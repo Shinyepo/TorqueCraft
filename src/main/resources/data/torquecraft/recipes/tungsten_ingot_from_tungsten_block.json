@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [{
+    "item": "torquecraft:tungsten_block"
+  }],
+  "result": {
+    "item": "torquecraft:tungsten_ingot",
+    "count": 9
+  }
+}

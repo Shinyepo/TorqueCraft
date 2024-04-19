@@ -1,4 +1,4 @@
-package dev.shinyepo.torquecraft.item;
+package dev.shinyepo.torquecraft.block;
 
 import dev.shinyepo.torquecraft.TorqueCraft;
 import net.minecraft.world.level.block.Block;
@@ -11,5 +11,5 @@ import java.util.function.Supplier;
 public class TCBlocks {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(TorqueCraft.MODID);
 
-    public static final Supplier<Block> TUNGSTEN_BLOCK = BLOCKS.registerSimpleBlock("tungsten_block", BlockBehaviour.Properties.of().mapColor(MapColor.STONE));
+    public static final Supplier<Block> TUNGSTEN_BLOCK = BLOCKS.registerSimpleBlock("tungsten_block", BlockBehaviour.Properties.of().requiresCorrectToolForDrops().mapColor(MapColor.STONE));
 }
