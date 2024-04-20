@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "blocks",
+  "cookingtime": 100,
+  "experience": 0.25,
+  "group": "tungsten",
+  "ingredient": {
+    "item": "torquecraft:tungsten_ingot"
+  },
+  "result": "torquecraft:tungsten_block"
+}
