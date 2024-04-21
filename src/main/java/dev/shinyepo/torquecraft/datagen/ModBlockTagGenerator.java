@@ -22,10 +22,16 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
         //this.tag(TCTags.Blocks.Tag)
           //      .add(TCBlocks.TUNGSTEN_BLOCK.get()).addTag(Tags.Blocks.ORES)
 
-        this.tag(BlockTags.NEEDS_IRON_TOOL)
+        tag(BlockTags.NEEDS_IRON_TOOL)
+                .add(TCBlocks.TUNGSTEN_BLOCK.get());
+        tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(TCBlocks.TUNGSTEN_BLOCK.get());
 
-        this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .add(TCBlocks.TUNGSTEN_BLOCK.get());
+        tag(BlockTags.NEEDS_IRON_TOOL)
+                .add(TCBlocks.STEAM_ENGINE.get());
+        tag(BlockTags.MINEABLE_WITH_PICKAXE)
+                .add(TCBlocks.STEAM_ENGINE.get());
+
+
     }
 }

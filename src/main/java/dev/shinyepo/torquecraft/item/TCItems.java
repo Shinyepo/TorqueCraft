@@ -18,5 +18,6 @@ public class TCItems {
 
     //Block items
     public static final Supplier<BlockItem> TUNGSTEN_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("tungsten_block", TCBlocks.TUNGSTEN_BLOCK);
+    public static final Supplier<BlockItem> STEAM_ENGINE_ITEM = ITEMS.registerSimpleBlockItem("steam_engine", TCBlocks.STEAM_ENGINE);
 
 }

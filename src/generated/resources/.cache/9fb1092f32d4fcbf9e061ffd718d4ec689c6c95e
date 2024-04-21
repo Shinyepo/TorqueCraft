@@ -1,7 +1,9 @@
-// 1.20.4	2024-04-20T19:41:15.7620078	Recipes
+// 1.20.4	2024-04-21T20:51:28.4721802	Recipes
 41a630d8ccbee330bdc35bb1a39120327cfa155f data/minecraft/advancements/recipes/misc/tungsten_block_from_smelting_tungsten_ingot.json
 cfb250c15d1400d7d609ae83b997ac4a1f1d292b data/minecraft/recipes/tungsten_block_from_smelting_tungsten_ingot.json
+40b971c3c3ca111784827c0ef206d088621f0b73 data/torquecraft/advancements/recipes/misc/steam_engine.json
 275e4dc0a073c1e8d6cb5fa5d7b4419255ab053c data/torquecraft/advancements/recipes/misc/tungsten_block.json
 41115ce1ff89c455c48e2f4a94a53a9cb5fd9795 data/torquecraft/advancements/recipes/misc/tungsten_ingot.json
+09f76211dc31aa86c870ba615780b2adad17de16 data/torquecraft/recipes/steam_engine.json
 e0b56ad233afd72ff434c5e027cd418157ced7b8 data/torquecraft/recipes/tungsten_block.json
 7c9512661b4f9c410b9d59872673b10e5b6a54f5 data/torquecraft/recipes/tungsten_ingot.json

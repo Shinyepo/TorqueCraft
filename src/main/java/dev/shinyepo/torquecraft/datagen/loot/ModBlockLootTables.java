@@ -16,6 +16,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
     @Override
     protected void generate() {
         dropSelf(TCBlocks.TUNGSTEN_BLOCK.get());
+        dropSelf(TCBlocks.STEAM_ENGINE.get());
 
 //        add(TCBlocks.ORE.get(),
 //                block -> createRedstoneOreDrops(TCBlocks.ORE.get(), TCItems.RAW.get()));

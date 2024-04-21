@@ -18,5 +18,7 @@ public class TCCreativeTabs {
             .displayItems((parameters, output) -> {
                 output.accept(TCItems.TUNGSTEN_INGOT.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
                 output.accept(TCItems.TUNGSTEN_BLOCK_ITEM.get());
+
+                output.accept(TCItems.STEAM_ENGINE_ITEM.get());
             }).build());
 }
