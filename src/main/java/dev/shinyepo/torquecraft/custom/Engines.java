@@ -3,6 +3,8 @@ package dev.shinyepo.torquecraft.custom;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -30,7 +32,7 @@ public class Engines extends HorizontalDirectionalBlock {
 
         registerDefaultState(getStateDefinition().any()
                 .setValue(FACING, Direction.NORTH)
-                .setValue(LIT, false));
+                .setValue(LIT, true));
     }
 
     @Override
@@ -56,22 +58,30 @@ public class Engines extends HorizontalDirectionalBlock {
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {
         return this.defaultBlockState().setValue(FACING, pContext.getHorizontalDirection().getOpposite())
-                .setValue(LIT, false);
+                .setValue(LIT,true);
+    }
+
+    @Override
+    public int getSignal(BlockState pBlockState, BlockGetter pBlockAccess, BlockPos pPos, Direction pSide) {
+        return pBlockState.getValue(LIT) ? 15 : 0;
+    }
+
+    @Override
+    public boolean isSignalSource(BlockState pState) {
+        return true;
     }
 
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         System.out.println("we've been hit "+ pState.getValue(LIT));
-        System.out.println("Facing - " + pState.getValue(FACING));
-
-        Boolean isLit = pState.getValue(LIT);
-        if (isLit) pState.setValue(LIT, false);
-        if (!isLit) pState.setValue(LIT, true);
-
-        System.out.println("we've been hit 2 " + pState.getValue(LIT));
-
+//        System.out.println("Facing - " + pState.getValue(FACING));
+        System.out.println("Signal North - " + pState.getSignal(pLevel, pPos, Direction.NORTH));
+        pLevel.setBlock(pPos,pState.cycle(LIT),2);
+        for(Direction direction : Direction.values()) {
+            System.out.println("Updating neighbor blocks");
+            pLevel.updateNeighborsAt(pPos.relative(direction), this);
+            pLevel.updateNeighborsAt(pPos, this);
+        }
         return InteractionResult.SUCCESS;
     }
-
-
 }
