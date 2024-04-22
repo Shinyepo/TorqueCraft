@@ -14,5 +14,5 @@ public class TCBlocks {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(TorqueCraft.MODID);
 
     public static final Supplier<Block> TUNGSTEN_BLOCK = BLOCKS.registerSimpleBlock("tungsten_block", BlockBehaviour.Properties.of().destroyTime(2f).requiresCorrectToolForDrops().mapColor(MapColor.STONE));
-    public static final Supplier<Block> STEAM_ENGINE = BLOCKS.register("steam_engine",() -> new Engines(BlockBehaviour.Properties.of().destroyTime(1.5f).requiresCorrectToolForDrops().mapColor(MapColor.STONE)));
+    public static final Supplier<Block> STEAM_ENGINE = BLOCKS.register("steam_engine",() -> new Engines(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().requiresCorrectToolForDrops().mapColor(MapColor.STONE)));
 }
