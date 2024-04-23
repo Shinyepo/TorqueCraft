@@ -1,6 +1,6 @@
 package dev.shinyepo.torquecraft.datagen.loot;
 
-import dev.shinyepo.torquecraft.block.TCBlocks;
+import dev.shinyepo.torquecraft.registries.TorqueBlocks;
 import net.minecraft.core.Holder;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
@@ -15,8 +15,8 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 
     @Override
     protected void generate() {
-        dropSelf(TCBlocks.TUNGSTEN_BLOCK.get());
-        dropSelf(TCBlocks.STEAM_ENGINE.get());
+        dropSelf(TorqueBlocks.TUNGSTEN_BLOCK.get());
+        dropSelf(TorqueBlocks.STEAM_ENGINE.get());
 
 //        add(TCBlocks.ORE.get(),
 //                block -> createRedstoneOreDrops(TCBlocks.ORE.get(), TCItems.RAW.get()));
@@ -24,6 +24,6 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 
     @Override
     protected Iterable<Block> getKnownBlocks() {
-        return TCBlocks.BLOCKS.getEntries().stream().map(Holder::value)::iterator;
+        return TorqueBlocks.BLOCKS.getEntries().stream().map(Holder::value)::iterator;
     }
 }

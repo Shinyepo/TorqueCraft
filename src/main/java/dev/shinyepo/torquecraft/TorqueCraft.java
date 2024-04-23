@@ -1,9 +1,9 @@
 package dev.shinyepo.torquecraft;
 
 import com.mojang.logging.LogUtils;
-import dev.shinyepo.torquecraft.block.TCBlocks;
-import dev.shinyepo.torquecraft.item.TCCreativeTabs;
-import dev.shinyepo.torquecraft.item.TCItems;
+import dev.shinyepo.torquecraft.registries.TorqueBlocks;
+import dev.shinyepo.torquecraft.registries.TorqueCreativeTabs;
+import dev.shinyepo.torquecraft.registries.TorqueItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.Blocks;
@@ -40,46 +40,38 @@ public class TorqueCraft
     public TorqueCraft(IEventBus modEventBus)
     {
         // Register the commonSetup method for modloading
-        modEventBus.addListener(this::commonSetup);
+//        modEventBus.addListener(this::commonSetup);
 
         // Register the Deferred Register to the mod event bus so blocks get registered
-        TCBlocks.BLOCKS.register(modEventBus);
+        TorqueBlocks.BLOCKS.register(modEventBus);
         // Register the Deferred Register to the mod event bus so items get registered
-        TCItems.ITEMS.register(modEventBus);
+        TorqueItems.ITEMS.register(modEventBus);
         // Register the Deferred Register to the mod event bus so tabs get registered
-        TCCreativeTabs.CREATIVE_MODE_TABS.register(modEventBus);
+        TorqueCreativeTabs.CREATIVE_MODE_TABS.register(modEventBus);
 
         // Register ourselves for server and other game events we are interested in.
         // Note that this is necessary if and only if we want *this* class (ExampleMod) to respond directly to events.
         // Do not add this line if there are no @SubscribeEvent-annotated functions in this class, like onServerStarting() below.
         NeoForge.EVENT_BUS.register(this);
 
-        // Register the item to a creative tab
-        modEventBus.addListener(this::addCreative);
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
 
-    private void commonSetup(final FMLCommonSetupEvent event)
-    {
-        // Some common setup code
-        LOGGER.info("HELLO FROM COMMON SETUP");
+//    private void commonSetup(final FMLCommonSetupEvent event)
+//    {
+//        // Some common setup code
+//        LOGGER.info("HELLO FROM COMMON SETUP");
+//
+//        if (Config.logDirtBlock)
+//            LOGGER.info("DIRT BLOCK >> {}", BuiltInRegistries.BLOCK.getKey(Blocks.DIRT));
+//
+//        LOGGER.info(Config.magicNumberIntroduction + Config.magicNumber);
+//
+//        Config.items.forEach((item) -> LOGGER.info("ITEM >> {}", item.toString()));
+//    }
 
-        if (Config.logDirtBlock)
-            LOGGER.info("DIRT BLOCK >> {}", BuiltInRegistries.BLOCK.getKey(Blocks.DIRT));
-
-        LOGGER.info(Config.magicNumberIntroduction + Config.magicNumber);
-
-        Config.items.forEach((item) -> LOGGER.info("ITEM >> {}", item.toString()));
-    }
-
-    // Add the example block item to the building blocks tab
-    private void addCreative(BuildCreativeModeTabContentsEvent event)
-    {
-        //if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS)
-          //  event.accept(EXAMPLE_BLOCK_ITEM);
-    }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent

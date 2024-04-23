@@ -1,11 +1,10 @@
 package dev.shinyepo.torquecraft.datagen;
 
 import dev.shinyepo.torquecraft.TorqueCraft;
-import dev.shinyepo.torquecraft.block.TCBlocks;
+import dev.shinyepo.torquecraft.registries.TorqueBlocks;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
-import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
@@ -23,14 +22,14 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
           //      .add(TCBlocks.TUNGSTEN_BLOCK.get()).addTag(Tags.Blocks.ORES)
 
         tag(BlockTags.NEEDS_IRON_TOOL)
-                .add(TCBlocks.TUNGSTEN_BLOCK.get());
+                .add(TorqueBlocks.TUNGSTEN_BLOCK.get());
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .add(TCBlocks.TUNGSTEN_BLOCK.get());
+                .add(TorqueBlocks.TUNGSTEN_BLOCK.get());
 
         tag(BlockTags.NEEDS_IRON_TOOL)
-                .add(TCBlocks.STEAM_ENGINE.get());
+                .add(TorqueBlocks.STEAM_ENGINE.get());
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .add(TCBlocks.STEAM_ENGINE.get());
+                .add(TorqueBlocks.STEAM_ENGINE.get());
 
 
     }
