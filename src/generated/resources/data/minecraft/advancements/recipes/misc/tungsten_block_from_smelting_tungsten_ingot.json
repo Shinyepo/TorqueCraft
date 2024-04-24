@@ -11,9 +11,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "torquecraft:tungsten_ingot"
-            ]
+            "items": "torquecraft:tungsten_ingot"
           }
         ]
       },

@@ -5,7 +5,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -88,7 +87,7 @@ public class SteamEngine extends HorizontalDirectionalBlock {
     }
 
     @Override
-    public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
+    protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHit) {
 //        if (pHit.getDirection()) {return InteractionResult.CONSUME;}
         System.out.println(pLevel.getBlockState(pPos.below()).is(Blocks.NETHERRACK));
 //        System.out.println("we've been hit "+ pState.getValue(LIT));

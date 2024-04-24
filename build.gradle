@@ -3,7 +3,7 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'maven-publish'
-    id 'net.neoforged.gradle.userdev' version '7.0.97'
+    id 'net.neoforged.gradle.userdev' version '7.0.105'
 }
 
 version = mod_version
@@ -23,8 +23,8 @@ base {
     archivesName = mod_id
 }
 
-// Mojang ships Java 17 to end users in 1.18+, so your mod should target Java 17.
-java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+// Mojang ships Java 21 to end users in 1.20.5+, so your mod should target Java 21.
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 //minecraft.accessTransformers.file rootProject.file('src/main/resources/META-INF/accesstransformer.cfg')
 //minecraft.accessTransformers.entry public net.minecraft.client.Minecraft textureManager # textureManager
@@ -93,19 +93,19 @@ dependencies {
     // compileOnly "mezz.jei:jei-${mc_version}-common-api:${jei_version}"
     // compileOnly "mezz.jei:jei-${mc_version}-forge-api:${jei_version}"
     // runtimeOnly "mezz.jei:jei-${mc_version}-forge:${jei_version}"
-    implementation "curse.maven:jade-324717:5109393"
+//    implementation "curse.maven:jade-324717:5109393"
 
     // compile against the JEI API but do not include it at runtime
-    compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
-    compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
+//    compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
+//    compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
     // at runtime, use the full JEI jar for NeoForge
-    runtimeOnly "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
-
-    compileOnly "mekanism:Mekanism:${mekanism_version}:api"
-    runtimeOnly "mekanism:Mekanism:${mekanism_version}"// Mekanism
-    runtimeOnly "mekanism:Mekanism:${mekanism_version}:additions"// Mekanism: Additions
-    runtimeOnly "mekanism:Mekanism:${mekanism_version}:generators"// Mekanism: Generators
-    runtimeOnly "mekanism:Mekanism:${mekanism_version}:tools"// Mekanism: Tools
+//    runtimeOnly "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
+//
+//    compileOnly "mekanism:Mekanism:${mekanism_version}:api"
+//    runtimeOnly "mekanism:Mekanism:${mekanism_version}"// Mekanism
+//    runtimeOnly "mekanism:Mekanism:${mekanism_version}:additions"// Mekanism: Additions
+//    runtimeOnly "mekanism:Mekanism:${mekanism_version}:generators"// Mekanism: Generators
+//    runtimeOnly "mekanism:Mekanism:${mekanism_version}:tools"// Mekanism: Tools
 
     // Example mod dependency using a mod jar from ./libs with a flat dir repository
     // This maps to ./libs/coolmod-${mc_version}-${coolmod_version}.jar
@@ -143,7 +143,7 @@ tasks.withType(ProcessResources).configureEach {
     ]
     inputs.properties replaceProperties
 
-    filesMatching(['META-INF/mods.toml']) {
+    filesMatching(['META-INF/neoforge.mods.toml']) {
         expand replaceProperties
     }
 }

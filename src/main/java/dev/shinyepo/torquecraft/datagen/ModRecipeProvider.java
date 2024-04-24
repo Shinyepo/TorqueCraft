@@ -2,21 +2,25 @@ package dev.shinyepo.torquecraft.datagen;
 
 import dev.shinyepo.torquecraft.registries.TorqueBlocks;
 import dev.shinyepo.torquecraft.registries.TorqueItems;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.world.level.ItemLike;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public class ModRecipeProvider extends RecipeProvider {
     private static final List<ItemLike> SMELTABLES = List.of(TorqueItems.TUNGSTEN_INGOT.get());
 
-    public ModRecipeProvider(PackOutput pOutput) {
-        super(pOutput);
+    public ModRecipeProvider(PackOutput pOutput, CompletableFuture<HolderLookup.Provider> pHolder) {
+        super(pOutput, pHolder);
     }
 
+
     @Override
-    protected void buildRecipes(RecipeOutput pRecipeOutput) {
+    protected void buildRecipes(@NotNull RecipeOutput pRecipeOutput) {
         oreSmelting(pRecipeOutput, SMELTABLES, RecipeCategory.MISC, TorqueBlocks.TUNGSTEN_BLOCK.get(), 0.25f, 100, "tungsten");
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TorqueItems.TUNGSTEN_INGOT.get(),9)

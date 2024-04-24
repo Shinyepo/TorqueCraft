@@ -5,22 +5,17 @@ import dev.shinyepo.torquecraft.registries.TorqueBlocks;
 import dev.shinyepo.torquecraft.registries.TorqueCreativeTabs;
 import dev.shinyepo.torquecraft.registries.TorqueItems;
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.level.block.Blocks;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import org.slf4j.Logger;
 
-// The value here should match an entry in the META-INF/mods.toml file
+// The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(TorqueCraft.MODID)
 public class TorqueCraft
 {
@@ -56,7 +51,7 @@ public class TorqueCraft
 
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+//        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
 
 //    private void commonSetup(final FMLCommonSetupEvent event)
@@ -82,7 +77,7 @@ public class TorqueCraft
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
-    @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+    @EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents
     {
         @SubscribeEvent

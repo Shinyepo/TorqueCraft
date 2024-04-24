@@ -7,5 +7,8 @@
   "ingredient": {
     "item": "torquecraft:tungsten_ingot"
   },
-  "result": "torquecraft:tungsten_block"
+  "result": {
+    "count": 1,
+    "id": "torquecraft:tungsten_block"
+  }
 }
