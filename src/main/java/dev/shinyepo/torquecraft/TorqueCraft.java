@@ -1,6 +1,7 @@
 package dev.shinyepo.torquecraft;
 
 import com.mojang.logging.LogUtils;
+import dev.shinyepo.torquecraft.registries.TorqueBlockEntities;
 import dev.shinyepo.torquecraft.registries.TorqueBlocks;
 import dev.shinyepo.torquecraft.registries.TorqueCreativeTabs;
 import dev.shinyepo.torquecraft.registries.TorqueItems;
@@ -43,6 +44,8 @@ public class TorqueCraft
         TorqueItems.ITEMS.register(modEventBus);
         // Register the Deferred Register to the mod event bus so tabs get registered
         TorqueCreativeTabs.CREATIVE_MODE_TABS.register(modEventBus);
+
+        TorqueBlockEntities.BLOCK_ENTITIES.register(modEventBus);
 
         // Register ourselves for server and other game events we are interested in.
         // Note that this is necessary if and only if we want *this* class (ExampleMod) to respond directly to events.
