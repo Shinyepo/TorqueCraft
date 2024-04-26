@@ -56,7 +56,7 @@ public class MechanicalFan extends HorizontalDirectionalBlock implements EntityB
         if(pLevel.isClientSide()) return null;
         return (pLevel1, pPos, pState1, pBlockEntity) -> {
             if (pBlockEntity instanceof MechanicalFanEntity mFE) {
-                mFE.tick(pLevel1, pPos, pState1);
+                mFE.tick(pLevel1);
             }
         };
     }
