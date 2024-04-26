@@ -15,7 +15,10 @@ repositories {
         url 'https://modmaven.dev/'
     }
     maven {
-        url "https://cursemaven.com"
+        url "https://www.cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
     }
 }
 
@@ -93,7 +96,7 @@ dependencies {
     // compileOnly "mezz.jei:jei-${mc_version}-common-api:${jei_version}"
     // compileOnly "mezz.jei:jei-${mc_version}-forge-api:${jei_version}"
     // runtimeOnly "mezz.jei:jei-${mc_version}-forge:${jei_version}"
-//    implementation "curse.maven:jade-324717:5109393"
+    implementation "curse.maven:jade-324717:5288504"
 
     // compile against the JEI API but do not include it at runtime
 //    compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "torquecraft:tungsten_ingot"
+    },
+    "B": {
+      "item": "torquecraft:tungsten_block"
+    }
+  },
+  "pattern": [
+    " A ",
+    "ABA",
+    " A "
+  ],
+  "result": {
+    "count": 1,
+    "id": "torquecraft:mechanical_fan"
+  }
+}

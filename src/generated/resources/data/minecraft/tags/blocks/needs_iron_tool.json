@@ -1,6 +1,7 @@
 {
   "values": [
     "torquecraft:tungsten_block",
-    "torquecraft:steam_engine"
+    "torquecraft:steam_engine",
+    "torquecraft:mechanical_fan"
   ]
 }

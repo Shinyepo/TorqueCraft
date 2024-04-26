@@ -31,6 +31,11 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(TorqueBlocks.STEAM_ENGINE.get());
 
+        tag(BlockTags.NEEDS_IRON_TOOL)
+                .add(TorqueBlocks.MECHANICAL_FAN_BLOCK.get());
+        tag(BlockTags.MINEABLE_WITH_PICKAXE)
+                .add(TorqueBlocks.MECHANICAL_FAN_BLOCK.get());
+
 
     }
 }

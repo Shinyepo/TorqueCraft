@@ -16,7 +16,6 @@ import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 public class ModBlockStateProvider extends BlockStateProvider {
     public ModBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
@@ -27,11 +26,21 @@ public class ModBlockStateProvider extends BlockStateProvider {
     protected void registerStatesAndModels() {
         blockWithItem(TorqueBlocks.TUNGSTEN_BLOCK.get());
 
-        ModelFile steamEngine = models().getExistingFile(modLoc("block/steam_engine"));
+        //TEMP
+        ModelFile fanModel = models().getExistingFile(modLoc("block/mechanical_fan"));
+        this.getVariantBuilder(TorqueBlocks.MECHANICAL_FAN_BLOCK.get()).forAllStatesExcept(blockState ->{
+            Direction dir = blockState.getValue(BlockStateProperties.HORIZONTAL_FACING);
+            return ConfiguredModel.builder()
+                    .modelFile(fanModel)
+                    .rotationY(dir.getAxis().isVertical() ? 0 : (((int) dir.toYRot()) + 180) % 360)
+                    .build();
+        });
+
+        ModelFile steamEngineModel = models().getExistingFile(modLoc("block/steam_engine"));
         this.getVariantBuilder(TorqueBlocks.STEAM_ENGINE.get()).forAllStatesExcept(blockState ->{
                     Direction dir = blockState.getValue(BlockStateProperties.HORIZONTAL_FACING);
                     return ConfiguredModel.builder()
-                            .modelFile(steamEngine)
+                            .modelFile(steamEngineModel)
                             .rotationY(dir.getAxis().isVertical() ? 0 : (((int) dir.toYRot()) + 180) % 360)
                             .build();
                 });

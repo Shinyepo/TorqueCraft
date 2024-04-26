@@ -22,5 +22,6 @@ public class TorqueCreativeTabs {
                 output.accept(TorqueItems.TUNGSTEN_BLOCK_ITEM.get());
 
                 output.accept(TorqueItems.STEAM_ENGINE_ITEM.get());
+                output.accept(TorqueItems.MECHANICAL_FAN_ITEM.get());
             }).build());
 }

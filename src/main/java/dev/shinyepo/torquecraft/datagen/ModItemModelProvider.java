@@ -24,5 +24,8 @@ public class ModItemModelProvider extends ItemModelProvider {
 
         withExistingParent(String.valueOf(TorqueItems.STEAM_ENGINE_ITEM.get()).toLowerCase(),
                 "torquecraft:block/" + BuiltInRegistries.BLOCK.getKey(TorqueBlocks.STEAM_ENGINE.get()).getPath());
+
+        withExistingParent(String.valueOf(TorqueItems.MECHANICAL_FAN_ITEM.get()).toLowerCase(),
+                "torquecraft:block/" + BuiltInRegistries.BLOCK.getKey(TorqueBlocks.MECHANICAL_FAN_BLOCK.get()).getPath());
     }
 }
