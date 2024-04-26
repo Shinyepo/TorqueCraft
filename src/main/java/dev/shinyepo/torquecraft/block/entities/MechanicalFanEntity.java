@@ -6,6 +6,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
@@ -13,10 +15,13 @@ import net.minecraft.world.level.block.FarmBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
 public class MechanicalFanEntity extends BlockEntity {
+    private final AABB workingBoundary;
     private final List<BlockPos> workingArea = Lists.newArrayList();
     private final List<BlockPos> validFarmlands = Lists.newArrayList();
 
@@ -24,39 +29,36 @@ public class MechanicalFanEntity extends BlockEntity {
     public MechanicalFanEntity(BlockPos pPos, BlockState pBlockState) {
         super(TorqueBlockEntities.MECHANICAL_FAN_ENTITY.get(), pPos, pBlockState);
 
-        var boundary = getBoundaries(pPos, pBlockState);
-        BlockPos.betweenClosed(boundary.get(0), boundary.get(1)).forEach(x-> {
+        this.workingBoundary = getWorkingBoundary(pPos, pBlockState);
+        BlockPos.betweenClosedStream(workingBoundary).forEach(x-> {
             workingArea.add(x.immutable());
         });
     }
 
-    private List<BlockPos> getBoundaries(BlockPos pPos, BlockState pState) {
-        List<BlockPos> result = Lists.newArrayList();
-
+    private AABB getWorkingBoundary(BlockPos pPos, BlockState pState) {
         Direction facing = pState.getValue(BlockStateProperties.HORIZONTAL_FACING);
         switch (facing) {
             case NORTH -> {
-                result.add(new BlockPos(pPos.getX()-1, pPos.getY(), pPos.getZ()-1));
-                result.add(new BlockPos(pPos.getX()+1, pPos.getY()+2, pPos.getZ()-9));
-                return result;
+                return new AABB(new Vec3(pPos.getX()-1, pPos.getY()-0.5, pPos.getZ()-0.1),
+                        new Vec3(pPos.getX()+1.9, pPos.getY()+2, pPos.getZ()-9));
             }
             case EAST -> {
-                result.add(new BlockPos(pPos.getX()+1, pPos.getY(), pPos.getZ()-1));
-                result.add(new BlockPos(pPos.getX()+9, pPos.getY()+2, pPos.getZ()+1));
-                return result;
+                return new AABB(new Vec3(pPos.getX()+1, pPos.getY()-0.5, pPos.getZ()-1),
+                        new Vec3(pPos.getX()+9, pPos.getY()+2, pPos.getZ()+1.9));
+
             }
             case SOUTH -> {
-                result.add(new BlockPos(pPos.getX()-1, pPos.getY(), pPos.getZ()+1));
-                result.add(new BlockPos(pPos.getX()+1, pPos.getY()+2, pPos.getZ()+9));
-                return result;
+                return new AABB(new Vec3(pPos.getX()-1, pPos.getY()-0.5, pPos.getZ()+1),
+                        new Vec3(pPos.getX()+1.9, pPos.getY()+2, pPos.getZ()+9));
             }
             case WEST -> {
-                result.add(new BlockPos(pPos.getX()-1, pPos.getY(), pPos.getZ()-1));
-                result.add(new BlockPos(pPos.getX()-9, pPos.getY()+2, pPos.getZ()+1));
-                return result;
+                return new AABB(new Vec3(pPos.getX(), pPos.getY()-0.5, pPos.getZ()-1),
+                        new Vec3(pPos.getX()-9, pPos.getY()+2, pPos.getZ()+1.9));
+            }
+            case null, default -> {
+                return null;
             }
         }
-        return result;
     }
 
     private void getFarmlands(Level pLevel) {
@@ -72,7 +74,19 @@ public class MechanicalFanEntity extends BlockEntity {
         }
     }
 
-    public void tick(Level pLevel) {
+    public void tick(Level pLevel, BlockState pState) {
+        List<Entity> entities = pLevel.getEntities(null,workingBoundary);
+        if (!entities.isEmpty()) {
+            for (Entity en : entities) {
+                Direction direction = pState.getValue(BlockStateProperties.HORIZONTAL_FACING);
+                en.hurtMarked = true;
+                en.setDeltaMovement(en.getDeltaMovement()
+                    .add(0.15d * (direction.getStepX() * 1.5),
+                        0,
+                        0.15d * (direction.getStepZ() * 1.5)));
+                System.out.println(workingBoundary + " " + direction.getStepX()*1.5 + " " + direction.getStepZ() * 1.5);
+            }
+        }
         if (pLevel.getGameTime() % 20 == 0) {
             getFarmlands(pLevel);
             if (!validFarmlands.isEmpty()) {
