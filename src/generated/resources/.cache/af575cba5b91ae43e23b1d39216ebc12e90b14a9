@@ -1,3 +1,3 @@
-// 1.20.5	2024-04-26T11:32:39.5788955	Tags for minecraft:block mod id torquecraft
-805ddbb0bd35a05ec5fe9ddbad3dff0e36d33945 data/minecraft/tags/blocks/mineable/pickaxe.json
-805ddbb0bd35a05ec5fe9ddbad3dff0e36d33945 data/minecraft/tags/blocks/needs_iron_tool.json
+// 1.20.5	2024-04-27T12:19:00.4481052	Tags for minecraft:block mod id torquecraft
+67f624804db4a41f949ec10f3799ff65be335c0d data/minecraft/tags/blocks/mineable/pickaxe.json
+67f624804db4a41f949ec10f3799ff65be335c0d data/minecraft/tags/blocks/needs_iron_tool.json

@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=east,operational=false": {
+      "model": "torquecraft:block/grinder",
+      "y": 90
+    },
+    "facing=east,operational=true": {
+      "model": "torquecraft:block/grinder",
+      "y": 90
+    },
+    "facing=north,operational=false": {
+      "model": "torquecraft:block/grinder"
+    },
+    "facing=north,operational=true": {
+      "model": "torquecraft:block/grinder"
+    },
+    "facing=south,operational=false": {
+      "model": "torquecraft:block/grinder",
+      "y": 180
+    },
+    "facing=south,operational=true": {
+      "model": "torquecraft:block/grinder",
+      "y": 180
+    },
+    "facing=west,operational=false": {
+      "model": "torquecraft:block/grinder",
+      "y": 270
+    },
+    "facing=west,operational=true": {
+      "model": "torquecraft:block/grinder",
+      "y": 270
+    }
+  }
+}

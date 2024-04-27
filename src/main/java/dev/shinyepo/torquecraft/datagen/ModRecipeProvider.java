@@ -54,5 +54,15 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("criteria", has(TorqueItems.TUNGSTEN_BLOCK_ITEM.get()))
                 .unlockedBy("criteria", has(TorqueItems.TUNGSTEN_INGOT.get()))
                 .save(pRecipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TorqueItems.GRINDER_ITEM.get())
+                .pattern(" A ")
+                .pattern("BAB")
+                .pattern("BBB")
+                .define('A', TorqueItems.TUNGSTEN_INGOT.get())
+                .define('B', TorqueItems.TUNGSTEN_BLOCK_ITEM.get())
+                .unlockedBy("criteria", has(TorqueItems.TUNGSTEN_BLOCK_ITEM.get()))
+                .unlockedBy("criteria", has(TorqueItems.TUNGSTEN_INGOT.get()))
+                .save(pRecipeOutput);
     }
 }

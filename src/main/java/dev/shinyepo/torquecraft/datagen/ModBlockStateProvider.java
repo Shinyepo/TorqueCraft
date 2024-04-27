@@ -16,6 +16,7 @@ import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class ModBlockStateProvider extends BlockStateProvider {
     public ModBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
@@ -27,23 +28,11 @@ public class ModBlockStateProvider extends BlockStateProvider {
         blockWithItem(TorqueBlocks.TUNGSTEN_BLOCK.get());
 
         //TEMP
-        ModelFile fanModel = models().getExistingFile(modLoc("block/mechanical_fan"));
-        this.getVariantBuilder(TorqueBlocks.MECHANICAL_FAN_BLOCK.get()).forAllStatesExcept(blockState ->{
-            Direction dir = blockState.getValue(BlockStateProperties.HORIZONTAL_FACING);
-            return ConfiguredModel.builder()
-                    .modelFile(fanModel)
-                    .rotationY(dir.getAxis().isVertical() ? 0 : (((int) dir.toYRot()) + 180) % 360)
-                    .build();
-        });
+        registerHorizontalMachineWithExistingModel("block/mechanical_fan", TorqueBlocks.MECHANICAL_FAN);
+        registerHorizontalMachineWithExistingModel("block/steam_engine", TorqueBlocks.STEAM_ENGINE);
+        registerHorizontalMachineWithExistingModel("block/grinder", TorqueBlocks.GRINDER);
 
-        ModelFile steamEngineModel = models().getExistingFile(modLoc("block/steam_engine"));
-        this.getVariantBuilder(TorqueBlocks.STEAM_ENGINE.get()).forAllStatesExcept(blockState ->{
-                    Direction dir = blockState.getValue(BlockStateProperties.HORIZONTAL_FACING);
-                    return ConfiguredModel.builder()
-                            .modelFile(steamEngineModel)
-                            .rotationY(dir.getAxis().isVertical() ? 0 : (((int) dir.toYRot()) + 180) % 360)
-                            .build();
-                });
+
         makeCanolaCrop((CropBlock) TorqueBlocks.CANOLA_CROP.get(), "canola_stage", "canola_stage");
 
     }
@@ -64,5 +53,16 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 new ResourceLocation(TorqueCraft.MODID, "block/"+ textureName + state.getValue(((CanolaCrop) block).getAgeProperty()))).renderType("cutout"));
 
         return models;
+    }
+
+    public void registerHorizontalMachineWithExistingModel(String modelPath, Supplier<Block> block) {
+        ModelFile machineModel = models().getExistingFile(modLoc(modelPath));
+        this.getVariantBuilder(block.get()).forAllStatesExcept(blockState ->{
+            Direction dir = blockState.getValue(BlockStateProperties.HORIZONTAL_FACING);
+            return ConfiguredModel.builder()
+                    .modelFile(machineModel)
+                    .rotationY(dir.getAxis().isVertical() ? 0 : (((int) dir.toYRot()) + 180) % 360)
+                    .build();
+        });
     }
 }
