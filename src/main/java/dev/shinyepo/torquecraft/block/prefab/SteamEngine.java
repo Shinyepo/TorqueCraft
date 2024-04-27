@@ -1,8 +1,8 @@
 package dev.shinyepo.torquecraft.block.prefab;
 
 import com.mojang.serialization.MapCodec;
+import dev.shinyepo.torquecraft.attributes.MachineAttributes;
 import dev.shinyepo.torquecraft.block.entities.SteamEngineEntity;
-import dev.shinyepo.torquecraft.registries.TorqueBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -28,7 +28,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class SteamEngine extends HorizontalDirectionalBlock implements EntityBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
-    public static final BooleanProperty OPERATIONAL = BooleanProperty.create("operational");
+    public static final BooleanProperty OPERATIONAL = MachineAttributes.OPERATIONAL;
     private static final VoxelShape SHAPE = Block.box(0,0,0,16,4,16);
 
     public SteamEngine(Properties properties) {
