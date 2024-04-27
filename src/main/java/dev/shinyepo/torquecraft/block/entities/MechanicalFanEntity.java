@@ -78,13 +78,13 @@ public class MechanicalFanEntity extends BlockEntity {
         List<Entity> entities = pLevel.getEntities(null,workingBoundary);
         if (!entities.isEmpty()) {
             for (Entity en : entities) {
+                if (en.isShiftKeyDown()) return;
                 Direction direction = pState.getValue(BlockStateProperties.HORIZONTAL_FACING);
                 en.hurtMarked = true;
                 en.setDeltaMovement(en.getDeltaMovement()
                     .add(0.15d * (direction.getStepX() * 1.5),
                         0,
                         0.15d * (direction.getStepZ() * 1.5)));
-                System.out.println(workingBoundary + " " + direction.getStepX()*1.5 + " " + direction.getStepZ() * 1.5);
             }
         }
         if (pLevel.getGameTime() % 20 == 0) {
