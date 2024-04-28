@@ -1,0 +1,10 @@
+{
+  "type": "torquecraft:grinding",
+  "ingredient": {
+    "item": "torquecraft:canola_seeds"
+  },
+  "result": {
+    "count": 1,
+    "id": "torquecraft:canola_meal"
+  }
+}

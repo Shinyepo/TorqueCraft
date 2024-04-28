@@ -1,10 +1,9 @@
 package dev.shinyepo.torquecraft;
 
 import com.mojang.logging.LogUtils;
-import dev.shinyepo.torquecraft.registries.TorqueBlockEntities;
-import dev.shinyepo.torquecraft.registries.TorqueBlocks;
-import dev.shinyepo.torquecraft.registries.TorqueCreativeTabs;
-import dev.shinyepo.torquecraft.registries.TorqueItems;
+import dev.shinyepo.torquecraft.menu.GrinderScreen;
+import dev.shinyepo.torquecraft.recipes.TorqueRecipes;
+import dev.shinyepo.torquecraft.registries.*;
 import net.minecraft.client.Minecraft;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -12,6 +11,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import org.slf4j.Logger;
@@ -46,6 +46,13 @@ public class TorqueCraft
         TorqueCreativeTabs.CREATIVE_MODE_TABS.register(modEventBus);
 
         TorqueBlockEntities.BLOCK_ENTITIES.register(modEventBus);
+
+        TorqueMenus.MENU_TYPES.register(modEventBus);
+
+        TorqueRecipes.Types.RECIPE_WRITING.register(modEventBus);
+        TorqueRecipes.Serializers.RECIPE_SERIALIZERS.register(modEventBus);
+
+        modEventBus.addListener(TorqueCapabilities::registerCapabilities);
 
         // Register ourselves for server and other game events we are interested in.
         // Note that this is necessary if and only if we want *this* class (ExampleMod) to respond directly to events.
@@ -89,6 +96,11 @@ public class TorqueCraft
             // Some client setup code
             LOGGER.info("HELLO FROM CLIENT SETUP");
             LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+        }
+
+        @SubscribeEvent
+        public static void menuSetup(RegisterMenuScreensEvent e) {
+            e.register(TorqueMenus.GRINDER_CONTAINER.get(), GrinderScreen::new);
         }
     }
 }

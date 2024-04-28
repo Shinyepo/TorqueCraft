@@ -3,11 +3,16 @@ package dev.shinyepo.torquecraft.block.prefab;
 import com.mojang.serialization.MapCodec;
 import dev.shinyepo.torquecraft.attributes.MachineAttributes;
 import dev.shinyepo.torquecraft.block.entities.GrinderEntity;
+import dev.shinyepo.torquecraft.menu.GrinderContainer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -71,7 +76,25 @@ public class Grinder extends HorizontalDirectionalBlock implements EntityBlock {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHit) {
-        //TODO: GUI Logic
+        if (!pLevel.isClientSide) {
+            BlockEntity be = pLevel.getBlockEntity(pPos);
+            if (be instanceof GrinderEntity) {
+                MenuProvider containerProvider = new MenuProvider() {
+                    @Override
+                    public Component getDisplayName() {
+                        return Component.translatable("block.torquecraft.grinder");
+                    }
+
+                    @Override
+                    public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player playerEntity) {
+                        return new GrinderContainer(windowId, playerEntity, pPos);
+                    }
+                };
+                pPlayer.openMenu(containerProvider, buf -> buf.writeBlockPos(pPos));
+            } else {
+                throw new IllegalStateException("Our named container provider is missing!");
+            }
+        }
         return InteractionResult.SUCCESS;
     }
 
@@ -87,7 +110,7 @@ public class Grinder extends HorizontalDirectionalBlock implements EntityBlock {
         if (pState.getBlock() != pNewState.getBlock()) {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
             if (blockEntity instanceof GrinderEntity) {
-                pLevel.removeBlockEntity(pPos);
+                ((GrinderEntity) blockEntity).drops();
             }
         }
         super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);

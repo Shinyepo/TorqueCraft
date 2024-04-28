@@ -1,10 +1,14 @@
 package dev.shinyepo.torquecraft.datagen;
 
+import dev.shinyepo.torquecraft.recipes.TorqueRecipes;
+import dev.shinyepo.torquecraft.recipes.custom.GrinderRecipe;
 import dev.shinyepo.torquecraft.registries.TorqueBlocks;
 import dev.shinyepo.torquecraft.registries.TorqueItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.SingleItemRecipe;
 import net.minecraft.world.level.ItemLike;
 import org.jetbrains.annotations.NotNull;
 
@@ -26,6 +30,9 @@ public class ModRecipeProvider extends RecipeProvider {
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TorqueItems.TUNGSTEN_INGOT.get(),9)
                 .requires(TorqueItems.TUNGSTEN_BLOCK_ITEM.get())
                 .unlockedBy("criteria", has(TorqueBlocks.TUNGSTEN_BLOCK.get()))
+                .save(pRecipeOutput);
+
+        grinding(Ingredient.of(TorqueItems.CANOLA_SEEDS.get()), TorqueItems.CANOLA_MEAL.get(), 1)
                 .save(pRecipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TorqueBlocks.TUNGSTEN_BLOCK.get())
@@ -64,5 +71,9 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("criteria", has(TorqueItems.TUNGSTEN_BLOCK_ITEM.get()))
                 .unlockedBy("criteria", has(TorqueItems.TUNGSTEN_INGOT.get()))
                 .save(pRecipeOutput);
+    }
+
+    public static SingleItemRecipeBuilder grinding(Ingredient ingredient, ItemLike result, int count) {
+        return new SingleItemRecipeBuilder(RecipeCategory.MISC, GrinderRecipe::new, ingredient, result, count);
     }
 }
