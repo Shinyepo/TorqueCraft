@@ -33,6 +33,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .save(pRecipeOutput);
 
         grinding(Ingredient.of(TorqueItems.CANOLA_SEEDS.get()), TorqueItems.CANOLA_MEAL.get(), 1)
+                .unlockedBy("criteria", has(TorqueItems.CANOLA_SEEDS.get()))
                 .save(pRecipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TorqueBlocks.TUNGSTEN_BLOCK.get())
