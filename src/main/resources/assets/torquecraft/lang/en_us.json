@@ -9,5 +9,8 @@
 
   "block.torquecraft.tungsten_block": "Tungsten Block",
 
-  "itemGroup.torquecraft": "TorqueCraft"
+  "itemGroup.torquecraft": "TorqueCraft",
+
+  "torquecraft.tooltip.liquid.amount.with.capacity": "%s / %s mB",
+  "torquecraft.tooltip.liquid.amount": "%s mB"
 }

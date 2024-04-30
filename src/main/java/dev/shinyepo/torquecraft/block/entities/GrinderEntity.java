@@ -4,8 +4,10 @@ import dev.shinyepo.torquecraft.recipes.TorqueRecipes;
 import dev.shinyepo.torquecraft.recipes.custom.GrinderRecipe;
 import dev.shinyepo.torquecraft.registries.TorqueBlockEntities;
 import dev.shinyepo.torquecraft.utils.AdaptedItemHandler;
+import dev.shinyepo.torquecraft.utils.TorqueFluidTank;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -17,7 +19,14 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.material.WaterFluid;
 import net.neoforged.neoforge.common.util.Lazy;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStack;
+import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper;
@@ -25,6 +34,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
+import java.util.List;
 import java.util.Optional;
 
 public class GrinderEntity extends BlockEntity {
@@ -33,6 +43,9 @@ public class GrinderEntity extends BlockEntity {
 
     public int progress = 0;
     public int maxProgress = 64;
+
+    public int fluidAmount = 0;
+    public int fluidCapacity = 2000;
 
     public static final int SLOT_INPUT = 0;
     public static final int SLOT_INPUT_COUNT = 1;
@@ -57,8 +70,12 @@ public class GrinderEntity extends BlockEntity {
         }
     });
 
+    private final TorqueFluidTank fluidTank;
+
     public GrinderEntity(BlockPos pPos, BlockState pBlockState) {
         super(TorqueBlockEntities.GRINDER_ENTITY.get(), pPos, pBlockState);
+        this.fluidTank = new TorqueFluidTank(fluidCapacity);
+        this.fluidTank.fill(new FluidStack(Fluids.WATER,fluidCapacity), IFluidHandler.FluidAction.EXECUTE);
     }
 
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
@@ -71,9 +88,21 @@ public class GrinderEntity extends BlockEntity {
                 resetProgress();
             }
         } else {
+//            fluidTank.fill(new FluidStack(Fluids.WATER,20), IFluidHandler.FluidAction.EXECUTE);
+            if (pLevel.getGameTime() % 20 == 0) {
+                fluidTank.drain(2, IFluidHandler.FluidAction.EXECUTE);
+                updateFluidAmount();
+                setChanged(pLevel,pPos,pState);
+            }
             resetProgress();
         }
     }
+
+
+    public void updateFluidAmount() {
+        this.fluidAmount = fluidTank.getFluidAmount();
+    }
+
 
     private void resetProgress() {
         this.progress = 0;
@@ -121,6 +150,8 @@ public class GrinderEntity extends BlockEntity {
         return this.outputItemHandler.get().getStackInSlot(SLOT_OUTPUT).getCount() + count <= this.outputItemHandler.get().getStackInSlot(SLOT_OUTPUT).getMaxStackSize();
     }
 
+    public TorqueFluidTank getFluidTank() {return fluidTank; }
+
     public ItemStackHandler getInputItems() {
         return inputItems;
     }
@@ -154,6 +185,7 @@ public class GrinderEntity extends BlockEntity {
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.saveAdditional(tag, provider);
+        fluidTank.writeToNBT(provider,tag);
         tag.put(ITEMS_INPUT_TAG, inputItems.serializeNBT(provider));
         tag.put(ITEMS_OUTPUT_TAG, outputItems.serializeNBT(provider));
         tag.putInt("grinder.progress", progress);
@@ -162,6 +194,7 @@ public class GrinderEntity extends BlockEntity {
     @Override
     public void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.loadAdditional(tag,provider);
+        fluidTank.readFromNBT(provider,tag);
         if (tag.contains(ITEMS_INPUT_TAG)) {
             inputItems.deserializeNBT(provider, tag.getCompound(ITEMS_INPUT_TAG));
         }

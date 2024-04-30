@@ -12,6 +12,7 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
 
 public class GrinderContainer extends AbstractContainerMenu {
@@ -34,6 +35,30 @@ public class GrinderContainer extends AbstractContainerMenu {
             {
                 @Override
                 public int get() {
+                    return grinderEntity.fluidAmount;
+                }
+
+                @Override
+                public void set(int value) {
+                    grinderEntity.fluidAmount = value;
+                }
+            });
+            addDataSlot(new DataSlot()
+            {
+                @Override
+                public int get() {
+                    return grinderEntity.fluidCapacity;
+                }
+
+                @Override
+                public void set(int value) {
+                    grinderEntity.fluidCapacity = value;
+                }
+            });
+            addDataSlot(new DataSlot()
+            {
+                @Override
+                public int get() {
                     return grinderEntity.progress;
                 }
 
@@ -42,6 +67,7 @@ public class GrinderContainer extends AbstractContainerMenu {
                     grinderEntity.progress = value;
                 }
             });
+
             addDataSlot(new DataSlot()
             {
                 @Override
