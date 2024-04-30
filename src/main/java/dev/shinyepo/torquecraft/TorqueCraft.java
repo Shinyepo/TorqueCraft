@@ -3,6 +3,7 @@ package dev.shinyepo.torquecraft;
 import dev.shinyepo.torquecraft.menu.GrinderScreen;
 import dev.shinyepo.torquecraft.recipes.TorqueRecipes;
 import dev.shinyepo.torquecraft.registries.*;
+import dev.shinyepo.torquecraft.registries.networking.TorquePackets;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -27,6 +28,7 @@ public class    TorqueCraft
         TorqueRecipes.Serializers.RECIPE_SERIALIZERS.register(modEventBus);
 
         modEventBus.addListener(TorqueCapabilities::registerCapabilities);
+        modEventBus.addListener(TorquePackets::registerPayloadHandler);
     }
 
     @EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
