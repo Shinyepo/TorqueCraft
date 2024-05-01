@@ -1,7 +1,7 @@
 package dev.shinyepo.torquecraft;
 
 import dev.shinyepo.torquecraft.menu.GrinderScreen;
-import dev.shinyepo.torquecraft.recipes.TorqueRecipes;
+import dev.shinyepo.torquecraft.registries.TorqueRecipes;
 import dev.shinyepo.torquecraft.registries.*;
 import dev.shinyepo.torquecraft.registries.networking.TorquePackets;
 import net.neoforged.api.distmarker.Dist;

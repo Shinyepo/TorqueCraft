@@ -1,4 +1,4 @@
-package dev.shinyepo.torquecraft.recipes;
+package dev.shinyepo.torquecraft.registries;
 
 import dev.shinyepo.torquecraft.TorqueCraft;
 import dev.shinyepo.torquecraft.recipes.custom.GrinderRecipe;

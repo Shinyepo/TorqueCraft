@@ -2,7 +2,7 @@ package dev.shinyepo.torquecraft.block.entities;
 
 import dev.shinyepo.torquecraft.networking.TorqueMessages;
 import dev.shinyepo.torquecraft.networking.packets.SyncFluidS2C;
-import dev.shinyepo.torquecraft.recipes.TorqueRecipes;
+import dev.shinyepo.torquecraft.registries.TorqueRecipes;
 import dev.shinyepo.torquecraft.recipes.custom.GrinderRecipe;
 import dev.shinyepo.torquecraft.registries.TorqueBlockEntities;
 import dev.shinyepo.torquecraft.utils.AdaptedItemHandler;

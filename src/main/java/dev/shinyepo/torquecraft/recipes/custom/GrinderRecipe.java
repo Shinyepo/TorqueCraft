@@ -3,7 +3,7 @@ package dev.shinyepo.torquecraft.recipes.custom;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import dev.shinyepo.torquecraft.recipes.TorqueRecipes;
+import dev.shinyepo.torquecraft.registries.TorqueRecipes;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
