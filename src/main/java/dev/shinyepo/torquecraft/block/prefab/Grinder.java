@@ -30,6 +30,7 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.neoforged.neoforge.fluids.FluidStack;
 import org.jetbrains.annotations.Nullable;
 
 public class Grinder extends HorizontalDirectionalBlock implements EntityBlock {
@@ -87,10 +88,13 @@ public class Grinder extends HorizontalDirectionalBlock implements EntityBlock {
 
                     @Override
                     public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player playerEntity) {
-                        return new GrinderContainer(windowId, playerEntity, pPos);
+                        return new GrinderContainer(windowId, playerEntity, pPos,((GrinderEntity) be).getFluidStack());
                     }
                 };
-                pPlayer.openMenu(containerProvider, buf -> buf.writeBlockPos(pPos));
+                pPlayer.openMenu(containerProvider, buf -> {
+                    buf.writeBlockPos(pPos);
+                    FluidStack.OPTIONAL_STREAM_CODEC.encode(buf,((GrinderEntity) be).getFluidStack());
+                });
             } else {
                 throw new IllegalStateException("Our named container provider is missing!");
             }

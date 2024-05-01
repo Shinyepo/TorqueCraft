@@ -1,5 +1,7 @@
 package dev.shinyepo.torquecraft.block.entities;
 
+import dev.shinyepo.torquecraft.networking.TorqueMessages;
+import dev.shinyepo.torquecraft.networking.packets.SyncFluidS2C;
 import dev.shinyepo.torquecraft.recipes.TorqueRecipes;
 import dev.shinyepo.torquecraft.recipes.custom.GrinderRecipe;
 import dev.shinyepo.torquecraft.registries.TorqueBlockEntities;
@@ -7,7 +9,6 @@ import dev.shinyepo.torquecraft.utils.AdaptedItemHandler;
 import dev.shinyepo.torquecraft.utils.TorqueFluidTank;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -19,14 +20,13 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.material.WaterFluid;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.ItemCapability;
 import net.neoforged.neoforge.common.util.Lazy;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStack;
-import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
+import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper;
@@ -34,7 +34,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
-import java.util.List;
 import java.util.Optional;
 
 public class GrinderEntity extends BlockEntity {
@@ -44,8 +43,7 @@ public class GrinderEntity extends BlockEntity {
     public int progress = 0;
     public int maxProgress = 64;
 
-    public int fluidAmount = 0;
-    public int fluidCapacity = 2000;
+    private final int fluidCapacity = 2000;
 
     public static final int SLOT_INPUT = 0;
     public static final int SLOT_INPUT_COUNT = 1;
@@ -70,12 +68,18 @@ public class GrinderEntity extends BlockEntity {
         }
     });
 
-    private final TorqueFluidTank fluidTank;
+    private final TorqueFluidTank fluidTank = new TorqueFluidTank(fluidCapacity) {
+        @Override
+        protected void onContentsChanged() {
+            setChanged();
+            if(!level.isClientSide()) {
+                TorqueMessages.sendToAllPlayers(new SyncFluidS2C(worldPosition, this.fluid));
+            }
+        }
+    };
 
     public GrinderEntity(BlockPos pPos, BlockState pBlockState) {
         super(TorqueBlockEntities.GRINDER_ENTITY.get(), pPos, pBlockState);
-        this.fluidTank = new TorqueFluidTank(fluidCapacity);
-        this.fluidTank.fill(new FluidStack(Fluids.WATER,fluidCapacity), IFluidHandler.FluidAction.EXECUTE);
     }
 
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
@@ -88,21 +92,58 @@ public class GrinderEntity extends BlockEntity {
                 resetProgress();
             }
         } else {
-//            fluidTank.fill(new FluidStack(Fluids.WATER,20), IFluidHandler.FluidAction.EXECUTE);
+            //debug reasons
+//            fluidTank.fill(new FluidStack(Fluids.WATER,500), IFluidHandler.FluidAction.EXECUTE);
             if (pLevel.getGameTime() % 20 == 0) {
-                fluidTank.drain(2, IFluidHandler.FluidAction.EXECUTE);
-                updateFluidAmount();
+                //debug reasons
+//                fluidTank.drain(2, IFluidHandler.FluidAction.EXECUTE);
+                updateFluidStack();
                 setChanged(pLevel,pPos,pState);
             }
             resetProgress();
         }
+        if (pLevel.getBlockEntity(pPos) instanceof GrinderEntity gE) {
+            if(hasFluidItemInSourceSlot(gE)) {
+                transferItemFluidToFluidTank(gE);
+            }
+        }
     }
 
-
-    public void updateFluidAmount() {
-        this.fluidAmount = fluidTank.getFluidAmount();
+    private static boolean hasFluidItemInSourceSlot(GrinderEntity pEntity) {
+        return pEntity.itemHandler.get().getStackInSlot(0).getCount() > 0;
     }
 
+    private static void transferItemFluidToFluidTank(GrinderEntity pEntity) {
+        IFluidHandlerItem fHandler = pEntity.itemHandler.get().getStackInSlot(0).getCapability(Capabilities.FluidHandler.ITEM);
+        if (fHandler != null){
+            int drainAmount = Math.min(pEntity.fluidTank.getSpace(), 1000);
+
+        FluidStack stack = fHandler.drain(drainAmount, IFluidHandler.FluidAction.SIMULATE);
+        if (pEntity.fluidTank.isFluidValid(stack)) {
+            stack = fHandler.drain(drainAmount, IFluidHandler.FluidAction.EXECUTE);
+            fillTankWithFluid(pEntity, stack, fHandler.getContainer());
+        }
+        }
+    }
+
+    private static void fillTankWithFluid(GrinderEntity pEntity, FluidStack stack, ItemStack container) {
+        pEntity.fluidTank.fill(stack, IFluidHandler.FluidAction.EXECUTE);
+
+        pEntity.itemHandler.get().extractItem(0, 1, false);
+        pEntity.itemHandler.get().insertItem(0, container, false);
+    }
+
+    public void updateFluidStack() {
+        setFluidStack(fluidTank.getFluid());
+    }
+
+    public void setFluidStack(FluidStack fluidStack) {
+        this.fluidTank.setFluid(fluidStack);
+    }
+
+    public FluidStack getFluidStack() {
+        return this.fluidTank.getFluid();
+    }
 
     private void resetProgress() {
         this.progress = 0;

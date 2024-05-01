@@ -12,49 +12,29 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.items.SlotItemHandler;
 
 public class GrinderContainer extends AbstractContainerMenu {
     private final BlockPos pos;
     private final int SLOT_COUNT;
     private final int SLOT_INPUT;
-    public final GrinderEntity grinderEntity;
+    private final GrinderEntity grinderEntity;
+    private FluidStack fluidStack;
 
-    public GrinderContainer(int windowId, Player player, BlockPos pos) {
+
+    public GrinderContainer(int windowId, Player player, BlockPos pos, FluidStack fluidStack) {
         super(TorqueMenus.GRINDER_CONTAINER.get(), windowId);
         this.pos = pos;
         this.SLOT_INPUT = GrinderEntity.SLOT_INPUT;
         this.SLOT_COUNT = GrinderEntity.SLOT_COUNT;
         this.grinderEntity = ((GrinderEntity) player.level().getBlockEntity(pos));
+        this.fluidStack = fluidStack;
+
 
         if (player.level().getBlockEntity(pos) instanceof GrinderEntity grinder) {
             addSlot(new SlotItemHandler(grinder.getInputItems(), GrinderEntity.SLOT_INPUT, 56, 34));
             addSlot(new SlotItemHandler(grinder.getOutputItems(), GrinderEntity.SLOT_OUTPUT, 110, 34));
-            addDataSlot(new DataSlot()
-            {
-                @Override
-                public int get() {
-                    return grinderEntity.fluidAmount;
-                }
-
-                @Override
-                public void set(int value) {
-                    grinderEntity.fluidAmount = value;
-                }
-            });
-            addDataSlot(new DataSlot()
-            {
-                @Override
-                public int get() {
-                    return grinderEntity.fluidCapacity;
-                }
-
-                @Override
-                public void set(int value) {
-                    grinderEntity.fluidCapacity = value;
-                }
-            });
             addDataSlot(new DataSlot()
             {
                 @Override
@@ -151,5 +131,17 @@ public class GrinderContainer extends AbstractContainerMenu {
     @Override
     public boolean stillValid(Player pPlayer) {
         return stillValid(ContainerLevelAccess.create(pPlayer.level(), pos), pPlayer, TorqueBlocks.GRINDER.get());
+    }
+
+    public GrinderEntity getBlockEntity() {
+        return this.grinderEntity;
+    }
+
+    public FluidStack getFluidStack() {
+        return this.fluidStack;
+    }
+
+    public void setFluidStack(FluidStack fluidStack) {
+        this.fluidStack = fluidStack;
     }
 }
