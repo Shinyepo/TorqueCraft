@@ -193,7 +193,7 @@ public class GrinderEntity extends BlockEntity {
     }
 
     private boolean fluidsMatch(FluidStack resultFluid) {
-        return this.fluidTank.getFluid().is(resultFluid.getFluid());
+        return this.fluidTank.getFluid().is(resultFluid.getFluid()) || this.fluidTank.isEmpty();
     }
 
     private boolean canFitInTank (FluidStack resultFluid) {
