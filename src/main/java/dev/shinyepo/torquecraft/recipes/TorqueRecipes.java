@@ -20,6 +20,6 @@ public class TorqueRecipes {
     public static class Serializers {
         public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(Registries.RECIPE_SERIALIZER,  TorqueCraft.MODID);
 
-        public static final Supplier<RecipeSerializer<?>> GRINDING_SERIALIZER = RECIPE_SERIALIZERS.register("grinding", () -> new GrinderRecipe.Serializer<>(GrinderRecipe::new));
+        public static final Supplier<RecipeSerializer<?>> GRINDING_SERIALIZER = RECIPE_SERIALIZERS.register("grinding", () -> new GrinderRecipe.Serializer<GrinderRecipe>(GrinderRecipe::new));
     }
 }

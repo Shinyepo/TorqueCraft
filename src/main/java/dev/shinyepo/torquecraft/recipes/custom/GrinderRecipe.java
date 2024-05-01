@@ -4,20 +4,52 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.shinyepo.torquecraft.recipes.TorqueRecipes;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.SingleItemRecipe;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 
-public class GrinderRecipe extends SingleItemRecipe implements Recipe<Container> {
+public class GrinderRecipe implements Recipe<Container> {
+    protected final Ingredient ingredient;
+    protected final ItemStack result;
+    private final RecipeType<?> type;
+    private final RecipeSerializer<?> serializer;
+    protected final String group;
+
     public GrinderRecipe(String pGroup, Ingredient ingredient, ItemStack itemStack) {
-        super(TorqueRecipes.Types.GRINDING, TorqueRecipes.Serializers.GRINDING_SERIALIZER.get(), pGroup, ingredient, itemStack);
+        this.type = TorqueRecipes.Types.GRINDING;
+        this.serializer = TorqueRecipes.Serializers.GRINDING_SERIALIZER.get();
+        this.group = pGroup;
+        this.ingredient = ingredient;
+        this.result = itemStack;
+    }
+
+
+    @Override
+    public ItemStack getResultItem(HolderLookup.Provider provider) {
+        return this.result;
+    }
+
+    @Override
+    public ItemStack assemble(Container container, HolderLookup.Provider provider) {
+        return this.result.copy();
+    }
+
+    public boolean matches(Container container, Level level) {
+        if(level.isClientSide()) return false;
+
+        return getIngredient().get(0).test(container.getItem(0));
+    }
+
+    public NonNullList<Ingredient> getIngredient() {
+        NonNullList<Ingredient> nonnulllist = NonNullList.create();
+        nonnulllist.add(this.ingredient);
+        return nonnulllist;
     }
 
     @Override
@@ -25,18 +57,27 @@ public class GrinderRecipe extends SingleItemRecipe implements Recipe<Container>
         return true;
     }
 
-    public boolean matches(Container pContainer, Level pLevel) {
-        if(pLevel.isClientSide()) return false;
-
-        return getIngredients().get(0).test(pContainer.getItem(0));
+    @Override
+    public RecipeSerializer<?> getSerializer() {
+        return serializer;
     }
 
-    public static class Serializer<T extends SingleItemRecipe> implements RecipeSerializer<GrinderRecipe> {
-        final SingleItemRecipe.Factory<GrinderRecipe> factory;
+    @Override
+    public RecipeType<?> getType() {
+        return type;
+    }
+
+    @Override
+    public boolean canCraftInDimensions(int pWidth, int pHeight) {
+        return true;
+    }
+
+    public static class Serializer<T extends GrinderRecipe> implements RecipeSerializer<GrinderRecipe> {
+        final GrinderRecipe.Factory<GrinderRecipe> factory;
         private final MapCodec<GrinderRecipe> codec;
         private final StreamCodec<RegistryFriendlyByteBuf, GrinderRecipe> streamCodec;
 
-        public Serializer(SingleItemRecipe.Factory<GrinderRecipe> pFactory) {
+        public Serializer(GrinderRecipe.Factory<GrinderRecipe> pFactory) {
             this.factory = pFactory;
             this.codec = RecordCodecBuilder.mapCodec(
                     p_340781_ -> p_340781_.group(
@@ -66,5 +107,9 @@ public class GrinderRecipe extends SingleItemRecipe implements Recipe<Container>
         public StreamCodec<RegistryFriendlyByteBuf, GrinderRecipe> streamCodec() {
             return this.streamCodec;
         }
+    }
+
+    public interface Factory<T extends GrinderRecipe> {
+        T create(String pGroup, Ingredient pIngredient, ItemStack pResult);
     }
 }

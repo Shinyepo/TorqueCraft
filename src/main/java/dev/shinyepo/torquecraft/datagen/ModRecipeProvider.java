@@ -1,5 +1,6 @@
 package dev.shinyepo.torquecraft.datagen;
 
+import dev.shinyepo.torquecraft.recipes.TorqueRecipeBuilder;
 import dev.shinyepo.torquecraft.recipes.TorqueRecipes;
 import dev.shinyepo.torquecraft.recipes.custom.GrinderRecipe;
 import dev.shinyepo.torquecraft.registries.TorqueBlocks;
@@ -74,7 +75,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .save(pRecipeOutput);
     }
 
-    public static SingleItemRecipeBuilder grinding(Ingredient ingredient, ItemLike result, int count) {
-        return new SingleItemRecipeBuilder(RecipeCategory.MISC, GrinderRecipe::new, ingredient, result, count);
+    public static TorqueRecipeBuilder grinding(Ingredient ingredient, ItemLike result, int count) {
+        return new TorqueRecipeBuilder(RecipeCategory.MISC, GrinderRecipe::new, ingredient, result, count);
     }
 }
