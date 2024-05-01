@@ -20,9 +20,7 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.capabilities.ItemCapability;
 import net.neoforged.neoforge.common.util.Lazy;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
@@ -152,10 +150,12 @@ public class GrinderEntity extends BlockEntity {
     private void craftItem() {
         Optional<RecipeHolder<GrinderRecipe>> recipe = getCurrentRecipe();
         ItemStack result = recipe.get().value().getResultItem(null);
+        FluidStack resultFluid = recipe.get().value().getResultFluid(null);
 
         this.itemHandler.get().extractItem(SLOT_INPUT,1, false);
         this.outputItems.setStackInSlot(SLOT_OUTPUT, new ItemStack(result.getItem(),
                 this.outputItems.getStackInSlot(SLOT_OUTPUT).getCount() + result.getCount()));
+        this.fluidTank.fill(resultFluid, IFluidHandler.FluidAction.EXECUTE);
     }
 
     private boolean hasProgressFinished() {
@@ -172,7 +172,8 @@ public class GrinderEntity extends BlockEntity {
         if (recipe.isEmpty()) return false;
 
         ItemStack result = recipe.get().value().getResultItem(null);
-        return canFitInOutput(result.getCount()) && canOutputItem(result.getItem());
+        FluidStack resultFluid = recipe.get().value().getResultFluid(null);
+        return canFitInOutput(result.getCount()) && canOutputItem(result.getItem()) && fluidsMatch(resultFluid) && canFitInTank(resultFluid);
     }
 
     private Optional<RecipeHolder<GrinderRecipe>> getCurrentRecipe() {
@@ -189,6 +190,14 @@ public class GrinderEntity extends BlockEntity {
 
     private boolean canFitInOutput (int count) {
         return this.outputItemHandler.get().getStackInSlot(SLOT_OUTPUT).getCount() + count <= this.outputItemHandler.get().getStackInSlot(SLOT_OUTPUT).getMaxStackSize();
+    }
+
+    private boolean fluidsMatch(FluidStack resultFluid) {
+        return this.fluidTank.getFluid().is(resultFluid.getFluid());
+    }
+
+    private boolean canFitInTank (FluidStack resultFluid) {
+        return this.fluidTank.getFluid().getAmount() + resultFluid.getAmount() <= this.fluidTank.getCapacity();
     }
 
     public TorqueFluidTank getFluidTank() {return fluidTank; }

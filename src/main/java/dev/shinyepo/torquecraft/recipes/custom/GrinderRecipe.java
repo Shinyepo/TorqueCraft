@@ -13,31 +13,38 @@ import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
+import net.neoforged.neoforge.fluids.FluidStack;
 
 public class GrinderRecipe implements Recipe<Container> {
     protected final Ingredient ingredient;
-    protected final ItemStack result;
+    protected final ItemStack resultItem;
+    protected final FluidStack resultFluid;
     private final RecipeType<?> type;
     private final RecipeSerializer<?> serializer;
     protected final String group;
 
-    public GrinderRecipe(String pGroup, Ingredient ingredient, ItemStack itemStack) {
+    public GrinderRecipe(String pGroup, Ingredient ingredient, ItemStack itemStack, FluidStack fluidStack) {
         this.type = TorqueRecipes.Types.GRINDING;
         this.serializer = TorqueRecipes.Serializers.GRINDING_SERIALIZER.get();
         this.group = pGroup;
         this.ingredient = ingredient;
-        this.result = itemStack;
+        this.resultItem = itemStack;
+        this.resultFluid = fluidStack;
     }
 
 
     @Override
     public ItemStack getResultItem(HolderLookup.Provider provider) {
-        return this.result;
+        return this.resultItem;
+    }
+
+    public FluidStack getResultFluid(HolderLookup.Provider provider) {
+        return this.resultFluid;
     }
 
     @Override
     public ItemStack assemble(Container container, HolderLookup.Provider provider) {
-        return this.result.copy();
+        return this.resultItem.copy();
     }
 
     public boolean matches(Container container, Level level) {
@@ -83,7 +90,8 @@ public class GrinderRecipe implements Recipe<Container> {
                     p_340781_ -> p_340781_.group(
                                     Codec.STRING.optionalFieldOf("group", "").forGetter(p -> p.group),
                                     Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(p_301068_ -> p_301068_.ingredient),
-                                    ItemStack.STRICT_CODEC.fieldOf("result").forGetter(p_302316_ -> p_302316_.result)
+                                    ItemStack.STRICT_CODEC.fieldOf("resultItem").forGetter(p_302316_ -> p_302316_.resultItem),
+                                    FluidStack.OPTIONAL_CODEC.fieldOf("resultFluid").forGetter(p -> p.resultFluid)
                             )
                             .apply(p_340781_, pFactory::create)
             );
@@ -93,7 +101,9 @@ public class GrinderRecipe implements Recipe<Container> {
                     Ingredient.CONTENTS_STREAM_CODEC,
                     p_319738_ -> p_319738_.ingredient,
                     ItemStack.STREAM_CODEC,
-                    p_319736_ -> p_319736_.result,
+                    p_319736_ -> p_319736_.resultItem,
+                    FluidStack.STREAM_CODEC,
+                    p -> p.resultFluid,
                     pFactory::create
             );
         }
@@ -110,6 +120,6 @@ public class GrinderRecipe implements Recipe<Container> {
     }
 
     public interface Factory<T extends GrinderRecipe> {
-        T create(String pGroup, Ingredient pIngredient, ItemStack pResult);
+        T create(String pGroup, Ingredient pIngredient, ItemStack pResultItem, FluidStack pResultFluid);
     }
 }

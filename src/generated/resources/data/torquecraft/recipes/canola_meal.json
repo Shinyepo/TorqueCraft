@@ -3,7 +3,11 @@
   "ingredient": {
     "item": "torquecraft:canola_seeds"
   },
-  "result": {
+  "resultFluid": {
+    "amount": 200,
+    "id": "minecraft:water"
+  },
+  "resultItem": {
     "count": 1,
     "id": "torquecraft:canola_meal"
   }
