@@ -105,7 +105,14 @@ public class Grinder extends HorizontalDirectionalBlock implements EntityBlock {
     @Override
     protected void entityInside(BlockState pState, Level pLevel, BlockPos pPos, Entity pEntity) {
         //TODO: Calculate dmg based on grinder speed
-        pEntity.hurt(pLevel.damageSources().generic(), 2f);
+        BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
+        if (blockEntity instanceof GrinderEntity ge) {
+            int progress = ge.progress;
+            if (progress != 0)
+            {
+                pEntity.hurt(pLevel.damageSources().generic(), 2f);
+            }
+        }
         super.entityInside(pState, pLevel, pPos, pEntity);
     }
 
