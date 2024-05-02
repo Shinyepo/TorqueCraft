@@ -1,7 +1,6 @@
 package dev.shinyepo.torquecraft.block.prefab;
 
 import com.mojang.serialization.MapCodec;
-import dev.shinyepo.torquecraft.block.entities.MechanicalFanEntity;
 import dev.shinyepo.torquecraft.block.entities.PumpEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -48,7 +47,7 @@ public class Pump extends HorizontalDirectionalBlock implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        return new MechanicalFanEntity(pPos, pState);
+        return new PumpEntity(pPos, pState);
     }
 
     @Nullable
@@ -57,7 +56,7 @@ public class Pump extends HorizontalDirectionalBlock implements EntityBlock {
         if(pLevel.isClientSide()) return null;
         return (pLevel1, pPos, pState1, pBlockEntity) -> {
             if (pBlockEntity instanceof PumpEntity pE) {
-                pE.tick(pLevel1, pPos, pState1);
+                pE.tick(pLevel1, pPos);
             }
         };
     }
