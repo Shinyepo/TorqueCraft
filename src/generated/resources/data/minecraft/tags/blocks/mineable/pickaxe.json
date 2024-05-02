@@ -3,6 +3,7 @@
     "torquecraft:tungsten_block",
     "torquecraft:steam_engine",
     "torquecraft:mechanical_fan",
-    "torquecraft:grinder"
+    "torquecraft:grinder",
+    "torquecraft:pump"
   ]
 }

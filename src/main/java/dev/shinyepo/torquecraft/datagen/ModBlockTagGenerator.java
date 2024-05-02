@@ -22,25 +22,17 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
           //      .add(TCBlocks.TUNGSTEN_BLOCK.get()).addTag(Tags.Blocks.ORES)
 
         tag(BlockTags.NEEDS_IRON_TOOL)
-                .add(TorqueBlocks.TUNGSTEN_BLOCK.get());
+                .add(TorqueBlocks.TUNGSTEN_BLOCK.get())
+                .add(TorqueBlocks.STEAM_ENGINE.get())
+                .add(TorqueBlocks.MECHANICAL_FAN.get())
+                .add(TorqueBlocks.GRINDER.get())
+                .add(TorqueBlocks.PUMP.get());
+
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .add(TorqueBlocks.TUNGSTEN_BLOCK.get());
-
-        tag(BlockTags.NEEDS_IRON_TOOL)
-                .add(TorqueBlocks.STEAM_ENGINE.get());
-        tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .add(TorqueBlocks.STEAM_ENGINE.get());
-
-        tag(BlockTags.NEEDS_IRON_TOOL)
-                .add(TorqueBlocks.MECHANICAL_FAN.get());
-        tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .add(TorqueBlocks.MECHANICAL_FAN.get());
-
-        tag(BlockTags.NEEDS_IRON_TOOL)
-                .add(TorqueBlocks.GRINDER.get());
-        tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .add(TorqueBlocks.GRINDER.get());
-
-
+                .add(TorqueBlocks.TUNGSTEN_BLOCK.get())
+                .add(TorqueBlocks.STEAM_ENGINE.get())
+                .add(TorqueBlocks.MECHANICAL_FAN.get())
+                .add(TorqueBlocks.GRINDER.get())
+                .add(TorqueBlocks.PUMP.get());
     }
 }

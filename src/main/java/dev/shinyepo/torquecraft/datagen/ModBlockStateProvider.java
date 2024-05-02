@@ -31,6 +31,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         registerHorizontalMachineWithExistingModel("block/mechanical_fan", TorqueBlocks.MECHANICAL_FAN);
         registerHorizontalMachineWithExistingModel("block/steam_engine", TorqueBlocks.STEAM_ENGINE);
         registerHorizontalMachineWithExistingModel("block/grinder", TorqueBlocks.GRINDER);
+        registerHorizontalMachineWithExistingModel("block/pump", TorqueBlocks.PUMP);
 
 
         makeCanolaCrop((CropBlock) TorqueBlocks.CANOLA_CROP.get(), "canola_stage", "canola_stage");

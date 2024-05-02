@@ -73,6 +73,16 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("criteria", has(TorqueItems.TUNGSTEN_BLOCK_ITEM.get()))
                 .unlockedBy("criteria", has(TorqueItems.TUNGSTEN_INGOT.get()))
                 .save(pRecipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TorqueItems.PUMP_ITEM.get())
+                .pattern(" A ")
+                .pattern(" BA")
+                .pattern(" A ")
+                .define('B', TorqueItems.TUNGSTEN_INGOT.get())
+                .define('A', TorqueItems.TUNGSTEN_BLOCK_ITEM.get())
+                .unlockedBy("criteria", has(TorqueItems.TUNGSTEN_BLOCK_ITEM.get()))
+                .unlockedBy("criteria", has(TorqueItems.TUNGSTEN_INGOT.get()))
+                .save(pRecipeOutput);
     }
 
     public static TorqueRecipeBuilder grinding(Ingredient ingredient, ItemLike result, int count, FluidStack resultFluid) {

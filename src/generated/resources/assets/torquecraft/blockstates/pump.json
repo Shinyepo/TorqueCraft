@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "torquecraft:block/pump",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "torquecraft:block/pump"
+    },
+    "facing=south": {
+      "model": "torquecraft:block/pump",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "torquecraft:block/pump",
+      "y": 270
+    }
+  }
+}

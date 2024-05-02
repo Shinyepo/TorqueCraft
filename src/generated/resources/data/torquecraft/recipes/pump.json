@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "torquecraft:tungsten_block"
+    },
+    "B": {
+      "item": "torquecraft:tungsten_ingot"
+    }
+  },
+  "pattern": [
+    " A ",
+    " BA",
+    " A "
+  ],
+  "result": {
+    "count": 1,
+    "id": "torquecraft:pump"
+  }
+}

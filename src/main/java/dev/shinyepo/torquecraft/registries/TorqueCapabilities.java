@@ -17,8 +17,12 @@ public class TorqueCapabilities {
             return o.getInputItemHandler().get();
             });
 
-        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, TorqueBlockEntities.GRINDER_ENTITY.get(),(object, context) -> {
-            return object.getFluidTank();
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, TorqueBlockEntities.GRINDER_ENTITY.get(),(o, context) -> {
+            return o.getFluidTank();
+        });
+
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, TorqueBlockEntities.PUMP_ENTITY.get(), (o, direction) -> {
+            return o.getFluidTank();
         });
     }
 }
