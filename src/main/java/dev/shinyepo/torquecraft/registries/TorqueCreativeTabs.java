@@ -20,9 +20,12 @@ public class TorqueCreativeTabs {
                 output.accept(TorqueItems.CANOLA_MEAL.get());
                 output.accept(TorqueItems.TUNGSTEN_INGOT.get());
                 output.accept(TorqueItems.TUNGSTEN_BLOCK_ITEM.get());
-
+                //machines
                 output.accept(TorqueItems.STEAM_ENGINE_ITEM.get());
                 output.accept(TorqueItems.MECHANICAL_FAN_ITEM.get());
                 output.accept(TorqueItems.GRINDER_ITEM.get());
+                //fluids
+                output.accept(TorqueItems.LUBRICANT_BUCKET.get());
+                output.accept(TorqueItems.JET_FUEL_BUCKET.get());
             }).build());
 }

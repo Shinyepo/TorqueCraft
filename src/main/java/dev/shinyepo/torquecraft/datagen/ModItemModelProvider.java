@@ -18,6 +18,9 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(TorqueItems.TUNGSTEN_INGOT.get());
         basicItem(TorqueItems.CANOLA_SEEDS.get());
         basicItem(TorqueItems.CANOLA_MEAL.get());
+        basicItem(TorqueItems.JET_FUEL_BUCKET.get());
+        basicItem(TorqueItems.LUBRICANT_BUCKET.get());
+
 
         withExistingParent(String.valueOf(TorqueItems.TUNGSTEN_BLOCK_ITEM.get()).toLowerCase(),
                 "torquecraft:block/" + BuiltInRegistries.BLOCK.getKey(TorqueBlocks.TUNGSTEN_BLOCK.get()).getPath());

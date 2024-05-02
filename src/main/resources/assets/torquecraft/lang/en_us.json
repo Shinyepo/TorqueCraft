@@ -2,12 +2,17 @@
   "item.torquecraft.tungsten_ingot": "Tungsten Ingot",
   "item.torquecraft.canola_seeds": "Canola Seeds",
   "item.torquecraft.canola_meal": "Canola Meal",
+  "item.torquecraft.lubricant_bucket": "Bucket of Lubricant",
+  "item.torquecraft.jet_fuel_bucket": "Bucket of Jet Fuel",
 
   "block.torquecraft.steam_engine": "Steam Engine",
   "block.torquecraft.mechanical_fan": "Mechanical Fan",
   "block.torquecraft.grinder": "Grinder",
 
   "block.torquecraft.tungsten_block": "Tungsten Block",
+
+  "fluid_type.torquecraft.lubricant_fluid": "Lubricant",
+  "fluid_type.torquecraft.jet_fuel_fluid": "Jet Fuel",
 
   "itemGroup.torquecraft": "TorqueCraft",
 

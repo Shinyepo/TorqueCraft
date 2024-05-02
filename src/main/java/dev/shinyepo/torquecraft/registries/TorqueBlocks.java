@@ -5,8 +5,10 @@ import dev.shinyepo.torquecraft.block.prefab.CanolaCrop;
 import dev.shinyepo.torquecraft.block.prefab.Grinder;
 import dev.shinyepo.torquecraft.block.prefab.MechanicalFan;
 import dev.shinyepo.torquecraft.block.prefab.SteamEngine;
+import dev.shinyepo.torquecraft.fluid.TorqueFluids;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -24,4 +26,8 @@ public class TorqueBlocks {
 
     //Crops
     public static final Supplier<Block> CANOLA_CROP = BLOCKS.register("canola_crop", () -> new CanolaCrop(BlockBehaviour.Properties.ofFullCopy(Blocks.WHEAT).noOcclusion().noCollission()));
+
+    //FLUIDS
+    public static final Supplier<LiquidBlock> LUBRICANT_BLOCK = BLOCKS.register("lubricant_block", () -> new LiquidBlock(TorqueFluids.SOURCE_LUBRICANT.get(), BlockBehaviour.Properties.ofFullCopy(Blocks.WATER)));
+    public static final Supplier<LiquidBlock> JET_FUEL_BLOCK = BLOCKS.register("jet_fuel_block", () -> new LiquidBlock(TorqueFluids.SOURCE_JET_FUEL.get(), BlockBehaviour.Properties.ofFullCopy(Blocks.WATER)));
 }
