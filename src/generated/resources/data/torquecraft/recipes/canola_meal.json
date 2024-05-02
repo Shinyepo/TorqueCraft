@@ -5,7 +5,7 @@
   },
   "resultFluid": {
     "amount": 200,
-    "id": "minecraft:water"
+    "id": "torquecraft:lubricant_fluid"
   },
   "resultItem": {
     "count": 1,

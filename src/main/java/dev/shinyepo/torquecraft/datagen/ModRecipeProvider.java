@@ -1,5 +1,6 @@
 package dev.shinyepo.torquecraft.datagen;
 
+import dev.shinyepo.torquecraft.fluid.TorqueFluids;
 import dev.shinyepo.torquecraft.recipes.TorqueRecipeBuilder;
 import dev.shinyepo.torquecraft.recipes.custom.GrinderRecipe;
 import dev.shinyepo.torquecraft.registries.TorqueBlocks;
@@ -33,7 +34,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("criteria", has(TorqueBlocks.TUNGSTEN_BLOCK.get()))
                 .save(pRecipeOutput);
 
-        grinding(Ingredient.of(TorqueItems.CANOLA_SEEDS.get()), TorqueItems.CANOLA_MEAL.get(), 1, new FluidStack(Fluids.WATER,200))
+        grinding(Ingredient.of(TorqueItems.CANOLA_SEEDS.get()), TorqueItems.CANOLA_MEAL.get(), 1, new FluidStack(TorqueFluids.SOURCE_LUBRICANT.get(),200))
                 .unlockedBy("criteria", has(TorqueItems.CANOLA_SEEDS.get()))
                 .save(pRecipeOutput);
 
