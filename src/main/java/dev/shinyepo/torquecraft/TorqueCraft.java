@@ -1,7 +1,7 @@
 package dev.shinyepo.torquecraft;
 
-import dev.shinyepo.torquecraft.fluid.TorqueFluidTypes;
-import dev.shinyepo.torquecraft.fluid.TorqueFluids;
+import dev.shinyepo.torquecraft.registries.TorqueFluidTypes;
+import dev.shinyepo.torquecraft.registries.TorqueFluids;
 import dev.shinyepo.torquecraft.menu.GrinderScreen;
 import dev.shinyepo.torquecraft.registries.TorqueRecipes;
 import dev.shinyepo.torquecraft.registries.*;

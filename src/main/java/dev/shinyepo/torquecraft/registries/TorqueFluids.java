@@ -1,8 +1,6 @@
-package dev.shinyepo.torquecraft.fluid;
+package dev.shinyepo.torquecraft.registries;
 
 import dev.shinyepo.torquecraft.TorqueCraft;
-import dev.shinyepo.torquecraft.registries.TorqueBlocks;
-import dev.shinyepo.torquecraft.registries.TorqueItems;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
