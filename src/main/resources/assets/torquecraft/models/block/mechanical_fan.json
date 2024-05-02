@@ -1,4 +1,5 @@
 {
+	"credit": "Made with Blockbench",
 	"parent": "neoforge:elements",
 	"textures": {
 		"0": "torquecraft:block/steam_engine",
