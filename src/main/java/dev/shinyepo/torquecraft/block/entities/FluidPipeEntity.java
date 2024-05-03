@@ -8,6 +8,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -43,9 +44,9 @@ public class FluidPipeEntity extends BlockEntity {
                     BlockPos p = pipe.getBlockPos().relative(direction);
                     BlockEntity te = level.getBlockEntity(p);
                     if (te != null && !(te instanceof FluidPipeEntity)) {
-                        IEnergyStorage handler = level.getCapability(Capabilities.EnergyStorage.BLOCK, p, null);
+                        IFluidHandler handler = level.getCapability(Capabilities.FluidHandler.BLOCK, p, null);
                         if (handler != null) {
-                            if (handler.canReceive()) {
+                            if (handler.getTankCapacity(1) > 0) {
                                 outputs.add(p);
                             }
                         }

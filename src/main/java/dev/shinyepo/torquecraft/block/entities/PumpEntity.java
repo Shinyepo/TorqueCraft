@@ -88,7 +88,10 @@ public class PumpEntity extends BlockEntity {
 
     }
 
-    public TorqueFluidTank getFluidTank() {
-        return fluidTank;
+    public TorqueFluidTank getFluidTank(Direction dir) {
+        if (dir == Direction.UP) {
+            return fluidTank;
+        }
+        return null;
     }
 }

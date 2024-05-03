@@ -44,7 +44,7 @@ public class FluidPipe extends Block implements SimpleWaterloggedBlock, EntityBl
     public static final EnumProperty<PipeConnection> UP = EnumProperty.create("up", PipeConnection.class);
     public static final EnumProperty<PipeConnection> DOWN = EnumProperty.create("down", PipeConnection.class);
 
-    public static final ModelProperty<BlockState> FACADEID = new ModelProperty<>();
+//    public static final ModelProperty<BlockState> FACADEID = new ModelProperty<>();
 
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
@@ -158,8 +158,8 @@ public class FluidPipe extends Block implements SimpleWaterloggedBlock, EntityBl
             return null;
         } else {
             return (lvl, pos, st, be) -> {
-                if (be instanceof FluidPipeEntity cable) {
-                    cable.tickServer();
+                if (be instanceof FluidPipeEntity pipe) {
+                    pipe.tickServer();
                 }
             };
         }
@@ -211,7 +211,7 @@ public class FluidPipe extends Block implements SimpleWaterloggedBlock, EntityBl
         if (te == null) {
             return false;
         }
-        return te.getLevel().getCapability(Capabilities.EnergyStorage.BLOCK, pos, null) != null;
+        return te.getLevel().getCapability(Capabilities.FluidHandler.BLOCK, pos, facing.getOpposite()) != null;
     }
 
     @Override

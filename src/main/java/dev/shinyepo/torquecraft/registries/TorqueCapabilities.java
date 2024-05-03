@@ -1,5 +1,6 @@
 package dev.shinyepo.torquecraft.registries;
 
+import dev.shinyepo.torquecraft.block.entities.PumpEntity;
 import net.minecraft.core.Direction;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
@@ -20,9 +21,6 @@ public class TorqueCapabilities {
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, TorqueBlockEntities.GRINDER_ENTITY.get(),(o, context) -> {
             return o.getFluidTank();
         });
-
-        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, TorqueBlockEntities.PUMP_ENTITY.get(), (o, direction) -> {
-            return o.getFluidTank();
-        });
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, TorqueBlockEntities.PUMP_ENTITY.get(), (o, dir) -> o.getFluidTank(dir));
     }
 }
