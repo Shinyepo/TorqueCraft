@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "torquecraft:block/lubricant_block"
+    }
+  }
+}

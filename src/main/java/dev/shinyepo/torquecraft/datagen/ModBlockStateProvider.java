@@ -4,16 +4,20 @@ import dev.shinyepo.torquecraft.TorqueCraft;
 import dev.shinyepo.torquecraft.block.prefab.CanolaCrop;
 import dev.shinyepo.torquecraft.registries.TorqueBlocks;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
+import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -33,7 +37,9 @@ public class ModBlockStateProvider extends BlockStateProvider {
         registerHorizontalMachineWithExistingModel("block/grinder", TorqueBlocks.GRINDER);
         registerHorizontalMachineWithExistingModel("block/pump", TorqueBlocks.PUMP);
 
-
+        registerFluid(TorqueBlocks.LUBRICANT_BLOCK);
+        registerFluid(TorqueBlocks.JET_FUEL_BLOCK);
+    
         makeCanolaCrop((CropBlock) TorqueBlocks.CANOLA_CROP.get(), "canola_stage", "canola_stage");
 
     }
@@ -65,5 +71,12 @@ public class ModBlockStateProvider extends BlockStateProvider {
                     .rotationY(dir.getAxis().isVertical() ? 0 : (((int) dir.toYRot()) + 180) % 360)
                     .build();
         });
+    }
+
+    public void registerFluid(Supplier<LiquidBlock> block) {
+        ResourceLocation location = BuiltInRegistries.BLOCK.getKey(block.get());
+        BlockModelBuilder model = models().getBuilder(location.getPath()).texture("particle", "minecraft:block/water_still");
+
+        getVariantBuilder(block.get()).partialState().setModels(new ConfiguredModel(model));
     }
 }
