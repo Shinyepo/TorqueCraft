@@ -1,7 +1,9 @@
 package dev.shinyepo.torquecraft.datagen;
 
+import com.google.gson.JsonObject;
 import dev.shinyepo.torquecraft.TorqueCraft;
 import dev.shinyepo.torquecraft.block.prefab.CanolaCrop;
+import dev.shinyepo.torquecraft.helpers.PipeModelLoader;
 import dev.shinyepo.torquecraft.registries.TorqueBlocks;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -12,10 +14,7 @@ import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
-import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
-import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
-import net.neoforged.neoforge.client.model.generators.ModelFile;
+import net.neoforged.neoforge.client.model.generators.*;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
@@ -30,6 +29,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         blockWithItem(TorqueBlocks.TUNGSTEN_BLOCK.get());
+        registerPipe();
 
         //TEMP
         registerHorizontalMachineWithExistingModel("block/mechanical_fan", TorqueBlocks.MECHANICAL_FAN);
@@ -42,6 +42,14 @@ public class ModBlockStateProvider extends BlockStateProvider {
     
         makeCanolaCrop((CropBlock) TorqueBlocks.CANOLA_CROP.get(), "canola_stage", "canola_stage");
 
+    }
+
+    private void registerPipe() {
+        BlockModelBuilder model = models().getBuilder("pipe")
+                .parent(models().getExistingFile(mcLoc("cube")))
+                .customLoader((builder, helper) -> new PipeLoaderBuilder(PipeModelLoader.GENERATOR_LOADER, builder, helper))
+                .end();
+        simpleBlock(TorqueBlocks.WATER_PIPE.get(), model);
     }
 
     private void blockWithItem(Block block) {
@@ -78,5 +86,22 @@ public class ModBlockStateProvider extends BlockStateProvider {
         BlockModelBuilder model = models().getBuilder(location.getPath()).texture("particle", "minecraft:block/water_still");
 
         getVariantBuilder(block.get()).partialState().setModels(new ConfiguredModel(model));
+    }
+
+    public static class PipeLoaderBuilder extends CustomLoaderBuilder<BlockModelBuilder> {
+
+//        private final boolean facade;
+
+        public PipeLoaderBuilder(ResourceLocation loader, BlockModelBuilder parent, ExistingFileHelper existingFileHelper) {
+            super(loader, parent, existingFileHelper);
+//            this.facade = facade;
+        }
+
+        @Override
+        public JsonObject toJson(JsonObject json) {
+            JsonObject obj = super.toJson(json);
+//            obj.addProperty("facade", facade);
+            return obj;
+        }
     }
 }

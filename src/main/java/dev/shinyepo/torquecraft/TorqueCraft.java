@@ -1,5 +1,6 @@
 package dev.shinyepo.torquecraft;
 
+import dev.shinyepo.torquecraft.helpers.PipeModelLoader;
 import dev.shinyepo.torquecraft.registries.TorqueFluidTypes;
 import dev.shinyepo.torquecraft.registries.TorqueFluids;
 import dev.shinyepo.torquecraft.menu.GrinderScreen;
@@ -8,6 +9,7 @@ import dev.shinyepo.torquecraft.registries.*;
 import dev.shinyepo.torquecraft.registries.networking.TorquePackets;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -15,6 +17,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 
 @Mod(TorqueCraft.MODID)
@@ -47,6 +50,11 @@ public class    TorqueCraft
             ItemBlockRenderTypes.setRenderLayer(TorqueFluids.FLOWING_LUBRICANT.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(TorqueFluids.SOURCE_JET_FUEL.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(TorqueFluids.FLOWING_JET_FUEL.get(), RenderType.translucent());
+        }
+
+        @SubscribeEvent
+        public static void registerGeometryLoaders(ModelEvent.RegisterGeometryLoaders event) {
+            event.register(new ResourceLocation(TorqueCraft.MODID, "pipe_loader"), new PipeModelLoader());
         }
         @SubscribeEvent
         public static void menuSetup(RegisterMenuScreensEvent e) {

@@ -25,6 +25,10 @@ public class TorqueItems {
     public static final Supplier<BlockItem> GRINDER_ITEM = ITEMS.registerSimpleBlockItem("grinder", TorqueBlocks.GRINDER);
     public static final Supplier<BlockItem> PUMP_ITEM = ITEMS.registerSimpleBlockItem("pump", TorqueBlocks.PUMP);
 
+    //PIPES
+    public static final Supplier<BlockItem> WATER_PIPE_ITEM = ITEMS.registerSimpleBlockItem("water_pipe", TorqueBlocks.WATER_PIPE);
+
+
     //Seeds
     public static final Supplier<Item> CANOLA_SEEDS = ITEMS.register("canola_seeds", () -> new ItemNameBlockItem(TorqueBlocks.CANOLA_CROP.get(), new Item.Properties()));
 

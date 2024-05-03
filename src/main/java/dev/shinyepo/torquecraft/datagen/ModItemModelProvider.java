@@ -21,7 +21,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(TorqueItems.JET_FUEL_BUCKET.get());
         basicItem(TorqueItems.LUBRICANT_BUCKET.get());
 
-
+        withExistingParent(String.valueOf(TorqueItems.WATER_PIPE_ITEM.get()).toLowerCase(),
+                "torquecraft:block/pipe");
         withExistingParent(String.valueOf(TorqueItems.TUNGSTEN_BLOCK_ITEM.get()).toLowerCase(),
                 "torquecraft:block/" + BuiltInRegistries.BLOCK.getKey(TorqueBlocks.TUNGSTEN_BLOCK.get()).getPath());
 
