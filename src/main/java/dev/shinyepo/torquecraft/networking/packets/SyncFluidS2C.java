@@ -30,6 +30,7 @@ public record SyncFluidS2C(BlockPos pos, FluidStack fluidStack) implements Custo
     public void handler(IPayloadContext context) {
         context.enqueueWork(()->{
             if(Minecraft.getInstance().level.getBlockEntity(pos) instanceof GrinderEntity blockEntity) {
+                blockEntity.setFluidStack(this.fluidStack);
                 if(Minecraft.getInstance().player.containerMenu instanceof GrinderContainer container && container.getBlockEntity().getBlockPos().equals(pos)) {
                     container.setFluidStack(this.fluidStack);
                 }
