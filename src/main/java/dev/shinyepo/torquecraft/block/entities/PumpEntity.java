@@ -2,6 +2,9 @@ package dev.shinyepo.torquecraft.block.entities;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
+import dev.shinyepo.torquecraft.networking.TorqueMessages;
+import dev.shinyepo.torquecraft.networking.packets.SyncFluidS2C;
+import dev.shinyepo.torquecraft.networking.packets.SyncPumpFluidS2C;
 import dev.shinyepo.torquecraft.registries.TorqueBlockEntities;
 import dev.shinyepo.torquecraft.utils.TorqueFluidTank;
 import net.minecraft.core.BlockPos;
@@ -25,7 +28,15 @@ import java.util.List;
 
 public class PumpEntity extends BlockEntity {
     private final int fluidCapacity = 16000;
-    private final TorqueFluidTank fluidTank = new TorqueFluidTank(fluidCapacity);
+    private final TorqueFluidTank fluidTank = new TorqueFluidTank(fluidCapacity) {
+        @Override
+        protected void onContentsChanged() {
+            setChanged();
+            if(!level.isClientSide()) {
+                TorqueMessages.sendToAllPlayers(new SyncPumpFluidS2C(worldPosition, this.fluid));
+            }
+        }
+    };
     private final List<BlockPos> validSources = Lists.newArrayList();
     public static final ImmutableList<Direction> POSSIBLE_DIRECTIONS = ImmutableList.of(
             Direction.DOWN, Direction.SOUTH, Direction.NORTH, Direction.EAST, Direction.WEST
@@ -44,6 +55,8 @@ public class PumpEntity extends BlockEntity {
                 BlockPos sourcePos = getSourceToHarvest();
                 if (sourcePos != null) {
                     harvestSource(level, sourcePos);
+                    setChanged(level,pos,level.getBlockState(pos));
+
                 }
             }
         }
@@ -93,5 +106,13 @@ public class PumpEntity extends BlockEntity {
             return fluidTank;
         }
         return null;
+    }
+
+    public void setFluidStack(FluidStack fluidStack) {
+        this.fluidTank.setFluid(fluidStack);
+    }
+
+    public FluidStack getFluidStack() {
+        return this.fluidTank.getFluid();
     }
 }

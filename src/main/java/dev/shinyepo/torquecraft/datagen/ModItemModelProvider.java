@@ -20,6 +20,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(TorqueItems.CANOLA_MEAL.get());
         basicItem(TorqueItems.JET_FUEL_BUCKET.get());
         basicItem(TorqueItems.LUBRICANT_BUCKET.get());
+        basicItem(TorqueItems.PRESSURE_GAUGE.get());
 
         withExistingParent(String.valueOf(TorqueItems.WATER_PIPE_ITEM.get()).toLowerCase(),
                 "torquecraft:block/pipe");

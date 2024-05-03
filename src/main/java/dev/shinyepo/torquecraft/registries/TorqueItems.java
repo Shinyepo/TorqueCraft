@@ -2,6 +2,7 @@ package dev.shinyepo.torquecraft.registries;
 
 import dev.shinyepo.torquecraft.TorqueCraft;
 import dev.shinyepo.torquecraft.item.prefab.CanolaMeal;
+import dev.shinyepo.torquecraft.item.prefab.PressureGauge;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -15,6 +16,9 @@ public class TorqueItems {
     //Items
     public static final Supplier<Item> TUNGSTEN_INGOT = ITEMS.registerSimpleItem("tungsten_ingot", new Item.Properties().food(new FoodProperties.Builder().fast().alwaysEdible().nutrition(10).build()));
     public static final Supplier<Item> CANOLA_MEAL = ITEMS.register("canola_meal", () -> new CanolaMeal(new Item.Properties()));
+
+    //TOOLS
+    public static final Supplier<Item> PRESSURE_GAUGE = ITEMS.register("pressure_gauge", () -> new PressureGauge(new Item.Properties()));
 
     //Block items
     public static final Supplier<BlockItem> TUNGSTEN_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("tungsten_block", TorqueBlocks.TUNGSTEN_BLOCK);

@@ -21,5 +21,7 @@
   "itemGroup.torquecraft": "TorqueCraft",
 
   "torquecraft.tooltip.liquid.amount.with.capacity": "%s / %s mB",
-  "torquecraft.tooltip.liquid.amount": "%s mB"
+  "torquecraft.tooltip.liquid.amount": "%s mB",
+
+  "torquecraft.chatmsg.fluid_content": "%s - %s mB"
 }
