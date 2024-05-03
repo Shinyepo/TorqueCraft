@@ -5,6 +5,7 @@ import dev.shinyepo.torquecraft.block.entities.PumpEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
@@ -15,10 +16,16 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 public class Pump extends HorizontalDirectionalBlock implements EntityBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+    private static final VoxelShape SHAPE_N = Block.box(4, 0, 0, 12, 16, 12);
+    private static final VoxelShape SHAPE_E = Block.box(4, 0, 4, 16, 16, 12);
+    private static final VoxelShape SHAPE_S = Block.box(4, 0, 4, 12, 16, 16);
+    private static final VoxelShape SHAPE_W = Block.box(0, 0, 4, 12, 16, 12);
 
     public Pump(Properties pProperties) {
         super(pProperties);
@@ -30,6 +37,25 @@ public class Pump extends HorizontalDirectionalBlock implements EntityBlock {
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
         pBuilder.add(FACING);
+    }
+
+    @Override
+    protected VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
+        switch(pState.getValue(FACING)) {
+            case NORTH -> {
+                return SHAPE_N;
+            }
+            case EAST -> {
+                return SHAPE_E;
+            }
+            case SOUTH -> {
+                return SHAPE_S;
+            }
+            case WEST -> {
+                return SHAPE_W;
+            }
+        }
+        return SHAPE_N;
     }
 
     @Nullable
