@@ -9,8 +9,6 @@ import dev.shinyepo.torquecraft.registries.TorqueBlockEntities;
 import dev.shinyepo.torquecraft.utils.TorqueFluidTank;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -116,18 +114,5 @@ public class PumpEntity extends BlockEntity {
 
     public FluidStack getFluidStack() {
         return this.fluidTank.getFluid();
-    }
-
-
-    @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-        super.saveAdditional(tag, provider);
-        fluidTank.writeToNBT(provider,tag);
-    }
-
-    @Override
-    public void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-        super.loadAdditional(tag,provider);
-        fluidTank.readFromNBT(provider,tag);
     }
 }

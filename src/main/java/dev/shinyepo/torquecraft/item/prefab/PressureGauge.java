@@ -1,6 +1,5 @@
 package dev.shinyepo.torquecraft.item.prefab;
 
-import dev.shinyepo.torquecraft.block.entities.GrinderEntity;
 import dev.shinyepo.torquecraft.block.entities.PumpEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -31,16 +30,9 @@ public class PressureGauge extends Item {
         Direction face = context.getClickedFace();
         IFluidHandler handler = context.getLevel().getCapability(Capabilities.FluidHandler.BLOCK, blockPos, context.getLevel().getBlockState(blockPos), blockEntity, face);
         if (handler != null) {
-            FluidStack fluid = handler.getFluidInTank(0);
+            FluidStack fluid = handler.getFluidInTank(handler.getTanks());
             Component displayName = fluid.getFluid().isSame(Fluids.EMPTY) ? Component.literal("Empty") : fluid.getHoverName();
             context.getPlayer().displayClientMessage(Component.translatable("torquecraft.chatmsg.fluid_content",displayName, fluid.getAmount()),true);
-            if (blockEntity instanceof GrinderEntity ge) {
-                FluidStack f = ge.getFluidStack();
-                Component dName = f.getFluid().isSame(Fluids.EMPTY) ? Component.literal("Empty") : f.getHoverName();
-
-                context.getPlayer().displayClientMessage(Component.translatable("torquecraft.chatmsg.fluid_content",dName, f.getAmount()),false);
-
-            }
         }
         return InteractionResult.SUCCESS;
     }
