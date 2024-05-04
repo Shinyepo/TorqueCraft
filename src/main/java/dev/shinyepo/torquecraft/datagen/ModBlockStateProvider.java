@@ -93,7 +93,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
 //        private final boolean facade;
 
         public PipeLoaderBuilder(ResourceLocation loader, BlockModelBuilder parent, ExistingFileHelper existingFileHelper) {
-            super(loader, parent, existingFileHelper);
+            super(loader, parent, existingFileHelper, false);
 //            this.facade = facade;
         }
 
