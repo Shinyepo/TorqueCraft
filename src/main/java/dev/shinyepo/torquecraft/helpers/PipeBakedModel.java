@@ -2,6 +2,7 @@ package dev.shinyepo.torquecraft.helpers;
 
 import dev.shinyepo.torquecraft.TorqueCraft;
 import dev.shinyepo.torquecraft.block.pipes.FluidPipe;
+import dev.shinyepo.torquecraft.block.pipes.SteamPipe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
@@ -12,6 +13,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.client.ChunkRenderTypeSet;
 import net.neoforged.neoforge.client.model.IDynamicBakedModel;
@@ -35,6 +37,7 @@ import static dev.shinyepo.torquecraft.helpers.BakedModelHelper.v;
 
 public class PipeBakedModel implements IDynamicBakedModel {
     private final IGeometryBakingContext context;
+    private BlockState pipeState;
 //    private final boolean facade;
 
     private TextureAtlasSprite spriteConnector;
@@ -74,21 +77,42 @@ public class PipeBakedModel implements IDynamicBakedModel {
     }
 
     private void initTextures() {
-        if (spriteConnector == null) {
-            spriteConnector = getTexture("block/pipe/connector");
-            spriteNormalPipe = getTexture("block/pipe/normal");
-            spriteNonePipe = getTexture("block/pipe/none");
-            spriteEndPipe = getTexture("block/pipe/end");
-            spriteCornerPipe = getTexture("block/pipe/corner");
-            spriteThreePipe = getTexture("block/pipe/three");
-            spriteCrossPipe = getTexture("block/pipe/cross");
-            spriteSide = getTexture("block/pipe/side");
+        BlockState pipeState = getPipeState();
+        String model = this.context.getModelName();
+        if (pipeState != null || spriteConnector == null) {
+            if (model.equals("torquecraft:item/fluid_pipe") || (pipeState != null && pipeState.getBlock() instanceof FluidPipe)) {
+                spriteConnector = getTexture("block/pipe/fluid/connector");
+                spriteNormalPipe = getTexture("block/pipe/fluid/normal");
+                spriteNonePipe = getTexture("block/pipe/fluid/none");
+                spriteEndPipe = getTexture("block/pipe/fluid/end");
+                spriteCornerPipe = getTexture("block/pipe/fluid/corner");
+                spriteThreePipe = getTexture("block/pipe/fluid/three");
+                spriteCrossPipe = getTexture("block/pipe/fluid/cross");
+                spriteSide = getTexture("block/pipe/fluid/side");
+            } else if (model.equals("torquecraft:item/steam_pipe")|| (pipeState != null && pipeState.getBlock() instanceof SteamPipe)) {
+                spriteConnector = getTexture("block/pipe/steam/connector");
+                spriteNormalPipe = getTexture("block/pipe/steam/normal");
+                spriteNonePipe = getTexture("block/pipe/steam/none");
+                spriteEndPipe = getTexture("block/pipe/steam/end");
+                spriteCornerPipe = getTexture("block/pipe/steam/corner");
+                spriteThreePipe = getTexture("block/pipe/steam/three");
+                spriteCrossPipe = getTexture("block/pipe/steam/cross");
+                spriteSide = getTexture("block/pipe/steam/side");
+            }
         }
     }
 
     // All textures are baked on a big texture atlas. This function gets the texture from that atlas
     private TextureAtlasSprite getTexture(String path) {
         return Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(new ResourceLocation(TorqueCraft.MODID, path));
+    }
+
+    private void setPipeState(BlockState pipeState) {
+        this.pipeState = pipeState;
+    }
+
+    private BlockState getPipeState() {
+        return this.pipeState;
     }
 
     private TextureAtlasSprite getSpriteNormal(PipePatterns.SpriteIdx idx) {
@@ -111,6 +135,7 @@ public class PipeBakedModel implements IDynamicBakedModel {
     @Override
     @NotNull
     public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, @NotNull RandomSource rand, @NotNull ModelData extraData, @Nullable RenderType layer) {
+        if (state != null) setPipeState(state);
         initTextures();
         List<BakedQuad> quads = new ArrayList<>();
         if (side == null && (layer == null || layer.equals(RenderType.solid()))) {
@@ -142,7 +167,7 @@ public class PipeBakedModel implements IDynamicBakedModel {
             TextureAtlasSprite spritePipe = spriteNormalPipe;
             Function<PipePatterns.SpriteIdx, TextureAtlasSprite> spriteGetter = this::getSpriteNormal;
 
-            double o = .4;      // Thickness of the pipe. .0 would be full block, .5 is infinitely thin.
+            double o = .3;      // Thickness of the pipe. .0 would be full block, .5 is infinitely thin.
             double p = .1;      // Thickness of the connector as it is put on the connecting block
             double q = .2;      // The wideness of the connector
 

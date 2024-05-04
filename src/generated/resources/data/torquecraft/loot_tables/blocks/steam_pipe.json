@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "torquecraft:water_pipe"
+          "name": "torquecraft:steam_pipe"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "torquecraft:blocks/water_pipe"
+  "random_sequence": "torquecraft:blocks/steam_pipe"
 }

@@ -1,40 +1,37 @@
-package dev.shinyepo.torquecraft.block.entities;
+package dev.shinyepo.torquecraft.block.entities.pipes;
 
 import dev.shinyepo.torquecraft.registries.TorqueBlockEntities;
+import dev.shinyepo.torquecraft.utils.TorqueFluidTank;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Consumer;
 
-public class FluidPipeEntity extends BlockEntity {
+public class SteamPipeEntity extends BlockEntity {
     private Set<BlockPos> outputs = null;
+    private final int fluidCapacity = 64000;
+    private final TorqueFluidTank fluidTank = new TorqueFluidTank(fluidCapacity);
 
 
-    public FluidPipeEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState) {
+    public SteamPipeEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState) {
         super(pType, pPos, pBlockState);
     }
 
-    public FluidPipeEntity(BlockPos pos, BlockState state) {
-        super(TorqueBlockEntities.WATER_PIPE_ENTITY.get(), pos, state);
+    public SteamPipeEntity(BlockPos pos, BlockState state) {
+        super(TorqueBlockEntities.STEAM_PIPE_ENTITY.get(), pos, state);
     }
 
     public void tickServer() {
 
     }
 
-    // Cached outputs
-
-    // This function will cache all outputs for this cable network. It will do this
-    // by traversing all cables connected to this cable and then check for all energy
-    // receivers around those cables.
     private void checkOutputs() {
         if (outputs == null) {
             outputs = new HashSet<>();
@@ -43,7 +40,7 @@ public class FluidPipeEntity extends BlockEntity {
                 for (Direction direction : Direction.values()) {
                     BlockPos p = pipe.getBlockPos().relative(direction);
                     BlockEntity te = level.getBlockEntity(p);
-                    if (te != null && !(te instanceof FluidPipeEntity)) {
+                    if (te != null && !(te instanceof SteamPipeEntity)) {
                         IFluidHandler handler = level.getCapability(Capabilities.FluidHandler.BLOCK, p, null);
                         if (handler != null) {
                             if (handler.getTankCapacity(1) > 0) {
@@ -62,23 +59,27 @@ public class FluidPipeEntity extends BlockEntity {
 
     // This is a generic function that will traverse all cables connected to this cable
     // and call the given consumer for each cable.
-    private void traverse(BlockPos pos, Consumer<FluidPipeEntity> consumer) {
+    private void traverse(BlockPos pos, Consumer<SteamPipeEntity> consumer) {
         Set<BlockPos> traversed = new HashSet<>();
         traversed.add(pos);
         consumer.accept(this);
         traverse(pos, traversed, consumer);
     }
 
-    private void traverse(BlockPos pos, Set<BlockPos> traversed, Consumer<FluidPipeEntity> consumer) {
+    private void traverse(BlockPos pos, Set<BlockPos> traversed, Consumer<SteamPipeEntity> consumer) {
         for (Direction direction : Direction.values()) {
             BlockPos p = pos.relative(direction);
             if (!traversed.contains(p)) {
                 traversed.add(p);
-                if (level.getBlockEntity(p) instanceof FluidPipeEntity pipe) {
+                if (level.getBlockEntity(p) instanceof SteamPipeEntity pipe) {
                     consumer.accept(pipe);
                     pipe.traverse(p, traversed, consumer);
                 }
             }
         }
+    }
+
+    public IFluidHandler getFluidTank() {
+        return this.fluidTank;
     }
 }

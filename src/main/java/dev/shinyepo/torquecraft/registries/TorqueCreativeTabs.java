@@ -29,7 +29,8 @@ public class TorqueCreativeTabs {
                 output.accept(TorqueItems.LUBRICANT_BUCKET.get());
                 output.accept(TorqueItems.JET_FUEL_BUCKET.get());
                 //Pipe
-                output.accept(TorqueItems.WATER_PIPE_ITEM.get());
+                output.accept(TorqueItems.FLUID_PIPE_ITEM.get());
+                output.accept(TorqueItems.STEAM_PIPE_ITEM.get());
                 //Tools
                 output.accept(TorqueItems.PRESSURE_GAUGE.get());
             }).build());

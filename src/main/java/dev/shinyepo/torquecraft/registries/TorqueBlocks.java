@@ -2,6 +2,7 @@ package dev.shinyepo.torquecraft.registries;
 
 import dev.shinyepo.torquecraft.TorqueCraft;
 import dev.shinyepo.torquecraft.block.pipes.FluidPipe;
+import dev.shinyepo.torquecraft.block.pipes.SteamPipe;
 import dev.shinyepo.torquecraft.block.prefab.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -31,6 +32,6 @@ public class TorqueBlocks {
     public static final Supplier<LiquidBlock> JET_FUEL_BLOCK = BLOCKS.register("jet_fuel_block", () -> new LiquidBlock(TorqueFluids.SOURCE_JET_FUEL.get(), BlockBehaviour.Properties.ofFullCopy(Blocks.WATER)));
 
     //PIPES
-    public static final Supplier<FluidPipe> WATER_PIPE = BLOCKS.register("water_pipe", FluidPipe::new);
-
+    public static final Supplier<Block> FLUID_PIPE = BLOCKS.register("fluid_pipe", FluidPipe::new);
+    public static final Supplier<Block> STEAM_PIPE = BLOCKS.register("steam_pipe", SteamPipe::new);;
 }

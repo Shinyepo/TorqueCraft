@@ -25,7 +25,8 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         dropSelf(TorqueBlocks.MECHANICAL_FAN.get());
         dropSelf(TorqueBlocks.GRINDER.get());
         dropSelf(TorqueBlocks.PUMP.get());
-        dropSelf(TorqueBlocks.WATER_PIPE.get());
+        dropSelf(TorqueBlocks.FLUID_PIPE.get());
+        dropSelf(TorqueBlocks.STEAM_PIPE.get());
 
         //Crops
         LootItemCondition.Builder licBuilder = LootItemBlockStatePropertyCondition

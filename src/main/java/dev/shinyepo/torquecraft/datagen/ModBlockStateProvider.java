@@ -16,7 +16,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.client.model.generators.*;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -29,7 +28,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         blockWithItem(TorqueBlocks.TUNGSTEN_BLOCK.get());
-        registerPipe();
+        registerPipe(TorqueBlocks.FLUID_PIPE);
+        registerPipe(TorqueBlocks.STEAM_PIPE);
 
         //TEMP
         registerHorizontalMachineWithExistingModel("block/mechanical_fan", TorqueBlocks.MECHANICAL_FAN);
@@ -44,12 +44,12 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
     }
 
-    private void registerPipe() {
+    private void registerPipe(Supplier<Block> pipe) {
         BlockModelBuilder model = models().getBuilder("pipe")
                 .parent(models().getExistingFile(mcLoc("cube")))
                 .customLoader((builder, helper) -> new PipeLoaderBuilder(PipeModelLoader.GENERATOR_LOADER, builder, helper))
                 .end();
-        simpleBlock(TorqueBlocks.WATER_PIPE.get(), model);
+        simpleBlock(pipe.get(), model);
     }
 
     private void blockWithItem(Block block) {

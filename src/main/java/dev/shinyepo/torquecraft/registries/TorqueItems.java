@@ -30,7 +30,8 @@ public class TorqueItems {
     public static final Supplier<BlockItem> PUMP_ITEM = ITEMS.registerSimpleBlockItem("pump", TorqueBlocks.PUMP);
 
     //PIPES
-    public static final Supplier<BlockItem> WATER_PIPE_ITEM = ITEMS.registerSimpleBlockItem("water_pipe", TorqueBlocks.WATER_PIPE);
+    public static final Supplier<BlockItem> FLUID_PIPE_ITEM = ITEMS.registerSimpleBlockItem("fluid_pipe", TorqueBlocks.FLUID_PIPE);
+    public static final Supplier<BlockItem> STEAM_PIPE_ITEM = ITEMS.registerSimpleBlockItem("steam_pipe", TorqueBlocks.STEAM_PIPE);
 
 
     //Seeds

@@ -1,6 +1,7 @@
 package dev.shinyepo.torquecraft.block.pipes;
 
 import dev.shinyepo.torquecraft.block.entities.pipes.FluidPipeEntity;
+import dev.shinyepo.torquecraft.block.entities.pipes.SteamPipeEntity;
 import dev.shinyepo.torquecraft.helpers.block.PipeBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
@@ -18,8 +19,8 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
 
-public class FluidPipe extends PipeBlock implements SimpleWaterloggedBlock, EntityBlock {
-    public FluidPipe() {
+public class SteamPipe extends PipeBlock implements SimpleWaterloggedBlock, EntityBlock {
+    public SteamPipe() {
         super(Properties.of()
                 .strength(1.0f)
                 .sound(SoundType.METAL)
@@ -30,7 +31,7 @@ public class FluidPipe extends PipeBlock implements SimpleWaterloggedBlock, Enti
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new FluidPipeEntity(blockPos, blockState);
+        return new SteamPipeEntity(blockPos, blockState);
     }
 
     @Nullable
@@ -40,7 +41,7 @@ public class FluidPipe extends PipeBlock implements SimpleWaterloggedBlock, Enti
             return null;
         } else {
             return (lvl, pos, st, be) -> {
-                if (be instanceof FluidPipeEntity pipe) {
+                if (be instanceof SteamPipeEntity pipe) {
                     pipe.tickServer();
                 }
             };
@@ -50,7 +51,7 @@ public class FluidPipe extends PipeBlock implements SimpleWaterloggedBlock, Enti
     @Override
     public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
         super.neighborChanged(state, level, pos, block, fromPos, isMoving);
-        if (!level.isClientSide && level.getBlockEntity(pos) instanceof FluidPipeEntity pipe) {
+        if (!level.isClientSide && level.getBlockEntity(pos) instanceof SteamPipeEntity pipe) {
             pipe.markDirty();
         }
     }
@@ -58,7 +59,7 @@ public class FluidPipe extends PipeBlock implements SimpleWaterloggedBlock, Enti
     @Override
     public void setPlacedBy(@Nonnull Level level, @Nonnull BlockPos pos, @Nonnull BlockState state, @Nullable LivingEntity placer, @Nonnull ItemStack stack) {
         super.setPlacedBy(level, pos, state, placer, stack);
-        if (!level.isClientSide && level.getBlockEntity(pos) instanceof FluidPipeEntity pipe) {
+        if (!level.isClientSide && level.getBlockEntity(pos) instanceof SteamPipeEntity pipe) {
             pipe.markDirty();
         }
         BlockState blockState = calculateState(level, pos, state);
