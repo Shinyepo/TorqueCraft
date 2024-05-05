@@ -129,7 +129,7 @@ public class PipeBakedModel implements IDynamicBakedModel {
 
     @Override
     public boolean usesBlockLight() {
-        return false;
+        return true;
     }
 
     @Override
