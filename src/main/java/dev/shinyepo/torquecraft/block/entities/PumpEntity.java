@@ -3,7 +3,6 @@ package dev.shinyepo.torquecraft.block.entities;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import dev.shinyepo.torquecraft.networking.TorqueMessages;
-import dev.shinyepo.torquecraft.networking.packets.SyncFluidS2C;
 import dev.shinyepo.torquecraft.networking.packets.SyncPumpFluidS2C;
 import dev.shinyepo.torquecraft.registries.TorqueBlockEntities;
 import dev.shinyepo.torquecraft.utils.TorqueFluidTank;
@@ -11,17 +10,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.material.Fluid;
-import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
@@ -104,6 +96,7 @@ public class PumpEntity extends BlockEntity {
     }
 
     public TorqueFluidTank getFluidTank(Direction dir) {
+        if (dir == null) return fluidTank;
         if (dir == Direction.UP) {
             return fluidTank;
         }
@@ -128,5 +121,12 @@ public class PumpEntity extends BlockEntity {
     public void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.loadAdditional(tag,provider);
         fluidTank.readFromNBT(provider,tag);
+    }
+
+    @Override
+    public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
+        CompoundTag nbt = super.getUpdateTag(provider);
+        saveAdditional(nbt, provider);
+        return nbt;
     }
 }
