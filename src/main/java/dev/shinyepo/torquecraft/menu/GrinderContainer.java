@@ -34,7 +34,7 @@ public class GrinderContainer extends AbstractContainerMenu {
 
         if (player.level().getBlockEntity(pos) instanceof GrinderEntity grinder) {
             addSlot(new SlotItemHandler(grinder.getInputItems(), GrinderEntity.SLOT_INPUT, 56, 34));
-            addSlot(new SlotItemHandler(grinder.getOutputItems(), GrinderEntity.SLOT_OUTPUT, 110, 34));
+            addSlot(new SlotItemHandler(grinder.getOutputItems(), grinder.getOutputItems().getSlots()-1, 110, 34));
             addDataSlot(new DataSlot()
             {
                 @Override
