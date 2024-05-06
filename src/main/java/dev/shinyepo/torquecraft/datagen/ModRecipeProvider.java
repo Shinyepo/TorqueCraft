@@ -8,8 +8,10 @@ import dev.shinyepo.torquecraft.registries.TorqueItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.fluids.FluidStack;
 import org.jetbrains.annotations.NotNull;
 
@@ -33,8 +35,8 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("criteria", has(TorqueBlocks.TUNGSTEN_BLOCK.get()))
                 .save(pRecipeOutput);
 
-        grinding(Ingredient.of(TorqueItems.CANOLA_SEEDS.get()), TorqueItems.CANOLA_MEAL.get(), 1, new FluidStack(TorqueFluids.SOURCE_LUBRICANT.get(),200))
-                .unlockedBy("criteria", has(TorqueItems.CANOLA_SEEDS.get()))
+        grinding(Ingredient.of(Tags.Items.SEEDS), TorqueItems.CRUSHED_SEEDS.get(), new FluidStack(TorqueFluids.SOURCE_LUBRICANT.get(),100))
+                .unlockedBy("criteria", has(Tags.Items.SEEDS))
                 .save(pRecipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TorqueBlocks.TUNGSTEN_BLOCK.get())
@@ -85,7 +87,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .save(pRecipeOutput);
     }
 
-    public static TorqueRecipeBuilder grinding(Ingredient ingredient, ItemLike result, int count, FluidStack resultFluid) {
-        return new TorqueRecipeBuilder(RecipeCategory.MISC, GrinderRecipe::new, ingredient, result, count, resultFluid, resultFluid.getAmount());
+    public static TorqueRecipeBuilder grinding(Ingredient ingredient, ItemLike result, FluidStack resultFluid) {
+        return new TorqueRecipeBuilder(RecipeCategory.MISC, GrinderRecipe::new, ingredient, new ItemStack(result, 1), resultFluid);
     }
 }

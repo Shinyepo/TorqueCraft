@@ -10,10 +10,12 @@ import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.fluids.FluidStack;
 import org.jetbrains.annotations.Nullable;
 
@@ -23,10 +25,8 @@ import java.util.Objects;
 
 public class TorqueRecipeBuilder implements RecipeBuilder {
     private final RecipeCategory category;
-    private final Item resultItem;
-    private final int count;
+    private final ItemStack resultItem;
     private final FluidStack resultFluid;
-    private final int fluidAmount;
     private final Ingredient ingredient;
 
 
@@ -35,14 +35,12 @@ public class TorqueRecipeBuilder implements RecipeBuilder {
     private String group;
     private final GrinderRecipe.Factory<?> factory;
 
-    public TorqueRecipeBuilder(RecipeCategory category, GrinderRecipe.Factory<?> factory, Ingredient ingredient, ItemLike resultItem, int count, FluidStack resultFluid, int amount) {
+    public TorqueRecipeBuilder(RecipeCategory category, GrinderRecipe.Factory<?> factory, Ingredient ingredient, ItemStack resultItem, FluidStack resultFluid) {
         this.category = category;
         this.factory = factory;
         this.ingredient = ingredient;
-        this.resultItem = resultItem.asItem();
-        this.count = count;
+        this.resultItem = resultItem;
         this.resultFluid = resultFluid;
-        this.fluidAmount = amount;
     }
     @Override
     public RecipeBuilder unlockedBy(String pName, Criterion<?> pCriterion) {
@@ -58,7 +56,7 @@ public class TorqueRecipeBuilder implements RecipeBuilder {
 
     @Override
     public Item getResult() {
-        return this.resultItem;
+        return this.resultItem.getItem();
     }
 
     @Override
@@ -70,7 +68,7 @@ public class TorqueRecipeBuilder implements RecipeBuilder {
                 .requirements(AdvancementRequirements.Strategy.OR);
         this.criteria.forEach(advancement$builder::addCriterion);
         GrinderRecipe grinderRecipe = this.factory
-                .create(Objects.requireNonNullElse(this.group, ""), this.ingredient, new ItemStack(this.resultItem, this.count), new FluidStack(this.resultFluid.getFluidHolder(), this.fluidAmount));
+                .create(Objects.requireNonNullElse(this.group, ""), ingredient, resultItem, resultFluid);
         pRecipeOutput.accept(pId, grinderRecipe, advancement$builder.build(pId.withPrefix("recipes/" + this.category.getFolderName() + "/")));
     }
 
