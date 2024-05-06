@@ -1,4 +1,4 @@
-package dev.shinyepo.torquecraft.utils;
+package dev.shinyepo.torquecraft.handlers;
 
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.IItemHandlerModifiable;
@@ -28,7 +28,10 @@ public class AdaptedItemHandler implements IItemHandlerModifiable {
 
     @Override
     public @NotNull ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
-        return handler.insertItem(slot, stack, simulate);
+        if (isItemValid(slot, stack)) {
+            return handler.insertItem(slot, stack, simulate);
+        }
+        return stack;
     }
 
     @Override

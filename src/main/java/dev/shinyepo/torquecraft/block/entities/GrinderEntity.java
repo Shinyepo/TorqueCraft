@@ -1,11 +1,11 @@
 package dev.shinyepo.torquecraft.block.entities;
 
+import dev.shinyepo.torquecraft.handlers.AdaptedItemHandler;
 import dev.shinyepo.torquecraft.networking.TorqueMessages;
 import dev.shinyepo.torquecraft.networking.packets.SyncFluidS2C;
 import dev.shinyepo.torquecraft.recipes.custom.GrinderRecipe;
 import dev.shinyepo.torquecraft.registries.TorqueBlockEntities;
 import dev.shinyepo.torquecraft.registries.TorqueRecipes;
-import dev.shinyepo.torquecraft.utils.AdaptedItemHandler;
 import dev.shinyepo.torquecraft.utils.TorqueFluidTank;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
