@@ -17,7 +17,7 @@ public class ModItemModelProvider extends ItemModelProvider {
     protected void registerModels() {
         basicItem(TorqueItems.TUNGSTEN_INGOT.get());
         basicItem(TorqueItems.CANOLA_SEEDS.get());
-        basicItem(TorqueItems.CANOLA_MEAL.get());
+        basicItem(TorqueItems.CRUSHED_SEEDS.get());
         basicItem(TorqueItems.JET_FUEL_BUCKET.get());
         basicItem(TorqueItems.LUBRICANT_BUCKET.get());
         basicItem(TorqueItems.PRESSURE_GAUGE.get());

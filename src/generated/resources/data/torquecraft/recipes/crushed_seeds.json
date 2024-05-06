@@ -1,14 +1,14 @@
 {
   "type": "torquecraft:grinding",
   "ingredient": {
-    "item": "torquecraft:canola_seeds"
+    "tag": "c:seeds"
   },
   "resultFluid": {
-    "amount": 200,
+    "amount": 100,
     "id": "torquecraft:lubricant_fluid"
   },
   "resultItem": {
     "count": 1,
-    "id": "torquecraft:canola_meal"
+    "id": "torquecraft:crushed_seeds"
   }
 }

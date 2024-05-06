@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "torquecraft:canola_seeds"
+            "items": "#c:seeds"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "torquecraft:canola_meal"
+        "recipe": "torquecraft:crushed_seeds"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "torquecraft:canola_meal"
+      "torquecraft:crushed_seeds"
     ]
   }
 }

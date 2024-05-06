@@ -15,7 +15,7 @@ public class TorqueItems {
 
     //Items
     public static final Supplier<Item> TUNGSTEN_INGOT = ITEMS.registerSimpleItem("tungsten_ingot", new Item.Properties().food(new FoodProperties.Builder().fast().alwaysEdible().nutrition(10).build()));
-    public static final Supplier<Item> CANOLA_MEAL = ITEMS.register("canola_meal", () -> new CanolaMeal(new Item.Properties()));
+    public static final Supplier<Item> CRUSHED_SEEDS = ITEMS.register("crushed_seeds", () -> new CanolaMeal(new Item.Properties()));
 
     //TOOLS
     public static final Supplier<Item> PRESSURE_GAUGE = ITEMS.register("pressure_gauge", () -> new PressureGauge(new Item.Properties()));

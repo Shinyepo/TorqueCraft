@@ -1,14 +1,14 @@
-// 1.20.6	2024-05-02T20:43:53.8866772	Recipes
+// 1.20.6	2024-05-06T22:01:49.738008	Recipes
 e8bad24fe513f67b12aabc45b2e44d37ae6ea22e data/minecraft/advancements/recipes/misc/tungsten_block_from_smelting_tungsten_ingot.json
 44dcb32a5ae891e4e56d7543da10ee650f9f62a9 data/minecraft/recipes/tungsten_block_from_smelting_tungsten_ingot.json
-68ba7eadef74f3777943bc262d8d08f7368b0bee data/torquecraft/advancements/recipes/misc/canola_meal.json
+84176b9d1d4f7832a101502ff4c27112a9610b1e data/torquecraft/advancements/recipes/misc/crushed_seeds.json
 1e9df96ad7e88840b75463dbb88c4825a5f5c427 data/torquecraft/advancements/recipes/misc/grinder.json
 1c13a7a1cbc6700023108a09a7cdf499436cefee data/torquecraft/advancements/recipes/misc/mechanical_fan.json
 62378e447ecc1b97b4da9d38610ce550655e827b data/torquecraft/advancements/recipes/misc/pump.json
 3ff54f10b7fa557089625ae21fcd5426d7aefdb9 data/torquecraft/advancements/recipes/misc/steam_engine.json
 76893d3dc561dc9fb3c6483904833c4438a884f4 data/torquecraft/advancements/recipes/misc/tungsten_block.json
 48d810c72eda863c65a81ac0a791fa9d0ab1dce9 data/torquecraft/advancements/recipes/misc/tungsten_ingot.json
-aaa877209c4787381ef933418ad545f7f03db727 data/torquecraft/recipes/canola_meal.json
+89248d502d61432464b469bc9b5f9789417513ef data/torquecraft/recipes/crushed_seeds.json
 01b528de3a0392f91c390dacd6a6d64f212abc8a data/torquecraft/recipes/grinder.json
 88e7076c795e67a3b724276c7e62d6391be6ca80 data/torquecraft/recipes/mechanical_fan.json
 f8613324442c9c52a6d391f9b8a24fb940aedeff data/torquecraft/recipes/pump.json
