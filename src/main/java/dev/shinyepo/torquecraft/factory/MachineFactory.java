@@ -16,7 +16,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.util.Lazy;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
@@ -41,6 +40,10 @@ public class MachineFactory extends BlockEntity {
     private Lazy<IItemHandler> inputItemHandler;
     private Lazy<IItemHandler> outputItemHandler;
 
+    private static List<TagKey<Item>> validFluidSlotInputs = List.of();
+
+    private Lazy<ItemStackHandler> tankDrainItems;
+
     public int progress = 0;
     public int maxProgress = 64;
 
@@ -52,8 +55,24 @@ public class MachineFactory extends BlockEntity {
         maxProgress = progress;
     }
 
+    protected void resetProgress() {
+        this.progress = 0;
+    }
+
+    protected boolean hasProgressFinished() {
+        return progress >= maxProgress;
+    }
+
+    protected void increaseCraftingProgress() {
+        this.progress++;
+    }
+
     public void setValidInputs(List<TagKey<Item>> tags) {
         validInputs = tags;
+    }
+
+    public void setValidFluidSlotInputs(List<TagKey<Item>> tags) {
+        validFluidSlotInputs = tags;
     }
 
     public Lazy<CombinedInvWrapper> createItemHandler (int inputSlots, int outputSlots) {
@@ -64,8 +83,12 @@ public class MachineFactory extends BlockEntity {
         return itemHandler = Lazy.of(() -> new CombinedInvWrapper(inputItems,outputItems));
     }
 
+    public Lazy<ItemStackHandler> createDrainHandler (int drainSlot) {
+        return tankDrainItems = createDrainTankHandler(drainSlot);
+    }
+
     public Lazy<IItemHandler> createInputItemHandler(){
-        return inputItemHandler = Lazy.of(() -> new AdaptedItemHandler(inputItems) {
+        return Lazy.of(() -> new AdaptedItemHandler(inputItems) {
             @Override
             public @NotNull ItemStack extractItem(int slot, int amount, boolean simulate) {
                 return ItemStack.EMPTY;
@@ -74,7 +97,7 @@ public class MachineFactory extends BlockEntity {
     }
 
     public Lazy<IItemHandler> createOutputItemHandler(){
-        return outputItemHandler = Lazy.of(() -> new AdaptedItemHandler(outputItems) {
+        return Lazy.of(() -> new AdaptedItemHandler(outputItems) {
             @Override
             public @NotNull ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
                 return stack;
@@ -108,8 +131,14 @@ public class MachineFactory extends BlockEntity {
                 setChanged();
             }
 
+
             @Override
             public boolean isItemValid(int slot, ItemStack stack) {
+                if (slot == 1) {
+                if (!validFluidSlotInputs.isEmpty()) {
+                    return stack.getTags().anyMatch(tag -> validFluidSlotInputs.contains(tag));
+                }
+                }
                 return false;
             }
         };
@@ -128,12 +157,29 @@ public class MachineFactory extends BlockEntity {
         };
     }
 
-    public TorqueFluidTank getFluidTank() { return fluidTank; }
+    public Lazy<ItemStackHandler> createDrainTankHandler(int slots) {
+        return Lazy.of(() -> new ItemStackHandler(slots) {
+            @Override
+            protected void onContentsChanged(int slot) {
+                setChanged();
+            }
 
+            @Override
+            public boolean isItemValid(int slot, ItemStack stack) {
+                if (!validFluidSlotInputs.isEmpty()) {
+                    return stack.getTags().anyMatch(tag -> validFluidSlotInputs.contains(tag));
+                }
+                return false;
+            }
+        });
+    }
+
+    public TorqueFluidTank getFluidTank() { return fluidTank; }
+    //GUI
     public ItemStackHandler getInputItems() {
         return inputItems;
     }
-
+    //GUI
     public ItemStackHandler getOutputItems() {
         return outputItems;
     }
@@ -148,10 +194,16 @@ public class MachineFactory extends BlockEntity {
 
     public Lazy<IItemHandler> getOutputItemHandler() { return outputItemHandler; }
 
+
+    public ItemStackHandler getTankDrainItems() {
+        return tankDrainItems.get();
+    }
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.saveAdditional(tag, provider);
-        fluidTank.writeToNBT(provider,tag);
+        if (fluidTank != null) {
+            fluidTank.writeToNBT(provider,tag);
+        }
         tag.put(ITEMS_INPUT_TAG, inputItems.serializeNBT(provider));
         tag.put(ITEMS_OUTPUT_TAG, outputItems.serializeNBT(provider));
         tag.putInt("grinder.progress", progress);
@@ -160,7 +212,9 @@ public class MachineFactory extends BlockEntity {
     @Override
     public void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.loadAdditional(tag,provider);
-        fluidTank.readFromNBT(provider,tag);
+        if (fluidTank != null) {
+            fluidTank.readFromNBT(provider,tag);
+        }
         if (tag.contains(ITEMS_INPUT_TAG)) {
             inputItems.deserializeNBT(provider, tag.getCompound(ITEMS_INPUT_TAG));
         }

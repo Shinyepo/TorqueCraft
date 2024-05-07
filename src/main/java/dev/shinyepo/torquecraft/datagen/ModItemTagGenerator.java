@@ -22,5 +22,9 @@ public class ModItemTagGenerator extends ItemTagsProvider {
         tag(Tags.Items.SEEDS)
                 .add(TorqueItems.CANOLA_SEEDS.get());
 
+        tag(Tags.Items.BUCKETS)
+                .add(TorqueItems.JET_FUEL_BUCKET.get())
+                .add(TorqueItems.LUBRICANT_BUCKET.get());
+
     }
 }

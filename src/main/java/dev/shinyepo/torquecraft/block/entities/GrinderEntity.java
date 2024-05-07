@@ -1,6 +1,5 @@
 package dev.shinyepo.torquecraft.block.entities;
 
-import dev.shinyepo.torquecraft.TorqueCraft;
 import dev.shinyepo.torquecraft.factory.MachineFactory;
 import dev.shinyepo.torquecraft.recipes.custom.GrinderRecipe;
 import dev.shinyepo.torquecraft.registries.TorqueBlockEntities;
@@ -12,7 +11,6 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -22,7 +20,6 @@ import net.neoforged.neoforge.common.util.Lazy;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
-import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper;
 
@@ -31,6 +28,7 @@ import java.util.Optional;
 
 public class GrinderEntity extends MachineFactory {
     public static final List<TagKey<Item>> validInputs = List.of(Tags.Items.SEEDS);
+    public static final List<TagKey<Item>> validFluidSlotInputs = List.of(Tags.Items.BUCKETS);
 
     private final int fluidCapacity = 2000;
 
@@ -41,13 +39,18 @@ public class GrinderEntity extends MachineFactory {
     public static final int SLOT_OUTPUT_COUNT = 1;
     public static final int SLOT_COUNT = SLOT_INPUT_COUNT + SLOT_OUTPUT_COUNT;
 
+    public static final int SLOT_DRAIN_FLUID = 0;
+
+
     private final Lazy<CombinedInvWrapper> itemHandler = createItemHandler(SLOT_INPUT_COUNT, SLOT_OUTPUT_COUNT);
+    private final Lazy<ItemStackHandler> drainHandler = createDrainHandler(1);
 
     private final TorqueFluidTank fluidTank = createFluidTank(fluidCapacity);
 
     public GrinderEntity(BlockPos pPos, BlockState pBlockState) {
         super(TorqueBlockEntities.GRINDER_ENTITY.get(), pPos, pBlockState);
         setValidInputs(validInputs);
+        setValidFluidSlotInputs(validFluidSlotInputs);
     }
 
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
@@ -112,11 +115,7 @@ public class GrinderEntity extends MachineFactory {
     public FluidStack getFluidStack() {
         return this.fluidTank.getFluid();
     }
-
-    private void resetProgress() {
-        this.progress = 0;
-    }
-
+    
     private void craftItem() {
         Optional<RecipeHolder<GrinderRecipe>> recipe = getCurrentRecipe();
         ItemStack result = recipe.get().value().getResultItem(null);
@@ -131,13 +130,7 @@ public class GrinderEntity extends MachineFactory {
         this.fluidTank.fill(new FluidStack(resultFluid.getFluid(), fluidAmount), IFluidHandler.FluidAction.EXECUTE);
     }
 
-    private boolean hasProgressFinished() {
-        return progress >= maxProgress;
-    }
 
-    private void increaseCraftingProgress() {
-        this.progress++;
-    }
 
     private boolean hasRecipe() {
         Optional<RecipeHolder<GrinderRecipe>> recipe = getCurrentRecipe();
