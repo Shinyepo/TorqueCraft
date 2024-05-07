@@ -11,6 +11,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -18,9 +19,9 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.util.Lazy;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
-import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper;
 
 import java.util.List;
@@ -30,20 +31,20 @@ public class GrinderEntity extends MachineFactory {
     public static final List<TagKey<Item>> validInputs = List.of(Tags.Items.SEEDS);
     public static final List<TagKey<Item>> validFluidSlotInputs = List.of(Tags.Items.BUCKETS);
 
-    private final int fluidCapacity = 2000;
+    private final int fluidCapacity = 8000;
 
     public static final int SLOT_INPUT = 0;
     public static final int SLOT_INPUT_COUNT = 1;
 
     public static final int SLOT_OUTPUT = 1;
     public static final int SLOT_OUTPUT_COUNT = 1;
-    public static final int SLOT_COUNT = SLOT_INPUT_COUNT + SLOT_OUTPUT_COUNT;
 
-    public static final int SLOT_DRAIN_FLUID = 0;
+    public static final int SLOT_DRAIN_FLUID = 2;
+    public static final int SLOT_DRAIN_COUNT = 1;
 
+    public static final int SLOT_COUNT = SLOT_INPUT_COUNT + SLOT_OUTPUT_COUNT + SLOT_DRAIN_COUNT;
 
-    private final Lazy<CombinedInvWrapper> itemHandler = createItemHandler(SLOT_INPUT_COUNT, SLOT_OUTPUT_COUNT);
-    private final Lazy<ItemStackHandler> drainHandler = createDrainHandler(1);
+    private final Lazy<CombinedInvWrapper> itemHandler = createItemHandler(SLOT_INPUT_COUNT, SLOT_OUTPUT_COUNT, SLOT_DRAIN_COUNT);
 
     private final TorqueFluidTank fluidTank = createFluidTank(fluidCapacity);
 
@@ -63,28 +64,44 @@ public class GrinderEntity extends MachineFactory {
                 resetProgress();
             }
         } else {
-            //debug reasons
-//            fluidTank.fill(new FluidStack(Fluids.WATER,500), IFluidHandler.FluidAction.EXECUTE);
-            if (pLevel.getGameTime() % 20 == 0) {
-                //debug reasons
-//                fluidTank.drain(2, IFluidHandler.FluidAction.EXECUTE);
-                updateFluidStack();
-                setChanged(pLevel,pPos,pState);
-            }
             resetProgress();
         }
         if (pLevel.getBlockEntity(pPos) instanceof GrinderEntity gE) {
-            if(hasFluidItemInSourceSlot(gE)) {
-                transferItemFluidToFluidTank(gE);
+            if(hasBucketItem()) {
+                fillBucket();
             }
         }
     }
 
+    private void fillBucket() {
+        IFluidHandlerItem fHandler = itemHandler.get().getStackInSlot(SLOT_DRAIN_FLUID).getCapability(Capabilities.FluidHandler.ITEM);
+        if (fHandler != null){
+            if (isBucketEmpty(fHandler)) {
+                if (fluidTank.getFluid().getAmount() >= 1000) {
+                    ItemStack filledBucket = FluidUtil.getFilledBucket(fluidTank.getFluid());
+                    if (!filledBucket.isEmpty()) {
+                        fluidTank.drain(1000, IFluidHandler.FluidAction.EXECUTE);
+                        itemHandler.get().setStackInSlot(SLOT_DRAIN_FLUID,filledBucket);
+                    }
+                }
+            }
+        }
+    }
+
+    private boolean isBucketEmpty(IFluidHandlerItem fHandler) {
+        return fHandler.getContainer().is(Items.BUCKET);
+    }
+
+    private boolean hasBucketItem() {
+        return itemHandler.get().getStackInSlot(SLOT_DRAIN_FLUID).getCount() > 0 && itemHandler.get().getStackInSlot(SLOT_DRAIN_FLUID).is(Tags.Items.BUCKETS_EMPTY);
+    }
+
     private static boolean hasFluidItemInSourceSlot(GrinderEntity pEntity) {
+
         return pEntity.itemHandler.get().getStackInSlot(SLOT_INPUT).getCount() > 0;
     }
 
-    private static void transferItemFluidToFluidTank(GrinderEntity pEntity) {
+    private void transferItemFluidToFluidTank(GrinderEntity pEntity) {
         IFluidHandlerItem fHandler = pEntity.itemHandler.get().getStackInSlot(SLOT_INPUT).getCapability(Capabilities.FluidHandler.ITEM);
         if (fHandler != null){
             int drainAmount = Math.min(pEntity.fluidTank.getSpace(), 1000);
@@ -92,20 +109,16 @@ public class GrinderEntity extends MachineFactory {
         FluidStack stack = fHandler.drain(drainAmount, IFluidHandler.FluidAction.SIMULATE);
         if (pEntity.fluidTank.isFluidValid(stack)) {
             stack = fHandler.drain(drainAmount, IFluidHandler.FluidAction.EXECUTE);
-            fillTankWithFluid(pEntity, stack, fHandler.getContainer());
+            fillTankWithFluid(stack, fHandler.getContainer());
         }
         }
     }
 
-    private static void fillTankWithFluid(GrinderEntity pEntity, FluidStack stack, ItemStack container) {
-        pEntity.fluidTank.fill(stack, IFluidHandler.FluidAction.EXECUTE);
+    private void fillTankWithFluid(FluidStack stack, ItemStack container) {
+        fluidTank.fill(stack, IFluidHandler.FluidAction.EXECUTE);
 
-        pEntity.itemHandler.get().extractItem(SLOT_INPUT, 1, false);
-        pEntity.itemHandler.get().insertItem(SLOT_INPUT, container, false);
-    }
-
-    public void updateFluidStack() {
-        setFluidStack(fluidTank.getFluid());
+        itemHandler.get().extractItem(SLOT_INPUT, 1, false);
+        itemHandler.get().insertItem(SLOT_INPUT, container, false);
     }
 
     public void setFluidStack(FluidStack fluidStack) {
@@ -115,7 +128,7 @@ public class GrinderEntity extends MachineFactory {
     public FluidStack getFluidStack() {
         return this.fluidTank.getFluid();
     }
-    
+
     private void craftItem() {
         Optional<RecipeHolder<GrinderRecipe>> recipe = getCurrentRecipe();
         ItemStack result = recipe.get().value().getResultItem(null);
