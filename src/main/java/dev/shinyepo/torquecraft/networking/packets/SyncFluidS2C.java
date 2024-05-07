@@ -23,7 +23,7 @@ public record SyncFluidS2C(BlockPos pos, FluidStack fluidStack) implements Custo
     public static final StreamCodec<RegistryFriendlyByteBuf, SyncFluidS2C> STREAM_CODEC = StreamCodec.composite(
             BlockPos.STREAM_CODEC,
             SyncFluidS2C::pos,
-            FluidStack.STREAM_CODEC,
+            FluidStack.OPTIONAL_STREAM_CODEC,
             SyncFluidS2C::fluidStack,
             SyncFluidS2C::new);
 
