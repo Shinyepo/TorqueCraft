@@ -7,6 +7,7 @@ import dev.shinyepo.torquecraft.registries.TorqueItems;
 import dev.shinyepo.torquecraft.registries.TorqueRecipes;
 import dev.shinyepo.torquecraft.utils.TorqueFluidTank;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.Item;
@@ -71,6 +72,35 @@ public class GrinderEntity extends MachineFactory {
                 fillBucket();
             }
         }
+        distributeFluid();
+    }
+
+    private void distributeFluid() {
+        if (fluidTank.isEmpty()) {
+            return;
+        }
+        IFluidHandler fHandler = level.getCapability(Capabilities.FluidHandler.BLOCK, getBlockPos().relative(Direction.DOWN),null);
+        if (fHandler != null) {
+            canAcceptFluid(fHandler);
+            int remainingSpace = fHandler.getTankCapacity(0) - fHandler.getFluidInTank(0).getAmount();
+            int amount = Math.min(remainingSpace, 250);
+
+            fHandler.fill(new FluidStack(fluidTank.getFluid().getFluid(), amount), IFluidHandler.FluidAction.EXECUTE);
+            fluidTank.drain(amount, IFluidHandler.FluidAction.EXECUTE);
+            setChanged();
+        }
+    }
+
+    private boolean canAcceptFluid(IFluidHandler handler) {
+//        int tanks = handler.getTanks();
+//        for (int i = 0; i < tanks; i++) {
+//            if (!handler.isFluidValid(i,fluidTank.getFluid())) continue;
+//            if (handler.getFluidInTank(i).isEmpty()) return true;
+//            if (handler.getFluidInTank(i).is(fluidTank.getFluid().getFluid()) && handler.getTankCapacity(i) < handler.getFluidInTank(i).getAmount()) {
+//                return true;
+//            }
+//        }
+        return handler.getFluidInTank(0).isEmpty() || (handler.getFluidInTank(0).is(fluidTank.getFluid().getFluid()) && handler.getTankCapacity(0) > handler.getFluidInTank(0).getAmount());
     }
 
     private void fillBucket() {
@@ -119,10 +149,6 @@ public class GrinderEntity extends MachineFactory {
 
         itemHandler.get().extractItem(SLOT_INPUT, 1, false);
         itemHandler.get().insertItem(SLOT_INPUT, container, false);
-    }
-
-    public void setFluidStack(FluidStack fluidStack) {
-        this.fluidTank.setFluid(fluidStack);
     }
 
     public FluidStack getFluidStack() {
