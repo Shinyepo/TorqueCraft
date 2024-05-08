@@ -11,18 +11,26 @@ public class TorqueCapabilities {
             if (direction == null) {
                 return o.getItemHandler().get();
             }
-            if (direction == Direction.SOUTH) {
+            if (direction == Direction.DOWN) {
                 return o.getOutputItemHandler().get();
             }
-            return o.getInputItemHandler().get();
-            });
+                return o.getInputItemHandler().get();
+        });
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, TorqueBlockEntities.GRINDER_ENTITY.get(), (o, direction) -> {
+            if (direction != Direction.UP && direction != Direction.NORTH) {
+                return o.getFluidTank();
+            }
+            return null;
+        });
 
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, TorqueBlockEntities.GRINDER_ENTITY.get(),(o, context) -> {
             return o.getFluidTank();
         });
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, TorqueBlockEntities.PUMP_ENTITY.get(), (o, dir) -> o.getFluidTank(dir));
 
-//        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, TorqueBlockEntities.FLUID_PIPE_ENTITY.get(), (o, dir) -> o.getFluidTank());
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, TorqueBlockEntities.FLUID_TANK_ENTITY.get(), (o, dir) -> o.getFluidTank(dir));
+
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, TorqueBlockEntities.FLUID_PIPE_ENTITY.get(), (o, dir) -> o.getFluidTank());
 //        event.registerBlockEntity(Capabilities.SteamHandler.BLOCK, TorqueBlockEntities.STEAM_ENGINE_ENTITY.get(), (o, dir) -> o.getSteamTank(dir));
 
     }
