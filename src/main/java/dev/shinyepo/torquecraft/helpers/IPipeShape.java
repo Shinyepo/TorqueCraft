@@ -1,10 +1,13 @@
 package dev.shinyepo.torquecraft.helpers;
 
+import dev.shinyepo.torquecraft.block.pipes.FluidPipe;
+import dev.shinyepo.torquecraft.utils.PipeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
@@ -30,12 +33,12 @@ public interface IPipeShape  {
     VoxelShape SHAPE_CABLE_UP = Shapes.box(.3, .5, .3, .7, 1, .7);
     VoxelShape SHAPE_CABLE_DOWN = Shapes.box(.3, 0, .3, .7, .5, .7);
 
-    VoxelShape SHAPE_BLOCK_NORTH = Shapes.box(.2, .2, 0, .8, .8, .1);
-    VoxelShape SHAPE_BLOCK_SOUTH = Shapes.box(.2, .2, .9, .8, .8, 1);
-    VoxelShape SHAPE_BLOCK_WEST = Shapes.box(0, .2, .2, .1, .8, .8);
-    VoxelShape SHAPE_BLOCK_EAST = Shapes.box(.9, .2, .2, 1, .8, .8);
-    VoxelShape SHAPE_BLOCK_UP = Shapes.box(.2, .9, .2, .8, 1, .8);
-    VoxelShape SHAPE_BLOCK_DOWN = Shapes.box(.2, 0, .2, .8, .1, .8);
+    VoxelShape SHAPE_BLOCK_NORTH = Shapes.box(.3, .3, 0, .7, .7, .1);
+    VoxelShape SHAPE_BLOCK_SOUTH = Shapes.box(.3, .3, .9, .7, .7, 1);
+    VoxelShape SHAPE_BLOCK_WEST = Shapes.box(0, .3, .3, .1, .7, .7);
+    VoxelShape SHAPE_BLOCK_EAST = Shapes.box(.9, .3, .3, 1, .7, .7);
+    VoxelShape SHAPE_BLOCK_UP = Shapes.box(.3, .9, .3, .7, 1, .7);
+    VoxelShape SHAPE_BLOCK_DOWN = Shapes.box(.3, 0, .3, .7, .1, .7);
 
     default int calculateShapeIndex(PipeConnection north, PipeConnection south, PipeConnection west, PipeConnection east, PipeConnection up, PipeConnection down) {
         int l = PipeConnection.values().length;
@@ -77,7 +80,7 @@ public interface IPipeShape  {
     default VoxelShape combineShape(VoxelShape shape, PipeConnection PipeConnection, VoxelShape cableShape, VoxelShape blockShape) {
         if (PipeConnection == PipeConnection.PIPE) {
             return Shapes.join(shape, cableShape, BooleanOp.OR);
-        } else if (PipeConnection == PipeConnection.BLOCK) {
+        } else if (PipeConnection == PipeConnection.BLOCK || PipeConnection == PipeConnection.INPUT || PipeConnection == PipeConnection.OUTPUT) {
             return Shapes.join(shape, Shapes.join(blockShape, cableShape, BooleanOp.OR), BooleanOp.OR);
         } else {
             return shape;
@@ -92,7 +95,8 @@ public interface IPipeShape  {
         if (block instanceof IPipeShape && fromState.getBlock().equals(state.getBlock())) {
             return PipeConnection.PIPE;
         } else if (isConnectable(world, connectorPos, facing)) {
-            return PipeConnection.BLOCK;
+            if (fromState.is(Blocks.AIR)) return PipeConnection.BLOCK;
+            return fromState.getValue(PipeUtil.getProp(facing)) != PipeConnection.NONE ? fromState.getValue(PipeUtil.getProp(facing)) : PipeConnection.BLOCK;
         } else {
             return PipeConnection.NONE;
         }

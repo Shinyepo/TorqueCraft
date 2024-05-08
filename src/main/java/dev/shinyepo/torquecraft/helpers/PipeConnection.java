@@ -7,7 +7,9 @@ import javax.annotation.Nonnull;
 public enum PipeConnection implements StringRepresentable {
     NONE,
     PIPE,
-    BLOCK;
+    BLOCK,
+    INPUT,
+    OUTPUT;
 
     public static final PipeConnection[] VALUES = values();
 
