@@ -79,7 +79,7 @@ public class GrinderEntity extends MachineFactory {
         if (fluidTank.isEmpty()) {
             return;
         }
-        IFluidHandler fHandler = level.getCapability(Capabilities.FluidHandler.BLOCK, getBlockPos().relative(Direction.DOWN),null);
+        IFluidHandler fHandler = level.getCapability(Capabilities.FluidHandler.BLOCK, getBlockPos().relative(Direction.DOWN),Direction.DOWN);
         if (fHandler != null) {
             canAcceptFluid(fHandler);
             int remainingSpace = fHandler.getTankCapacity(0) - fHandler.getFluidInTank(0).getAmount();
