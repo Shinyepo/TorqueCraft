@@ -17,6 +17,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.util.Lazy;
+import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper;
@@ -187,6 +188,7 @@ public class MachineFactory extends BlockEntity {
     }
 
     public TorqueFluidTank getFluidTank() { return fluidTank; }
+
     //GUI
     public ItemStackHandler getInputItems() {
         return inputItems;
@@ -216,10 +218,16 @@ public class MachineFactory extends BlockEntity {
         if (fluidTank != null) {
             fluidTank.writeToNBT(provider,tag);
         }
-        tag.put(ITEMS_INPUT_TAG, inputItems.serializeNBT(provider));
-        tag.put(ITEMS_OUTPUT_TAG, outputItems.serializeNBT(provider));
-        tag.put(FLUID_DRAIN_TAG, tankDrainItems.serializeNBT(provider));
-        tag.putInt("grinder.progress", progress);
+        if (inputItems != null) {
+            tag.put(ITEMS_INPUT_TAG, inputItems.serializeNBT(provider));
+            tag.putInt("progress", progress);
+        }
+        if (outputItems != null) {
+            tag.put(ITEMS_OUTPUT_TAG, outputItems.serializeNBT(provider));
+        }
+        if (tankDrainItems != null) {
+            tag.put(FLUID_DRAIN_TAG, tankDrainItems.serializeNBT(provider));
+        }
     }
 
     @Override
@@ -237,7 +245,9 @@ public class MachineFactory extends BlockEntity {
         if (tag.contains(FLUID_DRAIN_TAG)) {
             tankDrainItems.deserializeNBT(provider, tag.getCompound(FLUID_DRAIN_TAG));
         }
-        tag.getInt("grinder.progress");
+        if (tag.contains("progress")) {
+            tag.getInt("progress");
+        }
     }
 
     @Nullable
@@ -260,5 +270,9 @@ public class MachineFactory extends BlockEntity {
         }
 
         Containers.dropContents(this.level, this.worldPosition, inventory);
+    }
+
+    public void setFluidStack(FluidStack fluidStack) {
+        fluidTank.setFluid(fluidStack);
     }
 }
