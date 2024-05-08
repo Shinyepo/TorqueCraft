@@ -1,6 +1,7 @@
-// 1.20.6	2024-05-04T22:26:44.4511637	Loot Tables
+// 1.20.6	2024-05-07T21:55:23.2057852	Loot Tables
 be7f38dc86567c22d91629586c09e13f0450256b data/torquecraft/loot_tables/blocks/canola_crop.json
 7eb5fd852033c984c5121b7249264315de556dcd data/torquecraft/loot_tables/blocks/fluid_pipe.json
+21ea25c7bc8e97197afc561ba502fceb065c75fb data/torquecraft/loot_tables/blocks/fluid_tank.json
 f829fde024b1580c03a2cc51e20ff4368fa623e1 data/torquecraft/loot_tables/blocks/grinder.json
 9f5bd3b03ac0134bc5f54e261d6b6aa5dde34e02 data/torquecraft/loot_tables/blocks/mechanical_fan.json
 77afd223ce8ddd8e406f310c54f6fe14fbf5239f data/torquecraft/loot_tables/blocks/pump.json

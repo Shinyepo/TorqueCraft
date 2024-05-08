@@ -26,6 +26,7 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(TorqueBlocks.STEAM_ENGINE.get())
                 .add(TorqueBlocks.MECHANICAL_FAN.get())
                 .add(TorqueBlocks.GRINDER.get())
+                .add(TorqueBlocks.FLUID_TANK.get())
                 .add(TorqueBlocks.PUMP.get());
 
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
@@ -33,6 +34,7 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(TorqueBlocks.STEAM_ENGINE.get())
                 .add(TorqueBlocks.MECHANICAL_FAN.get())
                 .add(TorqueBlocks.GRINDER.get())
+                .add(TorqueBlocks.FLUID_TANK.get())
                 .add(TorqueBlocks.PUMP.get());
     }
 }

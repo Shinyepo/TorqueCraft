@@ -33,6 +33,9 @@ public class TorqueItems {
     public static final Supplier<BlockItem> FLUID_PIPE_ITEM = ITEMS.registerSimpleBlockItem("fluid_pipe", TorqueBlocks.FLUID_PIPE);
     public static final Supplier<BlockItem> STEAM_PIPE_ITEM = ITEMS.registerSimpleBlockItem("steam_pipe", TorqueBlocks.STEAM_PIPE);
 
+    public static final Supplier<BlockItem> FLUID_TANK_ITEM = ITEMS.registerSimpleBlockItem("fluid_tank", TorqueBlocks.FLUID_TANK);
+
+
 
     //Seeds
     public static final Supplier<Item> CANOLA_SEEDS = ITEMS.register("canola_seeds", () -> new ItemNameBlockItem(TorqueBlocks.CANOLA_CROP.get(), new Item.Properties()));

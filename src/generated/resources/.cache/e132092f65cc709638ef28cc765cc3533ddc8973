@@ -1,6 +1,7 @@
-// 1.20.6	2024-05-04T22:26:44.4576864	Block States: torquecraft
+// 1.20.6	2024-05-07T21:55:23.2077839	Block States: torquecraft
 5849e6e0fdf54a743c2f8b51e3a890dfbd088f0a assets/torquecraft/blockstates/canola_crop.json
 db8ffb440367dbd01ff3f11f4676dbe78d2f1313 assets/torquecraft/blockstates/fluid_pipe.json
+0e8842a77033625220956dede5bbc2759131554b assets/torquecraft/blockstates/fluid_tank.json
 f9199089795ca3665640a7bbbf182cff394ab0c3 assets/torquecraft/blockstates/grinder.json
 e898a7e37c63e6db018aa0635804b74b1308f564 assets/torquecraft/blockstates/jet_fuel_block.json
 f77b6d1df0e05b6fcaf445d9e08cef42be2283e4 assets/torquecraft/blockstates/lubricant_block.json

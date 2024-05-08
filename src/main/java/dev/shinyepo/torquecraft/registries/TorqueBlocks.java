@@ -31,6 +31,8 @@ public class TorqueBlocks {
     public static final Supplier<LiquidBlock> LUBRICANT_BLOCK = BLOCKS.register("lubricant_block", () -> new LiquidBlock(TorqueFluids.SOURCE_LUBRICANT.get(), BlockBehaviour.Properties.ofFullCopy(Blocks.WATER)));
     public static final Supplier<LiquidBlock> JET_FUEL_BLOCK = BLOCKS.register("jet_fuel_block", () -> new LiquidBlock(TorqueFluids.SOURCE_JET_FUEL.get(), BlockBehaviour.Properties.ofFullCopy(Blocks.WATER)));
 
+
+    public static final Supplier<Block> FLUID_TANK = BLOCKS.register("fluid_tank", () -> new FluidTank(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().mapColor(MapColor.TERRACOTTA_WHITE)));
     //PIPES
     public static final Supplier<Block> FLUID_PIPE = BLOCKS.register("fluid_pipe", FluidPipe::new);
     public static final Supplier<Block> STEAM_PIPE = BLOCKS.register("steam_pipe", SteamPipe::new);;

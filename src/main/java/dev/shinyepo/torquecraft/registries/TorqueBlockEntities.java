@@ -19,4 +19,5 @@ public class TorqueBlockEntities {
     public static final Supplier<BlockEntityType<PumpEntity>> PUMP_ENTITY = BLOCK_ENTITIES.register("pump_be", () -> BlockEntityType.Builder.of(PumpEntity::new, TorqueBlocks.PUMP.get()).build(null));
     public static final Supplier<BlockEntityType<FluidPipeEntity>> FLUID_PIPE_ENTITY = BLOCK_ENTITIES.register("fluid_pipe_be", () -> BlockEntityType.Builder.of(FluidPipeEntity::new, TorqueBlocks.FLUID_PIPE.get()).build(null));
     public static final Supplier<BlockEntityType<SteamPipeEntity>> STEAM_PIPE_ENTITY = BLOCK_ENTITIES.register("steam_pipe_be", () -> BlockEntityType.Builder.of(SteamPipeEntity::new, TorqueBlocks.STEAM_PIPE.get()).build(null));
+    public static final Supplier<BlockEntityType<FluidTankEntity>> FLUID_TANK_ENTITY = BLOCK_ENTITIES.register("fluid_tank_be", () -> BlockEntityType.Builder.of(FluidTankEntity::new, TorqueBlocks.FLUID_TANK.get()).build(null));
 }
