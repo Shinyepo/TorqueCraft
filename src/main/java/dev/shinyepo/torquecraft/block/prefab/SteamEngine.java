@@ -3,8 +3,13 @@ package dev.shinyepo.torquecraft.block.prefab;
 import com.mojang.serialization.MapCodec;
 import dev.shinyepo.torquecraft.attributes.MachineAttributes;
 import dev.shinyepo.torquecraft.block.entities.SteamEngineEntity;
+import dev.shinyepo.torquecraft.capabilities.TorqueCustomCapabilities;
+import dev.shinyepo.torquecraft.capabilities.types.IRotaryHandler;
+import dev.shinyepo.torquecraft.registries.TorqueItems;
+import dev.shinyepo.torquecraft.rotary.RotarySource;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResult;
@@ -86,19 +91,17 @@ public class SteamEngine extends HorizontalDirectionalBlock implements EntityBlo
 
     @Override
     protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHit) {
-//        if (pHit.getDirection()) {return InteractionResult.CONSUME;}
-        System.out.println(pLevel.getBlockState(pPos.below()).is(Blocks.NETHERRACK));
-//        System.out.println("we've been hit "+ pState.getValue(LIT));
-//        System.out.println("Facing - " + pState.getValue(FACING));
-//        System.out.println("Signal North - " + pState.getSignal(pLevel, pPos, Direction.NORTH));
-//        pLevel.setBlock(pPos,pState.cycle(LIT),2);
-//        for(Direction direction : Direction.values()) {
-//            System.out.println("Updating neighbor blocks");
-//            pLevel.updateNeighborsAt(pPos.relative(direction), this);
-//            pLevel.updateNeighborsAt(pPos, this);
-//        }
-
-        //playground
+        BlockEntity entity = pLevel.getBlockEntity(pPos);
+        if (entity instanceof RotarySource rotaryEntity) {
+            IRotaryHandler handler = pLevel.getCapability(TorqueCustomCapabilities.ROTARY_HANDLER_BLOCK,pPos, pState, rotaryEntity, pHit.getDirection());
+            if (handler != null) {
+                if (pLevel.isClientSide()) {
+                    pPlayer.displayClientMessage(Component.literal("ANGULAR: " + handler.getAngular() + ", TORQUE: " + handler.getTorque() + ", POWER: "+ handler.getPower()),false);
+                } else {
+                    pPlayer.displayClientMessage(Component.literal("ANGULAR: " + handler.getAngular() + ", TORQUE: " + handler.getTorque() + ", POWER: "+ handler.getPower()),true);
+                }
+            }
+        }
 
         return InteractionResult.SUCCESS;
     }

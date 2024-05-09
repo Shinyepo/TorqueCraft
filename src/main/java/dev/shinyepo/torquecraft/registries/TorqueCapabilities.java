@@ -1,5 +1,6 @@
 package dev.shinyepo.torquecraft.registries;
 
+import dev.shinyepo.torquecraft.capabilities.TorqueCustomCapabilities;
 import net.minecraft.core.Direction;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
@@ -31,7 +32,7 @@ public class TorqueCapabilities {
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, TorqueBlockEntities.FLUID_TANK_ENTITY.get(), (o, dir) -> o.getFluidTank(dir));
 
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, TorqueBlockEntities.FLUID_PIPE_ENTITY.get(), (o, dir) -> o.getFluidTank(dir));
-//        event.registerBlockEntity(Capabilities.SteamHandler.BLOCK, TorqueBlockEntities.STEAM_ENGINE_ENTITY.get(), (o, dir) -> o.getSteamTank(dir));
 
+        event.registerBlockEntity(TorqueCustomCapabilities.ROTARY_HANDLER_BLOCK, TorqueBlockEntities.STEAM_ENGINE_ENTITY.get(), (o, dir) -> o.getRotaryHandler(dir).get());
     }
 }
