@@ -42,5 +42,8 @@ public class ModItemModelProvider extends ItemModelProvider {
 
         withExistingParent(String.valueOf(TorqueItems.PUMP_ITEM.get()).toLowerCase(),
                 "torquecraft:block/" + BuiltInRegistries.BLOCK.getKey(TorqueBlocks.PUMP.get()).getPath());
+
+        withExistingParent(String.valueOf(TorqueItems.SHAFT_ITEM.get()).toLowerCase(),
+                "torquecraft:block/" + BuiltInRegistries.BLOCK.getKey(TorqueBlocks.SHAFT.get()).getPath());
     }
 }

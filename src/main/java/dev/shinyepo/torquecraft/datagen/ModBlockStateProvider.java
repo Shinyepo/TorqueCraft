@@ -36,6 +36,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         registerHorizontalMachineWithExistingModel("block/steam_engine", TorqueBlocks.STEAM_ENGINE);
         registerHorizontalMachineWithExistingModel("block/grinder", TorqueBlocks.GRINDER);
         registerHorizontalMachineWithExistingModel("block/pump", TorqueBlocks.PUMP);
+        registerHorizontalMachineWithExistingModel("block/shaft", TorqueBlocks.SHAFT);
         registerHorizontalMachineWithExistingModel("block/fluid_tank", TorqueBlocks.FLUID_TANK);
 
         registerFluid(TorqueBlocks.LUBRICANT_BLOCK);

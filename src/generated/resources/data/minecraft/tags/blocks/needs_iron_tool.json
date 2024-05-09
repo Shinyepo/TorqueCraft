@@ -5,6 +5,7 @@
     "torquecraft:mechanical_fan",
     "torquecraft:grinder",
     "torquecraft:fluid_tank",
-    "torquecraft:pump"
+    "torquecraft:pump",
+    "torquecraft:shaft"
   ]
 }

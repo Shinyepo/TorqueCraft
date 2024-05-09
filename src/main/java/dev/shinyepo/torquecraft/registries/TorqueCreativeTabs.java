@@ -25,6 +25,7 @@ public class TorqueCreativeTabs {
                 output.accept(TorqueItems.STEAM_ENGINE_ITEM.get());
                 output.accept(TorqueItems.MECHANICAL_FAN_ITEM.get());
                 output.accept(TorqueItems.GRINDER_ITEM.get());
+                output.accept(TorqueItems.SHAFT_ITEM.get());
                 //fluids
                 output.accept(TorqueItems.FLUID_TANK_ITEM.get());
                 output.accept(TorqueItems.LUBRICANT_BUCKET.get());

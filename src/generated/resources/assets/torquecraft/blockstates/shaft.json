@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "torquecraft:block/shaft",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "torquecraft:block/shaft"
+    },
+    "facing=south": {
+      "model": "torquecraft:block/shaft",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "torquecraft:block/shaft",
+      "y": 270
+    }
+  }
+}

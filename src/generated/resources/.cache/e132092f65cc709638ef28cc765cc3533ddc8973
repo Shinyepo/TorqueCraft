@@ -1,4 +1,4 @@
-// 1.20.6	2024-05-07T21:55:23.2077839	Block States: torquecraft
+// 1.20.6	2024-05-09T13:50:50.6473516	Block States: torquecraft
 5849e6e0fdf54a743c2f8b51e3a890dfbd088f0a assets/torquecraft/blockstates/canola_crop.json
 db8ffb440367dbd01ff3f11f4676dbe78d2f1313 assets/torquecraft/blockstates/fluid_pipe.json
 0e8842a77033625220956dede5bbc2759131554b assets/torquecraft/blockstates/fluid_tank.json
@@ -7,6 +7,7 @@ e898a7e37c63e6db018aa0635804b74b1308f564 assets/torquecraft/blockstates/jet_fuel
 f77b6d1df0e05b6fcaf445d9e08cef42be2283e4 assets/torquecraft/blockstates/lubricant_block.json
 5e561f222dfd438f5cb7f876be1e816de965d7e3 assets/torquecraft/blockstates/mechanical_fan.json
 4816a575b21c0d6ff6a5a781c76c707f7d8a3380 assets/torquecraft/blockstates/pump.json
+fa0585129f1c8df487d1f768d5094ab13a27a34c assets/torquecraft/blockstates/shaft.json
 fd8880b6490147976e573ea212a76979a8062e8e assets/torquecraft/blockstates/steam_engine.json
 db8ffb440367dbd01ff3f11f4676dbe78d2f1313 assets/torquecraft/blockstates/steam_pipe.json
 9f6258cded6e593511671e5efa52c0b894e868d4 assets/torquecraft/blockstates/tungsten_block.json
