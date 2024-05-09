@@ -36,4 +36,14 @@ public class SteamEngineEntity extends RotarySource {
             }
         }
     }
+
+    public Lazy<RotaryHandler> getRotaryHandler(Direction dir) {
+        return rotaryHandler;
+    }
+
+    public void setRotaryPower(float angular, float torque) {
+        rotaryHandler.get().setAngular(angular);
+        rotaryHandler.get().setTorque(torque);
+        rotaryHandler.get().calculatePower();
+    }
 }

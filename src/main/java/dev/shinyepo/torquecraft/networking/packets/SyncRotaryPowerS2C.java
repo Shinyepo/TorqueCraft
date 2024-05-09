@@ -10,6 +10,7 @@ import dev.shinyepo.torquecraft.menu.GrinderContainer;
 import dev.shinyepo.torquecraft.rotary.RotarySource;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
