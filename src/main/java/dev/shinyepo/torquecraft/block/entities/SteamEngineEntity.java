@@ -17,7 +17,7 @@ public class SteamEngineEntity extends RotarySource {
     public static float MAX_TORQUE = 50f;
     public static float MAX_ANGULAR = 128f;
     private static int SPEEDUP_TIME = 5;
-    public Lazy<RotaryHandler> rotaryHandler = initRotarySource(MAX_ANGULAR, MAX_TORQUE, Direction.NORTH);
+    public final Lazy<RotaryHandler> rotaryHandler = initRotarySource(MAX_ANGULAR, MAX_TORQUE, Direction.NORTH);
 
     public SteamEngineEntity(BlockPos pPos, BlockState pBlockState) {
         super(TorqueBlockEntities.STEAM_ENGINE_ENTITY.get(), pPos, pBlockState);
@@ -35,15 +35,5 @@ public class SteamEngineEntity extends RotarySource {
 
             }
         }
-    }
-
-    public Lazy<RotaryHandler> getRotaryHandler(Direction dir) {
-        return rotaryHandler;
-    }
-
-    public void setRotaryPower(float angular, float torque) {
-        rotaryHandler.get().setAngular(angular);
-        rotaryHandler.get().setTorque(torque);
-        rotaryHandler.get().calculatePower();
     }
 }

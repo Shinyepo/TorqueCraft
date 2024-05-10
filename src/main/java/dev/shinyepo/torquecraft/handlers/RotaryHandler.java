@@ -1,21 +1,10 @@
 package dev.shinyepo.torquecraft.handlers;
 
-import dev.shinyepo.torquecraft.TorqueCraft;
 import dev.shinyepo.torquecraft.capabilities.types.IRotaryHandler;
-import io.netty.buffer.ByteBuf;
-import io.netty.handler.codec.DecoderException;
-import io.netty.handler.codec.EncoderException;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
-import net.minecraft.core.component.DataComponentPatch;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.world.level.material.Fluid;
-import net.neoforged.neoforge.fluids.FluidStack;
+import dev.shinyepo.torquecraft.utils.MathUtil;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 
 public class RotaryHandler implements IRotaryHandler {
     protected float TORQUE = 0;
@@ -75,17 +64,17 @@ public class RotaryHandler implements IRotaryHandler {
 
     @Override
     public float getPower() {
-        return this.POWER;
+        return MathUtil.roundFloat(this.POWER, 2);
     }
 
     @Override
     public float getAngular() {
-        return this.ANGULAR;
+        return MathUtil.roundFloat(this.ANGULAR, 2);
     }
 
     @Override
     public float getTorque() {
-        return this.TORQUE;
+        return MathUtil.roundFloat(this.TORQUE, 2);
     }
 
     public void slowDownAngular() {
@@ -118,5 +107,17 @@ public class RotaryHandler implements IRotaryHandler {
         this.slowDownAngular();
         this.slowDownTorque();
         this.markDirty();
+    }
+
+    public void deserializeNBT(HolderLookup.Provider provider, CompoundTag nbt) {
+        setAngular(nbt.contains("Angular") ? nbt.getFloat("Angular") : 0);
+        setTorque(nbt.contains("Torque") ? nbt.getFloat("Torque") : 0);
+    }
+
+    public Tag serializeNBT(HolderLookup.Provider provider) {
+        CompoundTag nbt = new CompoundTag();
+        nbt.putFloat("Angular", getAngular());
+        nbt.putFloat("Torque", getTorque());
+        return nbt;
     }
 }

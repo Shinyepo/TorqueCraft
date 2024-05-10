@@ -1,6 +1,7 @@
 package dev.shinyepo.torquecraft.rotary;
 
 import dev.shinyepo.torquecraft.capabilities.types.IRotaryHandler;
+import dev.shinyepo.torquecraft.constants.NBTConstants;
 import dev.shinyepo.torquecraft.handlers.RotaryHandler;
 import dev.shinyepo.torquecraft.networking.TorqueMessages;
 import dev.shinyepo.torquecraft.networking.packets.SyncRotaryPowerS2C;
@@ -17,7 +18,7 @@ import net.neoforged.neoforge.common.util.Lazy;
 import org.jetbrains.annotations.Nullable;
 
 public class RotarySource extends BlockEntity {
-    private static Lazy<RotaryHandler> rotaryHandler;
+    private Lazy<RotaryHandler> rotaryHandler;
 
     public static Direction OUTPUT;
 
@@ -27,7 +28,7 @@ public class RotarySource extends BlockEntity {
 
     public Lazy<RotaryHandler> initRotarySource(float angular, float torque, Direction facing) {
         OUTPUT = facing;
-        return rotaryHandler = Lazy.of(() -> new RotaryHandler(angular, torque){
+        return rotaryHandler = Lazy.of(() ->new RotaryHandler(angular, torque){
             @Override
             public void markDirty() {
                 super.markDirty();
@@ -36,17 +37,17 @@ public class RotarySource extends BlockEntity {
                     TorqueMessages.sendToAllPlayers(new SyncRotaryPowerS2C(worldPosition, this.ANGULAR, this.TORQUE));
                 }
             }
-        }) ;
+        });
     }
 
-    public Lazy<RotaryHandler> getRotaryHandler(Direction dir) {
-        return rotaryHandler;
+    public RotaryHandler getRotaryHandler(Direction dir) {
+        return rotaryHandler.get();
     }
 
     public void setRotaryPower(float angular, float torque) {
-        rotaryHandler.get().setAngular(angular);
-        rotaryHandler.get().setTorque(torque);
-        rotaryHandler.get().calculatePower();
+        this.rotaryHandler.get().setAngular(angular);
+        this.rotaryHandler.get().setTorque(torque);
+        this.rotaryHandler.get().calculatePower();
     }
 
     @Nullable
@@ -60,5 +61,22 @@ public class RotarySource extends BlockEntity {
         CompoundTag nbt = super.getUpdateTag(provider);
         saveAdditional(nbt, provider);
         return nbt;
+    }
+
+    @Override
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
+        super.loadAdditional(tag, provider);
+        if (tag.contains(NBTConstants.POWER)) {
+            rotaryHandler.get().deserializeNBT(provider, tag.getCompound(NBTConstants.POWER));
+            rotaryHandler.get().calculatePower();
+        }
+    }
+
+    @Override
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
+        super.saveAdditional(tag, provider);
+        if (rotaryHandler != null) {
+            tag.put(NBTConstants.POWER, rotaryHandler.get().serializeNBT(provider));
+        }
     }
 }

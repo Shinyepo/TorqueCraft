@@ -1,5 +1,6 @@
 package dev.shinyepo.torquecraft.factory;
 
+import dev.shinyepo.torquecraft.constants.NBTConstants;
 import dev.shinyepo.torquecraft.handlers.AdaptedItemHandler;
 import dev.shinyepo.torquecraft.networking.TorqueMessages;
 import dev.shinyepo.torquecraft.networking.packets.SyncFluidS2C;
@@ -219,14 +220,14 @@ public class MachineFactory extends BlockEntity {
             fluidTank.writeToNBT(provider,tag);
         }
         if (inputItems != null) {
-            tag.put(ITEMS_INPUT_TAG, inputItems.serializeNBT(provider));
-            tag.putInt("progress", progress);
+            tag.put(NBTConstants.INPUT, inputItems.serializeNBT(provider));
+            tag.putInt(NBTConstants.PROGRESS, progress);
         }
         if (outputItems != null) {
-            tag.put(ITEMS_OUTPUT_TAG, outputItems.serializeNBT(provider));
+            tag.put(NBTConstants.OUTPUT, outputItems.serializeNBT(provider));
         }
         if (tankDrainItems != null) {
-            tag.put(FLUID_DRAIN_TAG, tankDrainItems.serializeNBT(provider));
+            tag.put(NBTConstants.DRAIN, tankDrainItems.serializeNBT(provider));
         }
     }
 
@@ -236,17 +237,17 @@ public class MachineFactory extends BlockEntity {
         if (fluidTank != null) {
             fluidTank.readFromNBT(provider,tag);
         }
-        if (tag.contains(ITEMS_INPUT_TAG)) {
-            inputItems.deserializeNBT(provider, tag.getCompound(ITEMS_INPUT_TAG));
+        if (tag.contains(NBTConstants.INPUT)) {
+            inputItems.deserializeNBT(provider, tag.getCompound(NBTConstants.INPUT));
         }
-        if (tag.contains(ITEMS_OUTPUT_TAG)) {
-            outputItems.deserializeNBT(provider, tag.getCompound(ITEMS_OUTPUT_TAG));
+        if (tag.contains(NBTConstants.OUTPUT)) {
+            outputItems.deserializeNBT(provider, tag.getCompound(NBTConstants.OUTPUT));
         }
-        if (tag.contains(FLUID_DRAIN_TAG)) {
-            tankDrainItems.deserializeNBT(provider, tag.getCompound(FLUID_DRAIN_TAG));
+        if (tag.contains(NBTConstants.DRAIN)) {
+            tankDrainItems.deserializeNBT(provider, tag.getCompound(NBTConstants.DRAIN));
         }
-        if (tag.contains("progress")) {
-            tag.getInt("progress");
+        if (tag.contains(NBTConstants.PROGRESS)) {
+            tag.getInt(NBTConstants.PROGRESS);
         }
     }
 
