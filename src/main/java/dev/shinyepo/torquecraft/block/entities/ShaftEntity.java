@@ -13,7 +13,7 @@ public class ShaftEntity extends RotaryTransmitter {
 
 
     public ShaftEntity(BlockPos pPos, BlockState pBlockState) {
-        super(TorqueBlockEntities.STEAM_ENGINE_ENTITY.get(), pPos, pBlockState);
+        super(TorqueBlockEntities.SHAFT_ENTITY.get(), pPos, pBlockState);
 
     }
 
