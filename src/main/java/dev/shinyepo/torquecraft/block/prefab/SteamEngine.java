@@ -34,7 +34,7 @@ import org.jetbrains.annotations.Nullable;
 public class SteamEngine extends HorizontalDirectionalBlock implements EntityBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty OPERATIONAL = MachineAttributes.OPERATIONAL;
-    private static final VoxelShape SHAPE = Block.box(0,0,0,16,4,16);
+    private static final VoxelShape SHAPE = Block.box(0,0,0,16,11,16);
 
     public SteamEngine(Properties properties) {
         super(properties);
