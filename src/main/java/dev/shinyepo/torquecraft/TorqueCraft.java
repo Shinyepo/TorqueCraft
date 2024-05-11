@@ -1,10 +1,9 @@
 package dev.shinyepo.torquecraft;
 
+import dev.shinyepo.torquecraft.block.entities.renderers.ShaftRenderer;
+import dev.shinyepo.torquecraft.events.HoverEvent;
 import dev.shinyepo.torquecraft.helpers.PipeModelLoader;
-import dev.shinyepo.torquecraft.registries.TorqueFluidTypes;
-import dev.shinyepo.torquecraft.registries.TorqueFluids;
 import dev.shinyepo.torquecraft.menu.GrinderScreen;
-import dev.shinyepo.torquecraft.registries.TorqueRecipes;
 import dev.shinyepo.torquecraft.registries.*;
 import dev.shinyepo.torquecraft.registries.networking.TorquePackets;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -19,6 +18,7 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import net.neoforged.neoforge.common.NeoForge;
 
 @Mod(TorqueCraft.MODID)
 public class    TorqueCraft
@@ -46,6 +46,7 @@ public class    TorqueCraft
     {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
+            NeoForge.EVENT_BUS.register(new HoverEvent());
             ItemBlockRenderTypes.setRenderLayer(TorqueFluids.SOURCE_LUBRICANT.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(TorqueFluids.FLOWING_LUBRICANT.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(TorqueFluids.SOURCE_JET_FUEL.get(), RenderType.translucent());
@@ -63,7 +64,7 @@ public class    TorqueCraft
 
         @SubscribeEvent
         public static void registerBER(EntityRenderersEvent.RegisterRenderers event) {
-//            event.registerBlockEntityRenderer(TorqueBlockEntities.GRINDER_ENTITY.get(), GrinderEntityRenderer::new);
+            event.registerBlockEntityRenderer(TorqueBlockEntities.SHAFT_ENTITY.get(), ShaftRenderer::new);
         }
     }
 }

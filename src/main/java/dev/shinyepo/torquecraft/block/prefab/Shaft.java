@@ -4,11 +4,15 @@ import com.mojang.serialization.MapCodec;
 import dev.shinyepo.torquecraft.block.entities.ShaftEntity;
 import dev.shinyepo.torquecraft.capabilities.TorqueCustomCapabilities;
 import dev.shinyepo.torquecraft.capabilities.types.IRotaryHandler;
+import dev.shinyepo.torquecraft.factory.RotaryIO;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -59,6 +63,7 @@ public class Shaft extends HorizontalDirectionalBlock implements EntityBlock {
         return null;
     }
 
+
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
@@ -68,7 +73,7 @@ public class Shaft extends HorizontalDirectionalBlock implements EntityBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        if(pLevel.isClientSide()) return null;
+//        if(pLevel.isClientSide()) return null;
         return (pLevel1, pPos, pState1, pBlockEntity) -> {
             if (pBlockEntity instanceof ShaftEntity sE) {
                 sE.tick(pPos, pState1);
@@ -84,6 +89,15 @@ public class Shaft extends HorizontalDirectionalBlock implements EntityBlock {
             player.displayClientMessage(Component.literal("POWER: "+ handler.getPower()), false);
         }
         return InteractionResult.SUCCESS;
+    }
+
+    @Override
+    public void setPlacedBy(Level pLevel, BlockPos pPos, BlockState pState, @Nullable LivingEntity pPlacer, ItemStack pStack) {
+        if (pPlacer == Minecraft.getInstance().player) {
+            if (pLevel.getBlockEntity(pPos) instanceof RotaryIO rIO) {
+                rIO.setProgress(0F);
+            }
+        }
     }
 
     @Override
