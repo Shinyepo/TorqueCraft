@@ -4,7 +4,7 @@ import com.mojang.serialization.MapCodec;
 import dev.shinyepo.torquecraft.block.entities.rotary.ShaftEntity;
 import dev.shinyepo.torquecraft.capabilities.TorqueCustomCapabilities;
 import dev.shinyepo.torquecraft.capabilities.handlers.IRotaryHandler;
-import dev.shinyepo.torquecraft.factory.rotary.RotaryIO;
+import dev.shinyepo.torquecraft.factory.rotary.IRotaryIO;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -73,10 +73,17 @@ public class Shaft extends HorizontalDirectionalBlock implements EntityBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-//        if(pLevel.isClientSide()) return null;
+        if(pLevel.isClientSide()) {
+            return (pLevel1, pPos, pState1, pBlockEntity) -> {
+                if (pBlockEntity instanceof IRotaryIO rotary) {
+                    rotary.renderTick();
+                }
+            };
+        }
         return (pLevel1, pPos, pState1, pBlockEntity) -> {
             if (pBlockEntity instanceof ShaftEntity sE) {
                 sE.tick(pPos, pState1);
+
             }
         };
     }
@@ -94,7 +101,7 @@ public class Shaft extends HorizontalDirectionalBlock implements EntityBlock {
     @Override
     public void setPlacedBy(Level pLevel, BlockPos pPos, BlockState pState, @Nullable LivingEntity pPlacer, ItemStack pStack) {
         if (pPlacer == Minecraft.getInstance().player) {
-            if (pLevel.getBlockEntity(pPos) instanceof RotaryIO rIO) {
+            if (pLevel.getBlockEntity(pPos) instanceof IRotaryIO rIO) {
                 rIO.setProgress(0F);
             }
         }

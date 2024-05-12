@@ -9,13 +9,16 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.util.Lazy;
 import org.jetbrains.annotations.Nullable;
 
-public class RotarySource extends BlockEntity {
+public class RotarySource extends BlockEntity implements IRotaryIO {
+    protected float progress = 2F;
+    private float progressOld;
     private Lazy<RotaryHandler> rotaryHandler;
 
     public static Direction OUTPUT;
@@ -75,6 +78,27 @@ public class RotarySource extends BlockEntity {
         super.saveAdditional(tag, provider);
         if (rotaryHandler != null) {
             tag.put(TorqueNBT.POWER, rotaryHandler.get().serializeNBT(provider));
+        }
+    }
+
+    public float getProgress(float pPartialTicks) {
+        return Mth.lerp(pPartialTicks, this.progressOld, this.progress);
+    }
+
+    public void setProgress(float dur) {
+        this.progress = dur;
+    }
+
+    @Override
+    public void renderTick() {
+        updateAnimation();
+    }
+
+    public void updateAnimation() {
+        this.progressOld = this.progress;
+        this.progress += 0.1F;
+        if (this.progress >= 2.0F) {
+            this.progress = 2.0F;
         }
     }
 }

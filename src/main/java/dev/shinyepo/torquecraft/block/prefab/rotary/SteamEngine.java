@@ -5,14 +5,18 @@ import dev.shinyepo.torquecraft.constants.TorqueAttributes;
 import dev.shinyepo.torquecraft.block.entities.rotary.SteamEngineEntity;
 import dev.shinyepo.torquecraft.capabilities.TorqueCustomCapabilities;
 import dev.shinyepo.torquecraft.capabilities.handlers.IRotaryHandler;
+import dev.shinyepo.torquecraft.factory.rotary.IRotaryIO;
 import dev.shinyepo.torquecraft.factory.rotary.RotarySource;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -119,15 +123,27 @@ public class SteamEngine extends HorizontalDirectionalBlock implements EntityBlo
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        if(pLevel.isClientSide()) return null;
+        if(pLevel.isClientSide()) {
+            return (pLevel1, pPos, pState1, pBlockEntity) -> {
+                if (pBlockEntity instanceof IRotaryIO rotary) {
+                    rotary.renderTick();
+                }
+            };
+        };
         return (pLevel1, pPos, pState1, pBlockEntity) -> {
             if (pBlockEntity instanceof SteamEngineEntity sEE) {
                 sEE.tick(pLevel1, pPos, pState1);
             }
         };
+    }
 
-
-//        return createTickerHelper(pBlockEntityType, TorqueBlockEntities.STEAM_ENGINE_ENTITY.get(), (pLevel1, pPos, pState1, pBlockEntity) -> pBlockEntity.tick(pLevel1, pPos, pState1));
+    @Override
+    public void setPlacedBy(Level pLevel, BlockPos pPos, BlockState pState, @Nullable LivingEntity pPlacer, ItemStack pStack) {
+        if (pPlacer == Minecraft.getInstance().player) {
+            if (pLevel.getBlockEntity(pPos) instanceof IRotaryIO rotary) {
+                rotary.setProgress(0F);
+            }
+        }
     }
 
     @Nullable

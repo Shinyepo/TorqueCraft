@@ -1,6 +1,7 @@
 package dev.shinyepo.torquecraft;
 
 import dev.shinyepo.torquecraft.block.entities.renderers.ShaftRenderer;
+import dev.shinyepo.torquecraft.block.entities.renderers.SteamEngineRenderer;
 import dev.shinyepo.torquecraft.events.HoverEvent;
 import dev.shinyepo.torquecraft.model.baker.helpers.PipeModelLoader;
 import dev.shinyepo.torquecraft.menu.GrinderScreen;
@@ -70,6 +71,7 @@ public class    TorqueCraft
         @SubscribeEvent
         public static void registerBER(EntityRenderersEvent.RegisterRenderers event) {
             event.registerBlockEntityRenderer(TorqueBlockEntities.SHAFT_ENTITY.get(), ShaftRenderer::new);
+            event.registerBlockEntityRenderer(TorqueBlockEntities.STEAM_ENGINE_ENTITY.get(), SteamEngineRenderer::new);
         }
     }
 }

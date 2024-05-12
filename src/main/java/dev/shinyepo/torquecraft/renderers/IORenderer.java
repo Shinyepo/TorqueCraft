@@ -3,6 +3,8 @@ package dev.shinyepo.torquecraft.renderers;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import dev.shinyepo.torquecraft.block.entities.rotary.ShaftEntity;
+import dev.shinyepo.torquecraft.block.prefab.rotary.SteamEngine;
+import dev.shinyepo.torquecraft.factory.rotary.RotarySource;
 import dev.shinyepo.torquecraft.renderers.types.TorqueRenders;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
@@ -19,12 +21,16 @@ import java.util.Map;
 
 public class IORenderer {
 
-    private static Map<Integer,Direction> getIOs(BlockEntity entity) {
-        Map<Integer,Direction> outputs = new HashMap<>();
+    private static Map<String,Direction> getIOs(BlockEntity entity) {
+        Map<String,Direction> outputs = new HashMap<>();
         if (entity instanceof ShaftEntity sE) {
             BlockState state = sE.getBlockState();
-            outputs.put(0,state.getValue(HorizontalDirectionalBlock.FACING));
-            outputs.put(1,state.getValue(HorizontalDirectionalBlock.FACING).getOpposite());
+            outputs.put("INPUT",state.getValue(HorizontalDirectionalBlock.FACING));
+            outputs.put("OUTPUT",state.getValue(HorizontalDirectionalBlock.FACING).getOpposite());
+        }
+        if (entity instanceof RotarySource source) {
+            BlockState state = source.getBlockState();
+            outputs.put("OUTPUT", state.getValue(HorizontalDirectionalBlock.FACING));
         }
         return outputs;
     }
@@ -60,18 +66,18 @@ public class IORenderer {
             RenderSystem.disableBlend();
             return;
         }
-        Map<Integer, Direction> ios = getIOs(blockEntity);
+        Map<String, Direction> ios = getIOs(blockEntity);
 
         ios.forEach((type,direction) -> {
-            BlockPos pos = blockEntity.getBlockPos().relative(direction);;
-            float r;
-            float g;
-            float b;
-            if (type == 0) {
+            BlockPos pos = blockEntity.getBlockPos().relative(direction.getOpposite());;
+            float r = 0f;
+            float g = 0f;
+            float b = 0f;
+            if (type.equals("INPUT")) {
                 r = 0f;
                 g = 137f;
                 b = 255f;
-            } else {
+            } else if (type.equals("OUTPUT")) {
                 r = 252f;
                 g = 168f;
                 b = 0f;

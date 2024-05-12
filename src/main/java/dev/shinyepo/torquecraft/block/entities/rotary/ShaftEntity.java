@@ -1,5 +1,6 @@
 package dev.shinyepo.torquecraft.block.entities.rotary;
 
+import dev.shinyepo.torquecraft.factory.rotary.IRotaryIO;
 import dev.shinyepo.torquecraft.registries.block.TorqueBlockEntities;
 import dev.shinyepo.torquecraft.factory.rotary.RotaryTransmitter;
 import net.minecraft.core.BlockPos;
