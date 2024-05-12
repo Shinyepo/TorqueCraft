@@ -1,9 +1,7 @@
 package dev.shinyepo.torquecraft.networking.packets;
 
 import dev.shinyepo.torquecraft.TorqueCraft;
-import dev.shinyepo.torquecraft.block.entities.GrinderEntity;
-import dev.shinyepo.torquecraft.block.entities.PumpEntity;
-import dev.shinyepo.torquecraft.menu.GrinderContainer;
+import dev.shinyepo.torquecraft.block.entities.rotary.PumpEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;

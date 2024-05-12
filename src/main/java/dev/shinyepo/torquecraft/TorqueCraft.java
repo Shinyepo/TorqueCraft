@@ -2,9 +2,14 @@ package dev.shinyepo.torquecraft;
 
 import dev.shinyepo.torquecraft.block.entities.renderers.ShaftRenderer;
 import dev.shinyepo.torquecraft.events.HoverEvent;
-import dev.shinyepo.torquecraft.helpers.PipeModelLoader;
+import dev.shinyepo.torquecraft.model.baker.helpers.PipeModelLoader;
 import dev.shinyepo.torquecraft.menu.GrinderScreen;
 import dev.shinyepo.torquecraft.registries.*;
+import dev.shinyepo.torquecraft.registries.block.TorqueBlockEntities;
+import dev.shinyepo.torquecraft.registries.block.TorqueBlocks;
+import dev.shinyepo.torquecraft.registries.fluid.TorqueFluidTypes;
+import dev.shinyepo.torquecraft.registries.fluid.TorqueFluids;
+import dev.shinyepo.torquecraft.registries.item.TorqueItems;
 import dev.shinyepo.torquecraft.registries.networking.TorquePackets;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;

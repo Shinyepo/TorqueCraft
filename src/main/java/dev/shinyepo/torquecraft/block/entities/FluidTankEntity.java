@@ -1,30 +1,14 @@
 package dev.shinyepo.torquecraft.block.entities;
 
 import dev.shinyepo.torquecraft.factory.MachineFactory;
-import dev.shinyepo.torquecraft.recipes.custom.GrinderRecipe;
-import dev.shinyepo.torquecraft.registries.TorqueBlockEntities;
-import dev.shinyepo.torquecraft.registries.TorqueItems;
-import dev.shinyepo.torquecraft.registries.TorqueRecipes;
-import dev.shinyepo.torquecraft.utils.TorqueFluidTank;
+import dev.shinyepo.torquecraft.registries.block.TorqueBlockEntities;
+import dev.shinyepo.torquecraft.factory.TorqueFluidTank;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.SimpleContainer;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.common.util.Lazy;
 import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
-import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper;
-
-import java.util.Optional;
 
 public class FluidTankEntity extends MachineFactory {
     private final int fluidCapacity = 64000;

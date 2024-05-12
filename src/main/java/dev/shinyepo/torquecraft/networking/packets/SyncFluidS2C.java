@@ -1,7 +1,6 @@
 package dev.shinyepo.torquecraft.networking.packets;
 
 import dev.shinyepo.torquecraft.TorqueCraft;
-import dev.shinyepo.torquecraft.block.entities.GrinderEntity;
 import dev.shinyepo.torquecraft.block.entities.pipes.FluidPipeEntity;
 import dev.shinyepo.torquecraft.factory.MachineFactory;
 import dev.shinyepo.torquecraft.menu.GrinderContainer;

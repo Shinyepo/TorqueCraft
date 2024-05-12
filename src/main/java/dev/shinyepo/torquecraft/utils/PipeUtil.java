@@ -1,7 +1,7 @@
 package dev.shinyepo.torquecraft.utils;
 
-import dev.shinyepo.torquecraft.block.pipes.FluidPipe;
-import dev.shinyepo.torquecraft.helpers.PipeConnection;
+import dev.shinyepo.torquecraft.block.prefab.pipes.FluidPipe;
+import dev.shinyepo.torquecraft.model.baker.helpers.PipeConnection;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 

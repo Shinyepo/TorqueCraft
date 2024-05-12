@@ -1,6 +1,7 @@
 package dev.shinyepo.torquecraft.registries;
 
 import dev.shinyepo.torquecraft.capabilities.TorqueCustomCapabilities;
+import dev.shinyepo.torquecraft.registries.block.TorqueBlockEntities;
 import net.minecraft.core.Direction;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;

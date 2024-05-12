@@ -1,8 +1,7 @@
 package dev.shinyepo.torquecraft.block.prefab;
 
-import dev.shinyepo.torquecraft.registries.TorqueItems;
+import dev.shinyepo.torquecraft.registries.item.TorqueItems;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
@@ -11,11 +10,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-
-import java.util.List;
 
 public class CanolaCrop extends CropBlock {
     public static final int MAX_AGE = 5;

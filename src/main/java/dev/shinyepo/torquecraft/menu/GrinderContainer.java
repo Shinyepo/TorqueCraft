@@ -1,7 +1,7 @@
 package dev.shinyepo.torquecraft.menu;
 
-import dev.shinyepo.torquecraft.block.entities.GrinderEntity;
-import dev.shinyepo.torquecraft.registries.TorqueBlocks;
+import dev.shinyepo.torquecraft.block.entities.rotary.GrinderEntity;
+import dev.shinyepo.torquecraft.registries.block.TorqueBlocks;
 import dev.shinyepo.torquecraft.registries.TorqueMenus;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Container;

@@ -1,6 +1,7 @@
 package dev.shinyepo.torquecraft.registries;
 
 import dev.shinyepo.torquecraft.TorqueCraft;
+import dev.shinyepo.torquecraft.registries.item.TorqueItems;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;

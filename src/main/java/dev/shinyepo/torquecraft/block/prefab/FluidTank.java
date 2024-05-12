@@ -2,7 +2,6 @@ package dev.shinyepo.torquecraft.block.prefab;
 
 import com.mojang.serialization.MapCodec;
 import dev.shinyepo.torquecraft.block.entities.FluidTankEntity;
-import dev.shinyepo.torquecraft.block.entities.MechanicalFanEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;

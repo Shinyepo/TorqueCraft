@@ -1,11 +1,11 @@
 package dev.shinyepo.torquecraft.block.entities.pipes;
 
-import dev.shinyepo.torquecraft.helpers.PipeConnection;
+import dev.shinyepo.torquecraft.model.baker.helpers.PipeConnection;
 import dev.shinyepo.torquecraft.networking.TorqueMessages;
 import dev.shinyepo.torquecraft.networking.packets.SyncFluidS2C;
-import dev.shinyepo.torquecraft.registries.TorqueBlockEntities;
+import dev.shinyepo.torquecraft.registries.block.TorqueBlockEntities;
 import dev.shinyepo.torquecraft.utils.PipeUtil;
-import dev.shinyepo.torquecraft.utils.TorqueFluidTank;
+import dev.shinyepo.torquecraft.factory.TorqueFluidTank;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;

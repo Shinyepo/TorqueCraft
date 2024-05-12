@@ -1,7 +1,7 @@
 package dev.shinyepo.torquecraft.block.entities.pipes;
 
-import dev.shinyepo.torquecraft.registries.TorqueBlockEntities;
-import dev.shinyepo.torquecraft.utils.TorqueFluidTank;
+import dev.shinyepo.torquecraft.registries.block.TorqueBlockEntities;
+import dev.shinyepo.torquecraft.factory.TorqueFluidTank;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.entity.BlockEntity;
