@@ -25,8 +25,8 @@ public class RotaryHandler implements IRotaryHandler {
     }
 
     public void calculatePower() {
-        validateValues();
         POWER = ANGULAR * TORQUE;
+        validateValues();
     }
 
     public void setTorque(float torque) {
