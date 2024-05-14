@@ -1,9 +1,9 @@
 package dev.shinyepo.torquecraft.block.entities.rotary;
 
-import dev.shinyepo.torquecraft.constants.TorqueAttributes;
 import dev.shinyepo.torquecraft.capabilities.handlers.RotaryHandler;
-import dev.shinyepo.torquecraft.registries.block.TorqueBlockEntities;
+import dev.shinyepo.torquecraft.constants.TorqueAttributes;
 import dev.shinyepo.torquecraft.factory.rotary.RotarySource;
+import dev.shinyepo.torquecraft.registries.block.TorqueBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
@@ -12,8 +12,8 @@ import net.neoforged.neoforge.common.util.Lazy;
 
 public class SteamEngineEntity extends RotarySource {
     public static float MAX_TORQUE = 50f;
-    public static float MAX_ANGULAR = 128f;
-    private static int SPEEDUP_TIME = 5;
+    public static float MAX_ANGULAR = 512f;
+    private static int SPEEDUP_TIME = 15;
     public final Lazy<RotaryHandler> rotaryHandler = initRotarySource(MAX_ANGULAR, MAX_TORQUE, Direction.NORTH);
 
     public SteamEngineEntity(BlockPos pPos, BlockState pBlockState) {

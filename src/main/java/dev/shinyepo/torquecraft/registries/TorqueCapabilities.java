@@ -35,5 +35,6 @@ public class TorqueCapabilities {
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, TorqueBlockEntities.FLUID_PIPE_ENTITY.get(), (o, dir) -> o.getFluidTank(dir));
 
         event.registerBlockEntity(TorqueCustomCapabilities.ROTARY_HANDLER_BLOCK, TorqueBlockEntities.STEAM_ENGINE_ENTITY.get(), (o, dir) -> o.getRotaryHandler(dir));
+        event.registerBlockEntity(TorqueCustomCapabilities.ROTARY_HANDLER_BLOCK, TorqueBlockEntities.SHAFT_ENTITY.get(), (o,dir) -> o.getRotaryHandler(dir));
     }
 }

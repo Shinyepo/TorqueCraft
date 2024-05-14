@@ -47,7 +47,7 @@ public class IORenderer {
         RenderSystem.setShader(GameRenderer::getPositionColorShader);
         RenderSystem.enableBlend();
         RenderSystem.enableCull();
-        RenderSystem.enableDepthTest();
+//        RenderSystem.enableDepthTest();
 
         BufferBuilder bufferbuilder = Tesselator.getInstance().getBuilder();
         bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
@@ -62,7 +62,8 @@ public class IORenderer {
         {
             pose.popPose();
             BufferUploader.drawWithShader(bufferbuilder.end());
-            RenderSystem.enableDepthTest();
+//            RenderSystem.disableDepthTest();
+            RenderSystem.disableCull();
             RenderSystem.disableBlend();
             return;
         }
@@ -101,7 +102,8 @@ public class IORenderer {
 
         pose.popPose();
         BufferUploader.drawWithShader(bufferbuilder.end());
-        RenderSystem.enableDepthTest();
+//        RenderSystem.disableDepthTest();
+        RenderSystem.disableCull();
         RenderSystem.disableBlend();
     }
 }

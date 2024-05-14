@@ -32,7 +32,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class Shaft extends HorizontalDirectionalBlock implements EntityBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
-    private static final VoxelShape SHAPE = Block.box(0,0,0,16,14,16);
+    private static final VoxelShape SHAPE = Block.box(0,0,0,16,16,16);
 
     public Shaft(Properties pProperties) {
         super(pProperties);

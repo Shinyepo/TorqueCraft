@@ -1,7 +1,7 @@
 package dev.shinyepo.torquecraft.factory.rotary;
 
-import dev.shinyepo.torquecraft.constants.TorqueNBT;
 import dev.shinyepo.torquecraft.capabilities.handlers.RotaryHandler;
+import dev.shinyepo.torquecraft.constants.TorqueNBT;
 import dev.shinyepo.torquecraft.networking.TorqueMessages;
 import dev.shinyepo.torquecraft.networking.packets.SyncRotaryPowerS2C;
 import net.minecraft.core.BlockPos;
@@ -17,8 +17,9 @@ import net.neoforged.neoforge.common.util.Lazy;
 import org.jetbrains.annotations.Nullable;
 
 public class RotarySource extends BlockEntity implements IRotaryIO {
-    protected float progress = 2F;
+    protected float progress = 3F;
     private float progressOld;
+    public float angle = 0;
     private Lazy<RotaryHandler> rotaryHandler;
 
     public static Direction OUTPUT;
@@ -85,6 +86,10 @@ public class RotarySource extends BlockEntity implements IRotaryIO {
         return Mth.lerp(pPartialTicks, this.progressOld, this.progress);
     }
 
+    public double getAngle() {
+        return angle;
+    }
+
     public void setProgress(float dur) {
         this.progress = dur;
     }
@@ -92,13 +97,14 @@ public class RotarySource extends BlockEntity implements IRotaryIO {
     @Override
     public void renderTick() {
         updateAnimation();
+        angle = (angle + rotaryHandler.get().getAngular()/10) % 360;
     }
 
     public void updateAnimation() {
         this.progressOld = this.progress;
         this.progress += 0.1F;
-        if (this.progress >= 2.0F) {
-            this.progress = 2.0F;
+        if (this.progress >= 3.0F) {
+            this.progress = 3.0F;
         }
     }
 }

@@ -12,6 +12,10 @@ import dev.shinyepo.torquecraft.registries.fluid.TorqueFluidTypes;
 import dev.shinyepo.torquecraft.registries.fluid.TorqueFluids;
 import dev.shinyepo.torquecraft.registries.item.TorqueItems;
 import dev.shinyepo.torquecraft.registries.networking.TorquePackets;
+import net.minecraft.client.model.geom.LayerDefinitions;
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
@@ -66,6 +70,16 @@ public class    TorqueCraft
         @SubscribeEvent
         public static void menuSetup(RegisterMenuScreensEvent e) {
             e.register(TorqueMenus.GRINDER_CONTAINER.get(), GrinderScreen::new);
+        }
+
+        @SubscribeEvent
+        public static void registerBakedModels(ModelEvent.RegisterAdditional e) {
+            e.register(new ResourceLocation(TorqueCraft.MODID,"block/partial/shaft_rod"));
+            e.register(new ResourceLocation(TorqueCraft.MODID,"block/partial/short_shaft_rod"));
+        }
+        @SubscribeEvent
+        public static void layersRegister(EntityRenderersEvent.RegisterLayerDefinitions event) {
+//            event.registerLayerDefinition(new ModelLayerLocation(new ResourceLocation(TorqueCraft.MODID, "block/partial/shaft_rod"),"shaft"), ShaftRenderer::createSingleBodyLayer);
         }
 
         @SubscribeEvent
