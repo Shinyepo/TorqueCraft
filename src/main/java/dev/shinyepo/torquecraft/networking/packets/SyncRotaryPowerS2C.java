@@ -2,6 +2,7 @@ package dev.shinyepo.torquecraft.networking.packets;
 
 import dev.shinyepo.torquecraft.TorqueCraft;
 import dev.shinyepo.torquecraft.factory.rotary.RotarySource;
+import dev.shinyepo.torquecraft.factory.rotary.RotaryTransmitter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -32,6 +33,9 @@ public record SyncRotaryPowerS2C(BlockPos pos, float angular, float torque) impl
         context.enqueueWork(()->{
             if(Minecraft.getInstance().level.getBlockEntity(pos) instanceof RotarySource blockEntity) {
                 blockEntity.setRotaryPower(this.angular, this.torque);
+            }
+            if(Minecraft.getInstance().level.getBlockEntity(pos) instanceof RotaryTransmitter rt) {
+                rt.setRotaryPower(this.angular, this.torque);
             }
         });
     }
