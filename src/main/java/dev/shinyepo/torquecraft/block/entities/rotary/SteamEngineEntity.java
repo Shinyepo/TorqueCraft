@@ -32,5 +32,6 @@ public class SteamEngineEntity extends RotarySource {
 
             }
         }
+        emit();
     }
 }
