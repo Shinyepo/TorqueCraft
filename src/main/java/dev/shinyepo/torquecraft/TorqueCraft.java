@@ -1,21 +1,22 @@
 package dev.shinyepo.torquecraft;
 
+import com.mojang.logging.LogUtils;
 import dev.shinyepo.torquecraft.block.entities.renderers.ShaftRenderer;
 import dev.shinyepo.torquecraft.block.entities.renderers.SteamEngineRenderer;
 import dev.shinyepo.torquecraft.events.HoverEvent;
-import dev.shinyepo.torquecraft.model.baker.helpers.PipeModelLoader;
 import dev.shinyepo.torquecraft.menu.GrinderScreen;
-import dev.shinyepo.torquecraft.registries.*;
+import dev.shinyepo.torquecraft.model.baker.helpers.PipeModelLoader;
+import dev.shinyepo.torquecraft.network.RotaryNetworkRegistry;
+import dev.shinyepo.torquecraft.registries.TorqueCapabilities;
+import dev.shinyepo.torquecraft.registries.TorqueCreativeTabs;
+import dev.shinyepo.torquecraft.registries.TorqueMenus;
+import dev.shinyepo.torquecraft.registries.TorqueRecipes;
 import dev.shinyepo.torquecraft.registries.block.TorqueBlockEntities;
 import dev.shinyepo.torquecraft.registries.block.TorqueBlocks;
 import dev.shinyepo.torquecraft.registries.fluid.TorqueFluidTypes;
 import dev.shinyepo.torquecraft.registries.fluid.TorqueFluids;
 import dev.shinyepo.torquecraft.registries.item.TorqueItems;
 import dev.shinyepo.torquecraft.registries.networking.TorquePackets;
-import net.minecraft.client.model.geom.LayerDefinitions;
-import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.model.geom.builders.LayerDefinition;
-import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
@@ -25,18 +26,23 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.server.ServerStoppedEvent;
+import org.slf4j.Logger;
 
 @Mod(TorqueCraft.MODID)
-public class    TorqueCraft
-{
+public class TorqueCraft {
     public static final String MODID = "torquecraft";
+    public static final Logger logger = LogUtils.getLogger();
 
-    public TorqueCraft(IEventBus modEventBus)
-    {
+    public TorqueCraft(IEventBus modEventBus) {
+
+        modEventBus.addListener(this::commonSetup);
+
         TorqueBlocks.BLOCKS.register(modEventBus);
         TorqueBlockEntities.BLOCK_ENTITIES.register(modEventBus);
         TorqueItems.ITEMS.register(modEventBus);
@@ -51,9 +57,16 @@ public class    TorqueCraft
         modEventBus.addListener(TorquePackets::registerPayloadHandler);
     }
 
+    private void commonSetup(FMLCommonSetupEvent event) {
+        RotaryNetworkRegistry.init();
+    }
+
+    private void serverStopped(ServerStoppedEvent event) {
+        RotaryNetworkRegistry.reset();
+    }
+
     @EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-    public static class ClientModEvents
-    {
+    public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
             NeoForge.EVENT_BUS.register(new HoverEvent());
@@ -67,6 +80,7 @@ public class    TorqueCraft
         public static void registerGeometryLoaders(ModelEvent.RegisterGeometryLoaders event) {
             event.register(new ResourceLocation(TorqueCraft.MODID, "pipe_loader"), new PipeModelLoader());
         }
+
         @SubscribeEvent
         public static void menuSetup(RegisterMenuScreensEvent e) {
             e.register(TorqueMenus.GRINDER_CONTAINER.get(), GrinderScreen::new);
@@ -74,9 +88,10 @@ public class    TorqueCraft
 
         @SubscribeEvent
         public static void registerBakedModels(ModelEvent.RegisterAdditional e) {
-            e.register(new ResourceLocation(TorqueCraft.MODID,"block/partial/shaft_rod"));
-            e.register(new ResourceLocation(TorqueCraft.MODID,"block/partial/short_shaft_rod"));
+            e.register(new ResourceLocation(TorqueCraft.MODID, "block/partial/shaft_rod"));
+            e.register(new ResourceLocation(TorqueCraft.MODID, "block/partial/short_shaft_rod"));
         }
+
         @SubscribeEvent
         public static void layersRegister(EntityRenderersEvent.RegisterLayerDefinitions event) {
 //            event.registerLayerDefinition(new ModelLayerLocation(new ResourceLocation(TorqueCraft.MODID, "block/partial/shaft_rod"),"shaft"), ShaftRenderer::createSingleBodyLayer);

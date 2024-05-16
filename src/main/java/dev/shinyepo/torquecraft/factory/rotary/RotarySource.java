@@ -4,6 +4,8 @@ import dev.shinyepo.torquecraft.capabilities.TorqueCustomCapabilities;
 import dev.shinyepo.torquecraft.capabilities.handlers.IRotaryHandler;
 import dev.shinyepo.torquecraft.capabilities.handlers.RotaryHandler;
 import dev.shinyepo.torquecraft.constants.TorqueNBT;
+import dev.shinyepo.torquecraft.network.IRotaryNetworkDevice;
+import dev.shinyepo.torquecraft.network.RotaryNetworkRegistry;
 import dev.shinyepo.torquecraft.networking.TorqueMessages;
 import dev.shinyepo.torquecraft.networking.packets.SyncRotaryPowerS2C;
 import net.minecraft.core.BlockPos;
@@ -18,15 +20,18 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.BlockCapabilityCache;
-import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.common.util.Lazy;
 import org.jetbrains.annotations.Nullable;
 
-public class RotarySource extends BlockEntity implements IRotaryIO, IRotarySource {
+import java.util.UUID;
+
+public class RotarySource extends BlockEntity implements IRotaryIO, IRotarySource, IRotaryNetworkDevice {
     protected float progress = 3F;
     private float progressOld;
     public float angle = 0;
     private Lazy<RotaryHandler> rotaryHandler;
+
+    private UUID network_id;
 
     public static Direction OUTPUT;
 
@@ -48,6 +53,10 @@ public class RotarySource extends BlockEntity implements IRotaryIO, IRotarySourc
                 }
             }
         });
+    }
+
+    public UUID getNetworkId() {
+        return this.network_id;
     }
 
     public RotaryHandler getRotaryHandler(Direction dir) {
@@ -80,6 +89,9 @@ public class RotarySource extends BlockEntity implements IRotaryIO, IRotarySourc
             rotaryHandler.get().deserializeNBT(provider, tag.getCompound(TorqueNBT.POWER));
             rotaryHandler.get().calculatePower();
         }
+        if (tag.contains(TorqueNBT.NETWORK_ID)) {
+            network_id = tag.getUUID(TorqueNBT.NETWORK_ID);
+        }
     }
 
     @Override
@@ -87,6 +99,9 @@ public class RotarySource extends BlockEntity implements IRotaryIO, IRotarySourc
         super.saveAdditional(tag, provider);
         if (rotaryHandler != null) {
             tag.put(TorqueNBT.POWER, rotaryHandler.get().serializeNBT(provider));
+        }
+        if (network_id != null){
+            tag.putUUID(TorqueNBT.NETWORK_ID, network_id);
         }
     }
 
@@ -125,8 +140,8 @@ public class RotarySource extends BlockEntity implements IRotaryIO, IRotarySourc
 
     @Override
     public void onLoad() {
-        if (this.level == null || this.level.isClientSide()) return;
         super.onLoad();
+        if (this.level == null || this.level.isClientSide()) return;
         Direction dir = this.getBlockState().getValue(HorizontalDirectionalBlock.FACING);
 
         this.capCache = BlockCapabilityCache.create(
@@ -135,6 +150,8 @@ public class RotarySource extends BlockEntity implements IRotaryIO, IRotarySourc
                 transmitPos(), // target position
                 dir // context
         );
+
+        this.network_id = RotaryNetworkRegistry.getInstance().registerSource(this);
     }
 
     public void updateAnimation() {
@@ -142,6 +159,24 @@ public class RotarySource extends BlockEntity implements IRotaryIO, IRotarySourc
         this.progress += 0.1F;
         if (this.progress >= 3.0F) {
             this.progress = 3.0F;
+        }
+    }
+
+    public UUID getNetworkID() {
+        return this.network_id;
+    }
+
+    @Override
+    public void updateNetwork(UUID id) {
+        this.network_id = id;
+        this.setChanged();
+    }
+
+    @Override
+    public void setRemoved() {
+        super.setRemoved();
+        if (!this.level.isClientSide) {
+            RotaryNetworkRegistry.getInstance().removeSource(network_id, this);
         }
     }
 }

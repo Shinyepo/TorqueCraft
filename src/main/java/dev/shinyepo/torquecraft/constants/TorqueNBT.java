@@ -12,4 +12,5 @@ public class TorqueNBT {
     public static final String DRAIN = "Drain";
 
     public static final String PROGRESS = "Progress";
+    public static final String NETWORK_ID = "Network_id";
 }
