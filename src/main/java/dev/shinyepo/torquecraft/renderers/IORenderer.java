@@ -25,8 +25,8 @@ public class IORenderer {
         Map<String,Direction> outputs = new HashMap<>();
         if (entity instanceof ShaftEntity sE) {
             BlockState state = sE.getBlockState();
-            outputs.put("INPUT",state.getValue(HorizontalDirectionalBlock.FACING));
-            outputs.put("OUTPUT",state.getValue(HorizontalDirectionalBlock.FACING).getOpposite());
+            outputs.put("INPUT",state.getValue(HorizontalDirectionalBlock.FACING).getOpposite());
+            outputs.put("OUTPUT",state.getValue(HorizontalDirectionalBlock.FACING));
         }
         if (entity instanceof RotarySource source) {
             BlockState state = source.getBlockState();
