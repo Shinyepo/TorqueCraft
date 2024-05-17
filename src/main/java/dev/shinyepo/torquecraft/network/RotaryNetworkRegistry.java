@@ -95,7 +95,7 @@ public class RotaryNetworkRegistry {
 
     public UUID registerTransmitter(RotaryTransmitter transmitter, Direction direction) {
         //TODO: Directions[]
-        RotaryNetwork network = getInstance().fetchNetwork((IRotaryNetworkDevice) transmitter, direction);
+        RotaryNetwork network = getInstance().fetchNetwork((IRotaryNetworkDevice) transmitter, new Direction[]{direction, direction.getOpposite()});
         if (network != null) {
             getInstance().addTransmitter(network, transmitter);
             TorqueCraft.logger.info("New network devices: {}", network.getDevices().toString());
@@ -109,7 +109,7 @@ public class RotaryNetworkRegistry {
     }
 
     public UUID registerSource(RotarySource source) {
-        RotaryNetwork network = getInstance().fetchNetwork((IRotaryNetworkDevice) source, source.getBlockState().getValue(HorizontalDirectionalBlock.FACING));
+        RotaryNetwork network = getInstance().fetchNetwork((IRotaryNetworkDevice) source, new Direction[]{source.getBlockState().getValue(HorizontalDirectionalBlock.FACING)});
         if (network != null) {
             getInstance().addSource(network, source);
             TorqueCraft.logger.info("Source merged with existing network");
@@ -148,17 +148,21 @@ public class RotaryNetworkRegistry {
     }
 
     //TODO: Separate for transmitter
-    public RotaryNetwork fetchNetwork(IRotaryNetworkDevice networkDevice, Direction dir) {
+    public RotaryNetwork fetchNetwork(IRotaryNetworkDevice networkDevice, Direction[] directions) {
         List<RotaryNetwork> foundNetworks = new ArrayList<>();
-        if (networkDevice instanceof BlockEntity source) {
-            BlockPos pos = source.getBlockPos();
-            var device = source.getLevel().getBlockEntity(pos.relative(dir.getOpposite()));
-            if (device instanceof IRotaryNetworkDevice nextDevice) {
-                BlockState nextState = nextDevice.getBlockState();
-                if (nextState.getValue(HorizontalDirectionalBlock.FACING) == dir) {
-                    foundNetworks.add(getInstance().getNetwork(nextDevice.getNetworkId()));
+        int i = 0;
+        for (Direction dir : directions) {
+            if (networkDevice instanceof BlockEntity entity) {
+                BlockPos pos = entity.getBlockPos();
+                var device = entity.getLevel().getBlockEntity(pos.relative(dir));
+                if (device instanceof IRotaryNetworkDevice nextDevice) {
+                    BlockState nextState = nextDevice.getBlockState();
+                    if ((i == 0 ? nextState.getValue(HorizontalDirectionalBlock.FACING) : nextState.getValue(HorizontalDirectionalBlock.FACING).getOpposite()) == dir) {
+                        foundNetworks.add(getInstance().getNetwork(nextDevice.getNetworkId()));
+                    }
                 }
             }
+            i++;
         }
         //TODO: Merging transmitter is clunky
         if (foundNetworks.size() > 1) {
@@ -204,9 +208,11 @@ public class RotaryNetworkRegistry {
         BlockPos pos = rotaryTransmitter.getBlockPos();
         Direction dir = rotaryTransmitter.getBlockState().getValue(HorizontalDirectionalBlock.FACING);
         Level level = rotaryTransmitter.getLevel();
-        if (level.getBlockEntity(pos.relative(dir)) instanceof IRotaryNetworkDevice && level.getBlockEntity(pos.relative(dir.getOpposite())) instanceof IRotaryNetworkDevice) {
-            getInstance().splitNetwork(network, level.getBlockEntity(pos.relative(dir)), level.getBlockEntity(pos.relative(dir.getOpposite())));
-            return;
+        if (level.getBlockEntity(pos.relative(dir)) instanceof IRotaryNetworkDevice r1 && level.getBlockEntity(pos.relative(dir.getOpposite())) instanceof IRotaryNetworkDevice r2) {
+            if(r1.getBlockState().getValue(HorizontalDirectionalBlock.FACING) == dir && r2.getBlockState().getValue(HorizontalDirectionalBlock.FACING).getOpposite() == dir.getOpposite()) {
+                getInstance().splitNetwork(network, level.getBlockEntity(pos.relative(dir)), level.getBlockEntity(pos.relative(dir.getOpposite())));
+                return;
+            }
         }
         network.removeTransmitter(rotaryTransmitter);
     }
