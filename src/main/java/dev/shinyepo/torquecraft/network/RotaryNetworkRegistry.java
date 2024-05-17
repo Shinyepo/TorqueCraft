@@ -60,7 +60,8 @@ public class RotaryNetworkRegistry {
     }
 
     public void removeNetwork(UUID id) {
-        networks.remove(id);
+        getInstance().networks.get(id).clear();
+        getInstance().networks.remove(id);
         TorqueCraft.logger.info("Removed network. New network size: {}", networks.size());
     }
 
@@ -94,7 +95,6 @@ public class RotaryNetworkRegistry {
     }
 
     public UUID registerTransmitter(RotaryTransmitter transmitter, Direction direction) {
-        //TODO: Directions[]
         RotaryNetwork network = getInstance().fetchNetwork((IRotaryNetworkDevice) transmitter, new Direction[]{direction, direction.getOpposite()});
         if (network != null) {
             getInstance().addTransmitter(network, transmitter);
@@ -221,9 +221,9 @@ public class RotaryNetworkRegistry {
         RotaryNetwork newNetwork = new RotaryNetwork(UUID.randomUUID());
         RotaryNetwork newNetwork1 = new RotaryNetwork(UUID.randomUUID());
 
-        findDevices(newNetwork, device);
+        getInstance().findDevices(newNetwork, device);
         getInstance().registerNetwork(newNetwork);
-        findDevices(newNetwork1, device1);
+        getInstance().findDevices(newNetwork1, device1);
         getInstance().registerNetwork(newNetwork1);
 
         getInstance().removeNetwork(network.getNetworkId());
@@ -235,7 +235,6 @@ public class RotaryNetworkRegistry {
             if (network.validDevice(source)) {
                 network.registerSource(source);
                 source.updateNetwork(network.getNetworkId());
-                return;
             }
         } else if (device instanceof RotaryTransmitter transmitter) {
             if (network.validDevice(transmitter)) {
@@ -245,41 +244,9 @@ public class RotaryNetworkRegistry {
                 Direction dir = tState.getValue(HorizontalDirectionalBlock.FACING);
                 BlockEntity relativeEntity = device.getLevel().getBlockEntity(device.getBlockPos().relative(dir));
                 BlockEntity relativeEntity2 = device.getLevel().getBlockEntity(device.getBlockPos().relative(dir.getOpposite()));
-                findDevices(network, relativeEntity);
-                findDevices(network, relativeEntity2);
+                getInstance().findDevices(network, relativeEntity);
+                getInstance().findDevices(network, relativeEntity2);
             }
         }
-        return;
-
-
-//
-//        BlockState state = device.getBlockState();
-//        List<Direction> directions = new ArrayList<>();
-//        if (device instanceof RotarySource) {
-//            directions.add(state.getValue(HorizontalDirectionalBlock.FACING));
-//        } else if (device instanceof RotaryTransmitter) {
-//            Direction dir = state.getValue(HorizontalDirectionalBlock.FACING);
-//            directions.add(dir);
-//            directions.add(dir.getOpposite());
-//        }
-//
-//        for (Direction dir : directions) {
-//            BlockEntity relative = device.getLevel().getBlockEntity(device.getBlockPos());
-//            if (relative instanceof RotarySource source) {
-//                BlockState stateSource = source.getBlockState();
-//                if (stateSource.getValue(HorizontalDirectionalBlock.FACING) == dir.getOpposite() && !network.validDevice(source)) {
-//                    network.registerSource(source);
-//                    source.updateNetwork(network.getNetworkId());
-//                    return;
-//                }
-//            } else if (relative instanceof RotaryTransmitter transmitter && !network.validDevice(transmitter)) {
-//                BlockState stateTransmitter = transmitter.getBlockState();
-//                if (stateTransmitter.getValue(HorizontalDirectionalBlock.FACING) == dir.getOpposite()) {
-//                    network.registerTransmitter(transmitter);
-//                    transmitter.updateNetwork(network.getNetworkId());
-//                    findDevices(network, relative.getLevel().getBlockEntity(relative.getBlockPos().relative(dir.getOpposite())));
-//                }
-//            }
-//        }
     }
 }

@@ -24,6 +24,16 @@ public class RotaryHandler implements IRotaryHandler {
         TORQUE_ACC = MAX_TORQUE / speedupTime / 20;
     }
 
+    public void setMaxTorque(float torque) {
+        this.MAX_TORQUE = torque;
+        validateValues();
+    }
+
+    public void setMaxAngular(float angular) {
+        this.MAX_ANGULAR = angular;
+        validateValues();
+    }
+
     public void calculatePower() {
         POWER = ANGULAR * TORQUE;
         validateValues();
@@ -31,10 +41,12 @@ public class RotaryHandler implements IRotaryHandler {
 
     public void setTorque(float torque) {
         TORQUE = torque;
+        this.markDirty();
     }
 
     public void setAngular(float angular) {
         ANGULAR = angular;
+        this.markDirty();
     }
 
     private void validateValues() {
