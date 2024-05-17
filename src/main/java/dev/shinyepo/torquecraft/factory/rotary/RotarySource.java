@@ -162,10 +162,6 @@ public class RotarySource extends BlockEntity implements IRotaryIO, IRotarySourc
         }
     }
 
-    public UUID getNetworkID() {
-        return this.network_id;
-    }
-
     @Override
     public void updateNetwork(UUID id) {
         this.network_id = id;
