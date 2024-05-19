@@ -41,6 +41,8 @@ public class TorqueCraft {
 
     public TorqueCraft(IEventBus modEventBus) {
 
+        NeoForge.EVENT_BUS.addListener(this::serverStopped);
+
         modEventBus.addListener(this::commonSetup);
 
         TorqueBlocks.BLOCKS.register(modEventBus);
