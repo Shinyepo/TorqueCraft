@@ -14,7 +14,6 @@ public class ShaftEntity extends RotaryTransmitter {
     }
 
     public void tick(BlockPos pPos, BlockState pState) {
-        updateAnimation();
     }
 
 }
