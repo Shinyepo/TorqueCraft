@@ -7,6 +7,7 @@ import dev.shinyepo.torquecraft.capabilities.TorqueCustomCapabilities;
 import dev.shinyepo.torquecraft.capabilities.handlers.IRotaryHandler;
 import dev.shinyepo.torquecraft.factory.rotary.IRotaryIO;
 import dev.shinyepo.torquecraft.factory.rotary.RotarySource;
+import dev.shinyepo.torquecraft.factory.rotary.RotaryTransmitter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -113,8 +114,10 @@ public class SteamEngine extends HorizontalDirectionalBlock implements EntityBlo
     protected void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
         if (pState.getBlock() != pNewState.getBlock()) {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-            if (blockEntity instanceof SteamEngineEntity) {
+            if (blockEntity instanceof RotarySource source) {
                 pLevel.removeBlockEntity(pPos);
+                source.removeSource();
+
             }
         }
         super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
@@ -140,7 +143,7 @@ public class SteamEngine extends HorizontalDirectionalBlock implements EntityBlo
     @Override
     public void setPlacedBy(Level pLevel, BlockPos pPos, BlockState pState, @Nullable LivingEntity pPlacer, ItemStack pStack) {
         if (pPlacer == Minecraft.getInstance().player) {
-            if (pLevel.getBlockEntity(pPos) instanceof IRotaryIO rotary) {
+            if (pLevel.getBlockEntity(pPos) instanceof RotarySource rotary) {
                 rotary.setProgress(0F);
             }
         }

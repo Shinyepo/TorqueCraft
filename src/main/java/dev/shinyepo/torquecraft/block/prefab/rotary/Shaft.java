@@ -5,7 +5,7 @@ import dev.shinyepo.torquecraft.block.entities.rotary.ShaftEntity;
 import dev.shinyepo.torquecraft.capabilities.TorqueCustomCapabilities;
 import dev.shinyepo.torquecraft.capabilities.handlers.IRotaryHandler;
 import dev.shinyepo.torquecraft.factory.rotary.IRotaryIO;
-import net.minecraft.client.Minecraft;
+import dev.shinyepo.torquecraft.factory.rotary.RotaryTransmitter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -32,7 +32,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class Shaft extends HorizontalDirectionalBlock implements EntityBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
-    private static final VoxelShape SHAPE = Block.box(0,0,0,16,16,16);
+    private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 16, 16);
 
     public Shaft(Properties pProperties) {
         super(pProperties);
@@ -73,7 +73,7 @@ public class Shaft extends HorizontalDirectionalBlock implements EntityBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        if(pLevel.isClientSide()) {
+        if (pLevel.isClientSide()) {
             return (pLevel1, pPos, pState1, pBlockEntity) -> {
                 if (pBlockEntity instanceof IRotaryIO rotary) {
                     rotary.renderTick();
@@ -93,15 +93,15 @@ public class Shaft extends HorizontalDirectionalBlock implements EntityBlock {
         player.displayClientMessage(Component.literal("State Face: " + state.getValue(FACING) + ", Hit Face: " + hit.getDirection()), false);
         IRotaryHandler handler = level.getCapability(TorqueCustomCapabilities.ROTARY_HANDLER_BLOCK, pos.relative(state.getValue(FACING).getOpposite()), state.getValue(FACING));
         if (handler != null) {
-            player.displayClientMessage(Component.literal("POWER: "+ handler.getPower()), false);
+            player.displayClientMessage(Component.literal("POWER: " + handler.getPower()), false);
         }
         return InteractionResult.SUCCESS;
     }
 
     @Override
     public void setPlacedBy(Level pLevel, BlockPos pPos, BlockState pState, @Nullable LivingEntity pPlacer, ItemStack pStack) {
-        if (pPlacer == Minecraft.getInstance().player) {
-            if (pLevel.getBlockEntity(pPos) instanceof IRotaryIO rIO) {
+        if (pLevel.isClientSide()) {
+            if (pLevel.getBlockEntity(pPos) instanceof RotaryTransmitter rIO) {
                 rIO.setProgress(0F);
             }
         }
@@ -111,8 +111,9 @@ public class Shaft extends HorizontalDirectionalBlock implements EntityBlock {
     protected void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
         if (pState.getBlock() != pNewState.getBlock()) {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-            if (blockEntity instanceof ShaftEntity) {
+            if (blockEntity instanceof RotaryTransmitter rotary) {
                 pLevel.removeBlockEntity(pPos);
+                rotary.removeTransmitter();
             }
         }
         super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);

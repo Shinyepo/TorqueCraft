@@ -41,16 +41,14 @@ public class RotaryHandler implements IRotaryHandler {
 
     public void setTorque(float torque) {
         TORQUE = torque;
-        this.markDirty();
     }
 
     public void setAngular(float angular) {
         ANGULAR = angular;
-        this.markDirty();
     }
 
     private void validateValues() {
-        if (POWER <= 0f) {
+        if (POWER < 0f) {
             POWER = 0f;
         }
         if (ANGULAR < 0f) {

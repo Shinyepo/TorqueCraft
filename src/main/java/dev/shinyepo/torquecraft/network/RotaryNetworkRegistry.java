@@ -60,8 +60,11 @@ public class RotaryNetworkRegistry {
     }
 
     public void removeNetwork(UUID id) {
-        getInstance().networks.get(id).clear();
-        getInstance().networks.remove(id);
+        var network = getInstance().networks.get(id);
+        if (network != null) {
+            network.clear();
+            getInstance().networks.remove(id);
+        }
         TorqueCraft.logger.info("Removed network. New network size: {}", networks.size());
     }
 
@@ -158,7 +161,12 @@ public class RotaryNetworkRegistry {
                 if (device instanceof IRotaryNetworkDevice nextDevice) {
                     BlockState nextState = nextDevice.getBlockState();
                     if ((i == 0 ? nextState.getValue(HorizontalDirectionalBlock.FACING) : nextState.getValue(HorizontalDirectionalBlock.FACING).getOpposite()) == dir) {
-                        foundNetworks.add(getInstance().getNetwork(nextDevice.getNetworkId()));
+                        if (nextDevice.getNetworkId() != null) {
+                            RotaryNetwork network = getInstance().getNetwork(nextDevice.getNetworkId());
+                            if (network != null) {
+                                foundNetworks.add(network);
+                            }
+                        }
                     }
                 }
             }
@@ -172,8 +180,8 @@ public class RotaryNetworkRegistry {
     }
 
     private RotaryNetwork mergeNetworks(List<RotaryNetwork> networks) {
-        List<IRotaryNetworkDevice> devices1 = networks.getFirst().getDevices();
-        List<IRotaryNetworkDevice> devices2 = networks.getLast().getDevices();
+        List<IRotaryNetworkDevice> devices1 = networks.get(0).getDevices();
+        List<IRotaryNetworkDevice> devices2 = networks.get(1).getDevices();
         RotaryNetwork newNetwork = new RotaryNetwork(UUID.randomUUID());
         bulkAddDevices(newNetwork, devices1);
         bulkAddDevices(newNetwork, devices2);
@@ -209,7 +217,7 @@ public class RotaryNetworkRegistry {
         Direction dir = rotaryTransmitter.getBlockState().getValue(HorizontalDirectionalBlock.FACING);
         Level level = rotaryTransmitter.getLevel();
         if (level.getBlockEntity(pos.relative(dir)) instanceof IRotaryNetworkDevice r1 && level.getBlockEntity(pos.relative(dir.getOpposite())) instanceof IRotaryNetworkDevice r2) {
-            if(r1.getBlockState().getValue(HorizontalDirectionalBlock.FACING) == dir && r2.getBlockState().getValue(HorizontalDirectionalBlock.FACING).getOpposite() == dir.getOpposite()) {
+            if (r1.getBlockState().getValue(HorizontalDirectionalBlock.FACING) == dir && r2.getBlockState().getValue(HorizontalDirectionalBlock.FACING).getOpposite() == dir.getOpposite()) {
                 getInstance().splitNetwork(network, level.getBlockEntity(pos.relative(dir)), level.getBlockEntity(pos.relative(dir.getOpposite())));
                 return;
             }

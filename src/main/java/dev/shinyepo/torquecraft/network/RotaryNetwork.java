@@ -29,6 +29,7 @@ public class RotaryNetwork {
     }
 
     public void registerSource(RotarySource source) {
+        if (!validDevice(source)) return;
         sources.put(source.getBlockPos(), source);
 
         var engine = SourceConfig.STEAM_ENGINE;
@@ -44,6 +45,7 @@ public class RotaryNetwork {
     }
 
     public void registerTransmitter(RotaryTransmitter transmitter) {
+        if (!validDevice(transmitter)) return;
         transmitters.put(transmitter.getBlockPos(), transmitter);
         updateNetwork();
         devices.add(transmitter);
@@ -66,11 +68,9 @@ public class RotaryNetwork {
     }
 
     public void emitPower(float angular, float torque) {
-
             this.rotaryHandler.setAngular(angular);
             this.rotaryHandler.setTorque(torque);
             this.updateNetwork();
-
     }
 
     private void updateNetwork() {

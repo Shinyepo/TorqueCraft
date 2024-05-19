@@ -26,12 +26,12 @@ public class RotaryTransmitter extends BlockEntity implements IRotaryIO, IRotary
 
     private UUID network_id;
 
-    private Lazy<RotaryHandler> rotaryHandler = Lazy.of(() ->new RotaryHandler(512*20,512*20){
+    private Lazy<RotaryHandler> rotaryHandler = Lazy.of(() -> new RotaryHandler(512 * 20, 512 * 20) {
         @Override
         public void markDirty() {
             super.markDirty();
             setChanged();
-            if (!level.isClientSide()) {
+            if (level != null && !level.isClientSide()) {
                 TorqueMessages.sendToAllPlayers(new SyncRotaryPowerS2C(worldPosition, this.ANGULAR, this.TORQUE));
             }
         }
@@ -53,21 +53,16 @@ public class RotaryTransmitter extends BlockEntity implements IRotaryIO, IRotary
         this.progress = dur;
     }
 
-    public void transmitPower(float angular, float torque) {
-        setRotaryPower(angular,torque);
-        this.rotaryHandler.get().markDirty();
-    }
-
     public void setRotaryPower(float angular, float torque) {
         this.rotaryHandler.get().setAngular(angular);
         this.rotaryHandler.get().setTorque(torque);
-        this.rotaryHandler.get().calculatePower();
+        this.rotaryHandler.get().markDirty();
     }
 
     @Override
     public void renderTick() {
         updateAnimation();
-        angle = (angle + rotaryHandler.get().getAngular()/10) % 360;
+        angle = (angle + rotaryHandler.get().getAngular() / 10) % 360;
     }
 
     public double getAngle() {
@@ -92,7 +87,7 @@ public class RotaryTransmitter extends BlockEntity implements IRotaryIO, IRotary
         if (rotaryHandler != null) {
             tag.put(TorqueNBT.POWER, rotaryHandler.get().serializeNBT(provider));
         }
-        if (network_id != null){
+        if (network_id != null) {
             tag.putUUID(TorqueNBT.NETWORK_ID, network_id);
         }
     }
@@ -113,7 +108,6 @@ public class RotaryTransmitter extends BlockEntity implements IRotaryIO, IRotary
     public void onLoad() {
         super.onLoad();
         if (this.level == null || this.level.isClientSide()) return;
-
         Direction direction = this.getBlockState().getValue(HorizontalDirectionalBlock.FACING);
         this.network_id = RotaryNetworkRegistry.getInstance().registerTransmitter(this, direction);
     }
@@ -127,6 +121,14 @@ public class RotaryTransmitter extends BlockEntity implements IRotaryIO, IRotary
     @Override
     public void setRemoved() {
         super.setRemoved();
-        RotaryNetworkRegistry.getInstance().removeTransmitter(this.network_id,this);
+    }
+
+    public void onPlaced() {
+    }
+
+    public void removeTransmitter() {
+        if (this.level != null && !this.level.isClientSide) {
+            RotaryNetworkRegistry.getInstance().removeTransmitter(this.network_id, this);
+        }
     }
 }
