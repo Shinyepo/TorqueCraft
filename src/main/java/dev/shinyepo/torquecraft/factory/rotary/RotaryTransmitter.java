@@ -19,7 +19,7 @@ import net.neoforged.neoforge.common.util.Lazy;
 
 import java.util.UUID;
 
-public class RotaryTransmitter extends BlockEntity implements IRotaryIO, IRotaryTransmitter, IRotaryNetworkDevice {
+public class RotaryTransmitter extends BlockEntity implements IRotaryIO, IRotaryTransmitter, IRotaryNetworkDevice, IRotational {
     protected float progress = 3F;
     private float progressOld;
     public float angle = 0;

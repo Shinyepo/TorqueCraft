@@ -20,7 +20,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
-public class RotarySource extends BlockEntity implements IRotaryIO, IRotarySource, IRotaryNetworkDevice {
+public class RotarySource extends BlockEntity implements IRotaryIO, IRotarySource, IRotaryNetworkDevice, IRotational {
     protected float progress = 3F;
     private float progressOld;
     public float angle = 0;

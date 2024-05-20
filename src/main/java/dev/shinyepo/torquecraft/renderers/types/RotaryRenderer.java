@@ -4,8 +4,10 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import dev.shinyepo.torquecraft.TorqueCraft;
 import dev.shinyepo.torquecraft.capabilities.TorqueCustomCapabilities;
 import dev.shinyepo.torquecraft.capabilities.handlers.IRotaryHandler;
+import dev.shinyepo.torquecraft.factory.rotary.IRotational;
 import dev.shinyepo.torquecraft.factory.rotary.RotarySource;
 import dev.shinyepo.torquecraft.factory.rotary.RotaryTransmitter;
+import dev.shinyepo.torquecraft.network.IRotaryNetworkDevice;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -34,10 +36,8 @@ public class RotaryRenderer {
         pose.pushPose();
         pose.translate(0.5F, 0.5F, 0.5F);
         double angle = 0;
-        if (blockEntity instanceof RotarySource rs) {
-            angle = -(rs.getAngle() + (handler.getAngular() / 10) * partialTick) % 360;
-        } else if (blockEntity instanceof RotaryTransmitter rt) {
-            angle = (rt.getAngle() + (handler.getAngular() / 10) * partialTick) % 360;
+        if (blockEntity instanceof IRotational rs) {
+            angle = (rs.getAngle() + (handler.getAngular() / 10) * partialTick) % 360;
         }
         pose.mulPose(new Quaternionf().rotateAxis((float)Math.toRadians(angle % 360), new Vector3f(-direction.getStepX(), 0, -direction.getStepZ())));
         pose.mulPose(direction.getRotation());
