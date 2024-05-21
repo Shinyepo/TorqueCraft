@@ -35,6 +35,8 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.Nullable;
 
 public class SteamEngine extends HorizontalDirectionalBlock implements EntityBlock {
@@ -100,9 +102,10 @@ public class SteamEngine extends HorizontalDirectionalBlock implements EntityBlo
         BlockEntity entity = pLevel.getBlockEntity(pPos);
         if (entity instanceof RotarySource rotaryEntity) {
             IRotaryHandler handler = pLevel.getCapability(TorqueCustomCapabilities.ROTARY_HANDLER_BLOCK,pPos, pState, rotaryEntity, pHit.getDirection());
-            if (handler != null) {
+            IFluidHandler fluidHandler = pLevel.getCapability(Capabilities.FluidHandler.BLOCK, pPos, pState, rotaryEntity, null);
+            if (handler != null && fluidHandler != null) {
                 if (pLevel.isClientSide()) {
-                    pPlayer.displayClientMessage(Component.literal("ANGULAR: " + handler.getAngular() + ", TORQUE: " + handler.getTorque() + ", POWER: "+ handler.getPower()),false);
+                    pPlayer.displayClientMessage(Component.literal("ANGULAR: " + handler.getAngular() + ", TORQUE: " + handler.getTorque() + ", POWER: "+ handler.getPower() + ", FLUID" + fluidHandler.getFluidInTank(0).getFluid() + " - " + fluidHandler.getFluidInTank(0).getAmount()),false);
                 } else {
                     pPlayer.displayClientMessage(Component.literal("ANGULAR: " + handler.getAngular() + ", TORQUE: " + handler.getTorque() + ", POWER: "+ handler.getPower()),true);
                 }
