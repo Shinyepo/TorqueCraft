@@ -1,6 +1,6 @@
 package dev.shinyepo.torquecraft.network;
 
-import dev.shinyepo.torquecraft.capabilities.handlers.RotaryHandler;
+import dev.shinyepo.torquecraft.capabilities.handlers.rotary.RotaryHandler;
 import dev.shinyepo.torquecraft.config.SourceConfig;
 import dev.shinyepo.torquecraft.factory.rotary.network.RotaryClient;
 import dev.shinyepo.torquecraft.factory.rotary.network.RotarySource;

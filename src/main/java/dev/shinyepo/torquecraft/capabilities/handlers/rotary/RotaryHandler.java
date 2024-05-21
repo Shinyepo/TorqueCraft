@@ -1,4 +1,4 @@
-package dev.shinyepo.torquecraft.capabilities.handlers;
+package dev.shinyepo.torquecraft.capabilities.handlers.rotary;
 
 import dev.shinyepo.torquecraft.utils.MathUtil;
 import net.minecraft.core.HolderLookup;

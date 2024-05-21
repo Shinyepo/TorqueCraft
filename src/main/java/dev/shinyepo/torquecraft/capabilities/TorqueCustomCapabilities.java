@@ -1,7 +1,7 @@
 package dev.shinyepo.torquecraft.capabilities;
 
 import dev.shinyepo.torquecraft.TorqueCraft;
-import dev.shinyepo.torquecraft.capabilities.handlers.IRotaryHandler;
+import dev.shinyepo.torquecraft.capabilities.handlers.rotary.IRotaryHandler;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.capabilities.BlockCapability;

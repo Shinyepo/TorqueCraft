@@ -3,7 +3,7 @@ package dev.shinyepo.torquecraft.block.prefab.rotary;
 import com.mojang.serialization.MapCodec;
 import dev.shinyepo.torquecraft.block.entities.rotary.SteamEngineEntity;
 import dev.shinyepo.torquecraft.capabilities.TorqueCustomCapabilities;
-import dev.shinyepo.torquecraft.capabilities.handlers.IRotaryHandler;
+import dev.shinyepo.torquecraft.capabilities.handlers.rotary.IRotaryHandler;
 import dev.shinyepo.torquecraft.constants.TorqueAttributes;
 import dev.shinyepo.torquecraft.factory.rotary.render.IRotaryIO;
 import dev.shinyepo.torquecraft.factory.rotary.network.RotarySource;

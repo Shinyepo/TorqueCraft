@@ -1,4 +1,4 @@
-package dev.shinyepo.torquecraft.capabilities.handlers;
+package dev.shinyepo.torquecraft.capabilities.handlers.rotary;
 
 public interface IRotaryHandler {
     float getPower();

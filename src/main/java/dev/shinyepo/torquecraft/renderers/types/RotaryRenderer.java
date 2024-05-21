@@ -3,7 +3,7 @@ package dev.shinyepo.torquecraft.renderers.types;
 import com.mojang.blaze3d.vertex.PoseStack;
 import dev.shinyepo.torquecraft.TorqueCraft;
 import dev.shinyepo.torquecraft.capabilities.TorqueCustomCapabilities;
-import dev.shinyepo.torquecraft.capabilities.handlers.IRotaryHandler;
+import dev.shinyepo.torquecraft.capabilities.handlers.rotary.IRotaryHandler;
 import dev.shinyepo.torquecraft.factory.rotary.render.IRotational;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;

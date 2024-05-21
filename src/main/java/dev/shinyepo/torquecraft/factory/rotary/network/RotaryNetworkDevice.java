@@ -1,6 +1,6 @@
 package dev.shinyepo.torquecraft.factory.rotary.network;
 
-import dev.shinyepo.torquecraft.capabilities.handlers.RotaryHandler;
+import dev.shinyepo.torquecraft.capabilities.handlers.rotary.RotaryHandler;
 import dev.shinyepo.torquecraft.config.IRotaryConfig;
 import dev.shinyepo.torquecraft.constants.TorqueNBT;
 import dev.shinyepo.torquecraft.factory.rotary.render.AnimatedEntity;
