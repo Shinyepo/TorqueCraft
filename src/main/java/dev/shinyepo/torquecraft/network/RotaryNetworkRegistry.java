@@ -1,16 +1,14 @@
 package dev.shinyepo.torquecraft.network;
 
 import dev.shinyepo.torquecraft.TorqueCraft;
-import dev.shinyepo.torquecraft.capabilities.TorqueCustomCapabilities;
-import dev.shinyepo.torquecraft.capabilities.handlers.IRotaryHandler;
-import dev.shinyepo.torquecraft.factory.rotary.IRotaryIO;
-import dev.shinyepo.torquecraft.factory.rotary.RotarySource;
-import dev.shinyepo.torquecraft.factory.rotary.RotaryTransmitter;
+import dev.shinyepo.torquecraft.factory.rotary.network.RotaryClient;
+import dev.shinyepo.torquecraft.factory.rotary.network.RotaryNetworkDevice;
+import dev.shinyepo.torquecraft.factory.rotary.network.RotarySource;
+import dev.shinyepo.torquecraft.factory.rotary.network.RotaryTransmitter;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -84,6 +82,14 @@ public class RotaryNetworkRegistry {
         return id;
     }
 
+    private UUID registerNetwork(UUID id, RotaryClient rotaryClient) {
+        RotaryNetwork network = new RotaryNetwork(id);
+        getInstance().addClient(network, rotaryClient);
+        getInstance().networks.put(id, network);
+        TorqueCraft.logger.info("Registering network. New network size: {}", networks.size());
+        return id;
+    }
+
     public RotaryNetwork registerNetwork(RotaryNetwork network) {
         getInstance().networks.put(network.getNetworkId(), network);
         return network;
@@ -95,6 +101,10 @@ public class RotaryNetworkRegistry {
 
     private void addSource(RotaryNetwork network, RotarySource source) {
         network.registerSource(source);
+    }
+
+    private void addClient(RotaryNetwork network, RotaryClient rotaryClient) {
+        network.registerClient(rotaryClient);
     }
 
     public UUID registerTransmitter(RotaryTransmitter transmitter, Direction direction) {
@@ -126,28 +136,6 @@ public class RotaryNetworkRegistry {
 
     public static RotaryNetworkRegistry getInstance() {
         return INSTANCE;
-    }
-
-    private static boolean possibleNetwork(Level level, BlockPos pos) {
-        Block block = level.getBlockState(pos).getBlock();
-        if (block instanceof IRotaryIO) {
-            BlockState state = level.getBlockState(pos);
-            IRotaryHandler handler = level.getCapability(TorqueCustomCapabilities.ROTARY_HANDLER_BLOCK, pos.relative(state.getValue(HorizontalDirectionalBlock.FACING)), null);
-            return handler != null;
-        }
-        return false;
-    }
-
-    private void fetchMachines(Level level, BlockPos pos) {
-        for (Direction dir : Direction.Plane.HORIZONTAL) {
-            IRotaryHandler handler = level.getCapability(TorqueCustomCapabilities.ROTARY_HANDLER_BLOCK, pos.relative(dir), null);
-            if (handler != null) {
-                if (!POS_CACHE.contains(pos.relative(dir))) {
-                    POS_CACHE.add(pos.relative(dir));
-                    fetchMachines(level, pos.relative(dir));
-                }
-            }
-        }
     }
 
     //TODO: Separate for transmitter
@@ -257,4 +245,24 @@ public class RotaryNetworkRegistry {
             }
         }
     }
+
+    public void removeClient(UUID networkId, RotaryClient rotaryClient) {
+        RotaryNetwork network = getInstance().getNetwork(networkId);
+        if (network == null) return;
+        network.removeClient(rotaryClient);
+    }
+
+    public UUID registerClient(RotaryClient rotaryClient) {
+        RotaryNetwork network = getInstance().fetchNetwork((RotaryNetworkDevice) rotaryClient, new Direction[]{rotaryClient.getBlockState().getValue(HorizontalDirectionalBlock.FACING)});
+        if (network != null) {
+            getInstance().addClient(network, rotaryClient);
+            TorqueCraft.logger.info("Source merged with existing network");
+            return network.getNetworkId();
+        } else {
+            TorqueCraft.logger.info("Created new network for source");
+            return registerNetwork(UUID.randomUUID(), rotaryClient);
+        }
+    }
+
+
 }

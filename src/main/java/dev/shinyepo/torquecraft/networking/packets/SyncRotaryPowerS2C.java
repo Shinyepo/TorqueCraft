@@ -1,8 +1,8 @@
 package dev.shinyepo.torquecraft.networking.packets;
 
 import dev.shinyepo.torquecraft.TorqueCraft;
-import dev.shinyepo.torquecraft.factory.rotary.RotarySource;
-import dev.shinyepo.torquecraft.factory.rotary.RotaryTransmitter;
+import dev.shinyepo.torquecraft.factory.rotary.network.RotarySource;
+import dev.shinyepo.torquecraft.factory.rotary.network.RotaryTransmitter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;

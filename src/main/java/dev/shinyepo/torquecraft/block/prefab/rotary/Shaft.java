@@ -5,7 +5,7 @@ import dev.shinyepo.torquecraft.block.entities.rotary.ShaftEntity;
 import dev.shinyepo.torquecraft.capabilities.TorqueCustomCapabilities;
 import dev.shinyepo.torquecraft.capabilities.handlers.IRotaryHandler;
 import dev.shinyepo.torquecraft.factory.rotary.IRotaryIO;
-import dev.shinyepo.torquecraft.factory.rotary.RotaryTransmitter;
+import dev.shinyepo.torquecraft.factory.rotary.network.RotaryTransmitter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;

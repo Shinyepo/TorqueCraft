@@ -1,7 +1,9 @@
 package dev.shinyepo.torquecraft.factory;
 
-import dev.shinyepo.torquecraft.constants.TorqueNBT;
 import dev.shinyepo.torquecraft.capabilities.handlers.AdaptedItemHandler;
+import dev.shinyepo.torquecraft.config.ClientConfig;
+import dev.shinyepo.torquecraft.constants.TorqueNBT;
+import dev.shinyepo.torquecraft.factory.rotary.network.RotaryClient;
 import dev.shinyepo.torquecraft.networking.TorqueMessages;
 import dev.shinyepo.torquecraft.networking.packets.SyncFluidS2C;
 import net.minecraft.core.BlockPos;
@@ -13,7 +15,6 @@ import net.minecraft.world.Containers;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.util.Lazy;
@@ -27,7 +28,7 @@ import org.jetbrains.annotations.Nullable;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class MachineFactory extends BlockEntity {
+public class MachineFactory extends RotaryClient {
     public static final String ITEMS_INPUT_TAG = "Input";
     public static final String ITEMS_OUTPUT_TAG = "Output";
     public static final String FLUID_DRAIN_TAG = "Drain";
@@ -50,7 +51,7 @@ public class MachineFactory extends BlockEntity {
     public int maxProgress = 64;
 
     public MachineFactory(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState) {
-        super(pType, pPos, pBlockState);
+        super(pType, pPos, pBlockState, ClientConfig.GRINDER);
     }
 
     public void setMaxProgress(int progress) {

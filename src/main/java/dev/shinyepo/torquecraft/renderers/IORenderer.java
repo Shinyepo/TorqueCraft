@@ -2,9 +2,8 @@ package dev.shinyepo.torquecraft.renderers;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
-import dev.shinyepo.torquecraft.block.entities.rotary.ShaftEntity;
-import dev.shinyepo.torquecraft.block.prefab.rotary.SteamEngine;
-import dev.shinyepo.torquecraft.factory.rotary.RotarySource;
+import dev.shinyepo.torquecraft.factory.rotary.network.RotarySource;
+import dev.shinyepo.torquecraft.factory.rotary.network.RotaryTransmitter;
 import dev.shinyepo.torquecraft.renderers.types.TorqueRenders;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
@@ -23,8 +22,8 @@ public class IORenderer {
 
     private static Map<String,Direction> getIOs(BlockEntity entity) {
         Map<String,Direction> outputs = new HashMap<>();
-        if (entity instanceof ShaftEntity sE) {
-            BlockState state = sE.getBlockState();
+        if (entity instanceof RotaryTransmitter transmitter) {
+            BlockState state = transmitter.getBlockState();
             outputs.put("INPUT",state.getValue(HorizontalDirectionalBlock.FACING).getOpposite());
             outputs.put("OUTPUT",state.getValue(HorizontalDirectionalBlock.FACING));
         }

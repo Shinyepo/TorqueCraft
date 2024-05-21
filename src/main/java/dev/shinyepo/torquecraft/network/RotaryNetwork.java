@@ -2,8 +2,9 @@ package dev.shinyepo.torquecraft.network;
 
 import dev.shinyepo.torquecraft.capabilities.handlers.RotaryHandler;
 import dev.shinyepo.torquecraft.config.SourceConfig;
-import dev.shinyepo.torquecraft.factory.rotary.RotarySource;
-import dev.shinyepo.torquecraft.factory.rotary.RotaryTransmitter;
+import dev.shinyepo.torquecraft.factory.rotary.network.RotaryClient;
+import dev.shinyepo.torquecraft.factory.rotary.network.RotarySource;
+import dev.shinyepo.torquecraft.factory.rotary.network.RotaryTransmitter;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.core.BlockPos;
 
@@ -14,9 +15,10 @@ import java.util.UUID;
 
 public class RotaryNetwork {
     private final UUID network_id;
-    private List<IRotaryNetworkDevice> devices = new ArrayList<>();
-    private Map<BlockPos, RotarySource> sources = new Object2ObjectOpenHashMap<>();
-    private Map<BlockPos, RotaryTransmitter> transmitters = new Object2ObjectOpenHashMap<>();
+    private final List<IRotaryNetworkDevice> devices = new ArrayList<>();
+    private final Map<BlockPos, RotarySource> sources = new Object2ObjectOpenHashMap<>();
+    private final Map<BlockPos, RotaryTransmitter> transmitters = new Object2ObjectOpenHashMap<>();
+    private Map<BlockPos, RotaryClient> clients = new Object2ObjectOpenHashMap<>();
 
     private final RotaryHandler rotaryHandler = new RotaryHandler(0, 0);
 
@@ -51,6 +53,13 @@ public class RotaryNetwork {
         devices.add(transmitter);
     }
 
+    public void registerClient(RotaryClient rotaryClient) {
+        if (!validDevice(rotaryClient)) return;
+        clients.put(rotaryClient.getBlockPos(), rotaryClient);
+        updateNetwork();
+        devices.add(rotaryClient);
+    }
+
     public List<IRotaryNetworkDevice> getDevices() {
         return devices;
     }
@@ -65,6 +74,12 @@ public class RotaryNetwork {
         this.rotaryHandler.setMaxTorque(0);
         this.updateNetwork();
         devices.remove(source);
+    }
+
+    public void removeClient(RotaryClient rotaryClient) {
+        this.clients.remove(rotaryClient.getBlockPos());
+        this.updateNetwork();
+        this.devices.remove(rotaryClient);
     }
 
     public void emitPower(float angular, float torque) {
