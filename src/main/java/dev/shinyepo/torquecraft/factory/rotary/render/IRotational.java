@@ -1,4 +1,4 @@
-package dev.shinyepo.torquecraft.factory.rotary;
+package dev.shinyepo.torquecraft.factory.rotary.render;
 
 public interface IRotational {
     float angle = 0;

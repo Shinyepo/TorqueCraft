@@ -5,7 +5,7 @@ import dev.shinyepo.torquecraft.block.entities.rotary.SteamEngineEntity;
 import dev.shinyepo.torquecraft.capabilities.TorqueCustomCapabilities;
 import dev.shinyepo.torquecraft.capabilities.handlers.IRotaryHandler;
 import dev.shinyepo.torquecraft.constants.TorqueAttributes;
-import dev.shinyepo.torquecraft.factory.rotary.IRotaryIO;
+import dev.shinyepo.torquecraft.factory.rotary.render.IRotaryIO;
 import dev.shinyepo.torquecraft.factory.rotary.network.RotarySource;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;

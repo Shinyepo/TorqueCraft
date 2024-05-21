@@ -1,7 +1,5 @@
 package dev.shinyepo.torquecraft.factory.rotary.render;
 
-import dev.shinyepo.torquecraft.factory.rotary.IRotaryIO;
-import dev.shinyepo.torquecraft.factory.rotary.IRotational;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.entity.BlockEntity;
