@@ -2,10 +2,11 @@ package dev.shinyepo.torquecraft.block.entities.rotary;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
-import dev.shinyepo.torquecraft.networking.TorqueMessages;
-import dev.shinyepo.torquecraft.networking.packets.SyncPumpFluidS2C;
-import dev.shinyepo.torquecraft.registries.block.TorqueBlockEntities;
+import dev.shinyepo.torquecraft.capabilities.handlers.fluid.IFluidBuffer;
 import dev.shinyepo.torquecraft.factory.TorqueFluidTank;
+import dev.shinyepo.torquecraft.networking.TorqueMessages;
+import dev.shinyepo.torquecraft.networking.packets.SyncFluidS2C;
+import dev.shinyepo.torquecraft.registries.block.TorqueBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -15,19 +16,20 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
 import java.util.List;
 
-public class PumpEntity extends BlockEntity {
+public class PumpEntity extends BlockEntity implements IFluidBuffer {
     private final int fluidCapacity = 16000;
     private final TorqueFluidTank fluidTank = new TorqueFluidTank(fluidCapacity) {
         @Override
         protected void onContentsChanged() {
             setChanged();
             if(!level.isClientSide()) {
-                TorqueMessages.sendToAllPlayers(new SyncPumpFluidS2C(worldPosition, this.fluid));
+                TorqueMessages.sendToAllPlayers(new SyncFluidS2C(worldPosition, this.fluid));
             }
         }
     };
@@ -54,6 +56,7 @@ public class PumpEntity extends BlockEntity {
                 }
             }
         }
+        distributeFluid();
     }
 
     private BlockPos getSourceToHarvest() {
@@ -92,7 +95,6 @@ public class PumpEntity extends BlockEntity {
                     }
                 }
             }
-
     }
 
     public TorqueFluidTank getFluidTank(Direction dir) {
@@ -114,13 +116,17 @@ public class PumpEntity extends BlockEntity {
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.saveAdditional(tag, provider);
-        fluidTank.writeToNBT(provider,tag);
+        if (!fluidTank.isEmpty()) {
+            fluidTank.writeToNBT(provider,tag);
+        }
     }
 
     @Override
     public void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.loadAdditional(tag,provider);
-        fluidTank.readFromNBT(provider,tag);
+        if (tag.contains("Fluid")) {
+            fluidTank.readFromNBT(provider,tag);
+        }
     }
 
     @Override
@@ -128,5 +134,25 @@ public class PumpEntity extends BlockEntity {
         CompoundTag nbt = super.getUpdateTag(provider);
         saveAdditional(nbt, provider);
         return nbt;
+    }
+
+    private void distributeFluid() {
+        if (fluidTank.isEmpty()) {
+            return;
+        }
+        IFluidHandler fHandler = level.getCapability(Capabilities.FluidHandler.BLOCK, getBlockPos().relative(Direction.UP),Direction.UP);
+        if (fHandler != null) {
+            canAcceptFluid(fHandler);
+            int remainingSpace = fHandler.getTankCapacity(0) - fHandler.getFluidInTank(0).getAmount();
+            int amount = Math.min(remainingSpace, 100);
+
+            fHandler.fill(new FluidStack(fluidTank.getFluid().getFluid(), amount), IFluidHandler.FluidAction.EXECUTE);
+            fluidTank.drain(amount, IFluidHandler.FluidAction.EXECUTE);
+            setChanged();
+        }
+    }
+
+    private boolean canAcceptFluid(IFluidHandler handler) {
+        return handler.getFluidInTank(0).isEmpty() || (handler.getFluidInTank(0).is(fluidTank.getFluid().getFluid()) && handler.getTankCapacity(0) > handler.getFluidInTank(0).getAmount());
     }
 }

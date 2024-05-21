@@ -1,5 +1,6 @@
 package dev.shinyepo.torquecraft.block.entities.pipes;
 
+import dev.shinyepo.torquecraft.capabilities.handlers.fluid.IFluidBuffer;
 import dev.shinyepo.torquecraft.model.baker.helpers.PipeConnection;
 import dev.shinyepo.torquecraft.networking.TorqueMessages;
 import dev.shinyepo.torquecraft.networking.packets.SyncFluidS2C;
@@ -23,7 +24,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Consumer;
 
-public class FluidPipeEntity extends BlockEntity {
+public class FluidPipeEntity extends BlockEntity implements IFluidBuffer {
     private Set<BlockPos> outputs = null;
     private Set<BlockPos> inputs = null;
     private final int fluidCapacity = 16000;
@@ -173,5 +174,10 @@ public class FluidPipeEntity extends BlockEntity {
 
     public void setFluidTank(FluidStack fluid) {
         this.fluidTank.setFluid(fluid);
+    }
+
+    @Override
+    public void setFluidStack(FluidStack fluidStack) {
+        this.fluidTank.setFluid(fluidStack);
     }
 }

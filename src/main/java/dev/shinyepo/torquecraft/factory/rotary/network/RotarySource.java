@@ -1,20 +1,26 @@
 package dev.shinyepo.torquecraft.factory.rotary.network;
 
+import dev.shinyepo.torquecraft.capabilities.handlers.fluid.IFluidBuffer;
 import dev.shinyepo.torquecraft.config.SourceConfig;
 import dev.shinyepo.torquecraft.constants.TorqueAttributes;
 import dev.shinyepo.torquecraft.factory.TorqueFluidTank;
 import dev.shinyepo.torquecraft.network.RotaryNetwork;
 import dev.shinyepo.torquecraft.network.RotaryNetworkRegistry;
+import dev.shinyepo.torquecraft.networking.TorqueMessages;
+import dev.shinyepo.torquecraft.networking.packets.SyncFluidS2C;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.util.Lazy;
+import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
-public class RotarySource extends RotaryNetworkDevice<SourceConfig> {
+public class RotarySource extends RotaryNetworkDevice<SourceConfig> implements IFluidBuffer {
     private RotaryNetwork network;
     private final SourceConfig sourceConfig;
     private Lazy<TorqueFluidTank> fluidTank;
@@ -29,7 +35,15 @@ public class RotarySource extends RotaryNetworkDevice<SourceConfig> {
     }
 
     private void initFluidTank(SourceConfig config) {
-        this.fluidTank = Lazy.of(() -> new TorqueFluidTank(config.getCapacity(), fluid -> fluid.is(config.getFuel())));
+        this.fluidTank = Lazy.of(() -> new TorqueFluidTank(config.getCapacity(), fluid -> fluid.is(config.getFuel())) {
+            @Override
+            protected void onContentsChanged() {
+                setChanged();
+                if(!level.isClientSide()) {
+                    TorqueMessages.sendToAllPlayers(new SyncFluidS2C(worldPosition, this.fluid));
+                }
+            }
+        });
     }
 
     public void tick(Level level, BlockPos pos, BlockState state) {
@@ -60,6 +74,23 @@ public class RotarySource extends RotaryNetworkDevice<SourceConfig> {
         } else {
             fluidTank.get().drain(config.getUsage(), IFluidHandler.FluidAction.EXECUTE);
         }
+        setChanged();
+    }
+
+    @Override
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
+        super.saveAdditional(tag, provider);
+        if (!fluidTank.get().isEmpty()) {
+            fluidTank.get().writeToNBT(provider,tag);
+        }
+    }
+
+    @Override
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
+        super.loadAdditional(tag, provider);
+        if (tag.contains("Fluid")) {
+            fluidTank.get().readFromNBT(provider,tag);
+        }
     }
 
     @Override
@@ -76,9 +107,14 @@ public class RotarySource extends RotaryNetworkDevice<SourceConfig> {
     }
 
     public IFluidHandler getFluidTank(Direction dir) {
+        if (dir == null) return this.fluidTank.get();
         if (dir == getBlockState().getValue(HorizontalDirectionalBlock.FACING).getOpposite()) {
             return this.fluidTank.get();
         }
         return null;
+    }
+
+    public void setFluidStack(FluidStack fluidStack) {
+        this.fluidTank.get().setFluid(fluidStack);
     }
 }

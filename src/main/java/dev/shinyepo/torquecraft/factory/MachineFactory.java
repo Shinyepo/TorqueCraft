@@ -1,6 +1,7 @@
 package dev.shinyepo.torquecraft.factory;
 
 import dev.shinyepo.torquecraft.capabilities.handlers.AdaptedItemHandler;
+import dev.shinyepo.torquecraft.capabilities.handlers.fluid.IFluidBuffer;
 import dev.shinyepo.torquecraft.config.ClientConfig;
 import dev.shinyepo.torquecraft.constants.TorqueNBT;
 import dev.shinyepo.torquecraft.factory.rotary.network.RotaryClient;
@@ -28,7 +29,7 @@ import org.jetbrains.annotations.Nullable;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class MachineFactory extends RotaryClient {
+public class MachineFactory extends RotaryClient implements IFluidBuffer {
     public static final String ITEMS_INPUT_TAG = "Input";
     public static final String ITEMS_OUTPUT_TAG = "Output";
     public static final String FLUID_DRAIN_TAG = "Drain";

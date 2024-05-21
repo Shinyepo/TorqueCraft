@@ -2,7 +2,6 @@ package dev.shinyepo.torquecraft.registries.networking;
 
 import dev.shinyepo.torquecraft.TorqueCraft;
 import dev.shinyepo.torquecraft.networking.packets.SyncFluidS2C;
-import dev.shinyepo.torquecraft.networking.packets.SyncPumpFluidS2C;
 import dev.shinyepo.torquecraft.networking.packets.SyncRotaryPowerS2C;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
@@ -15,7 +14,6 @@ public class TorquePackets {
 
 
         registrar.playToClient(SyncFluidS2C.TYPE, SyncFluidS2C.STREAM_CODEC,SyncFluidS2C::handler);
-        registrar.playToClient(SyncPumpFluidS2C.TYPE, SyncPumpFluidS2C.STREAM_CODEC,SyncPumpFluidS2C::handler);
         registrar.playToClient(SyncRotaryPowerS2C.TYPE, SyncRotaryPowerS2C.STREAM_CODEC, SyncRotaryPowerS2C::handler);
     }
 }
