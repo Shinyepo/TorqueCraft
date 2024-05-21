@@ -83,6 +83,9 @@ public class FluidPipe extends PipeBlock implements SimpleWaterloggedBlock, Enti
                 val = PipeConnection.OUTPUT;
             }
             level.setBlock(pos, state.setValue(prop, val),3);
+            if (!level.isClientSide && level.getBlockEntity(pos) instanceof FluidPipeEntity pipe) {
+                pipe.markDirty();
+            }
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.CONSUME;
