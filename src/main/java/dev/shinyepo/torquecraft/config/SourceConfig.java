@@ -5,7 +5,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.neoforged.neoforge.common.Tags;
 
 public enum SourceConfig implements IRotaryConfig {
-    STEAM_ENGINE (512,50, 10, 64000, Tags.Fluids.WATER, 125);
+    STEAM_ENGINE (512,50, 10, 64000, Tags.Fluids.WATER, 30);
 
     private final float torque;
     private final float angular;
