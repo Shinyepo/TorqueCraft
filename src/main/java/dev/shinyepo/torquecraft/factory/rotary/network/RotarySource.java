@@ -22,7 +22,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
 public class RotarySource extends RotaryNetworkDevice<SourceConfig> implements IFluidBuffer {
     private RotaryNetwork network;
-    private final SourceConfig sourceConfig;
+    public final SourceConfig sourceConfig;
     private Lazy<TorqueFluidTank> fluidTank;
     private boolean spinup = false;
 

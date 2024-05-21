@@ -32,14 +32,31 @@ public class RotaryNetwork {
 
     public void registerSource(RotarySource source) {
         if (!validDevice(source)) return;
+        increaseMax(source.sourceConfig);
         sources.put(source.getBlockPos(), source);
-
-        var engine = SourceConfig.STEAM_ENGINE;
-        this.rotaryHandler.setMaxAngular(engine.getAngular());
-        this.rotaryHandler.setMaxTorque(engine.getTorque());
         this.updateNetwork();
 
         devices.add(source);
+    }
+
+    private void increaseMax(SourceConfig config) {
+        if (this.sources.size() > 1) {
+            this.rotaryHandler.setMaxAngular(this.rotaryHandler.getMaxAngular() + config.getAngular());
+            this.rotaryHandler.setMaxTorque(this.rotaryHandler.getMaxTorque() + config.getTorque());
+        } else {
+            this.rotaryHandler.setMaxAngular(config.getAngular());
+            this.rotaryHandler.setMaxTorque(config.getTorque());
+        }
+    }
+
+    private void reduceMax(SourceConfig config) {
+        if (sources.size() > 1) {
+            this.rotaryHandler.setMaxAngular(this.rotaryHandler.getMaxAngular() - config.getAngular());
+            this.rotaryHandler.setMaxTorque(this.rotaryHandler.getMaxTorque() - config.getTorque());
+        } else {
+            this.rotaryHandler.setMaxAngular(0);
+            this.rotaryHandler.setMaxTorque(0);
+        }
     }
 
     public boolean validDevice(IRotaryNetworkDevice device) {
@@ -65,13 +82,16 @@ public class RotaryNetwork {
     }
 
     public Map<BlockPos, RotarySource> getSources() {
-        return this.sources;
+        return sources;
+    }
+
+    public Map<BlockPos, RotaryClient> getClients() {
+        return clients;
     }
 
     public void removeSource(RotarySource source) {
+        reduceMax(source.sourceConfig);
         sources.remove(source.getBlockPos());
-        this.rotaryHandler.setMaxAngular(0);
-        this.rotaryHandler.setMaxTorque(0);
         this.updateNetwork();
         devices.remove(source);
     }
@@ -94,6 +114,9 @@ public class RotaryNetwork {
                 transmitter.setRotaryPower(this.rotaryHandler.getAngular(), this.rotaryHandler.getTorque());
             });
         }
+        clients.forEach((pos, client) -> {
+            client.setRotaryPower(this.rotaryHandler.getAngular(), this.rotaryHandler.getTorque());
+        });
     }
 
 
@@ -106,6 +129,7 @@ public class RotaryNetwork {
     public void clear() {
         this.transmitters.clear();
         this.sources.clear();
+        this.clients.clear();
         this.devices.clear();
     }
 }

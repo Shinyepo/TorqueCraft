@@ -106,6 +106,14 @@ public class RotaryHandler implements IRotaryHandler {
         TORQUE = TORQUE + TORQUE_ACC;
     }
 
+    public float getMaxTorque() {
+        return MAX_TORQUE;
+    }
+
+    public float getMaxAngular() {
+        return MAX_ANGULAR;
+    }
+
     public void spinupSource() {
         this.speedupAngular();
         this.speedupTorque();
