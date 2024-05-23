@@ -13,4 +13,6 @@ public class TorqueNBT {
 
     public static final String PROGRESS = "Progress";
     public static final String NETWORK_ID = "Network_id";
+
+    public static final String TEMP = "Temperature";
 }

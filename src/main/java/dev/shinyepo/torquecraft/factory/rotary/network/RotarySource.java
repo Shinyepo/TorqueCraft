@@ -23,7 +23,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 public class RotarySource extends RotaryNetworkDevice<SourceConfig> implements IFluidBuffer {
     private RotaryNetwork network;
     public final SourceConfig sourceConfig;
-    private Lazy<TorqueFluidTank> fluidTank;
+    protected Lazy<TorqueFluidTank> fluidTank;
     private boolean spinup = false;
 
 
@@ -46,14 +46,14 @@ public class RotarySource extends RotaryNetworkDevice<SourceConfig> implements I
         });
     }
 
-    public void tick(Level level, BlockPos pos, BlockState state) {
+    public void tick(BlockState state, double temp) {
         if (network == null || network.getNetworkId() != this.getNetworkId()) {
             network = RotaryNetworkRegistry.getInstance().getNetwork(this.getNetworkId());
         } else {
             network.emitPower(this.rotaryHandler.get().getAngular(), this.rotaryHandler.get().getTorque());
         }
 
-        if (state.getValue(TorqueAttributes.OPERATIONAL) && fluidTank.get().getFluidAmount() > config.getUsage()) {
+        if (state.getValue(TorqueAttributes.OPERATIONAL) && fluidTank.get().getFluidAmount() > config.getUsage() && temp > 100) {
             if (rotaryHandler.get().getAngular() < sourceConfig.getAngular()) {
                 spinup = true;
                 rotaryHandler.get().spinupSource();
