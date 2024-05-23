@@ -5,8 +5,9 @@ import dev.shinyepo.torquecraft.block.entities.rotary.SteamEngineEntity;
 import dev.shinyepo.torquecraft.capabilities.TorqueCustomCapabilities;
 import dev.shinyepo.torquecraft.capabilities.handlers.rotary.IRotaryHandler;
 import dev.shinyepo.torquecraft.constants.TorqueAttributes;
-import dev.shinyepo.torquecraft.factory.rotary.render.IRotaryIO;
 import dev.shinyepo.torquecraft.factory.rotary.network.RotarySource;
+import dev.shinyepo.torquecraft.factory.rotary.render.IRotaryIO;
+import dev.shinyepo.torquecraft.registries.tag.TorqueTags;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -21,7 +22,6 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -70,9 +70,9 @@ public class SteamEngine extends HorizontalDirectionalBlock implements EntityBlo
 
     @Override
     public void neighborChanged(BlockState pState, Level pLevel, BlockPos pPos, Block pNeighborBlock, BlockPos pNeighborPos, boolean pMovedByPiston) {
-        boolean isNetherrack = pLevel.getBlockState(pPos.below()).is(Blocks.NETHERRACK);
+        boolean isHeatSource = pLevel.getBlockState(pPos.below()).is(TorqueTags.HEAT_SOURCE);
         boolean isPowered = pState.getValue(OPERATIONAL);
-        if (isPowered != isNetherrack) {
+        if (isPowered != isHeatSource) {
             if (isPowered) {
                 pLevel.scheduleTick(pPos, this, 4);
             } else {
@@ -87,12 +87,12 @@ public class SteamEngine extends HorizontalDirectionalBlock implements EntityBlo
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {
         return this.defaultBlockState()
                 .setValue(FACING, pContext.getPlayer().isShiftKeyDown() ? pContext.getHorizontalDirection() : pContext.getHorizontalDirection().getOpposite())
-                .setValue(OPERATIONAL, pContext.getLevel().getBlockState(pContext.getClickedPos().below()).is(Blocks.NETHERRACK));
+                .setValue(OPERATIONAL, pContext.getLevel().getBlockState(pContext.getClickedPos().below()).is(TorqueTags.HEAT_SOURCE));
     }
 
     @Override
     public void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
-        if (pState.getValue(OPERATIONAL) && !pLevel.getBlockState(pPos.below()).is(Blocks.NETHERRACK)) {
+        if (pState.getValue(OPERATIONAL) && !pLevel.getBlockState(pPos.below()).is(TorqueTags.HEAT_SOURCE)) {
             pLevel.setBlock(pPos, pState.cycle(OPERATIONAL), 2);
         }
     }
