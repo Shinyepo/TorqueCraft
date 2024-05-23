@@ -2,9 +2,11 @@ package dev.shinyepo.torquecraft.datagen.tag;
 
 import dev.shinyepo.torquecraft.TorqueCraft;
 import dev.shinyepo.torquecraft.registries.block.TorqueBlocks;
+import dev.shinyepo.torquecraft.registries.tag.TorqueTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
@@ -18,8 +20,10 @@ public class TorqueBlockTagGenerator extends BlockTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider pProvider) {
-        //this.tag(TCTags.Blocks.Tag)
-          //      .add(TCBlocks.TUNGSTEN_BLOCK.get()).addTag(Tags.Blocks.ORES)
+        tag(TorqueTags.HEAT_SOURCE)
+                .add(Blocks.LAVA, Blocks.MAGMA_BLOCK)
+                .addTag(BlockTags.FIRE)
+                .addTag(BlockTags.CAMPFIRES);
 
         tag(BlockTags.NEEDS_IRON_TOOL)
                 .add(TorqueBlocks.TUNGSTEN_BLOCK.get())
