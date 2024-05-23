@@ -3,6 +3,7 @@ package dev.shinyepo.torquecraft.datagen.block;
 import com.google.gson.JsonObject;
 import dev.shinyepo.torquecraft.TorqueCraft;
 import dev.shinyepo.torquecraft.block.prefab.CanolaCrop;
+import dev.shinyepo.torquecraft.block.prefab.CoolingRadiator;
 import dev.shinyepo.torquecraft.model.baker.helpers.PipeModelLoader;
 import dev.shinyepo.torquecraft.registries.block.TorqueBlocks;
 import net.minecraft.core.Direction;
@@ -43,6 +44,7 @@ public class TorqueBlockStateProvider extends BlockStateProvider {
         registerFluid(TorqueBlocks.JET_FUEL_BLOCK);
     
         makeCanolaCrop((CropBlock) TorqueBlocks.CANOLA_CROP.get(), "canola_stage", "canola_stage");
+        makeRadiator(TorqueBlocks.COOLING_RADIATOR);
 
     }
 
@@ -56,6 +58,17 @@ public class TorqueBlockStateProvider extends BlockStateProvider {
 
     private void blockWithItem(Block block) {
         simpleBlockWithItem(block, cubeAll(block));
+    }
+
+    public void makeRadiator(Supplier<Block> block) {
+        this.getVariantBuilder(block.get()).forAllStatesExcept(blockState ->{
+            Direction dir = blockState.getValue(BlockStateProperties.HORIZONTAL_FACING);
+            var usage = blockState.getValue(((CoolingRadiator) block.get()).getUsage()).getSerializedName();
+            return ConfiguredModel.builder()
+                    .modelFile(models().getExistingFile(new ResourceLocation(TorqueCraft.MODID, "block/radiator/cooling_radiator_" + usage)))
+                    .rotationY(dir.getAxis().isVertical() ? 0 : (((int) dir.toYRot()) + 180) % 360)
+                    .build();
+        });
     }
 
     public void makeCanolaCrop(CropBlock block, String modelName, String textureName) {

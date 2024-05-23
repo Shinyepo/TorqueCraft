@@ -32,6 +32,7 @@ public class TorqueItems {
     public static final Supplier<BlockItem> PUMP_ITEM = ITEMS.registerSimpleBlockItem("pump", TorqueBlocks.PUMP);
 
     public static final Supplier<BlockItem> SHAFT_ITEM = ITEMS.registerSimpleBlockItem("shaft", TorqueBlocks.SHAFT);
+    public static final Supplier<BlockItem> COOLING_RADIATOR_ITEM = ITEMS.registerSimpleBlockItem("cooling_radiator", TorqueBlocks.COOLING_RADIATOR);
 
     //PIPES
     public static final Supplier<BlockItem> FLUID_PIPE_ITEM = ITEMS.registerSimpleBlockItem("fluid_pipe", TorqueBlocks.FLUID_PIPE);

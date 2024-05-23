@@ -6,6 +6,7 @@
     "torquecraft:grinder",
     "torquecraft:fluid_tank",
     "torquecraft:pump",
+    "torquecraft:cooling_radiator",
     "torquecraft:shaft"
   ]
 }
