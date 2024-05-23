@@ -1,3 +1,4 @@
-// 1.20.6	2024-05-09T13:48:02.5924684	Tags for minecraft:block mod id torquecraft
+// 1.20.6	2024-05-23T15:07:30.5542798	Tags for minecraft:block mod id torquecraft
 7dad7ae7633587cabcbc3dcb6c31c2c864877238 data/minecraft/tags/blocks/mineable/pickaxe.json
 7dad7ae7633587cabcbc3dcb6c31c2c864877238 data/minecraft/tags/blocks/needs_iron_tool.json
+eb128263c7de20cf7a4bd319676ff688bf1afc2d data/torquecraft/tags/blocks/heat_sources.json
