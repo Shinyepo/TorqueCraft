@@ -2,6 +2,7 @@ package dev.shinyepo.torquecraft.renderers;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
+import dev.shinyepo.torquecraft.factory.rotary.network.RotaryClient;
 import dev.shinyepo.torquecraft.factory.rotary.network.RotarySource;
 import dev.shinyepo.torquecraft.factory.rotary.network.RotaryTransmitter;
 import dev.shinyepo.torquecraft.renderers.types.TorqueRenders;
@@ -30,6 +31,10 @@ public class IORenderer {
         if (entity instanceof RotarySource source) {
             BlockState state = source.getBlockState();
             outputs.put("OUTPUT", state.getValue(HorizontalDirectionalBlock.FACING));
+        }
+        if (entity instanceof RotaryClient client) {
+            BlockState state = client.getBlockState();
+            outputs.put("INPUT", state.getValue(HorizontalDirectionalBlock.FACING).getOpposite());
         }
         return outputs;
     }

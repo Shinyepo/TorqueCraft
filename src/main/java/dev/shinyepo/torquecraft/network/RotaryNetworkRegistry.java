@@ -145,7 +145,12 @@ public class RotaryNetworkRegistry {
         for (Direction dir : directions) {
             if (networkDevice instanceof BlockEntity entity) {
                 BlockPos pos = entity.getBlockPos();
-                var device = entity.getLevel().getBlockEntity(pos.relative(dir));
+                BlockEntity device = null;
+                if (networkDevice instanceof RotaryClient) {
+                    device = entity.getLevel().getBlockEntity(pos.relative(dir.getOpposite()));
+                } else {
+                    device = entity.getLevel().getBlockEntity(pos.relative(dir));
+                }
                 if (device instanceof IRotaryNetworkDevice nextDevice) {
                     BlockState nextState = nextDevice.getBlockState();
                     if ((i == 0 ? nextState.getValue(HorizontalDirectionalBlock.FACING) : nextState.getValue(HorizontalDirectionalBlock.FACING).getOpposite()) == dir) {
@@ -187,6 +192,8 @@ public class RotaryNetworkRegistry {
                 network.registerSource(source);
             } else if (device instanceof RotaryTransmitter transmitter) {
                 network.registerTransmitter(transmitter);
+            } else if (device instanceof  RotaryClient client) {
+                network.registerClient(client);
             }
             device.updateNetwork(network.getNetworkId());
         }
@@ -243,6 +250,11 @@ public class RotaryNetworkRegistry {
                 getInstance().findDevices(network, relativeEntity);
                 getInstance().findDevices(network, relativeEntity2);
             }
+        } else if (device instanceof RotaryClient client) {
+            if (network.validDevice(client)) {
+                network.registerClient(client);
+                client.updateNetwork(network.getNetworkId());
+            }
         }
     }
 
@@ -256,7 +268,7 @@ public class RotaryNetworkRegistry {
         RotaryNetwork network = getInstance().fetchNetwork((RotaryNetworkDevice) rotaryClient, new Direction[]{rotaryClient.getBlockState().getValue(HorizontalDirectionalBlock.FACING)});
         if (network != null) {
             getInstance().addClient(network, rotaryClient);
-            TorqueCraft.logger.info("Source merged with existing network");
+            TorqueCraft.logger.info("Client merged with existing network");
             return network.getNetworkId();
         } else {
             TorqueCraft.logger.info("Created new network for source");

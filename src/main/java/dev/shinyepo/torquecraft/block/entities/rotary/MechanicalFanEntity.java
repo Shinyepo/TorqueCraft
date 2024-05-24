@@ -1,6 +1,8 @@
 package dev.shinyepo.torquecraft.block.entities.rotary;
 
 import com.google.common.collect.Lists;
+import dev.shinyepo.torquecraft.config.ClientConfig;
+import dev.shinyepo.torquecraft.factory.rotary.network.RotaryClient;
 import dev.shinyepo.torquecraft.registries.block.TorqueBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -11,7 +13,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.FarmBlock;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.AABB;
@@ -19,14 +20,15 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
-public class MechanicalFanEntity extends BlockEntity {
+public class MechanicalFanEntity extends RotaryClient {
     private final AABB workingBoundary;
     private final List<BlockPos> workingArea = Lists.newArrayList();
     private final List<BlockPos> validFarmlands = Lists.newArrayList();
+    private static final ClientConfig config = ClientConfig.MECHANICAL_FAN;
 
 
     public MechanicalFanEntity(BlockPos pPos, BlockState pBlockState) {
-        super(TorqueBlockEntities.MECHANICAL_FAN_ENTITY.get(), pPos, pBlockState);
+        super(TorqueBlockEntities.MECHANICAL_FAN_ENTITY.get(), pPos, pBlockState, config);
 
         this.workingBoundary = getWorkingBoundary(pPos, pBlockState);
         BlockPos.betweenClosedStream(workingBoundary).forEach(x-> {
@@ -77,13 +79,14 @@ public class MechanicalFanEntity extends BlockEntity {
         List<Entity> entities = pLevel.getEntities(null,workingBoundary);
         if (!entities.isEmpty()) {
             for (Entity en : entities) {
-                if (en.isShiftKeyDown()) return;
-                Direction direction = pState.getValue(BlockStateProperties.HORIZONTAL_FACING);
-                en.hurtMarked = true;
-                en.setDeltaMovement(en.getDeltaMovement()
-                    .add(0.15d * (direction.getStepX() * 1.5),
-                        0,
-                        0.15d * (direction.getStepZ() * 1.5)));
+                if (!en.isShiftKeyDown()) {
+                    Direction direction = pState.getValue(BlockStateProperties.HORIZONTAL_FACING);
+                    en.hurtMarked = true;
+                    en.setDeltaMovement(en.getDeltaMovement()
+                            .add(0.15d * (direction.getStepX() * 1.5),
+                                    0,
+                                    0.15d * (direction.getStepZ() * 1.5)));
+                }
             }
         }
         if (pLevel.getGameTime() % 20 == 0) {

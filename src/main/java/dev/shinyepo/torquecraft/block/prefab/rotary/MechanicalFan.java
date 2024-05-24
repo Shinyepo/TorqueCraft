@@ -2,8 +2,12 @@ package dev.shinyepo.torquecraft.block.prefab.rotary;
 
 import com.mojang.serialization.MapCodec;
 import dev.shinyepo.torquecraft.block.entities.rotary.MechanicalFanEntity;
+import dev.shinyepo.torquecraft.factory.rotary.network.RotaryClient;
+import dev.shinyepo.torquecraft.factory.rotary.render.IRotaryIO;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -53,7 +57,11 @@ public class MechanicalFan extends HorizontalDirectionalBlock implements EntityB
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        if(pLevel.isClientSide()) return null;
+        if(pLevel.isClientSide()) return (pLevel1, pPos, pState1, pBlockEntity) -> {
+            if (pBlockEntity instanceof IRotaryIO rotary) {
+                rotary.renderTick();
+            }
+        };
         return (pLevel1, pPos, pState1, pBlockEntity) -> {
             if (pBlockEntity instanceof MechanicalFanEntity mFE) {
                 mFE.tick(pLevel1, pState1);
@@ -62,11 +70,21 @@ public class MechanicalFan extends HorizontalDirectionalBlock implements EntityB
     }
 
     @Override
+    public void setPlacedBy(Level pLevel, BlockPos pPos, BlockState pState, @Nullable LivingEntity pPlacer, ItemStack pStack) {
+        if (pLevel.isClientSide()) {
+            if (pLevel.getBlockEntity(pPos) instanceof RotaryClient rIO) {
+                rIO.setProgress(0F);
+            }
+        }
+    }
+
+    @Override
     protected void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
         if (pState.getBlock() != pNewState.getBlock()) {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-            if (blockEntity instanceof MechanicalFanEntity) {
+            if (blockEntity instanceof RotaryClient rotary) {
                 pLevel.removeBlockEntity(pPos);
+                rotary.removeClient();
             }
         }
         super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);

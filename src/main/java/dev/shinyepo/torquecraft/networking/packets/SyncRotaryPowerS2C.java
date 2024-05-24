@@ -1,6 +1,7 @@
 package dev.shinyepo.torquecraft.networking.packets;
 
 import dev.shinyepo.torquecraft.TorqueCraft;
+import dev.shinyepo.torquecraft.factory.rotary.network.RotaryNetworkDevice;
 import dev.shinyepo.torquecraft.factory.rotary.network.RotarySource;
 import dev.shinyepo.torquecraft.factory.rotary.network.RotaryTransmitter;
 import net.minecraft.client.Minecraft;
@@ -35,11 +36,8 @@ public record SyncRotaryPowerS2C(BlockPos pos, float angular, float torque, doub
     public void handler(IPayloadContext context) {
         context.enqueueWork(()->{
             if (Minecraft.getInstance().level == null) return;
-            if(Minecraft.getInstance().level.getBlockEntity(pos) instanceof RotarySource blockEntity) {
-                blockEntity.setRotaryPower(this.angular, this.torque, this.temp);
-            }
-            if(Minecraft.getInstance().level.getBlockEntity(pos) instanceof RotaryTransmitter rt) {
-                rt.setRotaryPower(this.angular, this.torque, this.temp);
+            if(Minecraft.getInstance().level.getBlockEntity(pos) instanceof RotaryNetworkDevice<?> networkDevice) {
+                networkDevice.setRotaryPower(this.angular, this.torque, this.temp);
             }
         });
     }
