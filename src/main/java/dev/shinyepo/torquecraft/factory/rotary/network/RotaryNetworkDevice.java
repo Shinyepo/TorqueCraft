@@ -29,7 +29,7 @@ public class RotaryNetworkDevice<CONFIG extends IRotaryConfig> extends AnimatedE
             super.markDirty();
             setChanged();
             if (level != null && !level.isClientSide()) {
-                TorqueMessages.sendToAllPlayers(new SyncRotaryPowerS2C(worldPosition, this.ANGULAR, this.TORQUE));
+                TorqueMessages.sendToAllPlayers(new SyncRotaryPowerS2C(worldPosition, this.ANGULAR, this.TORQUE, this.TEMP));
             }
         }
     });
@@ -43,9 +43,10 @@ public class RotaryNetworkDevice<CONFIG extends IRotaryConfig> extends AnimatedE
         return rotaryHandler.get();
     }
 
-    public void setRotaryPower(float angular, float torque) {
+    public void setRotaryPower(float angular, float torque, double temp) {
         this.rotaryHandler.get().setAngular(angular);
         this.rotaryHandler.get().setTorque(torque);
+        this.rotaryHandler.get().setTemp(temp);
         this.rotaryHandler.get().markDirty();
     }
 

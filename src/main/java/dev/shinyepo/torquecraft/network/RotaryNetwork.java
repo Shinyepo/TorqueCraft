@@ -18,7 +18,7 @@ public class RotaryNetwork {
     private final List<IRotaryNetworkDevice> devices = new ArrayList<>();
     private final Map<BlockPos, RotarySource> sources = new Object2ObjectOpenHashMap<>();
     private final Map<BlockPos, RotaryTransmitter> transmitters = new Object2ObjectOpenHashMap<>();
-    private Map<BlockPos, RotaryClient> clients = new Object2ObjectOpenHashMap<>();
+    private final Map<BlockPos, RotaryClient> clients = new Object2ObjectOpenHashMap<>();
 
     private final RotaryHandler rotaryHandler = new RotaryHandler(0, 0);
 
@@ -110,13 +110,11 @@ public class RotaryNetwork {
 
     private void updateNetwork() {
         if(!transmitters.isEmpty()) {
-            transmitters.forEach((pos, transmitter) -> {
-                transmitter.setRotaryPower(this.rotaryHandler.getAngular(), this.rotaryHandler.getTorque());
-            });
+            transmitters.forEach((pos, transmitter) -> transmitter.setRotaryPower(this.rotaryHandler.getAngular(), this.rotaryHandler.getTorque(), this.rotaryHandler.getTemp()));
         }
-        clients.forEach((pos, client) -> {
-            client.setRotaryPower(this.rotaryHandler.getAngular(), this.rotaryHandler.getTorque());
-        });
+        if (!clients.isEmpty()) {
+            clients.forEach((pos, client) -> client.setRotaryPower(this.rotaryHandler.getAngular(), this.rotaryHandler.getTorque(), this.rotaryHandler.getTemp()));
+        }
     }
 
 

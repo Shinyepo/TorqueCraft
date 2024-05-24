@@ -15,4 +15,6 @@ public class TorqueNBT {
     public static final String NETWORK_ID = "Network_id";
 
     public static final String TEMP = "Temperature";
+    public static final String TORQUE = "Torque";
+    public static final String ANGULAR = "Angular";
 }

@@ -12,7 +12,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -39,21 +38,21 @@ public class RotarySource extends RotaryNetworkDevice<SourceConfig> implements I
             @Override
             protected void onContentsChanged() {
                 setChanged();
-                if(!level.isClientSide()) {
+                if(level != null && !level.isClientSide()) {
                     TorqueMessages.sendToAllPlayers(new SyncFluidS2C(worldPosition, this.fluid));
                 }
             }
         });
     }
 
-    public void tick(BlockState state, double temp) {
+    public void tick(BlockState state) {
         if (network == null || network.getNetworkId() != this.getNetworkId()) {
             network = RotaryNetworkRegistry.getInstance().getNetwork(this.getNetworkId());
         } else {
             network.emitPower(this.rotaryHandler.get().getAngular(), this.rotaryHandler.get().getTorque());
         }
 
-        if (state.getValue(TorqueAttributes.OPERATIONAL) && fluidTank.get().getFluidAmount() > config.getUsage() && temp > 100) {
+        if (state.getValue(TorqueAttributes.OPERATIONAL) && fluidTank.get().getFluidAmount() > config.getUsage() && rotaryHandler.get().getTemp() > 100) {
             if (rotaryHandler.get().getAngular() < sourceConfig.getAngular()) {
                 spinup = true;
                 rotaryHandler.get().spinupSource();

@@ -2,6 +2,8 @@ package dev.shinyepo.torquecraft.block.prefab;
 
 import com.mojang.serialization.MapCodec;
 import dev.shinyepo.torquecraft.config.UsageConfig;
+import dev.shinyepo.torquecraft.constants.TorqueAttributes;
+import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
@@ -20,9 +22,12 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
+@ParametersAreNonnullByDefault
 public class CoolingRadiator extends HorizontalDirectionalBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
-    public static  final EnumProperty<UsageConfig> USAGE = EnumProperty.create("usage", UsageConfig.class);
+    public static final EnumProperty<UsageConfig> USAGE = TorqueAttributes.USAGE;
     public static final VoxelShape[] SHAPE = new VoxelShape[] {
             Block.box(0,0,0,16,1,16),
             Block.box(0,0,0,16,5,16),

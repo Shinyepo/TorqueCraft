@@ -1,5 +1,6 @@
 package dev.shinyepo.torquecraft.capabilities.handlers.rotary;
 
+import dev.shinyepo.torquecraft.constants.TorqueNBT;
 import dev.shinyepo.torquecraft.utils.MathUtil;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -14,9 +15,20 @@ public class RotaryHandler implements IRotaryHandler {
     private float ANGULAR_ACC;
     private float TORQUE_ACC;
 
+    protected double TEMP = 0;
+
     public RotaryHandler(float maxAngular, float maxTorque) {
         MAX_ANGULAR = maxAngular;
         MAX_TORQUE = maxTorque;
+    }
+
+    public void setTemp(double temp) {
+        this.TEMP = temp;
+        this.markDirty();
+    }
+
+    public double getTemp() {
+        return this.TEMP;
     }
 
     public void setAcceleration(int speedupTime) {
@@ -127,14 +139,16 @@ public class RotaryHandler implements IRotaryHandler {
     }
 
     public void deserializeNBT(HolderLookup.Provider provider, CompoundTag nbt) {
-        setAngular(nbt.contains("Angular") ? nbt.getFloat("Angular") : 0);
-        setTorque(nbt.contains("Torque") ? nbt.getFloat("Torque") : 0);
+        setAngular(nbt.contains(TorqueNBT.ANGULAR) ? nbt.getFloat(TorqueNBT.ANGULAR) : 0);
+        setTorque(nbt.contains(TorqueNBT.TORQUE) ? nbt.getFloat(TorqueNBT.TORQUE) : 0);
+        setTemp(nbt.contains(TorqueNBT.TEMP) ? nbt.getFloat(TorqueNBT.TEMP) : 0);
     }
 
     public Tag serializeNBT(HolderLookup.Provider provider) {
         CompoundTag nbt = new CompoundTag();
-        nbt.putFloat("Angular", getAngular());
-        nbt.putFloat("Torque", getTorque());
+        nbt.putFloat(TorqueNBT.ANGULAR, getAngular());
+        nbt.putFloat(TorqueNBT.TORQUE, getTorque());
+        nbt.putDouble(TorqueNBT.TEMP, (double) Math.round(getTemp() * 100) / 100);
         return nbt;
     }
 }
