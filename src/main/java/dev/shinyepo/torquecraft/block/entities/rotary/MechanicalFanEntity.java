@@ -6,6 +6,7 @@ import dev.shinyepo.torquecraft.factory.rotary.network.RotaryClient;
 import dev.shinyepo.torquecraft.registries.block.TorqueBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
@@ -21,7 +22,7 @@ import net.minecraft.world.phys.Vec3;
 import java.util.List;
 
 public class MechanicalFanEntity extends RotaryClient {
-    private final AABB workingBoundary;
+    private AABB workingBoundary;
     private final List<BlockPos> workingArea = Lists.newArrayList();
     private final List<BlockPos> validFarmlands = Lists.newArrayList();
     private static final ClientConfig config = ClientConfig.MECHANICAL_FAN;
@@ -36,27 +37,35 @@ public class MechanicalFanEntity extends RotaryClient {
         });
     }
 
+    private void calculateWorkingArea() {
+        this.workingBoundary = getWorkingBoundary(this.getBlockPos(), this.getBlockState());
+        BlockPos.betweenClosedStream(workingBoundary).forEach(x-> {
+            workingArea.add(x.immutable());
+        });
+    }
+
     private AABB getWorkingBoundary(BlockPos pPos, BlockState pState) {
         Direction facing = pState.getValue(BlockStateProperties.HORIZONTAL_FACING);
+        int distance = (int) Math.ceil(4.5714 + (this.rotaryHandler.get().getAngular()*3/112));
         switch (facing) {
             case NORTH -> {
                 return new AABB(new Vec3(pPos.getX()-1, pPos.getY()-0.5, pPos.getZ()-0.1),
-                        new Vec3(pPos.getX()+1.9, pPos.getY()+2, pPos.getZ()-9));
+                        new Vec3(pPos.getX()+1.9, pPos.getY()+2, pPos.getZ()-distance));
             }
             case EAST -> {
                 return new AABB(new Vec3(pPos.getX()+1, pPos.getY()-0.5, pPos.getZ()-1),
-                        new Vec3(pPos.getX()+9, pPos.getY()+2, pPos.getZ()+1.9));
+                        new Vec3(pPos.getX()+distance, pPos.getY()+2, pPos.getZ()+1.9));
 
             }
             case SOUTH -> {
                 return new AABB(new Vec3(pPos.getX()-1, pPos.getY()-0.5, pPos.getZ()+1),
-                        new Vec3(pPos.getX()+1.9, pPos.getY()+2, pPos.getZ()+9));
+                        new Vec3(pPos.getX()+1.9, pPos.getY()+2, pPos.getZ()+distance));
             }
             case WEST -> {
                 return new AABB(new Vec3(pPos.getX(), pPos.getY()-0.5, pPos.getZ()-1),
-                        new Vec3(pPos.getX()-9, pPos.getY()+2, pPos.getZ()+1.9));
+                        new Vec3(pPos.getX()-distance, pPos.getY()+2, pPos.getZ()+1.9));
             }
-            case null, default -> {
+            default -> {
                 return null;
             }
         }
@@ -76,6 +85,7 @@ public class MechanicalFanEntity extends RotaryClient {
     }
 
     public void tick(Level pLevel, BlockState pState) {
+        if (this.rotaryHandler.get().getAngular() == 0) return;
         List<Entity> entities = pLevel.getEntities(null,workingBoundary);
         if (!entities.isEmpty()) {
             for (Entity en : entities) {
@@ -115,6 +125,14 @@ public class MechanicalFanEntity extends RotaryClient {
                     }
                 }
             }
+        }
+    }
+
+    @Override
+    public void setRotaryPower(float angular, float torque, double temp) {
+        super.setRotaryPower(angular, torque, temp);
+        if (!this.level.isClientSide) {
+            calculateWorkingArea();
         }
     }
 }
