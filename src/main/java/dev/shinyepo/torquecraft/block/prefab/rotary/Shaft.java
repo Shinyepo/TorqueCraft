@@ -4,8 +4,8 @@ import com.mojang.serialization.MapCodec;
 import dev.shinyepo.torquecraft.block.entities.rotary.ShaftEntity;
 import dev.shinyepo.torquecraft.capabilities.TorqueCustomCapabilities;
 import dev.shinyepo.torquecraft.capabilities.handlers.rotary.IRotaryHandler;
-import dev.shinyepo.torquecraft.factory.rotary.render.IRotaryIO;
 import dev.shinyepo.torquecraft.factory.rotary.network.RotaryTransmitter;
+import dev.shinyepo.torquecraft.factory.rotary.render.IRotaryIO;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -82,7 +82,7 @@ public class Shaft extends HorizontalDirectionalBlock implements EntityBlock {
         }
         return (pLevel1, pPos, pState1, pBlockEntity) -> {
             if (pBlockEntity instanceof ShaftEntity sE) {
-                sE.tick(pPos, pState1);
+                sE.tick(pLevel1, pPos, pState1);
 
             }
         };

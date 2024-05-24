@@ -4,6 +4,7 @@ import dev.shinyepo.torquecraft.config.TransmitterConfig;
 import dev.shinyepo.torquecraft.network.RotaryNetworkRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -14,6 +15,12 @@ public class RotaryTransmitter extends RotaryNetworkDevice<TransmitterConfig> {
     public RotaryTransmitter(BlockEntityType<?> type, BlockPos pos, BlockState blockState, TransmitterConfig config) {
         super(type, pos, blockState, config);
         this.transmitterConfig = config;
+    }
+
+    public void tick(Level level, BlockPos pos, BlockState state) {
+        if (this.rotaryHandler.get().getAngular() > transmitterConfig.getAngular() || this.rotaryHandler.get().getTorque() > transmitterConfig.getTorque()) {
+            //Init meltdown
+        }
     }
 
     @Override
