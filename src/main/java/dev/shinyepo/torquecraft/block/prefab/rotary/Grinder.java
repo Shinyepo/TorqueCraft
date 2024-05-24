@@ -1,8 +1,10 @@
 package dev.shinyepo.torquecraft.block.prefab.rotary;
 
 import com.mojang.serialization.MapCodec;
-import dev.shinyepo.torquecraft.constants.TorqueAttributes;
 import dev.shinyepo.torquecraft.block.entities.rotary.GrinderEntity;
+import dev.shinyepo.torquecraft.capabilities.handlers.rotary.IRotaryHandler;
+import dev.shinyepo.torquecraft.constants.TorqueAttributes;
+import dev.shinyepo.torquecraft.factory.rotary.network.RotaryClient;
 import dev.shinyepo.torquecraft.menu.GrinderContainer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -10,9 +12,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -36,7 +40,7 @@ import org.jetbrains.annotations.Nullable;
 public class Grinder extends HorizontalDirectionalBlock implements EntityBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty OPERATIONAL = TorqueAttributes.OPERATIONAL;
-    private static final VoxelShape SHAPE = Block.box(0,0,0,16,14,16);
+    private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 14, 16);
 
     public Grinder(Properties properties) {
         super(properties);
@@ -88,12 +92,12 @@ public class Grinder extends HorizontalDirectionalBlock implements EntityBlock {
 
                     @Override
                     public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player playerEntity) {
-                        return new GrinderContainer(windowId, playerEntity, pPos,((GrinderEntity) be).getFluidStack());
+                        return new GrinderContainer(windowId, playerEntity, pPos, ((GrinderEntity) be).getFluidStack());
                     }
                 };
                 pPlayer.openMenu(containerProvider, buf -> {
                     buf.writeBlockPos(pPos);
-                    FluidStack.OPTIONAL_STREAM_CODEC.encode(buf,((GrinderEntity) be).getFluidStack());
+                    FluidStack.OPTIONAL_STREAM_CODEC.encode(buf, ((GrinderEntity) be).getFluidStack());
                 });
             } else {
                 throw new IllegalStateException("Our named container provider is missing!");
@@ -107,10 +111,13 @@ public class Grinder extends HorizontalDirectionalBlock implements EntityBlock {
         //TODO: Calculate dmg based on grinder speed
         BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
         if (blockEntity instanceof GrinderEntity ge) {
-            int progress = ge.progress;
-            if (progress != 0)
-            {
-                pEntity.hurt(pLevel.damageSources().generic(), 2f);
+            IRotaryHandler handler = ge.getRotaryHandler(null);
+            if (handler != null) {
+                float speed = handler.getAngular();
+                if (speed != 0) {
+                    pEntity.hurt(pLevel.damageSources().generic(), speed*0.01F);
+                }
+
             }
         }
         super.entityInside(pState, pLevel, pPos, pEntity);
@@ -120,17 +127,32 @@ public class Grinder extends HorizontalDirectionalBlock implements EntityBlock {
     protected void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
         if (pState.getBlock() != pNewState.getBlock()) {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-            if (blockEntity instanceof GrinderEntity) {
+            if (blockEntity instanceof RotaryClient client) {
                 ((GrinderEntity) blockEntity).drops();
+                pLevel.removeBlockEntity(pPos);
+                client.removeClient();
             }
         }
         super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
     }
 
+    @Override
+    public void setPlacedBy(Level pLevel, BlockPos pPos, BlockState pState, @Nullable LivingEntity pPlacer, ItemStack pStack) {
+        if (pLevel.isClientSide()) {
+            if (pLevel.getBlockEntity(pPos) instanceof RotaryClient rIO) {
+                rIO.setProgress(0F);
+            }
+        }
+    }
+
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        if(pLevel.isClientSide()) return null;
+        if (pLevel.isClientSide()) return (pLevel1, pPos, pState1, pBlockEntity) -> {
+            if (pBlockEntity instanceof GrinderEntity gE) {
+                gE.renderTick();
+            }
+        };
         return (pLevel1, pPos, pState1, pBlockEntity) -> {
             if (pBlockEntity instanceof GrinderEntity gE) {
                 gE.tick(pLevel1, pPos, pState1);

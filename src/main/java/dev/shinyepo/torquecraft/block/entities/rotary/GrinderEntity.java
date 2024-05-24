@@ -1,11 +1,11 @@
 package dev.shinyepo.torquecraft.block.entities.rotary;
 
 import dev.shinyepo.torquecraft.factory.MachineFactory;
+import dev.shinyepo.torquecraft.factory.TorqueFluidTank;
 import dev.shinyepo.torquecraft.recipes.custom.GrinderRecipe;
+import dev.shinyepo.torquecraft.registries.TorqueRecipes;
 import dev.shinyepo.torquecraft.registries.block.TorqueBlockEntities;
 import dev.shinyepo.torquecraft.registries.item.TorqueItems;
-import dev.shinyepo.torquecraft.registries.TorqueRecipes;
-import dev.shinyepo.torquecraft.factory.TorqueFluidTank;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.TagKey;
