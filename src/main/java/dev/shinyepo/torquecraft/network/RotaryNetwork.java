@@ -103,9 +103,11 @@ public class RotaryNetwork {
     }
 
     public void emitPower(float angular, float torque) {
+        if (angular != this.rotaryHandler.getAngular() || torque != this.rotaryHandler.getTorque()) {
             this.rotaryHandler.setAngular(angular);
             this.rotaryHandler.setTorque(torque);
             this.updateNetwork();
+        }
     }
 
     private void updateNetwork() {
