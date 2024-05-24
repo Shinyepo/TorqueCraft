@@ -1,6 +1,7 @@
 package dev.shinyepo.torquecraft;
 
 import com.mojang.logging.LogUtils;
+import dev.shinyepo.torquecraft.block.entities.renderers.GrinderRenderer;
 import dev.shinyepo.torquecraft.block.entities.renderers.MechanicalFanRenderer;
 import dev.shinyepo.torquecraft.block.entities.renderers.ShaftRenderer;
 import dev.shinyepo.torquecraft.block.entities.renderers.SteamEngineRenderer;
@@ -94,6 +95,7 @@ public class TorqueCraft {
             e.register(new ResourceLocation(TorqueCraft.MODID, "block/partial/shaft_rod"));
             e.register(new ResourceLocation(TorqueCraft.MODID, "block/partial/short_shaft_rod"));
             e.register(new ResourceLocation(TorqueCraft.MODID, "block/partial/fan_blade"));
+            e.register(new ResourceLocation(TorqueCraft.MODID, "block/partial/grinder_shaft"));
         }
 
         @SubscribeEvent
@@ -106,6 +108,7 @@ public class TorqueCraft {
             event.registerBlockEntityRenderer(TorqueBlockEntities.SHAFT_ENTITY.get(), ShaftRenderer::new);
             event.registerBlockEntityRenderer(TorqueBlockEntities.STEAM_ENGINE_ENTITY.get(), SteamEngineRenderer::new);
             event.registerBlockEntityRenderer(TorqueBlockEntities.MECHANICAL_FAN_ENTITY.get(), MechanicalFanRenderer::new);
+            event.registerBlockEntityRenderer(TorqueBlockEntities.GRINDER_ENTITY.get(), GrinderRenderer::new);
         }
     }
 }
