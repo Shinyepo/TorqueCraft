@@ -26,6 +26,7 @@ public class GrinderScreen extends AbstractContainerScreen<GrinderContainer> {
     public GrinderScreen(GrinderContainer container, Inventory inventory, Component title) {
         super(container, inventory, title);
         this.inventoryLabelY = this.imageHeight - 94;
+        this.titleLabelX = 30;
     }
 
     @Override
@@ -60,6 +61,7 @@ public class GrinderScreen extends AbstractContainerScreen<GrinderContainer> {
     @Override
     protected void renderLabels(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY) {
 //        super.renderLabels(pGuiGraphics,pMouseX,pMouseY);
+        pGuiGraphics.drawString(this.font, this.title, this.titleLabelX, this.titleLabelY, 4210752, false);
         int relX = (this.width - this.imageWidth) / 2;
         int relY = (this.height - this.imageHeight) / 2;
         renderFluidTooltips(pGuiGraphics, pMouseX, pMouseY, relX, relY);
