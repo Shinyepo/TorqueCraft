@@ -3,6 +3,7 @@ package dev.shinyepo.torquecraft.menu.renderer;
 import com.google.common.base.Preconditions;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
+import dev.shinyepo.torquecraft.TorqueCraft;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
@@ -17,16 +18,15 @@ import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.joml.Matrix4f;
+import org.slf4j.Logger;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FluidTankRenderer {
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger LOGGER = TorqueCraft.logger;
 
     private static final NumberFormat nf = NumberFormat.getIntegerInstance();
     private static final int TEXTURE_SIZE = 16;
