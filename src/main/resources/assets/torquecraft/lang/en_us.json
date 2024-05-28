@@ -27,6 +27,19 @@
 
   "torquecraft.tooltip.liquid.amount.with.capacity": "%s / %s mB",
   "torquecraft.tooltip.liquid.amount": "%s mB",
+  "torquecraft.tooltip.rotary.info.title.max" : "Full Speed",
+  "torquecraft.tooltip.rotary.info.tooltip.max" : "Machine is operating at its full speed",
+
+  "torquecraft.tooltip.rotary.info.title.sufficient" : "Requirements met",
+  "torquecraft.tooltip.rotary.info.tooltip.sufficient" : "Provided power is sufficient for machine operation. More power will result in lower operation time.",
+
+  "torquecraft.tooltip.rotary.info.title.notenough" : "Low power",
+  "torquecraft.tooltip.rotary.info.tooltip.notenough" : "Power requirements are not met.",
+
+  "torquecraft.tooltip.rotary.info.title.nopower" : "No power",
+  "torquecraft.tooltip.rotary.info.tooltip.nopower" : "This machine is not getting any power.",
 
   "torquecraft.chatmsg.fluid_content": "%s - %s mB"
+
+
 }
