@@ -25,7 +25,6 @@ public class RotaryNetworkRegistry {
     private static final RotaryNetworkRegistry INSTANCE = new RotaryNetworkRegistry();
     private static Boolean INITIALIZED = false;
     private Map<UUID, RotaryNetwork> networks = new Object2ObjectOpenHashMap<>();
-    private List<BlockPos> POS_CACHE = List.of();
 
     public static void init() {
         if (!INITIALIZED) {
@@ -151,6 +150,7 @@ public class RotaryNetworkRegistry {
                 } else {
                     device = entity.getLevel().getBlockEntity(pos.relative(dir));
                 }
+                if (device instanceof RotaryClient) return null;
                 if (device instanceof IRotaryNetworkDevice nextDevice) {
                     BlockState nextState = nextDevice.getBlockState();
                     if ((i == 0 ? nextState.getValue(HorizontalDirectionalBlock.FACING) : nextState.getValue(HorizontalDirectionalBlock.FACING).getOpposite()) == dir) {
