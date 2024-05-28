@@ -85,6 +85,7 @@ public class RotaryInfoRenderer {
         pose.pushPose();
         pose.translate(x, y, 100);
 
+        ROTARY_TYPE = RotaryType.NOT_ENOUGH;
         drawBackground(graphics);
         drawUnits(graphics);
         drawRotary(graphics, handler);
