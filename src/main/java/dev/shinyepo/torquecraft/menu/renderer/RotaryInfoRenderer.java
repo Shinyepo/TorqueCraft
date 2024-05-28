@@ -117,7 +117,7 @@ public class RotaryInfoRenderer {
             float torque = handler.getTorque();
             pGuiGraphics.renderTooltip(FONT, getTorqueTooltip(torque), Optional.empty(), pMouseX - relX, pMouseY - relY);
         }
-        if (mouseOverInfo(pMouseX,pMouseY,relX,relY,5,5)) {
+        if (mouseOverInfo(pMouseX,pMouseY,relX,relY,8,8)) {
             pGuiGraphics.renderTooltip(FONT, getInfoTooltip(ROTARY_TYPE), Optional.empty(), pMouseX - relX, pMouseY - relY);
         }
     }
