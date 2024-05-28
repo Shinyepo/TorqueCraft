@@ -1,7 +1,7 @@
 package dev.shinyepo.torquecraft.config;
 
 public enum ClientConfig implements IRotaryConfig {
-    GRINDER(2048, 2048,512,256),
+    GRINDER(2048, 2048,512,32),
     MECHANICAL_FAN(1024, 2048,128, 64);
 
     private final float minTorque;

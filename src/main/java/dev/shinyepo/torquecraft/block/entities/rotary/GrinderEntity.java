@@ -1,5 +1,6 @@
 package dev.shinyepo.torquecraft.block.entities.rotary;
 
+import dev.shinyepo.torquecraft.config.ClientConfig;
 import dev.shinyepo.torquecraft.factory.MachineFactory;
 import dev.shinyepo.torquecraft.factory.TorqueFluidTank;
 import dev.shinyepo.torquecraft.recipes.custom.GrinderRecipe;
@@ -29,6 +30,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class GrinderEntity extends MachineFactory {
+    private static final ClientConfig config = ClientConfig.GRINDER;
     public static final List<TagKey<Item>> validInputs = List.of(Tags.Items.SEEDS);
     public static final List<TagKey<Item>> validFluidSlotInputs = List.of(Tags.Items.BUCKETS);
 
@@ -50,13 +52,15 @@ public class GrinderEntity extends MachineFactory {
     private final TorqueFluidTank fluidTank = createFluidTank(fluidCapacity);
 
     public GrinderEntity(BlockPos pPos, BlockState pBlockState) {
-        super(TorqueBlockEntities.GRINDER_ENTITY.get(), pPos, pBlockState);
+        super(TorqueBlockEntities.GRINDER_ENTITY.get(), pPos, pBlockState, config);
         setValidInputs(validInputs);
         setValidFluidSlotInputs(validFluidSlotInputs);
+        this.rotaryHandler.get().setMaxTorque(config.getTorque());
+        this.rotaryHandler.get().setMaxAngular(config.getAngular());
     }
 
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
-        if (hasRecipe()) {
+        if (hasRecipe() && fulfilledReq()) {
             increaseCraftingProgress();
             setChanged(pLevel,pPos,pState);
 
@@ -73,6 +77,10 @@ public class GrinderEntity extends MachineFactory {
             }
         }
         distributeFluid();
+    }
+
+    private boolean fulfilledReq() {
+        return this.rotaryHandler.get().getTorque() >= config.getMinTorque() && this.rotaryHandler.get().getAngular() >= config.getMinAngular();
     }
 
     private void distributeFluid() {

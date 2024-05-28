@@ -30,9 +30,7 @@ import javax.annotation.Nonnull;
 import java.util.List;
 
 public class MachineFactory extends RotaryClient implements IFluidBuffer {
-    public static final String ITEMS_INPUT_TAG = "Input";
-    public static final String ITEMS_OUTPUT_TAG = "Output";
-    public static final String FLUID_DRAIN_TAG = "Drain";
+    private final ClientConfig config;
 
     private TorqueFluidTank fluidTank;
 
@@ -51,8 +49,9 @@ public class MachineFactory extends RotaryClient implements IFluidBuffer {
     public int progress = 0;
     public int maxProgress = 64;
 
-    public MachineFactory(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState) {
-        super(pType, pPos, pBlockState, ClientConfig.GRINDER);
+    public MachineFactory(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState, ClientConfig config) {
+        super(pType, pPos, pBlockState, config);
+        this.config = config;
     }
 
     public void setMaxProgress(int progress) {
