@@ -2,6 +2,7 @@ package dev.shinyepo.torquecraft.factory.rotary.network;
 
 import dev.shinyepo.torquecraft.capabilities.handlers.rotary.RotaryHandler;
 import dev.shinyepo.torquecraft.config.IRotaryConfig;
+import dev.shinyepo.torquecraft.config.side.SideType;
 import dev.shinyepo.torquecraft.constants.TorqueNBT;
 import dev.shinyepo.torquecraft.factory.rotary.render.AnimatedEntity;
 import dev.shinyepo.torquecraft.network.IRotaryNetworkDevice;
@@ -22,6 +23,7 @@ import java.util.UUID;
 public class RotaryNetworkDevice<CONFIG extends IRotaryConfig> extends AnimatedEntity implements IRotaryNetworkDevice {
     private UUID networkId;
     protected CONFIG config;
+    private SideType[] sides = new SideType[] {SideType.NONE,SideType.NONE,SideType.NONE,SideType.NONE,SideType.NONE,SideType.NONE};
 
     protected final Lazy<RotaryHandler> rotaryHandler = Lazy.of(() -> new RotaryHandler(config.getAngular(),config.getTorque()) {
         @Override
@@ -33,6 +35,17 @@ public class RotaryNetworkDevice<CONFIG extends IRotaryConfig> extends AnimatedE
             }
         }
     });
+
+    public void configureSides(Direction facing, SideType type) {
+        sides[facing.ordinal()] = type;
+    }
+    private void loadSide(int side, int type) {
+        sides[side] = SideType.values()[type];
+    }
+
+    public SideType[] getSidesConfig() {
+        return sides;
+    }
 
     public RotaryNetworkDevice(BlockEntityType<?> type, BlockPos pos, BlockState blockState, CONFIG config) {
         super(type, pos, blockState);
@@ -77,6 +90,12 @@ public class RotaryNetworkDevice<CONFIG extends IRotaryConfig> extends AnimatedE
         if (tag.contains(TorqueNBT.NETWORK_ID)) {
             this.networkId = tag.getUUID(TorqueNBT.NETWORK_ID);
         }
+        if (tag.contains(TorqueNBT.SIDES)) {
+            var sides = tag.getIntArray(TorqueNBT.SIDES);
+            for (int i = 0; i < sides.length; i++) {
+                loadSide(i,sides[i]);
+            }
+        }
     }
 
     @Override
@@ -88,6 +107,11 @@ public class RotaryNetworkDevice<CONFIG extends IRotaryConfig> extends AnimatedE
         if (this.networkId != null) {
             tag.putUUID(TorqueNBT.NETWORK_ID, this.networkId);
         }
+        int[] sides = new int[this.sides.length];
+        for (int i = 0; i < this.sides.length; i++) {
+            sides[i] = this.sides[i].ordinal();
+        }
+        tag.putIntArray(TorqueNBT.SIDES,sides);
     }
 
     @Nullable

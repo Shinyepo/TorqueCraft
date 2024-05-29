@@ -2,17 +2,14 @@ package dev.shinyepo.torquecraft.renderers;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
-import dev.shinyepo.torquecraft.factory.rotary.network.RotaryClient;
-import dev.shinyepo.torquecraft.factory.rotary.network.RotarySource;
-import dev.shinyepo.torquecraft.factory.rotary.network.RotaryTransmitter;
+import dev.shinyepo.torquecraft.config.side.SideType;
+import dev.shinyepo.torquecraft.factory.rotary.network.RotaryNetworkDevice;
 import dev.shinyepo.torquecraft.renderers.types.TorqueRenders;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import org.joml.Vector4d;
 
@@ -21,20 +18,15 @@ import java.util.Map;
 
 public class IORenderer {
 
-    private static Map<String,Direction> getIOs(BlockEntity entity) {
-        Map<String,Direction> outputs = new HashMap<>();
-        if (entity instanceof RotaryTransmitter transmitter) {
-            BlockState state = transmitter.getBlockState();
-            outputs.put("INPUT",state.getValue(HorizontalDirectionalBlock.FACING).getOpposite());
-            outputs.put("OUTPUT",state.getValue(HorizontalDirectionalBlock.FACING));
-        }
-        if (entity instanceof RotarySource source) {
-            BlockState state = source.getBlockState();
-            outputs.put("OUTPUT", state.getValue(HorizontalDirectionalBlock.FACING));
-        }
-        if (entity instanceof RotaryClient client) {
-            BlockState state = client.getBlockState();
-            outputs.put("INPUT", state.getValue(HorizontalDirectionalBlock.FACING).getOpposite());
+    private static Map<SideType, Direction> getIOs(BlockEntity entity) {
+        Map<SideType, Direction> outputs = new HashMap<>();
+        if (entity instanceof RotaryNetworkDevice<?> device) {
+            SideType[] sidesConfig = device.getSidesConfig();
+            for (int i = 0; i < sidesConfig.length; i++) {
+                if (sidesConfig[i] != SideType.NONE) {
+                    outputs.put(sidesConfig[i], Direction.values()[i]);
+                }
+            }
         }
         return outputs;
     }
@@ -62,8 +54,7 @@ public class IORenderer {
                 worldSpot.getZ(),
                 worldSpot.getX() + maxCorner,
                 worldSpot.getY() + maxCorner,
-                worldSpot.getZ() + maxCorner)))
-        {
+                worldSpot.getZ() + maxCorner))) {
             pose.popPose();
             BufferUploader.drawWithShader(bufferbuilder.end());
 //            RenderSystem.disableDepthTest();
@@ -71,24 +62,25 @@ public class IORenderer {
             RenderSystem.disableBlend();
             return;
         }
-        Map<String, Direction> ios = getIOs(blockEntity);
+        Map<SideType, Direction> ios = getIOs(blockEntity);
 
-        ios.forEach((type,direction) -> {
-            BlockPos pos = blockEntity.getBlockPos().relative(direction.getOpposite());;
+        ios.forEach((type, direction) -> {
+            BlockPos pos = blockEntity.getBlockPos().relative(direction.getOpposite());
+            ;
             float r = 0f;
             float g = 0f;
             float b = 0f;
-            if (type.equals("INPUT")) {
+            if (type == SideType.INPUT) {
                 r = 0f;
                 g = 137f;
                 b = 255f;
-            } else if (type.equals("OUTPUT")) {
+            } else if (type == SideType.OUTPUT) {
                 r = 252f;
                 g = 168f;
                 b = 0f;
             }
             pose.pushPose();
-            pose.translate(-pos.getX(), -pos.getY() ,-pos.getZ());
+            pose.translate(-pos.getX(), -pos.getY(), -pos.getZ());
 
             TorqueRenders.renderQuadBox(bufferbuilder, pose.last().pose(),
                     (float) (vector4dMin.x() + worldSpot.getX()),

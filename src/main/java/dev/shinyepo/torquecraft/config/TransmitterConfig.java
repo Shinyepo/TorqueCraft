@@ -1,7 +1,9 @@
 package dev.shinyepo.torquecraft.config;
 
 public enum TransmitterConfig implements IRotaryConfig {
-    SHAFT (2048, 2048);
+    SHAFT (2048F, 2048F),
+    JUNCTION (0,0),
+    BEVEL(0,0);
 
     private final float torque;
     private final float angular;

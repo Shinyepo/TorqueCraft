@@ -2,6 +2,7 @@ package dev.shinyepo.torquecraft.factory.rotary.network;
 
 import dev.shinyepo.torquecraft.capabilities.handlers.fluid.IFluidBuffer;
 import dev.shinyepo.torquecraft.config.SourceConfig;
+import dev.shinyepo.torquecraft.config.side.SideType;
 import dev.shinyepo.torquecraft.constants.TorqueAttributes;
 import dev.shinyepo.torquecraft.factory.TorqueFluidTank;
 import dev.shinyepo.torquecraft.network.RotaryNetwork;
@@ -15,6 +16,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.common.util.Lazy;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
@@ -31,6 +33,7 @@ public class RotarySource extends RotaryNetworkDevice<SourceConfig> implements I
         this.sourceConfig = config;
         initFluidTank(config);
         this.rotaryHandler.get().setAcceleration(config.getWindup());
+        configureSides(blockState.getValue(BlockStateProperties.HORIZONTAL_FACING),SideType.OUTPUT);
     }
 
     private void initFluidTank(SourceConfig config) {

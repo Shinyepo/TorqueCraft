@@ -1,6 +1,7 @@
 package dev.shinyepo.torquecraft.network;
 
 import dev.shinyepo.torquecraft.TorqueCraft;
+import dev.shinyepo.torquecraft.config.side.SideType;
 import dev.shinyepo.torquecraft.factory.rotary.network.RotaryClient;
 import dev.shinyepo.torquecraft.factory.rotary.network.RotaryNetworkDevice;
 import dev.shinyepo.torquecraft.factory.rotary.network.RotarySource;
@@ -107,7 +108,7 @@ public class RotaryNetworkRegistry {
     }
 
     public UUID registerTransmitter(RotaryTransmitter transmitter, Direction direction) {
-        RotaryNetwork network = getInstance().fetchNetwork((IRotaryNetworkDevice) transmitter, new Direction[]{direction, direction.getOpposite()});
+        RotaryNetwork network = getInstance().fetchNetwork(transmitter, new Direction[]{direction, direction.getOpposite()});
         if (network != null) {
             getInstance().addTransmitter(network, transmitter);
             TorqueCraft.logger.info("New network devices: {}", network.getDevices().toString());
@@ -121,7 +122,7 @@ public class RotaryNetworkRegistry {
     }
 
     public UUID registerSource(RotarySource source) {
-        RotaryNetwork network = getInstance().fetchNetwork((IRotaryNetworkDevice) source, new Direction[]{source.getBlockState().getValue(HorizontalDirectionalBlock.FACING)});
+        RotaryNetwork network = getInstance().fetchNetwork(source, new Direction[]{source.getBlockState().getValue(HorizontalDirectionalBlock.FACING)});
         if (network != null) {
             getInstance().addSource(network, source);
             TorqueCraft.logger.info("Source merged with existing network");
@@ -137,35 +138,23 @@ public class RotaryNetworkRegistry {
         return INSTANCE;
     }
 
-    //TODO: Separate for transmitter
-    public RotaryNetwork fetchNetwork(IRotaryNetworkDevice networkDevice, Direction[] directions) {
+
+    public RotaryNetwork fetchNetwork(RotaryNetworkDevice<?> dev1, Direction[] directions) {
         List<RotaryNetwork> foundNetworks = new ArrayList<>();
-        int i = 0;
-        for (Direction dir : directions) {
-            if (networkDevice instanceof BlockEntity entity) {
-                BlockPos pos = entity.getBlockPos();
-                BlockEntity device = null;
-                if (networkDevice instanceof RotaryClient) {
-                    device = entity.getLevel().getBlockEntity(pos.relative(dir.getOpposite()));
-                } else {
-                    device = entity.getLevel().getBlockEntity(pos.relative(dir));
-                }
-                if (device instanceof RotaryClient) return null;
-                if (device instanceof IRotaryNetworkDevice nextDevice) {
-                    BlockState nextState = nextDevice.getBlockState();
-                    if ((i == 0 ? nextState.getValue(HorizontalDirectionalBlock.FACING) : nextState.getValue(HorizontalDirectionalBlock.FACING).getOpposite()) == dir) {
-                        if (nextDevice.getNetworkId() != null) {
-                            RotaryNetwork network = getInstance().getNetwork(nextDevice.getNetworkId());
-                            if (network != null) {
-                                foundNetworks.add(network);
-                            }
-                        }
+        SideType[] sides = dev1.getSidesConfig();
+        for (int i = 0; i < sides.length; i++) {
+            if (sides[i] != SideType.NONE) {
+                BlockPos dev1Pos = dev1.getBlockPos();
+                var blockEntity = dev1.getLevel().getBlockEntity(dev1Pos.relative(Direction.values()[i]));
+                if (blockEntity instanceof RotaryNetworkDevice<?> dev2) {
+                    SideType[] sides2 = dev2.getSidesConfig();
+                    if (sides2[Direction.values()[i].getOpposite().ordinal()].getOpposite() == sides[i].ordinal()){
+                        RotaryNetwork network = getInstance().getNetwork(dev2.getNetworkId());
+                        foundNetworks.add(network);
                     }
                 }
             }
-            i++;
         }
-        //TODO: Merging transmitter is clunky
         if (foundNetworks.size() > 1) {
             return getInstance().mergeNetworks(foundNetworks);
         }
@@ -265,7 +254,7 @@ public class RotaryNetworkRegistry {
     }
 
     public UUID registerClient(RotaryClient rotaryClient) {
-        RotaryNetwork network = getInstance().fetchNetwork((RotaryNetworkDevice) rotaryClient, new Direction[]{rotaryClient.getBlockState().getValue(HorizontalDirectionalBlock.FACING)});
+        RotaryNetwork network = getInstance().fetchNetwork(rotaryClient, new Direction[]{rotaryClient.getBlockState().getValue(HorizontalDirectionalBlock.FACING)});
         if (network != null) {
             getInstance().addClient(network, rotaryClient);
             TorqueCraft.logger.info("Client merged with existing network");
@@ -275,6 +264,4 @@ public class RotaryNetworkRegistry {
             return registerNetwork(UUID.randomUUID(), rotaryClient);
         }
     }
-
-
 }

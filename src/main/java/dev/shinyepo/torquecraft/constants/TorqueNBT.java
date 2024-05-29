@@ -17,4 +17,5 @@ public class TorqueNBT {
     public static final String TEMP = "Temperature";
     public static final String TORQUE = "Torque";
     public static final String ANGULAR = "Angular";
+    public static final String SIDES = "Sides";
 }
