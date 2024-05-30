@@ -21,6 +21,7 @@ public class TorqueItemModelProvider extends ItemModelProvider {
         basicItem(TorqueItems.JET_FUEL_BUCKET.get());
         basicItem(TorqueItems.LUBRICANT_BUCKET.get());
         basicItem(TorqueItems.PRESSURE_GAUGE.get());
+        basicItem(TorqueItems.ROTARY_WRENCH.get());
 
         withExistingParent(String.valueOf(TorqueItems.FLUID_TANK_ITEM.get()).toLowerCase(),
                 "torquecraft:block/" + BuiltInRegistries.BLOCK.getKey(TorqueBlocks.FLUID_TANK.get()).getPath());

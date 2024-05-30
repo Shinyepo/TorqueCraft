@@ -2,7 +2,7 @@ package dev.shinyepo.torquecraft.factory.rotary.network;
 
 import dev.shinyepo.torquecraft.config.TransmitterConfig;
 import dev.shinyepo.torquecraft.config.side.SideType;
-import dev.shinyepo.torquecraft.network.RotaryNetworkRegistry;
+import dev.shinyepo.torquecraft.factory.IWrenchInteraction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
-public class RotaryTransmitter extends RotaryNetworkDevice<TransmitterConfig> {
+public class RotaryTransmitter extends RotaryNetworkDevice<TransmitterConfig> implements IWrenchInteraction {
     private final TransmitterConfig transmitterConfig;
 
 

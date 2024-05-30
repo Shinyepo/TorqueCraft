@@ -3,6 +3,7 @@ package dev.shinyepo.torquecraft.registries.item;
 import dev.shinyepo.torquecraft.TorqueCraft;
 import dev.shinyepo.torquecraft.item.prefab.CanolaMeal;
 import dev.shinyepo.torquecraft.item.prefab.PressureGauge;
+import dev.shinyepo.torquecraft.item.prefab.RotaryWrench;
 import dev.shinyepo.torquecraft.registries.block.TorqueBlocks;
 import dev.shinyepo.torquecraft.registries.fluid.TorqueFluids;
 import net.minecraft.world.food.FoodProperties;
@@ -21,6 +22,7 @@ public class TorqueItems {
 
     //TOOLS
     public static final Supplier<Item> PRESSURE_GAUGE = ITEMS.register("pressure_gauge", () -> new PressureGauge(new Item.Properties()));
+    public static final Supplier<Item> ROTARY_WRENCH = ITEMS.register("rotary_wrench", () -> new RotaryWrench(new Item.Properties()));
 
     //Block items
     public static final Supplier<BlockItem> TUNGSTEN_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("tungsten_block", TorqueBlocks.TUNGSTEN_BLOCK);

@@ -34,7 +34,11 @@ public class RotarySource extends RotaryNetworkDevice<SourceConfig> implements I
         this.sourceConfig = config;
         initFluidTank(config);
         this.rotaryHandler.get().setAcceleration(config.getWindup());
-        configureSides(blockState.getValue(BlockStateProperties.HORIZONTAL_FACING),SideType.OUTPUT);
+        configureSides(blockState.getValue(BlockStateProperties.HORIZONTAL_FACING));
+    }
+
+    public void configureSides(Direction facing) {
+        configureSides(facing, SideType.OUTPUT);
     }
 
     private void initFluidTank(SourceConfig config) {
@@ -93,19 +97,6 @@ public class RotarySource extends RotaryNetworkDevice<SourceConfig> implements I
         super.loadAdditional(tag, provider);
         if (tag.contains("Fluid")) {
             fluidTank.get().readFromNBT(provider,tag);
-        }
-    }
-
-    @Override
-    public void onLoad() {
-        super.onLoad();
-        if (this.level == null || this.level.isClientSide()) return;
-        updateNetwork(RotaryNetworkRegistry.getInstance().registerSource(this));
-    }
-
-    public void removeSource() {
-        if (this.level != null && !this.level.isClientSide) {
-            RotaryNetworkRegistry.getInstance().removeSource(this.getNetworkId(), this);
         }
     }
 

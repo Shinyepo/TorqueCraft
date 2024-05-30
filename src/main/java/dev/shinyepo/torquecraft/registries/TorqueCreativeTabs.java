@@ -37,5 +37,6 @@ public class TorqueCreativeTabs {
                 output.accept(TorqueItems.STEAM_PIPE_ITEM.get());
                 //Tools
                 output.accept(TorqueItems.PRESSURE_GAUGE.get());
+                output.accept(TorqueItems.ROTARY_WRENCH.get());
             }).build());
 }
