@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec;
 import dev.shinyepo.torquecraft.block.entities.rotary.ShaftEntity;
 import dev.shinyepo.torquecraft.capabilities.TorqueCustomCapabilities;
 import dev.shinyepo.torquecraft.capabilities.handlers.rotary.IRotaryHandler;
+import dev.shinyepo.torquecraft.factory.rotary.network.RotaryNetworkDevice;
 import dev.shinyepo.torquecraft.factory.rotary.network.RotaryTransmitter;
 import dev.shinyepo.torquecraft.factory.rotary.render.IRotaryIO;
 import net.minecraft.core.BlockPos;
@@ -111,9 +112,9 @@ public class Shaft extends HorizontalDirectionalBlock implements EntityBlock {
     protected void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
         if (pState.getBlock() != pNewState.getBlock()) {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-            if (blockEntity instanceof RotaryTransmitter rotary) {
+            if (blockEntity instanceof RotaryNetworkDevice<?> rotary) {
                 pLevel.removeBlockEntity(pPos);
-                rotary.removeTransmitter();
+                rotary.removeDevice();
             }
         }
         super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);

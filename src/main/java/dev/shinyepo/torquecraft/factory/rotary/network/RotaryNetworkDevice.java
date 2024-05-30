@@ -6,6 +6,7 @@ import dev.shinyepo.torquecraft.config.side.SideType;
 import dev.shinyepo.torquecraft.constants.TorqueNBT;
 import dev.shinyepo.torquecraft.factory.rotary.render.AnimatedEntity;
 import dev.shinyepo.torquecraft.network.IRotaryNetworkDevice;
+import dev.shinyepo.torquecraft.network.RotaryNetworkRegistry;
 import dev.shinyepo.torquecraft.networking.TorqueMessages;
 import dev.shinyepo.torquecraft.networking.packets.SyncRotaryPowerS2C;
 import net.minecraft.core.BlockPos;
@@ -23,9 +24,7 @@ import java.util.UUID;
 public class RotaryNetworkDevice<CONFIG extends IRotaryConfig> extends AnimatedEntity implements IRotaryNetworkDevice {
     private UUID networkId;
     protected CONFIG config;
-    private SideType[] sides = new SideType[] {SideType.NONE,SideType.NONE,SideType.NONE,SideType.NONE,SideType.NONE,SideType.NONE};
-
-    protected final Lazy<RotaryHandler> rotaryHandler = Lazy.of(() -> new RotaryHandler(config.getAngular(),config.getTorque()) {
+    protected final Lazy<RotaryHandler> rotaryHandler = Lazy.of(() -> new RotaryHandler(config.getAngular(), config.getTorque()) {
         @Override
         public void markDirty() {
             super.markDirty();
@@ -35,10 +34,16 @@ public class RotaryNetworkDevice<CONFIG extends IRotaryConfig> extends AnimatedE
             }
         }
     });
+    private SideType[] sides = new SideType[]{SideType.NONE, SideType.NONE, SideType.NONE, SideType.NONE, SideType.NONE, SideType.NONE};
+
+    public void resetSides() {
+        sides = new SideType[]{SideType.NONE, SideType.NONE, SideType.NONE, SideType.NONE, SideType.NONE, SideType.NONE};
+    }
 
     public void configureSides(Direction facing, SideType type) {
         sides[facing.ordinal()] = type;
     }
+
     private void loadSide(int side, int type) {
         sides[side] = SideType.values()[type];
     }
@@ -93,7 +98,7 @@ public class RotaryNetworkDevice<CONFIG extends IRotaryConfig> extends AnimatedE
         if (tag.contains(TorqueNBT.SIDES)) {
             var sides = tag.getIntArray(TorqueNBT.SIDES);
             for (int i = 0; i < sides.length; i++) {
-                loadSide(i,sides[i]);
+                loadSide(i, sides[i]);
             }
         }
     }
@@ -111,7 +116,7 @@ public class RotaryNetworkDevice<CONFIG extends IRotaryConfig> extends AnimatedE
         for (int i = 0; i < this.sides.length; i++) {
             sides[i] = this.sides[i].ordinal();
         }
-        tag.putIntArray(TorqueNBT.SIDES,sides);
+        tag.putIntArray(TorqueNBT.SIDES, sides);
     }
 
     @Nullable
@@ -125,5 +130,18 @@ public class RotaryNetworkDevice<CONFIG extends IRotaryConfig> extends AnimatedE
         CompoundTag nbt = super.getUpdateTag(provider);
         saveAdditional(nbt, provider);
         return nbt;
+    }
+
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        if (this.level == null || this.level.isClientSide()) return;
+        updateNetwork(RotaryNetworkRegistry.getInstance().registerDevice(this));
+    }
+
+    public void removeDevice() {
+        if (this.level != null && !this.level.isClientSide) {
+            RotaryNetworkRegistry.getInstance().unregisterDevice(this.getNetworkId(), this);
+        }
     }
 }

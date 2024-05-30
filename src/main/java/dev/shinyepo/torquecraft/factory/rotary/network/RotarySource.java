@@ -4,6 +4,7 @@ import dev.shinyepo.torquecraft.capabilities.handlers.fluid.IFluidBuffer;
 import dev.shinyepo.torquecraft.config.SourceConfig;
 import dev.shinyepo.torquecraft.config.side.SideType;
 import dev.shinyepo.torquecraft.constants.TorqueAttributes;
+import dev.shinyepo.torquecraft.factory.IWrenchInteraction;
 import dev.shinyepo.torquecraft.factory.TorqueFluidTank;
 import dev.shinyepo.torquecraft.network.RotaryNetwork;
 import dev.shinyepo.torquecraft.network.RotaryNetworkRegistry;
@@ -21,7 +22,7 @@ import net.neoforged.neoforge.common.util.Lazy;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
-public class RotarySource extends RotaryNetworkDevice<SourceConfig> implements IFluidBuffer {
+public class RotarySource extends RotaryNetworkDevice<SourceConfig> implements IFluidBuffer, IWrenchInteraction {
     private RotaryNetwork network;
     public final SourceConfig sourceConfig;
     protected Lazy<TorqueFluidTank> fluidTank;

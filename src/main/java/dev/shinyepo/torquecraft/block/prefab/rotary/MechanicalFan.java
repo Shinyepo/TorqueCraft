@@ -3,6 +3,7 @@ package dev.shinyepo.torquecraft.block.prefab.rotary;
 import com.mojang.serialization.MapCodec;
 import dev.shinyepo.torquecraft.block.entities.rotary.MechanicalFanEntity;
 import dev.shinyepo.torquecraft.factory.rotary.network.RotaryClient;
+import dev.shinyepo.torquecraft.factory.rotary.network.RotaryNetworkDevice;
 import dev.shinyepo.torquecraft.factory.rotary.render.IRotaryIO;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -82,9 +83,9 @@ public class MechanicalFan extends HorizontalDirectionalBlock implements EntityB
     protected void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
         if (pState.getBlock() != pNewState.getBlock()) {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-            if (blockEntity instanceof RotaryClient rotary) {
+            if (blockEntity instanceof RotaryNetworkDevice<?> device) {
                 pLevel.removeBlockEntity(pPos);
-                rotary.removeClient();
+                device.removeDevice();
             }
         }
         super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);

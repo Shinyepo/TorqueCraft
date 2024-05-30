@@ -5,6 +5,7 @@ import dev.shinyepo.torquecraft.block.entities.rotary.GrinderEntity;
 import dev.shinyepo.torquecraft.capabilities.handlers.rotary.IRotaryHandler;
 import dev.shinyepo.torquecraft.constants.TorqueAttributes;
 import dev.shinyepo.torquecraft.factory.rotary.network.RotaryClient;
+import dev.shinyepo.torquecraft.factory.rotary.network.RotaryNetworkDevice;
 import dev.shinyepo.torquecraft.menu.GrinderContainer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -127,10 +128,10 @@ public class Grinder extends HorizontalDirectionalBlock implements EntityBlock {
     protected void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
         if (pState.getBlock() != pNewState.getBlock()) {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-            if (blockEntity instanceof RotaryClient client) {
+            if (blockEntity instanceof RotaryNetworkDevice<?> device) {
                 ((GrinderEntity) blockEntity).drops();
                 pLevel.removeBlockEntity(pPos);
-                client.removeClient();
+                device.removeDevice();
             }
         }
         super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);

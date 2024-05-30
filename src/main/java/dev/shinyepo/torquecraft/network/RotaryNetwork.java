@@ -3,6 +3,7 @@ package dev.shinyepo.torquecraft.network;
 import dev.shinyepo.torquecraft.capabilities.handlers.rotary.RotaryHandler;
 import dev.shinyepo.torquecraft.config.SourceConfig;
 import dev.shinyepo.torquecraft.factory.rotary.network.RotaryClient;
+import dev.shinyepo.torquecraft.factory.rotary.network.RotaryNetworkDevice;
 import dev.shinyepo.torquecraft.factory.rotary.network.RotarySource;
 import dev.shinyepo.torquecraft.factory.rotary.network.RotaryTransmitter;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
@@ -15,7 +16,7 @@ import java.util.UUID;
 
 public class RotaryNetwork {
     private final UUID network_id;
-    private final List<IRotaryNetworkDevice> devices = new ArrayList<>();
+    private final List<RotaryNetworkDevice<?>> devices = new ArrayList<>();
     private final Map<BlockPos, RotarySource> sources = new Object2ObjectOpenHashMap<>();
     private final Map<BlockPos, RotaryTransmitter> transmitters = new Object2ObjectOpenHashMap<>();
     private final Map<BlockPos, RotaryClient> clients = new Object2ObjectOpenHashMap<>();
@@ -28,15 +29,6 @@ public class RotaryNetwork {
 
     public UUID getNetworkId() {
         return this.network_id;
-    }
-
-    public void registerSource(RotarySource source) {
-        if (!validDevice(source)) return;
-        increaseMax(source.sourceConfig);
-        sources.put(source.getBlockPos(), source);
-        this.updateNetwork();
-
-        devices.add(source);
     }
 
     private void increaseMax(SourceConfig config) {
@@ -63,21 +55,7 @@ public class RotaryNetwork {
         return !devices.contains(device);
     }
 
-    public void registerTransmitter(RotaryTransmitter transmitter) {
-        if (!validDevice(transmitter)) return;
-        transmitters.put(transmitter.getBlockPos(), transmitter);
-        updateNetwork();
-        devices.add(transmitter);
-    }
-
-    public void registerClient(RotaryClient rotaryClient) {
-        if (!validDevice(rotaryClient)) return;
-        clients.put(rotaryClient.getBlockPos(), rotaryClient);
-        updateNetwork();
-        devices.add(rotaryClient);
-    }
-
-    public List<IRotaryNetworkDevice> getDevices() {
+    public List<RotaryNetworkDevice<?>> getDevices() {
         return devices;
     }
 
@@ -87,19 +65,6 @@ public class RotaryNetwork {
 
     public Map<BlockPos, RotaryClient> getClients() {
         return clients;
-    }
-
-    public void removeSource(RotarySource source) {
-        reduceMax(source.sourceConfig);
-        sources.remove(source.getBlockPos());
-        this.updateNetwork();
-        devices.remove(source);
-    }
-
-    public void removeClient(RotaryClient rotaryClient) {
-        this.clients.remove(rotaryClient.getBlockPos());
-        this.updateNetwork();
-        this.devices.remove(rotaryClient);
     }
 
     public void emitPower(float angular, float torque) {
@@ -119,17 +84,44 @@ public class RotaryNetwork {
         }
     }
 
-
-    public void removeTransmitter(RotaryTransmitter rotaryTransmitter) {
-        transmitters.remove(rotaryTransmitter.getBlockPos());
-        this.updateNetwork();
-        devices.remove(rotaryTransmitter);
-    }
-
     public void clear() {
         this.transmitters.clear();
         this.sources.clear();
         this.clients.clear();
         this.devices.clear();
+    }
+
+    public <T extends RotaryNetworkDevice<?>> void registerDevice(T device) {
+        if (!validDevice(device)) return;
+        BlockPos pos = device.getBlockPos();
+        if (device instanceof RotaryClient client) {
+            clients.put(pos, client);
+        }
+        if (device instanceof RotaryTransmitter transmitter) {
+            transmitters.put(pos, transmitter);
+        }
+        if (device instanceof RotarySource source) {
+            sources.put(pos, source);
+            increaseMax(source.sourceConfig);
+        }
+        devices.add(device);
+        updateNetwork();
+    }
+
+    public <T extends RotaryNetworkDevice<?>> void unregisterDevice(T device) {
+        if (validDevice(device)) return;
+        BlockPos pos = device.getBlockPos();
+        if (device instanceof RotaryClient client) {
+            clients.remove(pos, client);
+        }
+        if (device instanceof RotaryTransmitter transmitter) {
+            transmitters.remove(pos, transmitter);
+        }
+        if (device instanceof RotarySource source) {
+            sources.remove(pos, source);
+            reduceMax(source.sourceConfig);
+        }
+        devices.remove(device);
+        updateNetwork();
     }
 }

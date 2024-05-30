@@ -5,6 +5,7 @@ import dev.shinyepo.torquecraft.block.entities.rotary.SteamEngineEntity;
 import dev.shinyepo.torquecraft.capabilities.TorqueCustomCapabilities;
 import dev.shinyepo.torquecraft.capabilities.handlers.rotary.IRotaryHandler;
 import dev.shinyepo.torquecraft.constants.TorqueAttributes;
+import dev.shinyepo.torquecraft.factory.rotary.network.RotaryNetworkDevice;
 import dev.shinyepo.torquecraft.factory.rotary.network.RotarySource;
 import dev.shinyepo.torquecraft.factory.rotary.render.IRotaryIO;
 import dev.shinyepo.torquecraft.registries.tag.TorqueTags;
@@ -119,9 +120,9 @@ public class SteamEngine extends HorizontalDirectionalBlock implements EntityBlo
     protected void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
         if (pState.getBlock() != pNewState.getBlock()) {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-            if (blockEntity instanceof RotarySource source) {
+            if (blockEntity instanceof RotaryNetworkDevice<?> device) {
                 pLevel.removeBlockEntity(pPos);
-                source.removeSource();
+                device.removeDevice();
 
             }
         }
