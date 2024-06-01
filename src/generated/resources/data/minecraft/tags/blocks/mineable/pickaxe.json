@@ -7,6 +7,8 @@
     "torquecraft:fluid_tank",
     "torquecraft:pump",
     "torquecraft:cooling_radiator",
+    "torquecraft:three_way",
+    "torquecraft:bevel_gears",
     "torquecraft:shaft"
   ]
 }

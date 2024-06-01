@@ -1,13 +1,16 @@
 package dev.shinyepo.torquecraft.network;
 
+import dev.shinyepo.torquecraft.block.entities.rotary.transmitters.ThreeWayEntity;
 import dev.shinyepo.torquecraft.capabilities.handlers.rotary.RotaryHandler;
 import dev.shinyepo.torquecraft.config.SourceConfig;
+import dev.shinyepo.torquecraft.config.side.SideType;
 import dev.shinyepo.torquecraft.factory.rotary.network.RotaryClient;
 import dev.shinyepo.torquecraft.factory.rotary.network.RotaryNetworkDevice;
 import dev.shinyepo.torquecraft.factory.rotary.network.RotarySource;
 import dev.shinyepo.torquecraft.factory.rotary.network.RotaryTransmitter;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +19,12 @@ import java.util.UUID;
 
 public class RotaryNetwork {
     private final UUID network_id;
-    private final List<RotaryNetworkDevice<?>> devices = new ArrayList<>();
+    private final Map<BlockPos, RotaryNetworkDevice<?>> devices = new Object2ObjectOpenHashMap<>();
     private final Map<BlockPos, RotarySource> sources = new Object2ObjectOpenHashMap<>();
     private final Map<BlockPos, RotaryTransmitter> transmitters = new Object2ObjectOpenHashMap<>();
     private final Map<BlockPos, RotaryClient> clients = new Object2ObjectOpenHashMap<>();
+
+    private final Map<BlockPos, RotarySource> transmittingSources = new Object2ObjectOpenHashMap<>();
 
     private final RotaryHandler rotaryHandler = new RotaryHandler(0, 0);
 
@@ -52,10 +57,10 @@ public class RotaryNetwork {
     }
 
     public boolean validDevice(IRotaryNetworkDevice device) {
-        return !devices.contains(device);
+        return !devices.containsValue(device);
     }
 
-    public List<RotaryNetworkDevice<?>> getDevices() {
+    public Map<BlockPos, RotaryNetworkDevice<?>> getDevices() {
         return devices;
     }
 
@@ -65,6 +70,14 @@ public class RotaryNetwork {
 
     public Map<BlockPos, RotaryClient> getClients() {
         return clients;
+    }
+
+    public boolean validateTransmittingSources(BlockPos pos) {
+        var source = transmittingSources.get(pos);
+        if (source != null) {
+            transmittingSources.remove(pos, source);
+        }
+        return false;
     }
 
     public void emitPower(float angular, float torque) {
@@ -77,10 +90,10 @@ public class RotaryNetwork {
 
     private void updateNetwork() {
         if(!transmitters.isEmpty()) {
-            transmitters.forEach((pos, transmitter) -> transmitter.setRotaryPower(this.rotaryHandler.getAngular(), this.rotaryHandler.getTorque(), this.rotaryHandler.getTemp()));
+            transmitters.forEach((pos, transmitter) -> transmitter.setRotaryPower(0, 0));
         }
         if (!clients.isEmpty()) {
-            clients.forEach((pos, client) -> client.setRotaryPower(this.rotaryHandler.getAngular(), this.rotaryHandler.getTorque(), this.rotaryHandler.getTemp()));
+            clients.forEach((pos, client) -> client.setRotaryPower(0, 0));
         }
     }
 
@@ -88,6 +101,7 @@ public class RotaryNetwork {
         this.transmitters.clear();
         this.sources.clear();
         this.clients.clear();
+        this.transmittingSources.clear();
         this.devices.clear();
     }
 
@@ -102,9 +116,9 @@ public class RotaryNetwork {
         }
         if (device instanceof RotarySource source) {
             sources.put(pos, source);
-            increaseMax(source.sourceConfig);
+            increaseMax(source.getConfig());
         }
-        devices.add(device);
+        devices.put(pos, device);
         updateNetwork();
     }
 
@@ -119,9 +133,10 @@ public class RotaryNetwork {
         }
         if (device instanceof RotarySource source) {
             sources.remove(pos, source);
-            reduceMax(source.sourceConfig);
+            validateTransmittingSources(source.getBlockPos());
+            reduceMax(source.getConfig());
         }
-        devices.remove(device);
+        devices.remove(pos, device);
         updateNetwork();
     }
 }

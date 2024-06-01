@@ -1,10 +1,16 @@
 package dev.shinyepo.torquecraft.registries.block;
 
 import dev.shinyepo.torquecraft.TorqueCraft;
-import dev.shinyepo.torquecraft.block.entities.*;
+import dev.shinyepo.torquecraft.block.entities.FluidTankEntity;
 import dev.shinyepo.torquecraft.block.entities.pipes.FluidPipeEntity;
 import dev.shinyepo.torquecraft.block.entities.pipes.SteamPipeEntity;
-import dev.shinyepo.torquecraft.block.entities.rotary.*;
+import dev.shinyepo.torquecraft.block.entities.rotary.GrinderEntity;
+import dev.shinyepo.torquecraft.block.entities.rotary.MechanicalFanEntity;
+import dev.shinyepo.torquecraft.block.entities.rotary.PumpEntity;
+import dev.shinyepo.torquecraft.block.entities.rotary.SteamEngineEntity;
+import dev.shinyepo.torquecraft.block.entities.rotary.transmitters.BevelGearsEntity;
+import dev.shinyepo.torquecraft.block.entities.rotary.transmitters.ShaftEntity;
+import dev.shinyepo.torquecraft.block.entities.rotary.transmitters.ThreeWayEntity;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -22,5 +28,7 @@ public class TorqueBlockEntities {
     public static final Supplier<BlockEntityType<SteamPipeEntity>> STEAM_PIPE_ENTITY = BLOCK_ENTITIES.register("steam_pipe_be", () -> BlockEntityType.Builder.of(SteamPipeEntity::new, TorqueBlocks.STEAM_PIPE.get()).build(null));
     public static final Supplier<BlockEntityType<FluidTankEntity>> FLUID_TANK_ENTITY = BLOCK_ENTITIES.register("fluid_tank_be", () -> BlockEntityType.Builder.of(FluidTankEntity::new, TorqueBlocks.FLUID_TANK.get()).build(null));
     public static final Supplier<BlockEntityType<ShaftEntity>> SHAFT_ENTITY = BLOCK_ENTITIES.register("shaft_be", () -> BlockEntityType.Builder.of(ShaftEntity::new, TorqueBlocks.SHAFT.get()).build(null));
+    public static final Supplier<BlockEntityType<ThreeWayEntity>> THREE_WAY_ENTITY = BLOCK_ENTITIES.register("three_way_be", () -> BlockEntityType.Builder.of(ThreeWayEntity::new, TorqueBlocks.THREE_WAY.get()).build(null));
+    public static final Supplier<BlockEntityType<BevelGearsEntity>> BEVEL_GEARS_ENTITY = BLOCK_ENTITIES.register("bevel_gears_be", () -> BlockEntityType.Builder.of(BevelGearsEntity::new, TorqueBlocks.BEVEL_GEARS.get()).build(null));
 
 }

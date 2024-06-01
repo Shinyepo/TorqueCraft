@@ -1,4 +1,5 @@
-// 1.20.6	2024-05-30T10:56:03.9835078	Item Models: torquecraft
+// 1.20.6	2024-05-31T15:57:13.2182432	Item Models: torquecraft
+3fe8dd0fb9cc5117ab768c498aecb97e50ef2187 assets/torquecraft/models/item/bevel_gears.json
 5f52cc675d3896825693098fb2797e0b3b53e704 assets/torquecraft/models/item/canola_seeds.json
 fb83119ca3215741128f5d2630736dd55e2a0dba assets/torquecraft/models/item/cooling_radiator.json
 9304d8e398bec48a50062c1b0ff34f49fdae2679 assets/torquecraft/models/item/crushed_seeds.json
@@ -14,5 +15,6 @@ d53bc6fa7e2fb1532dc169b010d54da77f2da30d assets/torquecraft/models/item/pump.jso
 d3e12ee96266b1651b4aa6fcfffb9fd6a9ac697d assets/torquecraft/models/item/shaft.json
 83653a7da4f2a307283ac0390b6523a1c6871597 assets/torquecraft/models/item/steam_engine.json
 c9132467fff67005b589e94e5e19c2d3488d110e assets/torquecraft/models/item/steam_pipe.json
+d9e08afd579feebf152d9216627b79c02f7cb4d6 assets/torquecraft/models/item/three_way.json
 77b58006ef309b6b42818ea8d4d04a4c1b64667b assets/torquecraft/models/item/tungsten_block.json
 ca9eadef4cf1935a1e23bcf10d8f025108c4dbb0 assets/torquecraft/models/item/tungsten_ingot.json

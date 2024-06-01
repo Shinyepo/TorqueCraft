@@ -52,6 +52,10 @@ public class RotaryNetworkDevice<CONFIG extends IRotaryConfig> extends AnimatedE
         return sides;
     }
 
+    public CONFIG getConfig() {
+        return config;
+    }
+
     public RotaryNetworkDevice(BlockEntityType<?> type, BlockPos pos, BlockState blockState, CONFIG config) {
         super(type, pos, blockState);
         this.config = config;
@@ -65,6 +69,12 @@ public class RotaryNetworkDevice<CONFIG extends IRotaryConfig> extends AnimatedE
         this.rotaryHandler.get().setAngular(angular);
         this.rotaryHandler.get().setTorque(torque);
         this.rotaryHandler.get().setTemp(temp);
+        this.rotaryHandler.get().markDirty();
+    }
+
+    public void setRotaryPower(float angular, float torque) {
+        this.rotaryHandler.get().setAngular(angular);
+        this.rotaryHandler.get().setTorque(torque);
         this.rotaryHandler.get().markDirty();
     }
 

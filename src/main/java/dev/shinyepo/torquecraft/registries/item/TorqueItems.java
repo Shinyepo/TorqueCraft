@@ -34,6 +34,8 @@ public class TorqueItems {
     public static final Supplier<BlockItem> PUMP_ITEM = ITEMS.registerSimpleBlockItem("pump", TorqueBlocks.PUMP);
 
     public static final Supplier<BlockItem> SHAFT_ITEM = ITEMS.registerSimpleBlockItem("shaft", TorqueBlocks.SHAFT);
+    public static final Supplier<BlockItem> THREE_WAY_ITEM = ITEMS.registerSimpleBlockItem("three_way", TorqueBlocks.THREE_WAY);
+    public static final Supplier<BlockItem> BEVEL_GEARS_ITEM = ITEMS.registerSimpleBlockItem("bevel_gears", TorqueBlocks.BEVEL_GEARS);
     public static final Supplier<BlockItem> COOLING_RADIATOR_ITEM = ITEMS.registerSimpleBlockItem("cooling_radiator", TorqueBlocks.COOLING_RADIATOR);
 
     //PIPES

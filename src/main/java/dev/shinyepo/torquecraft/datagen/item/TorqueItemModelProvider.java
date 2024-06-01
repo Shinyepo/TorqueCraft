@@ -47,6 +47,12 @@ public class TorqueItemModelProvider extends ItemModelProvider {
         withExistingParent(String.valueOf(TorqueItems.SHAFT_ITEM.get()).toLowerCase(),
                 "torquecraft:block/" + BuiltInRegistries.BLOCK.getKey(TorqueBlocks.SHAFT.get()).getPath());
 
+        withExistingParent(String.valueOf(TorqueItems.THREE_WAY_ITEM.get()).toLowerCase(),
+                "torquecraft:block/" + BuiltInRegistries.BLOCK.getKey(TorqueBlocks.THREE_WAY.get()).getPath());
+
+        withExistingParent(String.valueOf(TorqueItems.BEVEL_GEARS_ITEM.get()).toLowerCase(),
+                "torquecraft:block/" + BuiltInRegistries.BLOCK.getKey(TorqueBlocks.BEVEL_GEARS.get()).getPath());
+
         withExistingParent(String.valueOf(TorqueItems.COOLING_RADIATOR_ITEM.get()).toLowerCase(),
                 "torquecraft:block/radiator/" + BuiltInRegistries.BLOCK.getKey(TorqueBlocks.COOLING_RADIATOR.get()).getPath()+"_full");
     }

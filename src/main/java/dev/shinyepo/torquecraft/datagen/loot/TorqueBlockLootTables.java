@@ -26,6 +26,8 @@ public class TorqueBlockLootTables extends BlockLootSubProvider {
         dropSelf(TorqueBlocks.GRINDER.get());
         dropSelf(TorqueBlocks.PUMP.get());
         dropSelf(TorqueBlocks.SHAFT.get());
+        dropSelf(TorqueBlocks.BEVEL_GEARS.get());
+        dropSelf(TorqueBlocks.THREE_WAY.get());
         dropSelf(TorqueBlocks.FLUID_PIPE.get());
         dropSelf(TorqueBlocks.STEAM_PIPE.get());
         dropSelf(TorqueBlocks.FLUID_TANK.get());

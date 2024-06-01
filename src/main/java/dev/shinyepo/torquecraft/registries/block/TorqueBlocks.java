@@ -1,10 +1,18 @@
 package dev.shinyepo.torquecraft.registries.block;
 
 import dev.shinyepo.torquecraft.TorqueCraft;
+import dev.shinyepo.torquecraft.block.prefab.CanolaCrop;
+import dev.shinyepo.torquecraft.block.prefab.CoolingRadiator;
+import dev.shinyepo.torquecraft.block.prefab.FluidTank;
 import dev.shinyepo.torquecraft.block.prefab.pipes.FluidPipe;
 import dev.shinyepo.torquecraft.block.prefab.pipes.SteamPipe;
-import dev.shinyepo.torquecraft.block.prefab.*;
-import dev.shinyepo.torquecraft.block.prefab.rotary.*;
+import dev.shinyepo.torquecraft.block.prefab.rotary.Grinder;
+import dev.shinyepo.torquecraft.block.prefab.rotary.MechanicalFan;
+import dev.shinyepo.torquecraft.block.prefab.rotary.Pump;
+import dev.shinyepo.torquecraft.block.prefab.rotary.SteamEngine;
+import dev.shinyepo.torquecraft.block.prefab.rotary.transmitters.BevelGears;
+import dev.shinyepo.torquecraft.block.prefab.rotary.transmitters.Shaft;
+import dev.shinyepo.torquecraft.block.prefab.rotary.transmitters.ThreeWay;
 import dev.shinyepo.torquecraft.registries.fluid.TorqueFluids;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -26,6 +34,8 @@ public class TorqueBlocks {
     public static final Supplier<Block> GRINDER = BLOCKS.register("grinder",() -> new Grinder(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().requiresCorrectToolForDrops().mapColor(MapColor.STONE)));
     public static final Supplier<Block> PUMP = BLOCKS.register("pump",() -> new Pump(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE)));
     public static final Supplier<Block> SHAFT = BLOCKS.register("shaft",() -> new Shaft(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE)));
+    public static final Supplier<Block> THREE_WAY = BLOCKS.register("three_way", () -> new ThreeWay(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE)));
+    public static final Supplier<Block> BEVEL_GEARS = BLOCKS.register("bevel_gears", () -> new BevelGears(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE)));
     public static final Supplier<Block> COOLING_RADIATOR = BLOCKS.register("cooling_radiator",() -> new CoolingRadiator(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE)));
 
     //Crops

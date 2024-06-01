@@ -1,10 +1,7 @@
 package dev.shinyepo.torquecraft;
 
 import com.mojang.logging.LogUtils;
-import dev.shinyepo.torquecraft.block.entities.renderers.GrinderRenderer;
-import dev.shinyepo.torquecraft.block.entities.renderers.MechanicalFanRenderer;
-import dev.shinyepo.torquecraft.block.entities.renderers.ShaftRenderer;
-import dev.shinyepo.torquecraft.block.entities.renderers.SteamEngineRenderer;
+import dev.shinyepo.torquecraft.block.entities.renderers.*;
 import dev.shinyepo.torquecraft.events.HoverEvent;
 import dev.shinyepo.torquecraft.menu.GrinderScreen;
 import dev.shinyepo.torquecraft.model.baker.helpers.PipeModelLoader;
@@ -109,6 +106,8 @@ public class TorqueCraft {
             event.registerBlockEntityRenderer(TorqueBlockEntities.STEAM_ENGINE_ENTITY.get(), SteamEngineRenderer::new);
             event.registerBlockEntityRenderer(TorqueBlockEntities.MECHANICAL_FAN_ENTITY.get(), MechanicalFanRenderer::new);
             event.registerBlockEntityRenderer(TorqueBlockEntities.GRINDER_ENTITY.get(), GrinderRenderer::new);
+            event.registerBlockEntityRenderer(TorqueBlockEntities.THREE_WAY_ENTITY.get(), ThreeWayRenderer::new);
+            event.registerBlockEntityRenderer(TorqueBlockEntities.BEVEL_GEARS_ENTITY.get(), BevelGearsRenderer::new);
         }
     }
 }

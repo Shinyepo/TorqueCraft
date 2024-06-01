@@ -1,18 +1,13 @@
-package dev.shinyepo.torquecraft.block.prefab.rotary;
+package dev.shinyepo.torquecraft.block.prefab.rotary.transmitters;
 
 import com.mojang.serialization.MapCodec;
-import dev.shinyepo.torquecraft.block.entities.rotary.ShaftEntity;
-import dev.shinyepo.torquecraft.capabilities.TorqueCustomCapabilities;
-import dev.shinyepo.torquecraft.capabilities.handlers.rotary.IRotaryHandler;
+import dev.shinyepo.torquecraft.block.entities.rotary.transmitters.ThreeWayEntity;
 import dev.shinyepo.torquecraft.factory.rotary.network.RotaryNetworkDevice;
 import dev.shinyepo.torquecraft.factory.rotary.network.RotaryTransmitter;
 import dev.shinyepo.torquecraft.factory.rotary.render.IRotaryIO;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -26,16 +21,15 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-public class Shaft extends HorizontalDirectionalBlock implements EntityBlock {
+public class ThreeWay extends HorizontalDirectionalBlock implements EntityBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 16, 16);
 
-    public Shaft(Properties pProperties) {
+    public ThreeWay(Properties pProperties) {
         super(pProperties);
 
         registerDefaultState(getStateDefinition().any()
@@ -68,7 +62,7 @@ public class Shaft extends HorizontalDirectionalBlock implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        return new ShaftEntity(pPos, pState);
+        return new ThreeWayEntity(pPos, pState);
     }
 
     @Nullable
@@ -82,21 +76,11 @@ public class Shaft extends HorizontalDirectionalBlock implements EntityBlock {
             };
         }
         return (pLevel1, pPos, pState1, pBlockEntity) -> {
-            if (pBlockEntity instanceof ShaftEntity sE) {
-                sE.tick(pLevel1, pPos, pState1);
+            if (pBlockEntity instanceof RotaryTransmitter rT) {
+                rT.tick(pLevel1, pPos, pState1);
 
             }
         };
-    }
-
-    @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        player.displayClientMessage(Component.literal("State Face: " + state.getValue(FACING) + ", Hit Face: " + hit.getDirection()), false);
-        IRotaryHandler handler = level.getCapability(TorqueCustomCapabilities.ROTARY_HANDLER_BLOCK, pos.relative(state.getValue(FACING).getOpposite()), state.getValue(FACING));
-        if (handler != null) {
-            player.displayClientMessage(Component.literal("POWER: " + handler.getPower()), false);
-        }
-        return InteractionResult.SUCCESS;
     }
 
     @Override

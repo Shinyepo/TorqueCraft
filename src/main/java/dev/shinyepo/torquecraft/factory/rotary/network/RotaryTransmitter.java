@@ -26,12 +26,12 @@ public class RotaryTransmitter extends RotaryNetworkDevice<TransmitterConfig> im
                 configureSides(facing, SideType.OUTPUT);
                 configureSides(facing.getOpposite(), SideType.INPUT);
             }
-            case JUNCTION -> {
+            case THREE_WAY -> {
                 configureSides(facing, SideType.OUTPUT);
-                configureSides(facing.getCounterClockWise(), SideType.OUTPUT);
+                configureSides(facing.getClockWise(), SideType.INPUT);
                 configureSides(facing.getOpposite(), SideType.INPUT);
             }
-            case BEVEL -> {
+            case BEVEL_GEARS -> {
                 configureSides(facing.getOpposite(), SideType.INPUT);
                 configureSides(Direction.UP, SideType.OUTPUT);
             }

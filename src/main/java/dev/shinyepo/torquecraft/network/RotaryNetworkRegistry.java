@@ -117,24 +117,20 @@ public class RotaryNetworkRegistry {
     }
 
     private RotaryNetwork mergeNetworks(List<RotaryNetwork> networks) {
-        List<RotaryNetworkDevice<?>> devices1 = networks.get(0).getDevices();
-        List<RotaryNetworkDevice<?>> devices2 = networks.get(1).getDevices();
         RotaryNetwork newNetwork = new RotaryNetwork(UUID.randomUUID());
-        bulkAddDevices(newNetwork, devices1);
-        bulkAddDevices(newNetwork, devices2);
-        getInstance().removeNetwork(networks.get(0).getNetworkId());
-        getInstance().removeNetwork(networks.get(1).getNetworkId());
-        TorqueCraft.logger.info("Merged 2 networks");
-        TorqueCraft.logger.info("Devices from first network: {}", devices1);
-        TorqueCraft.logger.info("Devices from second network: {}", devices2);
+        for (RotaryNetwork network : networks) {
+            bulkAddDevices(newNetwork, network.getDevices());
+            getInstance().removeNetwork(network.getNetworkId());
+        }
+        TorqueCraft.logger.info("Merged " + networks.size() + " networks");
         return getInstance().registerNetwork(newNetwork);
     }
 
-    private void bulkAddDevices(RotaryNetwork network, List<RotaryNetworkDevice<?>> devices) {
-        for (RotaryNetworkDevice<?> device : devices) {
+    private void bulkAddDevices(RotaryNetwork network, Map<BlockPos, RotaryNetworkDevice<?>> devices) {
+        devices.forEach((pos, device) -> {
             network.registerDevice(device);
             device.updateNetwork(network.getNetworkId());
-        }
+        });
     }
 
     public <T extends RotaryNetworkDevice<?>> void unregisterDevice(UUID networkId, T device) {

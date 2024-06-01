@@ -1,7 +1,7 @@
 package dev.shinyepo.torquecraft.block.entities.renderers;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import dev.shinyepo.torquecraft.block.entities.rotary.ShaftEntity;
+import dev.shinyepo.torquecraft.block.entities.rotary.transmitters.ShaftEntity;
 import dev.shinyepo.torquecraft.renderers.IORenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
