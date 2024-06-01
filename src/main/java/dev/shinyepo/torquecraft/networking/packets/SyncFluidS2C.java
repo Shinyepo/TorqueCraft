@@ -1,11 +1,7 @@
 package dev.shinyepo.torquecraft.networking.packets;
 
 import dev.shinyepo.torquecraft.TorqueCraft;
-import dev.shinyepo.torquecraft.block.entities.pipes.FluidPipeEntity;
 import dev.shinyepo.torquecraft.capabilities.handlers.fluid.IFluidBuffer;
-import dev.shinyepo.torquecraft.capabilities.handlers.fluid.IFluidMenu;
-import dev.shinyepo.torquecraft.factory.MachineFactory;
-import dev.shinyepo.torquecraft.factory.rotary.network.RotarySource;
 import dev.shinyepo.torquecraft.menu.GrinderContainer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -35,7 +31,8 @@ public record SyncFluidS2C(BlockPos pos, FluidStack fluidStack) implements Custo
         context.enqueueWork(()->{
             if(Minecraft.getInstance().level.getBlockEntity(pos) instanceof IFluidBuffer buffer) {
                 buffer.setFluidStack(this.fluidStack);
-                if(Minecraft.getInstance().player.containerMenu instanceof IFluidMenu container && Minecraft.getInstance().level.getBlockEntity(pos).getBlockPos().equals(pos)) {
+                var menu = Minecraft.getInstance().player.containerMenu;
+                if (menu instanceof GrinderContainer container && container.getBlockEntity().getBlockPos().equals(pos)) {
                     container.setFluidStack(this.fluidStack);
                 }
             }
