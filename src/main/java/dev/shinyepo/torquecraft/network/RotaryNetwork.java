@@ -3,8 +3,10 @@ package dev.shinyepo.torquecraft.network;
 import dev.shinyepo.torquecraft.block.entities.rotary.transmitters.GearboxEntity;
 import dev.shinyepo.torquecraft.block.entities.rotary.transmitters.ThreeWayEntity;
 import dev.shinyepo.torquecraft.capabilities.handlers.rotary.RotaryHandler;
+import dev.shinyepo.torquecraft.config.RotaryMode;
 import dev.shinyepo.torquecraft.config.SourceConfig;
 import dev.shinyepo.torquecraft.config.side.SideType;
+import dev.shinyepo.torquecraft.constants.TorqueAttributes;
 import dev.shinyepo.torquecraft.factory.rotary.network.RotaryClient;
 import dev.shinyepo.torquecraft.factory.rotary.network.RotaryNetworkDevice;
 import dev.shinyepo.torquecraft.factory.rotary.network.RotarySource;
@@ -86,9 +88,16 @@ public class RotaryNetwork {
 
     private void adjustOutput(GearboxEntity gearbox, float angular, float torque) {
         var value = gearbox.getRatio().getRatio();
-        float newAngular = angular * value;
-        float newTorque = torque / value;
-
+        var mode = gearbox.getBlockState().getValue(TorqueAttributes.ROTARY_MODE);
+        float newAngular;
+        float newTorque;
+        if (mode == RotaryMode.ANGULAR) {
+            newAngular = angular * value;
+            newTorque = torque / value;
+        } else {
+            newAngular = angular / value;
+            newTorque = torque * value;
+        }
         gearbox.setRotaryPower(newAngular, newTorque);
     }
 
