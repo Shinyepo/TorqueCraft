@@ -1,7 +1,10 @@
 package dev.shinyepo.torquecraft.factory.rotary.network;
 
+import dev.shinyepo.torquecraft.block.entities.rotary.transmitters.GearboxEntity;
+import dev.shinyepo.torquecraft.config.GearboxRatio;
 import dev.shinyepo.torquecraft.config.TransmitterConfig;
 import dev.shinyepo.torquecraft.config.side.SideType;
+import dev.shinyepo.torquecraft.constants.TorqueAttributes;
 import dev.shinyepo.torquecraft.factory.IWrenchInteraction;
 import dev.shinyepo.torquecraft.network.RotaryNetworkRegistry;
 import dev.shinyepo.torquecraft.networking.TorqueMessages;
@@ -21,17 +24,20 @@ import net.minecraft.world.phys.Vec3;
 public class RotaryTransmitter extends RotaryNetworkDevice<TransmitterConfig> implements IWrenchInteraction {
     private final TransmitterConfig transmitterConfig;
     private boolean meltdown = false;
-
+    private GearboxRatio RATIO;
 
     public RotaryTransmitter(BlockEntityType<?> type, BlockPos pos, BlockState blockState, TransmitterConfig config) {
         super(type, pos, blockState, config);
         this.transmitterConfig = config;
+        if (this instanceof GearboxEntity)
+            RATIO = blockState.getValue(TorqueAttributes.RATIO);
+
         configureSides(blockState.getValue(BlockStateProperties.HORIZONTAL_FACING));
     }
 
     public void configureSides(Direction facing) {
         switch (transmitterConfig) {
-            case SHAFT -> {
+            case SHAFT, GEARBOX -> {
                 configureSides(facing, SideType.OUTPUT);
                 configureSides(facing.getOpposite(), SideType.INPUT);
             }
@@ -58,6 +64,10 @@ public class RotaryTransmitter extends RotaryNetworkDevice<TransmitterConfig> im
         }
         RotaryNetworkRegistry.getInstance().getNetwork(this.getNetworkId()).emitPower(this.getBlockPos().relative(this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING)), this.rotaryHandler.get().getAngular(), this.rotaryHandler.get().getTorque());
 
+    }
+
+    public GearboxRatio getRatio() {
+        return RATIO;
     }
 
 

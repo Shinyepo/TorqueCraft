@@ -1,6 +1,5 @@
 package dev.shinyepo.torquecraft.config;
 
-import dev.shinyepo.torquecraft.model.baker.helpers.PipeConnection;
 import net.minecraft.util.StringRepresentable;
 
 import javax.annotation.Nonnull;

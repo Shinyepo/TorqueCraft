@@ -11,8 +11,10 @@ import dev.shinyepo.torquecraft.block.prefab.rotary.MechanicalFan;
 import dev.shinyepo.torquecraft.block.prefab.rotary.Pump;
 import dev.shinyepo.torquecraft.block.prefab.rotary.SteamEngine;
 import dev.shinyepo.torquecraft.block.prefab.rotary.transmitters.BevelGears;
+import dev.shinyepo.torquecraft.block.prefab.rotary.transmitters.Gearbox;
 import dev.shinyepo.torquecraft.block.prefab.rotary.transmitters.Shaft;
 import dev.shinyepo.torquecraft.block.prefab.rotary.transmitters.ThreeWay;
+import dev.shinyepo.torquecraft.config.GearboxRatio;
 import dev.shinyepo.torquecraft.registries.fluid.TorqueFluids;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -36,6 +38,7 @@ public class TorqueBlocks {
     public static final Supplier<Block> SHAFT = BLOCKS.register("shaft",() -> new Shaft(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE)));
     public static final Supplier<Block> THREE_WAY = BLOCKS.register("three_way", () -> new ThreeWay(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE)));
     public static final Supplier<Block> BEVEL_GEARS = BLOCKS.register("bevel_gears", () -> new BevelGears(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE)));
+    public static final Supplier<Block> GEARBOX1_2 = BLOCKS.register("gearbox1_2", () -> new Gearbox(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE), GearboxRatio.RATIO_2));
     public static final Supplier<Block> COOLING_RADIATOR = BLOCKS.register("cooling_radiator",() -> new CoolingRadiator(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE)));
 
     //Crops
@@ -49,5 +52,5 @@ public class TorqueBlocks {
     public static final Supplier<Block> FLUID_TANK = BLOCKS.register("fluid_tank", () -> new FluidTank(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().mapColor(MapColor.TERRACOTTA_WHITE)));
     //PIPES
     public static final Supplier<Block> FLUID_PIPE = BLOCKS.register("fluid_pipe", FluidPipe::new);
-    public static final Supplier<Block> STEAM_PIPE = BLOCKS.register("steam_pipe", SteamPipe::new);;
+    public static final Supplier<Block> STEAM_PIPE = BLOCKS.register("steam_pipe", SteamPipe::new);
 }

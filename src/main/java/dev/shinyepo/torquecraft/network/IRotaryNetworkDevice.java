@@ -1,5 +1,6 @@
 package dev.shinyepo.torquecraft.network;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.UUID;
@@ -10,6 +11,8 @@ public interface IRotaryNetworkDevice {
     UUID getNetworkId();
 
     BlockState getBlockState();
+
+    BlockPos getBlockPos();
 
     void updateNetwork(UUID id);
 }

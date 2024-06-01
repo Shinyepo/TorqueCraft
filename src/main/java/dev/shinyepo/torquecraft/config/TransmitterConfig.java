@@ -3,7 +3,8 @@ package dev.shinyepo.torquecraft.config;
 public enum TransmitterConfig implements IRotaryConfig {
     SHAFT (2048F, 2048F),
     THREE_WAY(2048F, 2048F),
-    BEVEL_GEARS(2048F, 2048F);
+    BEVEL_GEARS(2048F, 2048F),
+    GEARBOX(2048F, 2048F);
 
     private final float torque;
     private final float angular;

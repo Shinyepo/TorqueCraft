@@ -1,5 +1,6 @@
 package dev.shinyepo.torquecraft.network;
 
+import dev.shinyepo.torquecraft.block.entities.rotary.transmitters.GearboxEntity;
 import dev.shinyepo.torquecraft.block.entities.rotary.transmitters.ThreeWayEntity;
 import dev.shinyepo.torquecraft.capabilities.handlers.rotary.RotaryHandler;
 import dev.shinyepo.torquecraft.config.SourceConfig;
@@ -76,15 +77,22 @@ public class RotaryNetwork {
 
     public void emitPower(BlockPos pos, float angular, float torque) {
         var device = devices.get(pos);
-        if (device == null) return;
-        if (device instanceof ThreeWayEntity threeWay) {
-            mergeTransmitter(threeWay, angular, torque);
-            return;
+        switch (device) {
+            case ThreeWayEntity threeWay -> mergeTransmitter(threeWay, angular, torque);
+            case GearboxEntity gearbox -> adjustOutput(gearbox, angular, torque);
+            default -> device.setRotaryPower(angular, torque);
         }
-        device.setRotaryPower(angular, torque);
     }
 
-    public void mergeTransmitter(ThreeWayEntity transmitter, float angular, float torque) {
+    private void adjustOutput(GearboxEntity gearbox, float angular, float torque) {
+        var value = gearbox.getRatio().getRatio();
+        float newAngular = angular * value;
+        float newTorque = torque / value;
+
+        gearbox.setRotaryPower(newAngular, newTorque);
+    }
+
+    private void mergeTransmitter(ThreeWayEntity transmitter, float angular, float torque) {
         SideType[] sides = transmitter.getSidesConfig();
 
         List<Direction> inputs = new ArrayList<>();
@@ -118,7 +126,7 @@ public class RotaryNetwork {
     }
 
     public boolean validDevice(IRotaryNetworkDevice device) {
-        return !devices.containsValue(device);
+        return !devices.containsKey(device.getBlockPos());
     }
 
     public Map<BlockPos, RotaryNetworkDevice<?>> getDevices() {
@@ -148,9 +156,7 @@ public class RotaryNetwork {
     }
 
     private void recheckMeltdown() {
-        transmitters.forEach((pos, transmitter) -> {
-            transmitter.stopMeltdown(pos);
-        });
+        transmitters.forEach((pos, transmitter) -> transmitter.stopMeltdown(pos));
     }
 
     private void updateNetwork() {

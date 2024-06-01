@@ -35,6 +35,7 @@ public class TorqueBlockTagGenerator extends BlockTagsProvider {
                 .add(TorqueBlocks.COOLING_RADIATOR.get())
                 .add(TorqueBlocks.THREE_WAY.get())
                 .add(TorqueBlocks.BEVEL_GEARS.get())
+                .add(TorqueBlocks.GEARBOX1_2.get())
                 .add(TorqueBlocks.SHAFT.get());
 
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
@@ -47,6 +48,7 @@ public class TorqueBlockTagGenerator extends BlockTagsProvider {
                 .add(TorqueBlocks.COOLING_RADIATOR.get())
                 .add(TorqueBlocks.THREE_WAY.get())
                 .add(TorqueBlocks.BEVEL_GEARS.get())
+                .add(TorqueBlocks.GEARBOX1_2.get())
                 .add(TorqueBlocks.SHAFT.get());
     }
 }

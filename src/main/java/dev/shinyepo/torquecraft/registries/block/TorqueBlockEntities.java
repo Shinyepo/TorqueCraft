@@ -9,6 +9,7 @@ import dev.shinyepo.torquecraft.block.entities.rotary.MechanicalFanEntity;
 import dev.shinyepo.torquecraft.block.entities.rotary.PumpEntity;
 import dev.shinyepo.torquecraft.block.entities.rotary.SteamEngineEntity;
 import dev.shinyepo.torquecraft.block.entities.rotary.transmitters.BevelGearsEntity;
+import dev.shinyepo.torquecraft.block.entities.rotary.transmitters.GearboxEntity;
 import dev.shinyepo.torquecraft.block.entities.rotary.transmitters.ShaftEntity;
 import dev.shinyepo.torquecraft.block.entities.rotary.transmitters.ThreeWayEntity;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -30,5 +31,6 @@ public class TorqueBlockEntities {
     public static final Supplier<BlockEntityType<ShaftEntity>> SHAFT_ENTITY = BLOCK_ENTITIES.register("shaft_be", () -> BlockEntityType.Builder.of(ShaftEntity::new, TorqueBlocks.SHAFT.get()).build(null));
     public static final Supplier<BlockEntityType<ThreeWayEntity>> THREE_WAY_ENTITY = BLOCK_ENTITIES.register("three_way_be", () -> BlockEntityType.Builder.of(ThreeWayEntity::new, TorqueBlocks.THREE_WAY.get()).build(null));
     public static final Supplier<BlockEntityType<BevelGearsEntity>> BEVEL_GEARS_ENTITY = BLOCK_ENTITIES.register("bevel_gears_be", () -> BlockEntityType.Builder.of(BevelGearsEntity::new, TorqueBlocks.BEVEL_GEARS.get()).build(null));
+    public static final Supplier<BlockEntityType<GearboxEntity>> GEARBOX1_2_ENTITY = BLOCK_ENTITIES.register("gearbox1_2_be", () -> BlockEntityType.Builder.of(GearboxEntity::new, TorqueBlocks.GEARBOX1_2.get()).build(null));
 
 }
