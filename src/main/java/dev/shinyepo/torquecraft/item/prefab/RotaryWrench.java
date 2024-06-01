@@ -2,6 +2,7 @@ package dev.shinyepo.torquecraft.item.prefab;
 
 import dev.shinyepo.torquecraft.factory.IWrenchInteraction;
 import dev.shinyepo.torquecraft.factory.rotary.network.RotaryNetworkDevice;
+import dev.shinyepo.torquecraft.factory.rotary.render.AnimatedEntity;
 import dev.shinyepo.torquecraft.network.RotaryNetworkRegistry;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
@@ -18,7 +19,12 @@ public class RotaryWrench extends Item {
 
     @Override
     public InteractionResult useOn(UseOnContext pContext) {
-        if (pContext.getLevel().isClientSide()) return InteractionResult.SUCCESS_NO_ITEM_USED;
+        if (pContext.getLevel().isClientSide()) {
+            var entity = pContext.getLevel().getBlockEntity(pContext.getClickedPos());
+            if (entity instanceof AnimatedEntity animated)
+                animated.setProgress(1.5F);
+            return InteractionResult.SUCCESS_NO_ITEM_USED;
+        }
 
         BlockEntity entity = pContext.getLevel().getBlockEntity(pContext.getClickedPos());
         if (entity instanceof IWrenchInteraction device) {
@@ -34,7 +40,6 @@ public class RotaryWrench extends Item {
             pContext.getLevel().setBlockAndUpdate(pContext.getClickedPos(), state.setValue(BlockStateProperties.HORIZONTAL_FACING, newFace));
 
             networkDevice.updateNetwork(RotaryNetworkRegistry.getInstance().registerDevice(networkDevice));
-
         }
         return InteractionResult.SUCCESS_NO_ITEM_USED;
     }

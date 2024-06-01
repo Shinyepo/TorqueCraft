@@ -18,13 +18,13 @@ import java.util.Map;
 
 public class IORenderer {
 
-    private static Map<SideType, Direction> getIOs(BlockEntity entity) {
-        Map<SideType, Direction> outputs = new HashMap<>();
+    private static Map<Direction, SideType> getIOs(BlockEntity entity) {
+        Map<Direction, SideType> outputs = new HashMap<>();
         if (entity instanceof RotaryNetworkDevice<?> device) {
             SideType[] sidesConfig = device.getSidesConfig();
             for (int i = 0; i < sidesConfig.length; i++) {
                 if (sidesConfig[i] != SideType.NONE) {
-                    outputs.put(sidesConfig[i], Direction.values()[i]);
+                    outputs.put(Direction.values()[i], sidesConfig[i]);
                 }
             }
         }
@@ -62,11 +62,10 @@ public class IORenderer {
             RenderSystem.disableBlend();
             return;
         }
-        Map<SideType, Direction> ios = getIOs(blockEntity);
+        Map<Direction, SideType> ios = getIOs(blockEntity);
 
-        ios.forEach((type, direction) -> {
+        ios.forEach((direction, type) -> {
             BlockPos pos = blockEntity.getBlockPos().relative(direction.getOpposite());
-            ;
             float r = 0f;
             float g = 0f;
             float b = 0f;
