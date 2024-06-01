@@ -38,8 +38,12 @@ public class RotaryNetwork {
 
     private void increaseMax(SourceConfig config) {
         if (this.sources.size() > 1) {
-            this.rotaryHandler.setMaxAngular(this.rotaryHandler.getMaxAngular() + config.getAngular());
-            this.rotaryHandler.setMaxTorque(this.rotaryHandler.getMaxTorque() + config.getTorque());
+            if (this.rotaryHandler.getAngular() < config.getAngular()) {
+                this.rotaryHandler.setMaxAngular(config.getAngular());
+                this.rotaryHandler.setMaxTorque(config.getTorque());
+            } else if (this.rotaryHandler.getAngular() == config.getAngular()) {
+                this.rotaryHandler.setMaxTorque(this.rotaryHandler.getMaxTorque() + config.getTorque());
+            }
         } else {
             this.rotaryHandler.setMaxAngular(config.getAngular());
             this.rotaryHandler.setMaxTorque(config.getTorque());
@@ -48,11 +52,62 @@ public class RotaryNetwork {
 
     private void reduceMax(SourceConfig config) {
         if (sources.size() > 1) {
-            this.rotaryHandler.setMaxAngular(this.rotaryHandler.getMaxAngular() - config.getAngular());
             this.rotaryHandler.setMaxTorque(this.rotaryHandler.getMaxTorque() - config.getTorque());
         } else {
             this.rotaryHandler.setMaxAngular(0);
             this.rotaryHandler.setMaxTorque(0);
+        }
+    }
+
+    public void emitPower(BlockPos pos, float angular, float torque, RotarySource source) {
+        if (transmittingSources.size() >= 4) {
+            //TODO: Init transmitter meltdown
+            return;
+        }
+        transmittingSources.put(source.getBlockPos(), source);
+        emitPower(pos, angular, torque);
+    }
+
+    public void emitPower(BlockPos pos, float angular, float torque) {
+        var device = devices.get(pos);
+        if (device == null) return;
+        if (device instanceof ThreeWayEntity threeWay) {
+            mergeTransmitter(threeWay, angular, torque);
+            return;
+        }
+        device.setRotaryPower(angular, torque);
+    }
+
+    public void mergeTransmitter(ThreeWayEntity transmitter, float angular, float torque) {
+        SideType[] sides = transmitter.getSidesConfig();
+
+        List<Direction> inputs = new ArrayList<>();
+        for (int i = 0; i < sides.length; i++) {
+            if (sides[i] == SideType.INPUT)
+                inputs.add(Direction.values()[i]);
+        }
+        if (inputs.size() > 1) {
+            float mergedAngular = 0;
+            float mergedTorque = 0;
+            for (Direction dir : inputs) {
+                BlockPos pos = transmitter.getBlockPos().relative(dir);
+                var dev = devices.get(pos);
+                if (dev instanceof RotaryTransmitter || (dev instanceof RotarySource && transmittingSources.containsKey(pos))) {
+                    var handler = dev.getRotaryHandler(dir.getOpposite());
+                    if (handler != null) {
+                        if (handler.getAngular() > mergedAngular) {
+                            mergedAngular = handler.getAngular();
+                            mergedTorque = handler.getTorque();
+                        } else if (handler.getAngular() == mergedAngular && handler.getTorque() > 0) {
+                            mergedTorque += handler.getTorque();
+                        }
+                    }
+                }
+            }
+
+            transmitter.setRotaryPower(mergedAngular, mergedTorque);
+        } else {
+            transmitter.setRotaryPower(angular, torque);
         }
     }
 

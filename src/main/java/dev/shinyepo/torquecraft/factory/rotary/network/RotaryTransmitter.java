@@ -3,6 +3,7 @@ package dev.shinyepo.torquecraft.factory.rotary.network;
 import dev.shinyepo.torquecraft.config.TransmitterConfig;
 import dev.shinyepo.torquecraft.config.side.SideType;
 import dev.shinyepo.torquecraft.factory.IWrenchInteraction;
+import dev.shinyepo.torquecraft.network.RotaryNetworkRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
@@ -42,5 +43,7 @@ public class RotaryTransmitter extends RotaryNetworkDevice<TransmitterConfig> im
         if (this.rotaryHandler.get().getAngular() > transmitterConfig.getAngular() || this.rotaryHandler.get().getTorque() > transmitterConfig.getTorque()) {
             //Init meltdown
         }
+        if (this.rotaryHandler.get().getPower() > 0)
+            RotaryNetworkRegistry.getInstance().getNetwork(this.getNetworkId()).emitPower(this.getBlockPos().relative(this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING)), this.rotaryHandler.get().getAngular(), this.rotaryHandler.get().getTorque());
     }
 }

@@ -24,14 +24,13 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
 public class RotarySource extends RotaryNetworkDevice<SourceConfig> implements IFluidBuffer, IWrenchInteraction {
     private RotaryNetwork network;
-    public final SourceConfig sourceConfig;
     protected Lazy<TorqueFluidTank> fluidTank;
     private boolean spinup = false;
+    private boolean shouldUpdate = false;
 
 
     public RotarySource(BlockEntityType<?> type, BlockPos pos, BlockState blockState, SourceConfig config) {
         super(type, pos, blockState, config);
-        this.sourceConfig = config;
         initFluidTank(config);
         this.rotaryHandler.get().setAcceleration(config.getWindup());
         configureSides(blockState.getValue(BlockStateProperties.HORIZONTAL_FACING));
@@ -57,11 +56,17 @@ public class RotarySource extends RotaryNetworkDevice<SourceConfig> implements I
         if (network == null || network.getNetworkId() != this.getNetworkId()) {
             network = RotaryNetworkRegistry.getInstance().getNetwork(this.getNetworkId());
         } else {
-            network.emitPower(this.rotaryHandler.get().getAngular(), this.rotaryHandler.get().getTorque());
+            if (this.rotaryHandler.get().getPower() > 0) {
+                network.emitPower(getBlockPos().relative(getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING)), this.rotaryHandler.get().getAngular(), this.rotaryHandler.get().getTorque(), this);
+            }
+        }
+
+        if (this.rotaryHandler.get().getPower() == 0 && shouldUpdate) {
+            shouldUpdate = network.validateTransmittingSources(getBlockPos());
         }
 
         if (state.getValue(TorqueAttributes.OPERATIONAL) && fluidTank.get().getFluidAmount() > config.getUsage() && rotaryHandler.get().getTemp() > 100) {
-            if (rotaryHandler.get().getAngular() < sourceConfig.getAngular()) {
+            if (rotaryHandler.get().getAngular() < config.getAngular()) {
                 spinup = true;
                 rotaryHandler.get().spinupSource();
             } else {
@@ -70,6 +75,7 @@ public class RotarySource extends RotaryNetworkDevice<SourceConfig> implements I
             consumeFuel();
         } else {
             if (rotaryHandler.get().getPower() > 0) {
+                shouldUpdate = true;
                 rotaryHandler.get().slowDownSource();
             }
         }
