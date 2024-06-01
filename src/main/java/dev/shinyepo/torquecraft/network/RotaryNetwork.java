@@ -11,6 +11,7 @@ import dev.shinyepo.torquecraft.factory.rotary.network.RotaryTransmitter;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,8 +62,13 @@ public class RotaryNetwork {
 
     public void emitPower(BlockPos pos, float angular, float torque, RotarySource source) {
         if (transmittingSources.size() >= 4) {
-            //TODO: Init transmitter meltdown
-            return;
+            if (!transmittingSources.containsKey(source.getBlockPos())) {
+                var device = devices.get(pos);
+                if (device instanceof RotaryTransmitter transmitter) {
+                    transmitter.initMeltdown(pos);
+                }
+                return;
+            }
         }
         transmittingSources.put(source.getBlockPos(), source);
         emitPower(pos, angular, torque);
@@ -127,24 +133,28 @@ public class RotaryNetwork {
         return clients;
     }
 
-    public boolean validateTransmittingSources(BlockPos pos) {
-        var source = transmittingSources.get(pos);
-        if (source != null) {
-            transmittingSources.remove(pos, source);
+    public boolean validateTransmittingSources(RotarySource source) {
+        var found = transmittingSources.get(source.getBlockPos());
+        if (found == null) {
+            var transmitter = transmitters.get(source.getBlockPos().relative(source.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING)));
+            if (transmitter != null) {
+                transmitter.stopMeltdown(transmitter.getBlockPos());
+            }
+            return false;
         }
+        transmittingSources.remove(source.getBlockPos(), source);
+        recheckMeltdown();
         return false;
     }
 
-    public void emitPower(float angular, float torque) {
-        if (angular != this.rotaryHandler.getAngular() || torque != this.rotaryHandler.getTorque()) {
-            this.rotaryHandler.setAngular(angular);
-            this.rotaryHandler.setTorque(torque);
-            this.updateNetwork();
-        }
+    private void recheckMeltdown() {
+        transmitters.forEach((pos, transmitter) -> {
+            transmitter.stopMeltdown(pos);
+        });
     }
 
     private void updateNetwork() {
-        if(!transmitters.isEmpty()) {
+        if (!transmitters.isEmpty()) {
             transmitters.forEach((pos, transmitter) -> transmitter.setRotaryPower(0, 0));
         }
         if (!clients.isEmpty()) {
@@ -188,7 +198,7 @@ public class RotaryNetwork {
         }
         if (device instanceof RotarySource source) {
             sources.remove(pos, source);
-            validateTransmittingSources(source.getBlockPos());
+            transmittingSources.remove(pos, source);
             reduceMax(source.getConfig());
         }
         devices.remove(pos, device);
