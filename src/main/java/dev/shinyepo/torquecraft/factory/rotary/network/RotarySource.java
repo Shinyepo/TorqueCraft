@@ -61,8 +61,8 @@ public class RotarySource extends RotaryNetworkDevice<SourceConfig> implements I
             }
         }
 
-        if (this.rotaryHandler.get().getPower() == 0 && shouldUpdate) {
-            shouldUpdate = network.validateTransmittingSources(getBlockPos());
+        if (this.rotaryHandler.get().getPower() == 0) {
+            shouldUpdate = network.validateTransmittingSources(this);
         }
 
         if (state.getValue(TorqueAttributes.OPERATIONAL) && fluidTank.get().getFluidAmount() > config.getUsage() && rotaryHandler.get().getTemp() > 100) {
