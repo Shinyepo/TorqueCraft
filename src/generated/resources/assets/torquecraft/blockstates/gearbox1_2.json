@@ -1,32 +1,32 @@
 {
   "variants": {
-    "facing=east,mode=angular": {
+    "facing=east,rotary_mode=angular": {
       "model": "torquecraft:block/gearbox/gearbox1_2",
       "y": 90
     },
-    "facing=east,mode=torque": {
+    "facing=east,rotary_mode=torque": {
       "model": "torquecraft:block/gearbox/gearbox1_2",
       "y": 90
     },
-    "facing=north,mode=angular": {
+    "facing=north,rotary_mode=angular": {
       "model": "torquecraft:block/gearbox/gearbox1_2"
     },
-    "facing=north,mode=torque": {
+    "facing=north,rotary_mode=torque": {
       "model": "torquecraft:block/gearbox/gearbox1_2"
     },
-    "facing=south,mode=angular": {
+    "facing=south,rotary_mode=angular": {
       "model": "torquecraft:block/gearbox/gearbox1_2",
       "y": 180
     },
-    "facing=south,mode=torque": {
+    "facing=south,rotary_mode=torque": {
       "model": "torquecraft:block/gearbox/gearbox1_2",
       "y": 180
     },
-    "facing=west,mode=angular": {
+    "facing=west,rotary_mode=angular": {
       "model": "torquecraft:block/gearbox/gearbox1_2",
       "y": 270
     },
-    "facing=west,mode=torque": {
+    "facing=west,rotary_mode=torque": {
       "model": "torquecraft:block/gearbox/gearbox1_2",
       "y": 270
     }

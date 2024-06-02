@@ -11,8 +11,12 @@ import net.minecraft.world.level.block.state.BlockState;
 public class GearboxEntity extends RotaryTransmitter implements IModeMachine {
     private GearboxRatio RATIO;
 
+    public GearboxEntity(BlockPos pPos, BlockState pBlockState) {
+        super(TorqueBlockEntities.GEARBOX_ENTITY.get(), pPos, pBlockState, TransmitterConfig.GEARBOX);
+    }
+
     public GearboxEntity(BlockPos pPos, BlockState pBlockState, GearboxRatio ratio) {
-        super(TorqueBlockEntities.GEARBOX1_2_ENTITY.get(), pPos, pBlockState, TransmitterConfig.GEARBOX);
+        super(TorqueBlockEntities.GEARBOX_ENTITY.get(), pPos, pBlockState, TransmitterConfig.GEARBOX);
         RATIO = ratio;
     }
 

@@ -32,6 +32,7 @@ public class TorqueBlockLootTables extends BlockLootSubProvider {
         dropSelf(TorqueBlocks.STEAM_PIPE.get());
         dropSelf(TorqueBlocks.FLUID_TANK.get());
         dropSelf(TorqueBlocks.GEARBOX1_2.get());
+        dropSelf(TorqueBlocks.GEARBOX1_4.get());
         dropSelf(TorqueBlocks.COOLING_RADIATOR.get());
 
         //Crops

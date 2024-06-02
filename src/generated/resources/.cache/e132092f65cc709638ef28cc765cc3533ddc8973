@@ -1,10 +1,11 @@
-// 1.20.6	2024-06-02T15:23:52.0136308	Block States: torquecraft
+// 1.20.6	2024-06-02T15:52:03.0648895	Block States: torquecraft
 37b3144e890b83fe283a4f0a2b4d02ebf293814d assets/torquecraft/blockstates/bevel_gears.json
 5849e6e0fdf54a743c2f8b51e3a890dfbd088f0a assets/torquecraft/blockstates/canola_crop.json
 d231c1283cfc0ba16cf4cedb8b4e34cd26f7d7f4 assets/torquecraft/blockstates/cooling_radiator.json
 db8ffb440367dbd01ff3f11f4676dbe78d2f1313 assets/torquecraft/blockstates/fluid_pipe.json
 0e8842a77033625220956dede5bbc2759131554b assets/torquecraft/blockstates/fluid_tank.json
-6a63f8e3f7ae1dee8bda95126163e5f4a27ad846 assets/torquecraft/blockstates/gearbox1_2.json
+7878be274ba8212bf8e46b80acb9c9e45416ee23 assets/torquecraft/blockstates/gearbox1_2.json
+6d0428fefd32e2dede300578384160649d18d195 assets/torquecraft/blockstates/gearbox1_4.json
 f9199089795ca3665640a7bbbf182cff394ab0c3 assets/torquecraft/blockstates/grinder.json
 e898a7e37c63e6db018aa0635804b74b1308f564 assets/torquecraft/blockstates/jet_fuel_block.json
 f77b6d1df0e05b6fcaf445d9e08cef42be2283e4 assets/torquecraft/blockstates/lubricant_block.json

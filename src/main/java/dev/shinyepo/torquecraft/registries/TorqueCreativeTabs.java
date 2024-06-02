@@ -29,6 +29,8 @@ public class TorqueCreativeTabs {
                 output.accept(TorqueItems.SHAFT_ITEM.get());
                 output.accept(TorqueItems.THREE_WAY_ITEM.get());
                 output.accept(TorqueItems.BEVEL_GEARS_ITEM.get());
+                output.accept(TorqueItems.GEARBOX1_2_ITEM.get());
+                output.accept(TorqueItems.GEARBOX1_4_ITEM.get());
                 output.accept(TorqueItems.COOLING_RADIATOR_ITEM.get());
                 //fluids
                 output.accept(TorqueItems.FLUID_TANK_ITEM.get());

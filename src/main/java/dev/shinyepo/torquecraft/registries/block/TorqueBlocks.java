@@ -39,6 +39,7 @@ public class TorqueBlocks {
     public static final Supplier<Block> THREE_WAY = BLOCKS.register("three_way", () -> new ThreeWay(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE)));
     public static final Supplier<Block> BEVEL_GEARS = BLOCKS.register("bevel_gears", () -> new BevelGears(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE)));
     public static final Supplier<Block> GEARBOX1_2 = BLOCKS.register("gearbox1_2", () -> new Gearbox(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE), GearboxRatio.RATIO_2));
+    public static final Supplier<Block> GEARBOX1_4 = BLOCKS.register("gearbox1_4", () -> new Gearbox(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE), GearboxRatio.RATIO_4));
     public static final Supplier<Block> COOLING_RADIATOR = BLOCKS.register("cooling_radiator",() -> new CoolingRadiator(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE)));
 
     //Crops

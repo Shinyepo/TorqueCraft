@@ -109,7 +109,7 @@ public class TorqueCraft {
             event.registerBlockEntityRenderer(TorqueBlockEntities.GRINDER_ENTITY.get(), GrinderRenderer::new);
             event.registerBlockEntityRenderer(TorqueBlockEntities.THREE_WAY_ENTITY.get(), ThreeWayRenderer::new);
             event.registerBlockEntityRenderer(TorqueBlockEntities.BEVEL_GEARS_ENTITY.get(), BevelGearsRenderer::new);
-            event.registerBlockEntityRenderer(TorqueBlockEntities.GEARBOX1_2_ENTITY.get(), GearboxRenderer::new);
+            event.registerBlockEntityRenderer(TorqueBlockEntities.GEARBOX_ENTITY.get(), GearboxRenderer::new);
         }
     }
 }
