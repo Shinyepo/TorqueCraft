@@ -1,62 +1,32 @@
 {
   "variants": {
-    "facing=east,ratio=ratio_16": {
+    "facing=east,mode=angular": {
       "model": "torquecraft:block/gearbox/gearbox1_2",
       "y": 90
     },
-    "facing=east,ratio=ratio_2": {
+    "facing=east,mode=torque": {
       "model": "torquecraft:block/gearbox/gearbox1_2",
       "y": 90
     },
-    "facing=east,ratio=ratio_4": {
-      "model": "torquecraft:block/gearbox/gearbox1_2",
-      "y": 90
-    },
-    "facing=east,ratio=ratio_8": {
-      "model": "torquecraft:block/gearbox/gearbox1_2",
-      "y": 90
-    },
-    "facing=north,ratio=ratio_16": {
+    "facing=north,mode=angular": {
       "model": "torquecraft:block/gearbox/gearbox1_2"
     },
-    "facing=north,ratio=ratio_2": {
+    "facing=north,mode=torque": {
       "model": "torquecraft:block/gearbox/gearbox1_2"
     },
-    "facing=north,ratio=ratio_4": {
-      "model": "torquecraft:block/gearbox/gearbox1_2"
-    },
-    "facing=north,ratio=ratio_8": {
-      "model": "torquecraft:block/gearbox/gearbox1_2"
-    },
-    "facing=south,ratio=ratio_16": {
+    "facing=south,mode=angular": {
       "model": "torquecraft:block/gearbox/gearbox1_2",
       "y": 180
     },
-    "facing=south,ratio=ratio_2": {
+    "facing=south,mode=torque": {
       "model": "torquecraft:block/gearbox/gearbox1_2",
       "y": 180
     },
-    "facing=south,ratio=ratio_4": {
-      "model": "torquecraft:block/gearbox/gearbox1_2",
-      "y": 180
-    },
-    "facing=south,ratio=ratio_8": {
-      "model": "torquecraft:block/gearbox/gearbox1_2",
-      "y": 180
-    },
-    "facing=west,ratio=ratio_16": {
+    "facing=west,mode=angular": {
       "model": "torquecraft:block/gearbox/gearbox1_2",
       "y": 270
     },
-    "facing=west,ratio=ratio_2": {
-      "model": "torquecraft:block/gearbox/gearbox1_2",
-      "y": 270
-    },
-    "facing=west,ratio=ratio_4": {
-      "model": "torquecraft:block/gearbox/gearbox1_2",
-      "y": 270
-    },
-    "facing=west,ratio=ratio_8": {
+    "facing=west,mode=torque": {
       "model": "torquecraft:block/gearbox/gearbox1_2",
       "y": 270
     }

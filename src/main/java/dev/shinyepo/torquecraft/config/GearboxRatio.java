@@ -1,8 +1,6 @@
 package dev.shinyepo.torquecraft.config;
 
-import net.minecraft.util.StringRepresentable;
-
-public enum GearboxRatio implements StringRepresentable {
+public enum GearboxRatio {
     RATIO_2(2),
     RATIO_4(4),
     RATIO_8(8),
@@ -16,10 +14,5 @@ public enum GearboxRatio implements StringRepresentable {
 
     public int getRatio() {
         return ratio;
-    }
-
-    @Override
-    public String getSerializedName() {
-        return name().toLowerCase();
     }
 }

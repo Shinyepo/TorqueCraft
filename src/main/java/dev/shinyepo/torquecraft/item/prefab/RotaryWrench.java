@@ -1,5 +1,8 @@
 package dev.shinyepo.torquecraft.item.prefab;
 
+import dev.shinyepo.torquecraft.config.RotaryMode;
+import dev.shinyepo.torquecraft.constants.TorqueAttributes;
+import dev.shinyepo.torquecraft.factory.IModeMachine;
 import dev.shinyepo.torquecraft.factory.IWrenchInteraction;
 import dev.shinyepo.torquecraft.factory.rotary.network.RotaryNetworkDevice;
 import dev.shinyepo.torquecraft.factory.rotary.render.AnimatedEntity;
@@ -26,8 +29,10 @@ public class RotaryWrench extends Item {
             return InteractionResult.SUCCESS_NO_ITEM_USED;
         }
 
+
+        //Rotate machine
         BlockEntity entity = pContext.getLevel().getBlockEntity(pContext.getClickedPos());
-        if (entity instanceof IWrenchInteraction device) {
+        if (entity instanceof IWrenchInteraction device && pContext.getPlayer().isShiftKeyDown()) {
             BlockState state = pContext.getLevel().getBlockState(pContext.getClickedPos());
             Direction newFace = state.getValue(BlockStateProperties.HORIZONTAL_FACING).getClockWise();
 
@@ -40,7 +45,17 @@ public class RotaryWrench extends Item {
             pContext.getLevel().setBlockAndUpdate(pContext.getClickedPos(), state.setValue(BlockStateProperties.HORIZONTAL_FACING, newFace));
 
             networkDevice.updateNetwork(RotaryNetworkRegistry.getInstance().registerDevice(networkDevice));
+            return InteractionResult.SUCCESS_NO_ITEM_USED;
         }
-        return InteractionResult.SUCCESS_NO_ITEM_USED;
+
+        //Change machine mode
+        if (entity instanceof IModeMachine) {
+            BlockState state = pContext.getLevel().getBlockState(pContext.getClickedPos());
+            RotaryMode oldValue = state.getValue(TorqueAttributes.MODE);
+            pContext.getLevel().setBlockAndUpdate(pContext.getClickedPos(), state.setValue(TorqueAttributes.MODE, oldValue.getNext()));
+
+            return InteractionResult.SUCCESS_NO_ITEM_USED;
+        }
+        return InteractionResult.PASS;
     }
 }

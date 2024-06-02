@@ -37,23 +37,22 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class Gearbox extends HorizontalDirectionalBlock implements EntityBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 16, 16);
-    private static final EnumProperty<GearboxRatio> RATIO = TorqueAttributes.RATIO;
-    private static final EnumProperty<RotaryMode> ROTARY_MODE = TorqueAttributes.ROTARY_MODE;
+    private static final EnumProperty<RotaryMode> MODE = TorqueAttributes.MODE;
+    private final GearboxRatio RATIO;
 
     public Gearbox(Properties pProperties, GearboxRatio ratio) {
         super(pProperties);
 
+        RATIO = ratio;
+
         registerDefaultState(getStateDefinition().any()
                 .setValue(FACING, Direction.NORTH)
-                .setValue(RATIO, ratio)
-                .setValue(ROTARY_MODE, RotaryMode.ANGULAR));
+                .setValue(MODE, RotaryMode.ANGULAR));
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(FACING)
-                .add(RATIO)
-                .add(ROTARY_MODE);
+        pBuilder.add(FACING, MODE);
     }
 
     @Nullable
@@ -61,7 +60,7 @@ public class Gearbox extends HorizontalDirectionalBlock implements EntityBlock {
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {
         return this.defaultBlockState()
                 .setValue(FACING, (pContext.getPlayer().isShiftKeyDown() ? pContext.getHorizontalDirection() : pContext.getHorizontalDirection().getOpposite()))
-                .setValue(ROTARY_MODE, RotaryMode.ANGULAR);
+                .setValue(MODE, RotaryMode.ANGULAR);
     }
 
     @Override
@@ -78,7 +77,7 @@ public class Gearbox extends HorizontalDirectionalBlock implements EntityBlock {
     @Nullable
     @Override
     public GearboxEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new GearboxEntity(pos, state);
+        return new GearboxEntity(pos, state, RATIO);
     }
 
     @Override

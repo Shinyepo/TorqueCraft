@@ -79,6 +79,7 @@ public class RotaryNetwork {
 
     public void emitPower(BlockPos pos, float angular, float torque) {
         var device = devices.get(pos);
+        if (device == null) return;
         switch (device) {
             case ThreeWayEntity threeWay -> mergeTransmitter(threeWay, angular, torque);
             case GearboxEntity gearbox -> adjustOutput(gearbox, angular, torque);
@@ -87,8 +88,8 @@ public class RotaryNetwork {
     }
 
     private void adjustOutput(GearboxEntity gearbox, float angular, float torque) {
-        var value = gearbox.getRatio().getRatio();
-        var mode = gearbox.getBlockState().getValue(TorqueAttributes.ROTARY_MODE);
+        var value = gearbox.getRatio();
+        var mode = gearbox.getBlockState().getValue(TorqueAttributes.MODE);
         float newAngular;
         float newTorque;
         if (mode == RotaryMode.ANGULAR) {
