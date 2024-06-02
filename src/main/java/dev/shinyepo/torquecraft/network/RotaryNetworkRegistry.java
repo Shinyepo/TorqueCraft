@@ -66,12 +66,12 @@ public class RotaryNetworkRegistry {
         TorqueCraft.logger.info("Removed network. New network size: {}", networks.size());
     }
 
-    public <T extends RotaryNetworkDevice<?>> UUID registerNetwork(UUID id, T device) {
+    public <T extends RotaryNetworkDevice<?>> RotaryNetwork registerNetwork(UUID id, T device) {
         RotaryNetwork network = new RotaryNetwork(id);
         network.registerDevice(device);
         getInstance().networks.put(id, network);
         TorqueCraft.logger.info("Registering network. New network size: {}", networks.size());
-        return id;
+        return network;
     }
 
     public RotaryNetwork registerNetwork(RotaryNetwork network) {
@@ -79,14 +79,14 @@ public class RotaryNetworkRegistry {
         return network;
     }
 
-    public <T extends RotaryNetworkDevice<?>> UUID registerDevice(T device) {
+    public <T extends RotaryNetworkDevice<?>> RotaryNetwork registerDevice(T device) {
         RotaryNetwork network = getInstance().fetchNetwork(device);
         if (network != null) {
             network.registerDevice(device);
             TorqueCraft.logger.info("New network devices: {}", network.getDevices().toString());
 
             TorqueCraft.logger.info("Device merged with existing network");
-            return network.getNetworkId();
+            return network;
         } else {
             TorqueCraft.logger.info("Created new network for device");
             return getInstance().registerNetwork(UUID.randomUUID(), device);
@@ -129,7 +129,7 @@ public class RotaryNetworkRegistry {
     private void bulkAddDevices(RotaryNetwork network, Map<BlockPos, RotaryNetworkDevice<?>> devices) {
         devices.forEach((pos, device) -> {
             network.registerDevice(device);
-            device.updateNetwork(network.getNetworkId());
+            device.updateNetwork(network);
         });
     }
 
@@ -178,7 +178,7 @@ public class RotaryNetworkRegistry {
             if (device.getBlockPos() == unregisteredPos) return;
             if (!network.validDevice(transmitter)) return;
             network.registerDevice(transmitter);
-            transmitter.updateNetwork(network.getNetworkId());
+            transmitter.updateNetwork(network);
             SideType[] sides = transmitter.getSidesConfig();
             for (int i = 0; i < sides.length; i++) {
                 if (sides[i] != SideType.NONE) {
@@ -190,7 +190,7 @@ public class RotaryNetworkRegistry {
         } else {
             if (!network.validDevice((IRotaryNetworkDevice) device)) return;
             network.registerDevice((RotaryNetworkDevice<?>) device);
-            ((RotaryNetworkDevice<?>) device).updateNetwork(network.getNetworkId());
+            ((RotaryNetworkDevice<?>) device).updateNetwork(network);
         }
     }
 }

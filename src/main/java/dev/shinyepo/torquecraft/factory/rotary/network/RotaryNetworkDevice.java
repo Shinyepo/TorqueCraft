@@ -6,6 +6,7 @@ import dev.shinyepo.torquecraft.config.side.SideType;
 import dev.shinyepo.torquecraft.constants.TorqueNBT;
 import dev.shinyepo.torquecraft.factory.rotary.render.AnimatedEntity;
 import dev.shinyepo.torquecraft.network.IRotaryNetworkDevice;
+import dev.shinyepo.torquecraft.network.RotaryNetwork;
 import dev.shinyepo.torquecraft.network.RotaryNetworkRegistry;
 import dev.shinyepo.torquecraft.networking.TorqueMessages;
 import dev.shinyepo.torquecraft.networking.packets.SyncRotaryPowerS2C;
@@ -23,6 +24,8 @@ import java.util.UUID;
 
 public class RotaryNetworkDevice<CONFIG extends IRotaryConfig> extends AnimatedEntity implements IRotaryNetworkDevice {
     private UUID networkId;
+    protected RotaryNetwork network;
+
     protected CONFIG config;
     protected final Lazy<RotaryHandler> rotaryHandler = Lazy.of(() -> new RotaryHandler(config.getAngular(), config.getTorque()) {
         @Override
@@ -89,9 +92,14 @@ public class RotaryNetworkDevice<CONFIG extends IRotaryConfig> extends AnimatedE
         return this.networkId;
     }
 
+    protected RotaryNetwork getNetwork() {
+        return this.network;
+    }
+
     @Override
-    public void updateNetwork(UUID id) {
-        this.networkId = id;
+    public void updateNetwork(RotaryNetwork network) {
+        this.network = network;
+        this.networkId = network.getNetworkId();
         this.setChanged();
     }
 

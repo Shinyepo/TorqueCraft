@@ -14,5 +14,5 @@ public interface IRotaryNetworkDevice {
 
     BlockPos getBlockPos();
 
-    void updateNetwork(UUID id);
+    void updateNetwork(RotaryNetwork network);
 }

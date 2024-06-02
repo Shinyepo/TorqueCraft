@@ -6,7 +6,6 @@ import dev.shinyepo.torquecraft.config.side.SideType;
 import dev.shinyepo.torquecraft.constants.TorqueAttributes;
 import dev.shinyepo.torquecraft.factory.IWrenchInteraction;
 import dev.shinyepo.torquecraft.factory.TorqueFluidTank;
-import dev.shinyepo.torquecraft.network.RotaryNetwork;
 import dev.shinyepo.torquecraft.network.RotaryNetworkRegistry;
 import dev.shinyepo.torquecraft.networking.TorqueMessages;
 import dev.shinyepo.torquecraft.networking.packets.SyncFluidS2C;
@@ -23,10 +22,8 @@ import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
 public class RotarySource extends RotaryNetworkDevice<SourceConfig> implements IFluidBuffer, IWrenchInteraction {
-    private RotaryNetwork network;
     protected Lazy<TorqueFluidTank> fluidTank;
     private boolean spinup = false;
-    private boolean shouldUpdate = false;
 
 
     public RotarySource(BlockEntityType<?> type, BlockPos pos, BlockState blockState, SourceConfig config) {
@@ -62,7 +59,7 @@ public class RotarySource extends RotaryNetworkDevice<SourceConfig> implements I
         }
 
         if (this.rotaryHandler.get().getPower() == 0) {
-            shouldUpdate = network.validateTransmittingSources(this);
+            network.validateTransmittingSources(this);
         }
 
         if (state.getValue(TorqueAttributes.OPERATIONAL) && fluidTank.get().getFluidAmount() > config.getUsage() && rotaryHandler.get().getTemp() > 100) {
@@ -75,7 +72,6 @@ public class RotarySource extends RotaryNetworkDevice<SourceConfig> implements I
             consumeFuel();
         } else {
             if (rotaryHandler.get().getPower() > 0) {
-                shouldUpdate = true;
                 rotaryHandler.get().slowDownSource();
             }
         }

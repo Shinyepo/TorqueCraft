@@ -1,12 +1,8 @@
 package dev.shinyepo.torquecraft.factory.rotary.network;
 
-import dev.shinyepo.torquecraft.block.entities.rotary.transmitters.GearboxEntity;
-import dev.shinyepo.torquecraft.config.GearboxRatio;
 import dev.shinyepo.torquecraft.config.TransmitterConfig;
 import dev.shinyepo.torquecraft.config.side.SideType;
-import dev.shinyepo.torquecraft.constants.TorqueAttributes;
 import dev.shinyepo.torquecraft.factory.IWrenchInteraction;
-import dev.shinyepo.torquecraft.network.RotaryNetworkRegistry;
 import dev.shinyepo.torquecraft.networking.TorqueMessages;
 import dev.shinyepo.torquecraft.networking.packets.SyncMeltdownS2C;
 import net.minecraft.core.BlockPos;
@@ -24,13 +20,11 @@ import net.minecraft.world.phys.Vec3;
 public class RotaryTransmitter extends RotaryNetworkDevice<TransmitterConfig> implements IWrenchInteraction {
     private final TransmitterConfig transmitterConfig;
     private boolean meltdown = false;
-    private GearboxRatio RATIO;
 
     public RotaryTransmitter(BlockEntityType<?> type, BlockPos pos, BlockState blockState, TransmitterConfig config) {
         super(type, pos, blockState, config);
         this.transmitterConfig = config;
-        if (this instanceof GearboxEntity)
-            RATIO = blockState.getValue(TorqueAttributes.RATIO);
+
 
         configureSides(blockState.getValue(BlockStateProperties.HORIZONTAL_FACING));
     }
@@ -62,14 +56,11 @@ public class RotaryTransmitter extends RotaryNetworkDevice<TransmitterConfig> im
             this.rotaryHandler.get().setAngular(0);
             this.rotaryHandler.get().setTorque(0);
         }
-        RotaryNetworkRegistry.getInstance().getNetwork(this.getNetworkId()).emitPower(this.getBlockPos().relative(this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING)), this.rotaryHandler.get().getAngular(), this.rotaryHandler.get().getTorque());
 
+        if (getNetwork() != null) {
+            getNetwork().emitPower(this.getBlockPos().relative(this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING)), this.rotaryHandler.get().getAngular(), this.rotaryHandler.get().getTorque());
+        }
     }
-
-    public GearboxRatio getRatio() {
-        return RATIO;
-    }
-
 
     @Override
     public void renderTick() {
