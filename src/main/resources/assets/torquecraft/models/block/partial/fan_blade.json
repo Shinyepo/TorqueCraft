@@ -1,6 +1,6 @@
 {
 	"credit": "Made with Blockbench",
-	"parent": "neoforge:elements",
+  "loader": "neoforge:elements",
 	"textures": {
 		"1": "torquecraft:block/shared/default_shaft",
 		"particle": "torquecraft:block/shared/default_shaft"
