@@ -38,21 +38,19 @@ public class Gearbox extends HorizontalDirectionalBlock implements EntityBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 16, 16);
     private static final EnumProperty<RotaryMode> MODE = TorqueAttributes.MODE;
-    private final GearboxRatio RATIO;
+    private static final EnumProperty<GearboxRatio> RATIO = TorqueAttributes.RATIO;
 
     public Gearbox(Properties pProperties, GearboxRatio ratio) {
         super(pProperties);
 
-        RATIO = ratio;
-
         registerDefaultState(getStateDefinition().any()
                 .setValue(FACING, Direction.NORTH)
-                .setValue(MODE, RotaryMode.ANGULAR));
+                .setValue(MODE, RotaryMode.ANGULAR)
+                .setValue(RATIO, ratio));
     }
-
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(FACING, MODE);
+        pBuilder.add(FACING, MODE, RATIO);
     }
 
     @Nullable
@@ -60,7 +58,8 @@ public class Gearbox extends HorizontalDirectionalBlock implements EntityBlock {
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {
         return this.defaultBlockState()
                 .setValue(FACING, (pContext.getPlayer().isShiftKeyDown() ? pContext.getHorizontalDirection() : pContext.getHorizontalDirection().getOpposite()))
-                .setValue(MODE, RotaryMode.ANGULAR);
+                .setValue(MODE, RotaryMode.ANGULAR)
+                .setValue(RATIO, GearboxRatio.RATIO_2);
     }
 
     @Override
@@ -77,7 +76,7 @@ public class Gearbox extends HorizontalDirectionalBlock implements EntityBlock {
     @Nullable
     @Override
     public GearboxEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new GearboxEntity(pos, state, RATIO);
+        return new GearboxEntity(pos, state);
     }
 
     @Override

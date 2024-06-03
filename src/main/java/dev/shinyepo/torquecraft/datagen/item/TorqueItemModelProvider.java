@@ -45,7 +45,7 @@ public class TorqueItemModelProvider extends ItemModelProvider {
                 "torquecraft:block/" + BuiltInRegistries.BLOCK.getKey(TorqueBlocks.PUMP.get()).getPath());
 
         withExistingParent(String.valueOf(TorqueItems.SHAFT_ITEM.get()).toLowerCase(),
-                "torquecraft:block/" + BuiltInRegistries.BLOCK.getKey(TorqueBlocks.SHAFT.get()).getPath());
+                "torquecraft:block/item/" + BuiltInRegistries.BLOCK.getKey(TorqueBlocks.SHAFT.get()).getPath());
 
         withExistingParent(String.valueOf(TorqueItems.THREE_WAY_ITEM.get()).toLowerCase(),
                 "torquecraft:block/" + BuiltInRegistries.BLOCK.getKey(TorqueBlocks.THREE_WAY.get()).getPath());

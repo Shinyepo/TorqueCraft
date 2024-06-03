@@ -69,6 +69,7 @@ public class FluidTankEntity extends BlockEntity {
     @Override
     public void onLoad() {
         super.onLoad();
+        if (this.getLevel().isClientSide()) return;
         this.capCache = BlockCapabilityCache.create(
                 Capabilities.FluidHandler.BLOCK,
                 (ServerLevel) this.getLevel(),

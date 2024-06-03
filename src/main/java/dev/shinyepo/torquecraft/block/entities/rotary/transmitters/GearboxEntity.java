@@ -2,6 +2,7 @@ package dev.shinyepo.torquecraft.block.entities.rotary.transmitters;
 
 import dev.shinyepo.torquecraft.config.GearboxRatio;
 import dev.shinyepo.torquecraft.config.TransmitterConfig;
+import dev.shinyepo.torquecraft.constants.TorqueAttributes;
 import dev.shinyepo.torquecraft.factory.IModeMachine;
 import dev.shinyepo.torquecraft.factory.rotary.network.RotaryTransmitter;
 import dev.shinyepo.torquecraft.registries.block.TorqueBlockEntities;
@@ -13,11 +14,7 @@ public class GearboxEntity extends RotaryTransmitter implements IModeMachine {
 
     public GearboxEntity(BlockPos pPos, BlockState pBlockState) {
         super(TorqueBlockEntities.GEARBOX_ENTITY.get(), pPos, pBlockState, TransmitterConfig.GEARBOX);
-    }
-
-    public GearboxEntity(BlockPos pPos, BlockState pBlockState, GearboxRatio ratio) {
-        super(TorqueBlockEntities.GEARBOX_ENTITY.get(), pPos, pBlockState, TransmitterConfig.GEARBOX);
-        RATIO = ratio;
+        RATIO = pBlockState.getValue(TorqueAttributes.RATIO);
     }
 
     public int getRatio() {
