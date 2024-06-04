@@ -26,6 +26,7 @@ public class TorqueBlockTagGenerator extends BlockTagsProvider {
                 .addTag(BlockTags.CAMPFIRES);
 
         tag(BlockTags.NEEDS_IRON_TOOL)
+                .add(TorqueBlocks.ALLOY_FURNACE.get())
                 .add(TorqueBlocks.TUNGSTEN_BLOCK.get())
                 .add(TorqueBlocks.STEAM_ENGINE.get())
                 .add(TorqueBlocks.MECHANICAL_FAN.get())
@@ -40,6 +41,7 @@ public class TorqueBlockTagGenerator extends BlockTagsProvider {
                 .add(TorqueBlocks.SHAFT.get());
 
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
+                .add(TorqueBlocks.ALLOY_FURNACE.get())
                 .add(TorqueBlocks.TUNGSTEN_BLOCK.get())
                 .add(TorqueBlocks.STEAM_ENGINE.get())
                 .add(TorqueBlocks.MECHANICAL_FAN.get())

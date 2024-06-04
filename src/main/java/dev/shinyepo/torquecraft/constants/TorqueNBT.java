@@ -10,6 +10,8 @@ public class TorqueNBT {
     public static final String INPUT = "Input";
     public static final String OUTPUT = "Output";
     public static final String DRAIN = "Drain";
+    public static final String ADDON = "Addon";
+    public static final String FUEL = "Fuel";
 
     public static final String PROGRESS = "Progress";
     public static final String NETWORK_ID = "Network_id";

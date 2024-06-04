@@ -1,4 +1,5 @@
-// 1.20.6	2024-06-02T15:52:03.0618315	Loot Tables
+// 1.20.6	2024-06-03T16:22:18.1862633	Loot Tables
+ddb896cf32b30d4472a280819f7286a4b360a767 data/torquecraft/loot_tables/blocks/alloy_furnace.json
 df90065909e2942aaaa9191c38ee2a3e61a13663 data/torquecraft/loot_tables/blocks/bevel_gears.json
 be7f38dc86567c22d91629586c09e13f0450256b data/torquecraft/loot_tables/blocks/canola_crop.json
 ac52c1dd381ec370e14b0817a3f64783deb4fc0e data/torquecraft/loot_tables/blocks/cooling_radiator.json

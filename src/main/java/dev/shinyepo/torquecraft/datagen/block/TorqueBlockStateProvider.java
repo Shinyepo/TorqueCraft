@@ -34,6 +34,7 @@ public class TorqueBlockStateProvider extends BlockStateProvider {
 
         //TEMP
         registerHorizontalMachineWithExistingModel("block/mechanical_fan", TorqueBlocks.MECHANICAL_FAN);
+        registerHorizontalMachineWithExistingModel("block/furnace/alloy_furnace", TorqueBlocks.ALLOY_FURNACE);
         registerHorizontalMachineWithExistingModel("block/steam_engine", TorqueBlocks.STEAM_ENGINE);
         registerHorizontalMachineWithExistingModel("block/grinder", TorqueBlocks.GRINDER);
         registerHorizontalMachineWithExistingModel("block/pump", TorqueBlocks.PUMP);
@@ -84,7 +85,7 @@ public class TorqueBlockStateProvider extends BlockStateProvider {
     private ConfiguredModel[] canolaStates(BlockState state, CropBlock block, String modelName, String textureName) {
         ConfiguredModel[] models = new ConfiguredModel[1];
         models[0] = new ConfiguredModel(models().crop(modelName + state.getValue(((CanolaCrop) block).getAgeProperty()),
-                new ResourceLocation(TorqueCraft.MODID, "block/"+ textureName + state.getValue(((CanolaCrop) block).getAgeProperty()))).renderType("cutout"));
+                new ResourceLocation(TorqueCraft.MODID, "block/seeds/canola/" + textureName + state.getValue(((CanolaCrop) block).getAgeProperty()))).renderType("cutout"));
 
         return models;
     }

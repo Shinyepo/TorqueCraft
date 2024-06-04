@@ -1,7 +1,8 @@
 package dev.shinyepo.torquecraft.registries;
 
 import dev.shinyepo.torquecraft.TorqueCraft;
-import dev.shinyepo.torquecraft.menu.GrinderContainer;
+import dev.shinyepo.torquecraft.menu.furnace.GrinderContainer;
+import dev.shinyepo.torquecraft.menu.grinder.AlloyFurnaceContainer;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.inventory.MenuType;
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
@@ -15,5 +16,9 @@ public class TorqueMenus {
 
     public static final Supplier<MenuType<GrinderContainer>> GRINDER_CONTAINER = MENU_TYPES.register("grinder",
             () -> IMenuTypeExtension.create((windowId, inv, data) -> new GrinderContainer(windowId, inv.player, data.readBlockPos(), FluidStack.OPTIONAL_STREAM_CODEC.decode(data))));
+
+
+    public static final Supplier<MenuType<AlloyFurnaceContainer>> ALLOY_FURNACE_CONTAINER = MENU_TYPES.register("alloy_furnace",
+            () -> IMenuTypeExtension.create((windowId, inv, data) -> new AlloyFurnaceContainer(windowId, inv.player, data.readBlockPos())));
 
 }

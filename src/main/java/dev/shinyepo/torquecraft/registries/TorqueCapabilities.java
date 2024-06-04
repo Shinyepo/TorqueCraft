@@ -25,6 +25,8 @@ public class TorqueCapabilities {
             return null;
         });
 
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, TorqueBlockEntities.ALLOY_FURNACE_ENTITY.get(), (o, dir) -> o.getItemHandler(dir));
+
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, TorqueBlockEntities.GRINDER_ENTITY.get(),(o, context) -> o.getFluidTank());
         event.registerBlockEntity(TorqueCustomCapabilities.ROTARY_HANDLER_BLOCK, TorqueBlockEntities.GRINDER_ENTITY.get(),(o, dir) -> o.getRotaryHandler(dir));
 

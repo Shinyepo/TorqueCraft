@@ -1,4 +1,5 @@
-// 1.20.6	2024-06-03T13:54:32.7165439	Block States: torquecraft
+// 1.20.6	2024-06-03T16:22:18.1882579	Block States: torquecraft
+2312c1c3c7ad7072ba22370da969ed99ed2a3887 assets/torquecraft/blockstates/alloy_furnace.json
 37b3144e890b83fe283a4f0a2b4d02ebf293814d assets/torquecraft/blockstates/bevel_gears.json
 5849e6e0fdf54a743c2f8b51e3a890dfbd088f0a assets/torquecraft/blockstates/canola_crop.json
 d231c1283cfc0ba16cf4cedb8b4e34cd26f7d7f4 assets/torquecraft/blockstates/cooling_radiator.json
@@ -16,12 +17,12 @@ fd8880b6490147976e573ea212a76979a8062e8e assets/torquecraft/blockstates/steam_en
 db8ffb440367dbd01ff3f11f4676dbe78d2f1313 assets/torquecraft/blockstates/steam_pipe.json
 0b5f8cc2f9df340321463b6e162f6b9809a311bf assets/torquecraft/blockstates/three_way.json
 9f6258cded6e593511671e5efa52c0b894e868d4 assets/torquecraft/blockstates/tungsten_block.json
-cca675e6554d7a5bd5dd48b7ac45ea5ab725e728 assets/torquecraft/models/block/canola_stage0.json
-24594bd170203b0aa0d927aa6a25bfcb74ff5c66 assets/torquecraft/models/block/canola_stage1.json
-7a20f587ceb7ea0da458884400aea7f49b95da66 assets/torquecraft/models/block/canola_stage2.json
-28e015c83c8d07d4db5b0ca925f4e0812338f0bb assets/torquecraft/models/block/canola_stage3.json
-abd4179df9cbd2a870c83c2de58e89d1adc0efc2 assets/torquecraft/models/block/canola_stage4.json
-9c15ad46e0b542ece6561176a202b40e3cb3ef78 assets/torquecraft/models/block/canola_stage5.json
+42134fa2970acc1181db07874965e7aad03c977e assets/torquecraft/models/block/canola_stage0.json
+160c6ad3fca049da2f42d2d9ef8917422bc4d820 assets/torquecraft/models/block/canola_stage1.json
+2f2d29d0c20e3a0e6d60be777a816914d6ab5e12 assets/torquecraft/models/block/canola_stage2.json
+79c96e43e488bd65a8a263b26fe3fc150ada213f assets/torquecraft/models/block/canola_stage3.json
+5d93bbf13b27996392570b9fedd0011ce41f7eaa assets/torquecraft/models/block/canola_stage4.json
+def9c60ff9cdcad891daf13b0196b64923ec632c assets/torquecraft/models/block/canola_stage5.json
 50812bd51e14ec5ea223afe239c89730a63e43b1 assets/torquecraft/models/block/jet_fuel_block.json
 50812bd51e14ec5ea223afe239c89730a63e43b1 assets/torquecraft/models/block/lubricant_block.json
 39e74e83285786a2c86946f13abe16514df55b11 assets/torquecraft/models/block/pipe.json

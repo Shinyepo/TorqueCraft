@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import dev.shinyepo.torquecraft.block.entities.renderers.*;
 import dev.shinyepo.torquecraft.events.HoverEvent;
 import dev.shinyepo.torquecraft.menu.GrinderScreen;
+import dev.shinyepo.torquecraft.menu.grinder.AlloyFurnaceScreen;
 import dev.shinyepo.torquecraft.model.baker.helpers.PipeModelLoader;
 import dev.shinyepo.torquecraft.network.RotaryNetworkRegistry;
 import dev.shinyepo.torquecraft.registries.TorqueCapabilities;
