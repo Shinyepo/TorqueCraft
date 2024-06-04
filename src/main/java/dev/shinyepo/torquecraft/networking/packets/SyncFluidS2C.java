@@ -2,7 +2,7 @@ package dev.shinyepo.torquecraft.networking.packets;
 
 import dev.shinyepo.torquecraft.TorqueCraft;
 import dev.shinyepo.torquecraft.capabilities.handlers.fluid.IFluidBuffer;
-import dev.shinyepo.torquecraft.menu.GrinderContainer;
+import dev.shinyepo.torquecraft.menu.grinder.GrinderContainer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;

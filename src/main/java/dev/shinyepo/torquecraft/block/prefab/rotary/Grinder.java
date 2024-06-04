@@ -6,7 +6,7 @@ import dev.shinyepo.torquecraft.capabilities.handlers.rotary.IRotaryHandler;
 import dev.shinyepo.torquecraft.constants.TorqueAttributes;
 import dev.shinyepo.torquecraft.factory.rotary.network.RotaryClient;
 import dev.shinyepo.torquecraft.factory.rotary.network.RotaryNetworkDevice;
-import dev.shinyepo.torquecraft.menu.GrinderContainer;
+import dev.shinyepo.torquecraft.menu.grinder.GrinderContainer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;

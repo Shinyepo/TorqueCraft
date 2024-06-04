@@ -1,8 +1,8 @@
 package dev.shinyepo.torquecraft.registries;
 
 import dev.shinyepo.torquecraft.TorqueCraft;
-import dev.shinyepo.torquecraft.menu.furnace.GrinderContainer;
-import dev.shinyepo.torquecraft.menu.grinder.AlloyFurnaceContainer;
+import dev.shinyepo.torquecraft.menu.furnace.AlloyFurnaceContainer;
+import dev.shinyepo.torquecraft.menu.grinder.GrinderContainer;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.inventory.MenuType;
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;

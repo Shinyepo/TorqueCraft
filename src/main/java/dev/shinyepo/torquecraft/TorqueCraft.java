@@ -3,8 +3,8 @@ package dev.shinyepo.torquecraft;
 import com.mojang.logging.LogUtils;
 import dev.shinyepo.torquecraft.block.entities.renderers.*;
 import dev.shinyepo.torquecraft.events.HoverEvent;
-import dev.shinyepo.torquecraft.menu.GrinderScreen;
-import dev.shinyepo.torquecraft.menu.grinder.AlloyFurnaceScreen;
+import dev.shinyepo.torquecraft.menu.furnace.AlloyFurnaceScreen;
+import dev.shinyepo.torquecraft.menu.grinder.GrinderScreen;
 import dev.shinyepo.torquecraft.model.baker.helpers.PipeModelLoader;
 import dev.shinyepo.torquecraft.network.RotaryNetworkRegistry;
 import dev.shinyepo.torquecraft.registries.TorqueCapabilities;
@@ -87,6 +87,7 @@ public class TorqueCraft {
         @SubscribeEvent
         public static void menuSetup(RegisterMenuScreensEvent e) {
             e.register(TorqueMenus.GRINDER_CONTAINER.get(), GrinderScreen::new);
+            e.register(TorqueMenus.ALLOY_FURNACE_CONTAINER.get(), AlloyFurnaceScreen::new);
         }
 
         @SubscribeEvent

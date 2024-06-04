@@ -1,4 +1,4 @@
-package dev.shinyepo.torquecraft.menu;
+package dev.shinyepo.torquecraft.menu.grinder;
 
 import dev.shinyepo.torquecraft.TorqueCraft;
 import dev.shinyepo.torquecraft.config.ClientConfig;

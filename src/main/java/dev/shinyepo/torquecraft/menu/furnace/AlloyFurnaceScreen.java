@@ -1,4 +1,4 @@
-package dev.shinyepo.torquecraft.menu.grinder;
+package dev.shinyepo.torquecraft.menu.furnace;
 
 import dev.shinyepo.torquecraft.TorqueCraft;
 import net.minecraft.client.gui.GuiGraphics;

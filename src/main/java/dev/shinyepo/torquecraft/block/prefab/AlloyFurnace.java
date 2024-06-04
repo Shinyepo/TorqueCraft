@@ -3,7 +3,7 @@ package dev.shinyepo.torquecraft.block.prefab;
 import com.mojang.serialization.MapCodec;
 import dev.shinyepo.torquecraft.block.entities.AlloyFurnaceEntity;
 import dev.shinyepo.torquecraft.block.entities.rotary.GrinderEntity;
-import dev.shinyepo.torquecraft.menu.grinder.AlloyFurnaceContainer;
+import dev.shinyepo.torquecraft.menu.furnace.AlloyFurnaceContainer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;

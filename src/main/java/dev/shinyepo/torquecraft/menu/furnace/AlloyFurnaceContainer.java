@@ -1,8 +1,8 @@
-package dev.shinyepo.torquecraft.menu;
+package dev.shinyepo.torquecraft.menu.furnace;
 
-import dev.shinyepo.torquecraft.block.entities.rotary.GrinderEntity;
-import dev.shinyepo.torquecraft.registries.block.TorqueBlocks;
+import dev.shinyepo.torquecraft.block.entities.AlloyFurnaceEntity;
 import dev.shinyepo.torquecraft.registries.TorqueMenus;
+import dev.shinyepo.torquecraft.registries.block.TorqueBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
@@ -12,61 +12,81 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
 
-public class GrinderContainer extends AbstractContainerMenu {
+public class AlloyFurnaceContainer extends AbstractContainerMenu {
     private final BlockPos pos;
     private final int SLOT_COUNT;
     private final int SLOT_INPUT;
-    private final GrinderEntity grinderEntity;
-    private FluidStack fluidStack;
+    private final AlloyFurnaceEntity alloyFurnaceEntityEntity;
 
 
-    public GrinderContainer(int windowId, Player player, BlockPos pos, FluidStack fluidStack) {
-        super(TorqueMenus.GRINDER_CONTAINER.get(), windowId);
+    //
+    //      35 18   62 18 +18 +18            143 18
+    //      35 36   +18  +18/+18 +18/+18     143 18
+    //      35 54   +18 +18/+18 +18/+18      143 18
+    //
+    //9 47
+    //8 63
+
+    //progress 176+22 0+16
+    //lit 176+14  16+30
+
+
+    public AlloyFurnaceContainer(int windowId, Player player, BlockPos pos) {
+        super(TorqueMenus.ALLOY_FURNACE_CONTAINER.get(), windowId);
         this.pos = pos;
-        this.SLOT_INPUT = GrinderEntity.SLOT_INPUT;
-        this.SLOT_COUNT = GrinderEntity.SLOT_COUNT;
-        this.grinderEntity = ((GrinderEntity) player.level().getBlockEntity(pos));
-        this.fluidStack = fluidStack;
+        this.SLOT_INPUT = 0;
+        this.SLOT_COUNT = AlloyFurnaceEntity.SLOT_COUNT;
+        this.alloyFurnaceEntityEntity = ((AlloyFurnaceEntity) player.level().getBlockEntity(pos));
 
 
-        if (player.level().getBlockEntity(pos) instanceof GrinderEntity grinder) {
-            addSlot(new SlotItemHandler(grinder.getInputItems(), GrinderEntity.SLOT_INPUT, 56, 34));
-            addSlot(new SlotItemHandler(grinder.getOutputItems(), 0, 110, 34));
-            addSlot(new SlotItemHandler(grinder.getTankDrainItems(), 0, 133, 58));
-            addDataSlot(new DataSlot()
-            {
+        if (player.level().getBlockEntity(pos) instanceof AlloyFurnaceEntity alloyFurnace) {
+            addSlot(new SlotItemHandler(alloyFurnace.getFuelHandler(), 0, 8, 63));
+            addItemSlotRange(alloyFurnace.getAddon(), 1, 3, 35, 18);
+            addItemSlotRange(alloyFurnace.getInput(), 3, 3, 62, 18);
+            addItemSlotRange(alloyFurnace.getOutput(), 1, 3, 143, 18);
+
+            addDataSlot(new DataSlot() {
                 @Override
                 public int get() {
-                    return grinderEntity.progress;
+                    return alloyFurnaceEntityEntity.progress;
                 }
 
                 @Override
                 public void set(int value) {
-                    grinderEntity.progress = value;
+                    alloyFurnaceEntityEntity.progress = value;
                 }
             });
 
-            addDataSlot(new DataSlot()
-            {
+            addDataSlot(new DataSlot() {
                 @Override
                 public int get() {
-                    return grinderEntity.maxProgress;
+                    return alloyFurnaceEntityEntity.maxProgress;
                 }
 
                 @Override
                 public void set(int value) {
-                    grinderEntity.maxProgress = value;
+                    alloyFurnaceEntityEntity.maxProgress = value;
                 }
             });
             layoutPlayerInventorySlots(player.getInventory(), 8, 84);
         }
     }
 
+    private void addItemSlotRange(IItemHandler handler, int row, int column, int x, int y) {
+        int index = 0;
+        for (int i = 0; i < column; i++) {
+            for (int j = 0; j < row; j++) {
+                addSlot(new SlotItemHandler(handler, index, x + (y * j), y + (y * i)));
+                index++;
+            }
+        }
+    }
+
     private int addSlotRange(Container playerInventory, int index, int x, int y, int amount, int dx) {
-        for (int i = 0 ; i < amount ; i++) {
+        for (int i = 0; i < amount; i++) {
             addSlot(new Slot(playerInventory, index, x, y));
             x += dx;
             index++;
@@ -75,7 +95,7 @@ public class GrinderContainer extends AbstractContainerMenu {
     }
 
     private int addSlotBox(Container playerInventory, int index, int x, int y, int horAmount, int dx, int verAmount, int dy) {
-        for (int j = 0 ; j < verAmount ; j++) {
+        for (int j = 0; j < verAmount; j++) {
             index = addSlotRange(playerInventory, index, x, y, horAmount, dx);
             y += dy;
         }
@@ -103,7 +123,7 @@ public class GrinderContainer extends AbstractContainerMenu {
                     return ItemStack.EMPTY;
                 }
             }
-            if (!this.moveItemStackTo(stack, SLOT_INPUT, SLOT_INPUT+1, false)) {
+            if (!this.moveItemStackTo(stack, SLOT_INPUT, SLOT_INPUT + 13, false)) {
                 if (pIndex < 27 + SLOT_COUNT) {
                     if (!this.moveItemStackTo(stack, 27 + SLOT_COUNT, 36 + SLOT_COUNT, false)) {
                         return ItemStack.EMPTY;
@@ -131,18 +151,10 @@ public class GrinderContainer extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player pPlayer) {
-        return stillValid(ContainerLevelAccess.create(pPlayer.level(), pos), pPlayer, TorqueBlocks.GRINDER.get());
+        return stillValid(ContainerLevelAccess.create(pPlayer.level(), pos), pPlayer, TorqueBlocks.ALLOY_FURNACE.get());
     }
 
-    public GrinderEntity getBlockEntity() {
-        return this.grinderEntity;
-    }
-
-    public FluidStack getFluidStack() {
-        return this.fluidStack;
-    }
-
-    public void setFluidStack(FluidStack fluidStack) {
-        this.fluidStack = fluidStack;
+    public AlloyFurnaceEntity getBlockEntity() {
+        return this.alloyFurnaceEntityEntity;
     }
 }
