@@ -1,47 +1,46 @@
-package dev.shinyepo.torquecraft.recipes;
+package dev.shinyepo.torquecraft.recipes.custom;
 
-import dev.shinyepo.torquecraft.recipes.custom.GrinderRecipe;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
+import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.neoforged.neoforge.fluids.FluidStack;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class TorqueRecipeBuilder implements RecipeBuilder {
+public class AlloyFurnaceRecipeBuilder implements RecipeBuilder {
     private final RecipeCategory category;
     private final RecipeType<?> recipeType;
+    private final NonNullList<Ingredient> addonIngredient = NonNullList.create();
+    private final Ingredient ingotIngredient;
     private final ItemStack resultItem;
-    private final FluidStack resultFluid;
-    private final Ingredient ingredient;
 
 
     private final Map<String, Criterion<?>> criteria = new LinkedHashMap<>();
+    private final AlloyFurnaceRecipe.Factory<?> factory;
     @Nullable
     private String group;
-    private final GrinderRecipe.Factory<?> factory;
 
-    public TorqueRecipeBuilder(RecipeType<?> recipeType, RecipeCategory category, GrinderRecipe.Factory<?> factory, Ingredient ingredient, ItemStack resultItem, FluidStack resultFluid) {
+    public AlloyFurnaceRecipeBuilder(RecipeType<?> recipeType, RecipeCategory category, AlloyFurnaceRecipe.Factory<?> factory, Ingredient ingotIngredient, ItemStack resultItem) {
         this.category = category;
         this.recipeType = recipeType;
+        this.ingotIngredient = ingotIngredient;
         this.factory = factory;
-        this.ingredient = ingredient;
         this.resultItem = resultItem;
-        this.resultFluid = resultFluid;
     }
 
     @Override
@@ -61,6 +60,11 @@ public class TorqueRecipeBuilder implements RecipeBuilder {
         return this.resultItem.getItem();
     }
 
+    public AlloyFurnaceRecipeBuilder addAddonIngredient(TagKey<Item> tag) {
+        addonIngredient.add(Ingredient.of(tag));
+        return this;
+    }
+
     private String getResultPath() {
         return BuiltInRegistries.ITEM.getKey(getResult().asItem()).getPath();
     }
@@ -78,9 +82,9 @@ public class TorqueRecipeBuilder implements RecipeBuilder {
                 .rewards(AdvancementRewards.Builder.recipe(pId))
                 .requirements(AdvancementRequirements.Strategy.OR);
         this.criteria.forEach(advancement$builder::addCriterion);
-        GrinderRecipe grinderRecipe = this.factory
-                .create(Objects.requireNonNullElse(this.group, ""), ingredient, resultItem, resultFluid);
-        pRecipeOutput.accept(pId, grinderRecipe, advancement$builder.build(pId.withPrefix("recipes/" + this.category.getFolderName() + "/")));
+        AlloyFurnaceRecipe alloyFurnaceRecipe = this.factory
+                .create(Objects.requireNonNullElse(this.group, ""), addonIngredient, ingotIngredient, resultItem);
+        pRecipeOutput.accept(pId, alloyFurnaceRecipe, advancement$builder.build(pId.withPrefix("recipes/" + this.category.getFolderName() + "/")));
     }
 
     private void ensureValid(ResourceLocation pId) {

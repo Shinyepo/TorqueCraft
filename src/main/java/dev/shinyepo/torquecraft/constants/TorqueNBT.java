@@ -20,4 +20,6 @@ public class TorqueNBT {
     public static final String TORQUE = "Torque";
     public static final String ANGULAR = "Angular";
     public static final String SIDES = "Sides";
+    public static final String MAX_BURN_TIME = "Max_BurnTime";
+    public static final String BURN_TIME = "BurnTime";
 }

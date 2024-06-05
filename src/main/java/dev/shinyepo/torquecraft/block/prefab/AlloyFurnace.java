@@ -2,7 +2,6 @@ package dev.shinyepo.torquecraft.block.prefab;
 
 import com.mojang.serialization.MapCodec;
 import dev.shinyepo.torquecraft.block.entities.AlloyFurnaceEntity;
-import dev.shinyepo.torquecraft.block.entities.rotary.GrinderEntity;
 import dev.shinyepo.torquecraft.menu.furnace.AlloyFurnaceContainer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -77,7 +76,7 @@ public class AlloyFurnace extends HorizontalDirectionalBlock implements EntityBl
     protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHit) {
         if (!pLevel.isClientSide) {
             BlockEntity be = pLevel.getBlockEntity(pPos);
-            if (be instanceof AlloyFurnaceEntity) {
+            if (be instanceof AlloyFurnaceEntity aFE) {
                 MenuProvider containerProvider = new MenuProvider() {
                     @Override
                     public Component getDisplayName() {
@@ -86,7 +85,7 @@ public class AlloyFurnace extends HorizontalDirectionalBlock implements EntityBl
 
                     @Override
                     public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player playerEntity) {
-                        return new AlloyFurnaceContainer(windowId, playerEntity, pPos);
+                        return new AlloyFurnaceContainer(windowId, playerEntity, pPos, aFE.getGuiData());
                     }
                 };
                 pPlayer.openMenu(containerProvider, buf -> {
@@ -112,8 +111,9 @@ public class AlloyFurnace extends HorizontalDirectionalBlock implements EntityBl
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
+        if (pLevel.isClientSide()) return null;
         return (pLevel1, pPos, pState1, pBlockEntity) -> {
-            if (pBlockEntity instanceof GrinderEntity gE) {
+            if (pBlockEntity instanceof AlloyFurnaceEntity gE) {
                 gE.tick(pLevel1, pPos, pState1);
             }
         };

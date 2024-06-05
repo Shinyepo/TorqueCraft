@@ -27,20 +27,28 @@ public class AlloyFurnaceScreen extends AbstractContainerScreen<AlloyFurnaceCont
         int relX = (this.width - this.imageWidth) / 2;
         int relY = (this.height - this.imageHeight) / 2;
         graphics.blit(GUI, relX, relY, 0, 0, this.imageWidth, this.imageHeight);
-
+        renderBurnProgress(graphics, relX, relY);
         renderProgressArrow(graphics, relX, relY);
     }
 
     @Override
     protected void renderLabels(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY) {
-//        super.renderLabels(pGuiGraphics,pMouseX,pMouseY);
         pGuiGraphics.drawString(this.font, this.title, this.titleLabelX, this.titleLabelY, 4210752, false);
-        int relX = (this.width - this.imageWidth) / 2;
-        int relY = (this.height - this.imageHeight) / 2;
+    }
+
+    private void renderBurnProgress(GuiGraphics graphics, int relX, int relY) {
+        int maxBurn = this.menu.data.get(1);
+        if (maxBurn < 1) return;
+
+        var progress = this.menu.data.get(0);
+        var scaledBurn = (progress * 14 / maxBurn) + 1;
+        graphics.blit(GUI, relX + 9, relY + 47 + 14 - scaledBurn, 176, 16 + 14 - scaledBurn, 14, scaledBurn);
+
     }
 
     private void renderProgressArrow(GuiGraphics graphics, int relX, int relY) {
-        int progress = this.menu.getBlockEntity().progress * 22 / this.menu.getBlockEntity().maxProgress;
-        graphics.blit(GUI, relX + 80, relY + 34, 176, 0, progress, 16);
+        if (this.menu.data.get(3) < 1) return;
+        int progress = this.menu.data.get(2) * 22 / this.menu.data.get(3);
+        graphics.blit(GUI, relX + 117, relY + 36, 176, 0, progress, 16);
     }
 }

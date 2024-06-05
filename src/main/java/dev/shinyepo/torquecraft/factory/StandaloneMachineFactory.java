@@ -1,6 +1,7 @@
 package dev.shinyepo.torquecraft.factory;
 
 import dev.shinyepo.torquecraft.capabilities.handlers.AdaptedItemHandler;
+import dev.shinyepo.torquecraft.constants.TorqueNBT;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -27,6 +28,8 @@ import java.util.Map;
 public class StandaloneMachineFactory extends BlockEntity {
     public int progress = 0;
     public int maxProgress = 64;
+    protected int burnTime = 0;
+    protected int maxBurnTime = 0;
     private Map<String, ItemStackHandler> registeredHandlers;
 
     public StandaloneMachineFactory(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState) {
@@ -115,6 +118,23 @@ public class StandaloneMachineFactory extends BlockEntity {
         super.saveAdditional(tag, provider);
         if (!registeredHandlers.isEmpty()) {
             registeredHandlers.forEach((key, handler) -> tag.put(key, handler.serializeNBT(provider)));
+        }
+        tag.putInt(TorqueNBT.PROGRESS, progress);
+        tag.putInt(TorqueNBT.BURN_TIME, burnTime);
+        tag.putInt(TorqueNBT.MAX_BURN_TIME, maxBurnTime);
+    }
+
+    @Override
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
+        super.loadAdditional(tag, provider);
+        if (tag.contains(TorqueNBT.BURN_TIME)) {
+            this.burnTime = tag.getInt(TorqueNBT.BURN_TIME);
+        }
+        if (tag.contains(TorqueNBT.MAX_BURN_TIME)) {
+            this.maxBurnTime = tag.getInt(TorqueNBT.MAX_BURN_TIME);
+        }
+        if (tag.contains(TorqueNBT.PROGRESS)) {
+            this.progress = tag.getInt(TorqueNBT.PROGRESS);
         }
     }
 
