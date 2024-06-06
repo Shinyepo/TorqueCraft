@@ -10,6 +10,7 @@
   "item.torquecraft.pressure_gauge": "Pressure Gauge",
   "item.torquecraft.rotary_wrench": "Rotary Wrench",
   "item.torquecraft.rotary_monitor": "Rotary Monitor",
+  "item.torquecraft.circuit_module": "Circuit Module",
 
   "block.torquecraft.steam_engine": "Steam Engine",
   "block.torquecraft.mechanical_fan": "Mechanical Fan",

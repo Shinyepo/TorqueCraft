@@ -18,16 +18,31 @@ public abstract class CustomItemModelProvider extends ItemModelProvider {
         super(output, modid, existingFileHelper);
     }
 
-    public ItemModelBuilder basicItem(Item item) {
-        return super.basicItem(item);
+    public ItemModelBuilder basicItem(Item item, String folder) {
+        return basicItem(key(item), folder);
     }
 
+
     public ItemModelBuilder basicMaterialItem(Item item) {
-        return basicMaterialItem(Objects.requireNonNull(BuiltInRegistries.ITEM.getKey(item)));
+        return basicMaterialItem(key(item));
+    }
+
+    private ResourceLocation key(Item item) {
+        return Objects.requireNonNull(BuiltInRegistries.ITEM.getKey(item));
+    }
+
+    private ResourceLocation key(Block item) {
+        return Objects.requireNonNull(BuiltInRegistries.BLOCK.getKey(item));
     }
 
     public ItemModelBuilder basicBlockMaterialItem(Item item) {
-        return basicBlockMaterialItem(Objects.requireNonNull(BuiltInRegistries.ITEM.getKey(item)));
+        return basicBlockMaterialItem(key(item));
+    }
+
+    public ItemModelBuilder basicItem(ResourceLocation item, String folder) {
+        return getBuilder(item.toString())
+                .parent(new ModelFile.UncheckedModelFile("item/generated"))
+                .texture("layer0", new ResourceLocation(item.getNamespace(), "item/" + folder + item.getPath()));
     }
 
     public ItemModelBuilder basicMaterialItem(ResourceLocation item) {
@@ -44,25 +59,25 @@ public abstract class CustomItemModelProvider extends ItemModelProvider {
 
     public ItemModelBuilder withExistingParent(BlockItem item, String folder, Block block) {
         var name = String.valueOf(item).toLowerCase();
-        var parent = "torquecraft:block/" + folder + BuiltInRegistries.BLOCK.getKey(block).getPath();
+        var parent = "torquecraft:block/" + folder + key(block).getPath();
         return super.withExistingParent(name, parent);
     }
 
     public ItemModelBuilder withExistingParent(BlockItem item, String folder, Block block, String itemModel) {
         var name = String.valueOf(item).toLowerCase();
-        var parent = "torquecraft:block/" + folder + BuiltInRegistries.BLOCK.getKey(block).getPath() + itemModel;
+        var parent = "torquecraft:block/" + folder + key(block).getPath() + itemModel;
         return super.withExistingParent(name, parent);
     }
 
     public ItemModelBuilder withExistingParent(BlockItem item, Block block, String itemModel) {
         var name = String.valueOf(item).toLowerCase();
-        var parent = "torquecraft:block/" + BuiltInRegistries.BLOCK.getKey(block).getPath() + itemModel;
+        var parent = "torquecraft:block/" + key(block).getPath() + itemModel;
         return super.withExistingParent(name, parent);
     }
 
     public ItemModelBuilder withExistingParent(BlockItem item, Block block) {
         var name = String.valueOf(item).toLowerCase();
-        var parent = "torquecraft:block/" + BuiltInRegistries.BLOCK.getKey(block).getPath();
+        var parent = "torquecraft:block/" + key(block).getPath();
         return super.withExistingParent(name, parent);
     }
 

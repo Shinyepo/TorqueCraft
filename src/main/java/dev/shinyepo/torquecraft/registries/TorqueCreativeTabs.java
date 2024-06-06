@@ -27,6 +27,9 @@ public class TorqueCreativeTabs {
                 output.accept(TorqueItems.CAST_IRON_BLOCK_ITEM.get());
                 output.accept(TorqueItems.TUNGSTEN_BLOCK_ITEM.get());
 
+                //Components
+                output.accept(TorqueItems.CIRCUIT_MODULE.get());
+
                 //
                 output.accept(TorqueItems.CANOLA_SEEDS.get());
                 output.accept(TorqueItems.CRUSHED_SEEDS.get());

@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "tag": "c:ingots/gold"
+    },
+    "I": {
+      "item": "torquecraft:tungsten_ingot"
+    },
+    "R": {
+      "tag": "c:dusts/redstone"
+    },
+    "S": {
+      "item": "torquecraft:silicon"
+    }
+  },
+  "pattern": [
+    "IGI",
+    "SRS",
+    "III"
+  ],
+  "result": {
+    "count": 1,
+    "id": "torquecraft:circuit_module"
+  }
+}

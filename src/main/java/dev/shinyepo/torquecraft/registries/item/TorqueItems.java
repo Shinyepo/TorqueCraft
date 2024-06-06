@@ -23,6 +23,9 @@ public class TorqueItems {
     public static final Supplier<Item> SILICON = ITEMS.registerSimpleItem("silicon", new Item.Properties());
     public static final Supplier<Item> CAST_IRON_INGOT = ITEMS.registerSimpleItem("cast_iron_ingot", new Item.Properties());
 
+    //Components
+    public static final Supplier<Item> CIRCUIT_MODULE = ITEMS.registerSimpleItem("circuit_module", new Item.Properties());
+
     //Items
     public static final Supplier<Item> CRUSHED_SEEDS = ITEMS.register("crushed_seeds", () -> new CanolaMeal(new Item.Properties()));
 

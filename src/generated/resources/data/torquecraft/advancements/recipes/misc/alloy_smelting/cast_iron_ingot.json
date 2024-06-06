@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "criteria": {
+    "has_alloy_furnace": {
       "conditions": {
         "items": [
           {
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "criteria"
+      "has_alloy_furnace"
     ]
   ],
   "rewards": {

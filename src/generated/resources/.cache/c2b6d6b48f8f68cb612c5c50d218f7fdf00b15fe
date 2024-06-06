@@ -1,9 +1,10 @@
-// 1.20.6	2024-06-06T19:46:03.4416694	Item Models: torquecraft
+// 1.20.6	2024-06-06T21:35:31.5439432	Item Models: torquecraft
 e59d6b3d630b1cb3f52cae24f436ff54e71aa420 assets/torquecraft/models/item/alloy_furnace.json
 3fe8dd0fb9cc5117ab768c498aecb97e50ef2187 assets/torquecraft/models/item/bevel_gears.json
 5f52cc675d3896825693098fb2797e0b3b53e704 assets/torquecraft/models/item/canola_seeds.json
 b9b386c2e28e8c70e124a8d3bc6061e2ae6989c3 assets/torquecraft/models/item/cast_iron_block.json
 958176ce3cf7f0e4267d230b3c52d2ab9c59f554 assets/torquecraft/models/item/cast_iron_ingot.json
+ef62573dbfadab8e6abdae9b6b81d75881126570 assets/torquecraft/models/item/circuit_module.json
 fb83119ca3215741128f5d2630736dd55e2a0dba assets/torquecraft/models/item/cooling_radiator.json
 9304d8e398bec48a50062c1b0ff34f49fdae2679 assets/torquecraft/models/item/crushed_seeds.json
 c9132467fff67005b589e94e5e19c2d3488d110e assets/torquecraft/models/item/fluid_pipe.json

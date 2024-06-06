@@ -45,6 +45,8 @@ public class TorqueRecipeProvider extends RecipeProvider {
         //Materials
         registerMaterialRecipes(pRecipeOutput);
         registerBlockRecipes(pRecipeOutput);
+        registerComponents(pRecipeOutput);
+
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TorqueItems.TUNGSTEN_INGOT.get(),9)
                 .requires(TorqueItems.TUNGSTEN_BLOCK_ITEM.get())
                 .unlockedBy("criteria", has(TorqueBlocks.TUNGSTEN_BLOCK.get()))
@@ -111,11 +113,36 @@ public class TorqueRecipeProvider extends RecipeProvider {
                 .define('B', Items.BLAST_FURNACE)
                 .unlockedBy("has_blast_furnace", has(Items.BLAST_FURNACE))
                 .save(output);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TorqueItems.ROTARY_MONITOR.get())
+                .pattern("III")
+                .pattern("ICI")
+                .pattern("IGI")
+                .define('I', Tags.Items.INGOTS_IRON)
+                .define('C', TorqueItems.CIRCUIT_MODULE.get())
+                //Add gear
+                .define('G', TorqueItems.TUNGSTEN_INGOT.get())
+                .unlockedBy("has_circuit_module", has(TorqueItems.CIRCUIT_MODULE.get()))
+                .save(output);
+    }
+
+    private void registerComponents(RecipeOutput output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TorqueItems.CIRCUIT_MODULE.get())
+                .pattern("IGI")
+                .pattern("SRS")
+                .pattern("III")
+                .define('S', TorqueItems.SILICON.get())
+                .define('G', Tags.Items.INGOTS_GOLD)
+                .define('R', Tags.Items.DUSTS_REDSTONE)
+                //Replace with new ingot?
+                .define('I', TorqueItems.TUNGSTEN_INGOT.get())
+                .unlockedBy("has_silicon", has(TorqueItems.SILICON.get()))
+                .save(output);
     }
 
     private void registerMaterialRecipes(RecipeOutput output) {
         grinding(Ingredient.of(Tags.Items.GEMS_QUARTZ), TorqueItems.NETHER_QUARTZ_DUST.get(), FluidStack.EMPTY)
-                .unlockedBy("criteria", has(Tags.Items.GEMS_QUARTZ))
+                .unlockedBy("has_quartz", has(Tags.Items.GEMS_QUARTZ))
                 .save(output);
 
         smeltingResultFromBase(output, TorqueItems.SILICON.get(), TorqueItems.NETHER_QUARTZ_DUST.get());
@@ -124,12 +151,12 @@ public class TorqueRecipeProvider extends RecipeProvider {
                 .addAddonIngredient(ItemTags.COALS)
                 .addAddonIngredient(Tags.Items.GUNPOWDERS)
                 .addAddonIngredient(TorqueTags.SILICON)
-                .unlockedBy("criteria", has(TorqueItems.ALLOY_FURNACE_ITEM.get()))
+                .unlockedBy("has_alloy_furnace", has(TorqueItems.ALLOY_FURNACE_ITEM.get()))
                 .save(output);
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TorqueItems.CAST_IRON_INGOT.get(), 9)
                 .requires(TorqueBlocks.CAST_IRON_BLOCK.get())
-                .unlockedBy("criteria", has(TorqueBlocks.CAST_IRON_BLOCK.get()))
+                .unlockedBy("has_cast_iron_block", has(TorqueBlocks.CAST_IRON_BLOCK.get()))
                 .save(output);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TorqueBlocks.CAST_IRON_BLOCK.get())
@@ -137,7 +164,7 @@ public class TorqueRecipeProvider extends RecipeProvider {
                 .pattern("SSS")
                 .pattern("SSS")
                 .define('S', TorqueItems.CAST_IRON_INGOT.get())
-                .unlockedBy("criteria", has(TorqueItems.CAST_IRON_INGOT.get()))
+                .unlockedBy("has_cast_iron_ingot", has(TorqueItems.CAST_IRON_INGOT.get()))
                 .save(output);
     }
 }
