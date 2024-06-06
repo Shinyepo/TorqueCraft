@@ -1,6 +1,7 @@
 {
   "item.torquecraft.nether_quartz_dust": "Nether Quartz Dust",
   "item.torquecraft.silicon": "Silicon",
+  "item.torquecraft.cast_iron_ingot": "Cast Iron Ingot",
   "item.torquecraft.tungsten_ingot": "Tungsten Ingot",
   "item.torquecraft.canola_seeds": "Canola Seeds",
   "item.torquecraft.crushed_seeds": "Crushed Seeds",
@@ -27,6 +28,7 @@
 
 
   "block.torquecraft.tungsten_block": "Tungsten Block",
+  "block.torquecraft.cast_iron_block": "Cast Iron Block",
 
   "fluid_type.torquecraft.lubricant_fluid": "Lubricant",
   "fluid_type.torquecraft.jet_fuel_fluid": "Jet Fuel",

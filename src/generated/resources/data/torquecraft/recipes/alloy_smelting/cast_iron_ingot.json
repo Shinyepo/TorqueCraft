@@ -8,7 +8,7 @@
       "tag": "c:gunpowders"
     },
     {
-      "tag": "c:sandstone/blocks"
+      "tag": "c:silicon"
     }
   ],
   "ingotIngredient": {
@@ -16,6 +16,6 @@
   },
   "resultItem": {
     "count": 1,
-    "id": "torquecraft:tungsten_ingot"
+    "id": "torquecraft:cast_iron_ingot"
   }
 }

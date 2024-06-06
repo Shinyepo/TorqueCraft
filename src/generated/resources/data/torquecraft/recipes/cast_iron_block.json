@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "S": {
+      "item": "torquecraft:cast_iron_ingot"
+    }
+  },
+  "pattern": [
+    "SSS",
+    "SSS",
+    "SSS"
+  ],
+  "result": {
+    "count": 1,
+    "id": "torquecraft:cast_iron_block"
+  }
+}

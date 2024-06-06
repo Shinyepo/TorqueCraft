@@ -20,9 +20,11 @@ public class TorqueCreativeTabs {
                 //Materials
                 output.accept(TorqueItems.NETHER_QUARTZ_DUST.get());
                 output.accept(TorqueItems.SILICON.get());
+                output.accept(TorqueItems.CAST_IRON_INGOT.get());
                 output.accept(TorqueItems.TUNGSTEN_INGOT.get());
 
                 //Block Materials
+                output.accept(TorqueItems.CAST_IRON_BLOCK_ITEM.get());
                 output.accept(TorqueItems.TUNGSTEN_BLOCK_ITEM.get());
 
                 //

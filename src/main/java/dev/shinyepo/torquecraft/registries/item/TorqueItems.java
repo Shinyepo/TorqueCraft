@@ -20,6 +20,7 @@ public class TorqueItems {
     public static final Supplier<Item> TUNGSTEN_INGOT = ITEMS.registerSimpleItem("tungsten_ingot", new Item.Properties().food(new FoodProperties.Builder().fast().alwaysEdible().nutrition(10).build()));
     public static final Supplier<Item> NETHER_QUARTZ_DUST = ITEMS.registerSimpleItem("nether_quartz_dust", new Item.Properties());
     public static final Supplier<Item> SILICON = ITEMS.registerSimpleItem("silicon", new Item.Properties());
+    public static final Supplier<Item> CAST_IRON_INGOT = ITEMS.registerSimpleItem("cast_iron_ingot", new Item.Properties());
 
     //Items
     public static final Supplier<Item> CRUSHED_SEEDS = ITEMS.register("crushed_seeds", () -> new CanolaMeal(new Item.Properties()));
@@ -30,6 +31,7 @@ public class TorqueItems {
 
     //Block items
     public static final Supplier<BlockItem> TUNGSTEN_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("tungsten_block", TorqueBlocks.TUNGSTEN_BLOCK);
+    public static final Supplier<BlockItem> CAST_IRON_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("cast_iron_block", TorqueBlocks.CAST_IRON_BLOCK);
     public static final Supplier<BlockItem> ALLOY_FURNACE_ITEM = ITEMS.registerSimpleBlockItem("alloy_furnace", TorqueBlocks.ALLOY_FURNACE);
 
     //machine block items

@@ -6,6 +6,7 @@ import dev.shinyepo.torquecraft.factory.StandaloneMachineFactory;
 import dev.shinyepo.torquecraft.recipes.custom.AlloyFurnaceRecipe;
 import dev.shinyepo.torquecraft.registries.block.TorqueBlockEntities;
 import dev.shinyepo.torquecraft.registries.recipe.TorqueRecipes;
+import dev.shinyepo.torquecraft.registries.tag.TorqueTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -36,7 +37,7 @@ public class AlloyFurnaceEntity extends StandaloneMachineFactory {
     public static final int INPUT_SLOT_COUNT = 9;
     public static final int OUTPUT_SLOT_COUNT = 3;
     public static final int SLOT_COUNT = ADDON_SLOT_COUNT + INPUT_SLOT_COUNT + OUTPUT_SLOT_COUNT + 1;
-    private static final List<TagKey<Item>> validAddonsInputs = List.of(ItemTags.COALS, Tags.Items.GUNPOWDERS, Tags.Items.SANDS, Tags.Items.SANDSTONE_BLOCKS);
+    private static final List<TagKey<Item>> validAddonsInputs = List.of(ItemTags.COALS, Tags.Items.GUNPOWDERS, Tags.Items.SANDS, Tags.Items.SANDSTONE_BLOCKS, TorqueTags.SILICON);
     private static final List<TagKey<Item>> validInputs = List.of(Tags.Items.INGOTS);
     private final Lazy<ItemStackHandler> addonItemHandler = createInputItemHandler(ADDON_SLOT_COUNT, validAddonsInputs);
     private final Lazy<ItemStackHandler> inputItemHandler = createInputItemHandler(INPUT_SLOT_COUNT, validInputs);

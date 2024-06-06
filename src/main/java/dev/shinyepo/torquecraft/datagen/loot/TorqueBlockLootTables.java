@@ -21,6 +21,7 @@ public class TorqueBlockLootTables extends BlockLootSubProvider {
     @Override
     protected void generate() {
         dropSelf(TorqueBlocks.TUNGSTEN_BLOCK.get());
+        dropSelf(TorqueBlocks.CAST_IRON_BLOCK.get());
         dropSelf(TorqueBlocks.ALLOY_FURNACE.get());
         dropSelf(TorqueBlocks.STEAM_ENGINE.get());
         dropSelf(TorqueBlocks.MECHANICAL_FAN.get());

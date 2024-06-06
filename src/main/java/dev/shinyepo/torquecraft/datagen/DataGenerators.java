@@ -4,7 +4,7 @@ import dev.shinyepo.torquecraft.TorqueCraft;
 import dev.shinyepo.torquecraft.datagen.block.TorqueBlockStateProvider;
 import dev.shinyepo.torquecraft.datagen.item.TorqueItemModelProvider;
 import dev.shinyepo.torquecraft.datagen.loot.TorqueLootTableProvider;
-import dev.shinyepo.torquecraft.datagen.recipe.ModRecipeProvider;
+import dev.shinyepo.torquecraft.datagen.recipe.TorqueRecipeProvider;
 import dev.shinyepo.torquecraft.datagen.tag.TorqueBlockTagGenerator;
 import dev.shinyepo.torquecraft.datagen.tag.TorqueItemTagGenerator;
 import net.minecraft.core.HolderLookup;
@@ -26,7 +26,7 @@ public class DataGenerators {
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
-        generator.addProvider(event.includeServer(), new ModRecipeProvider(packOutput, lookupProvider));
+        generator.addProvider(event.includeServer(), new TorqueRecipeProvider(packOutput, lookupProvider));
         generator.addProvider(event.includeServer(), TorqueLootTableProvider.create(packOutput, lookupProvider));
 
         generator.addProvider(event.includeClient(), new TorqueBlockStateProvider(packOutput, existingFileHelper));

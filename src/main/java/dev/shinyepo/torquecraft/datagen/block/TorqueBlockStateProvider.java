@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import dev.shinyepo.torquecraft.TorqueCraft;
 import dev.shinyepo.torquecraft.block.prefab.CanolaCrop;
 import dev.shinyepo.torquecraft.block.prefab.CoolingRadiator;
+import dev.shinyepo.torquecraft.datagen.helpers.CustomBlockStateProvider;
 import dev.shinyepo.torquecraft.model.baker.helpers.PipeModelLoader;
 import dev.shinyepo.torquecraft.registries.block.TorqueBlocks;
 import net.minecraft.core.Direction;
@@ -15,20 +16,24 @@ import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.neoforged.neoforge.client.model.generators.*;
+import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
+import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
+import net.neoforged.neoforge.client.model.generators.CustomLoaderBuilder;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public class TorqueBlockStateProvider extends BlockStateProvider {
+public class TorqueBlockStateProvider extends CustomBlockStateProvider {
     public TorqueBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
         super(output, TorqueCraft.MODID, exFileHelper);
     }
 
     @Override
     protected void registerStatesAndModels() {
-        blockWithItem(TorqueBlocks.TUNGSTEN_BLOCK.get());
+        blockMaterialWithItem(TorqueBlocks.TUNGSTEN_BLOCK.get());
+        blockMaterialWithItem(TorqueBlocks.CAST_IRON_BLOCK.get());
         registerPipe(TorqueBlocks.FLUID_PIPE);
         registerPipe(TorqueBlocks.STEAM_PIPE);
 
@@ -59,10 +64,6 @@ public class TorqueBlockStateProvider extends BlockStateProvider {
                 .customLoader((builder, helper) -> new PipeLoaderBuilder(PipeModelLoader.GENERATOR_LOADER, builder, helper))
                 .end();
         simpleBlock(pipe.get(), model);
-    }
-
-    private void blockWithItem(Block block) {
-        simpleBlockWithItem(block, cubeAll(block));
     }
 
     public void makeRadiator(Supplier<Block> block) {

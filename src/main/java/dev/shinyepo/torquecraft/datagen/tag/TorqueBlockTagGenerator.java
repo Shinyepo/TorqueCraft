@@ -7,6 +7,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Blocks;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
@@ -20,6 +21,10 @@ public class TorqueBlockTagGenerator extends BlockTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider pProvider) {
+        tag(Tags.Blocks.STORAGE_BLOCKS)
+                .add(TorqueBlocks.CAST_IRON_BLOCK.get())
+                .replace(false);
+
         tag(TorqueTags.HEAT_SOURCE)
                 .add(Blocks.LAVA, Blocks.MAGMA_BLOCK)
                 .addTag(BlockTags.FIRE)

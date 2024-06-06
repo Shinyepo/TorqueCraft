@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "torquecraft:alloy_furnace"
+            "items": "torquecraft:cast_iron_ingot"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "torquecraft:alloy_smelting/tungsten_ingot"
+        "recipe": "torquecraft:cast_iron_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "torquecraft:alloy_smelting/tungsten_ingot"
+      "torquecraft:cast_iron_block"
     ]
   }
 }

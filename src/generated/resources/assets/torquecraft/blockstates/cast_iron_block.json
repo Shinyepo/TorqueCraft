@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "torquecraft:block/cast_iron_block"
+    }
+  }
+}

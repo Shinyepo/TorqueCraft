@@ -18,9 +18,11 @@ public class TorqueItemModelProvider extends CustomItemModelProvider {
         basicMaterialItem(TorqueItems.NETHER_QUARTZ_DUST.get());
         basicMaterialItem(TorqueItems.SILICON.get());
         basicMaterialItem(TorqueItems.TUNGSTEN_INGOT.get());
+        basicMaterialItem(TorqueItems.CAST_IRON_INGOT.get());
 
         //Block Materials
         withExistingParent(TorqueItems.TUNGSTEN_BLOCK_ITEM.get(), TorqueBlocks.TUNGSTEN_BLOCK.get());
+        withExistingParent(TorqueItems.CAST_IRON_BLOCK_ITEM.get(), TorqueBlocks.CAST_IRON_BLOCK.get());
 
         basicItem(TorqueItems.CANOLA_SEEDS.get());
         basicItem(TorqueItems.CRUSHED_SEEDS.get());

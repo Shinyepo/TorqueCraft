@@ -8,6 +8,7 @@ import dev.shinyepo.torquecraft.registries.block.TorqueBlocks;
 import dev.shinyepo.torquecraft.registries.fluid.TorqueFluids;
 import dev.shinyepo.torquecraft.registries.item.TorqueItems;
 import dev.shinyepo.torquecraft.registries.recipe.TorqueRecipes;
+import dev.shinyepo.torquecraft.registries.tag.TorqueTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
@@ -23,10 +24,10 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public class ModRecipeProvider extends RecipeProvider {
+public class TorqueRecipeProvider extends RecipeProvider {
     private static final List<ItemLike> SMELTABLES = List.of(TorqueItems.TUNGSTEN_INGOT.get());
 
-    public ModRecipeProvider(PackOutput pOutput, CompletableFuture<HolderLookup.Provider> pHolder) {
+    public TorqueRecipeProvider(PackOutput pOutput, CompletableFuture<HolderLookup.Provider> pHolder) {
         super(pOutput, pHolder);
     }
 
@@ -44,8 +45,6 @@ public class ModRecipeProvider extends RecipeProvider {
         //Materials
         registerMaterialRecipes(pRecipeOutput);
 
-        oreSmelting(pRecipeOutput, SMELTABLES, RecipeCategory.MISC, TorqueBlocks.TUNGSTEN_BLOCK.get(), 0.25f, 100, "tungsten");
-
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TorqueItems.TUNGSTEN_INGOT.get(),9)
                 .requires(TorqueItems.TUNGSTEN_BLOCK_ITEM.get())
                 .unlockedBy("criteria", has(TorqueBlocks.TUNGSTEN_BLOCK.get()))
@@ -54,14 +53,6 @@ public class ModRecipeProvider extends RecipeProvider {
         grinding(Ingredient.of(Tags.Items.SEEDS), TorqueItems.CRUSHED_SEEDS.get(), new FluidStack(TorqueFluids.SOURCE_LUBRICANT.get(),100))
                 .unlockedBy("criteria", has(Tags.Items.SEEDS))
                 .save(pRecipeOutput);
-
-        alloying(Ingredient.of(Items.IRON_INGOT), TorqueItems.TUNGSTEN_INGOT.get())
-                .addAddonIngredient(ItemTags.COALS)
-                .addAddonIngredient(Tags.Items.GUNPOWDERS)
-                .addAddonIngredient(Tags.Items.SANDSTONE_BLOCKS)
-                .unlockedBy("criteria", has(TorqueItems.ALLOY_FURNACE_ITEM.get()))
-                .save(pRecipeOutput);
-
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TorqueBlocks.TUNGSTEN_BLOCK.get())
                 .pattern("SSS")
@@ -117,5 +108,25 @@ public class ModRecipeProvider extends RecipeProvider {
                 .save(output);
 
         smeltingResultFromBase(output, TorqueItems.SILICON.get(), TorqueItems.NETHER_QUARTZ_DUST.get());
+
+        alloying(Ingredient.of(Items.IRON_INGOT), TorqueItems.CAST_IRON_INGOT.get())
+                .addAddonIngredient(ItemTags.COALS)
+                .addAddonIngredient(Tags.Items.GUNPOWDERS)
+                .addAddonIngredient(TorqueTags.SILICON)
+                .unlockedBy("criteria", has(TorqueItems.ALLOY_FURNACE_ITEM.get()))
+                .save(output);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TorqueItems.CAST_IRON_INGOT.get(), 9)
+                .requires(TorqueBlocks.CAST_IRON_BLOCK.get())
+                .unlockedBy("criteria", has(TorqueBlocks.CAST_IRON_BLOCK.get()))
+                .save(output);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TorqueBlocks.CAST_IRON_BLOCK.get())
+                .pattern("SSS")
+                .pattern("SSS")
+                .pattern("SSS")
+                .define('S', TorqueItems.CAST_IRON_INGOT.get())
+                .unlockedBy("criteria", has(TorqueItems.CAST_IRON_INGOT.get()))
+                .save(output);
     }
 }

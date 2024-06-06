@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "criteria": {
+      "conditions": {
+        "items": [
+          {
+            "items": "torquecraft:cast_iron_block"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "torquecraft:cast_iron_ingot"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "criteria"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "torquecraft:cast_iron_ingot"
+    ]
+  }
+}
