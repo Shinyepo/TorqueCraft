@@ -84,7 +84,7 @@ public class Grinder extends HorizontalDirectionalBlock implements EntityBlock {
     protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHit) {
         if (!pLevel.isClientSide) {
             BlockEntity be = pLevel.getBlockEntity(pPos);
-            if (be instanceof GrinderEntity) {
+            if (be instanceof GrinderEntity grinderEntity) {
                 MenuProvider containerProvider = new MenuProvider() {
                     @Override
                     public Component getDisplayName() {
@@ -93,7 +93,7 @@ public class Grinder extends HorizontalDirectionalBlock implements EntityBlock {
 
                     @Override
                     public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player playerEntity) {
-                        return new GrinderContainer(windowId, playerEntity, pPos, ((GrinderEntity) be).getFluidStack());
+                        return new GrinderContainer(windowId, playerEntity, pPos, grinderEntity.getFluidStack(), grinderEntity.getSlotData());
                     }
                 };
                 pPlayer.openMenu(containerProvider, buf -> {

@@ -11,6 +11,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -51,6 +52,30 @@ public class GrinderEntity extends MachineFactory {
 
     private final TorqueFluidTank fluidTank = createFluidTank(fluidCapacity);
 
+    private final ContainerData data = new ContainerData() {
+        @Override
+        public int get(int pIndex) {
+            return switch (pIndex) {
+                case 0 -> progress;
+                case 1 -> maxProgress;
+                default -> 0;
+            };
+        }
+
+        @Override
+        public void set(int pIndex, int pValue) {
+            switch (pIndex) {
+                case 0 -> progress = pValue;
+                case 1 -> maxProgress = pValue;
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return 2;
+        }
+    };
+
     public GrinderEntity(BlockPos pPos, BlockState pBlockState) {
         super(TorqueBlockEntities.GRINDER_ENTITY.get(), pPos, pBlockState, config);
         setValidInputs(validInputs);
@@ -62,9 +87,9 @@ public class GrinderEntity extends MachineFactory {
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
         if (hasRecipe() && fulfilledReq()) {
             increaseCraftingProgress();
-            setChanged(pLevel,pPos,pState);
+            setChanged(pLevel, pPos, pState);
 
-            if(hasProgressFinished()) {
+            if (hasProgressFinished()) {
                 craftItem();
                 resetProgress();
             }
@@ -72,7 +97,7 @@ public class GrinderEntity extends MachineFactory {
             resetProgress();
         }
         if (pLevel.getBlockEntity(pPos) instanceof GrinderEntity gE) {
-            if(hasBucketItem()) {
+            if (hasBucketItem()) {
                 fillBucket();
             }
         }
@@ -87,7 +112,7 @@ public class GrinderEntity extends MachineFactory {
         if (fluidTank.isEmpty()) {
             return;
         }
-        IFluidHandler fHandler = level.getCapability(Capabilities.FluidHandler.BLOCK, getBlockPos().relative(Direction.DOWN),Direction.DOWN);
+        IFluidHandler fHandler = level.getCapability(Capabilities.FluidHandler.BLOCK, getBlockPos().relative(Direction.DOWN), Direction.DOWN);
         if (fHandler != null) {
             canAcceptFluid(fHandler);
             int remainingSpace = fHandler.getTankCapacity(0) - fHandler.getFluidInTank(0).getAmount();
@@ -113,13 +138,13 @@ public class GrinderEntity extends MachineFactory {
 
     private void fillBucket() {
         IFluidHandlerItem fHandler = itemHandler.get().getStackInSlot(SLOT_DRAIN_FLUID).getCapability(Capabilities.FluidHandler.ITEM);
-        if (fHandler != null){
+        if (fHandler != null) {
             if (isBucketEmpty(fHandler)) {
                 if (fluidTank.getFluid().getAmount() >= 1000) {
                     ItemStack filledBucket = FluidUtil.getFilledBucket(fluidTank.getFluid());
                     if (!filledBucket.isEmpty()) {
                         fluidTank.drain(1000, IFluidHandler.FluidAction.EXECUTE);
-                        itemHandler.get().setStackInSlot(SLOT_DRAIN_FLUID,filledBucket);
+                        itemHandler.get().setStackInSlot(SLOT_DRAIN_FLUID, filledBucket);
                     }
                 }
             }
@@ -141,14 +166,14 @@ public class GrinderEntity extends MachineFactory {
 
     private void transferItemFluidToFluidTank(GrinderEntity pEntity) {
         IFluidHandlerItem fHandler = pEntity.itemHandler.get().getStackInSlot(SLOT_INPUT).getCapability(Capabilities.FluidHandler.ITEM);
-        if (fHandler != null){
+        if (fHandler != null) {
             int drainAmount = Math.min(pEntity.fluidTank.getSpace(), 1000);
 
-        FluidStack stack = fHandler.drain(drainAmount, IFluidHandler.FluidAction.SIMULATE);
-        if (pEntity.fluidTank.isFluidValid(stack)) {
-            stack = fHandler.drain(drainAmount, IFluidHandler.FluidAction.EXECUTE);
-            fillTankWithFluid(stack, fHandler.getContainer());
-        }
+            FluidStack stack = fHandler.drain(drainAmount, IFluidHandler.FluidAction.SIMULATE);
+            if (pEntity.fluidTank.isFluidValid(stack)) {
+                stack = fHandler.drain(drainAmount, IFluidHandler.FluidAction.EXECUTE);
+                fillTankWithFluid(stack, fHandler.getContainer());
+            }
         }
     }
 
@@ -171,12 +196,11 @@ public class GrinderEntity extends MachineFactory {
         if (this.itemHandler.get().getStackInSlot(SLOT_INPUT).is(TorqueItems.CANOLA_SEEDS.get())) {
             fluidAmount = fluidAmount * 2;
         }
-        this.itemHandler.get().extractItem(SLOT_INPUT,1, false);
+        this.itemHandler.get().extractItem(SLOT_INPUT, 1, false);
         this.itemHandler.get().setStackInSlot(SLOT_OUTPUT, new ItemStack(result.getItem(),
                 this.itemHandler.get().getStackInSlot(SLOT_OUTPUT).getCount() + result.getCount()));
         this.fluidTank.fill(new FluidStack(resultFluid.getFluid(), fluidAmount), IFluidHandler.FluidAction.EXECUTE);
     }
-
 
 
     private boolean hasRecipe() {
@@ -198,10 +222,10 @@ public class GrinderEntity extends MachineFactory {
     }
 
     private boolean canOutputItem(Item item) {
-            return this.itemHandler.get().getStackInSlot(SLOT_OUTPUT).isEmpty() || this.itemHandler.get().getStackInSlot(1).is(item);
+        return this.itemHandler.get().getStackInSlot(SLOT_OUTPUT).isEmpty() || this.itemHandler.get().getStackInSlot(1).is(item);
     }
 
-    private boolean canFitInOutput (int count) {
+    private boolean canFitInOutput(int count) {
         return this.itemHandler.get().getStackInSlot(SLOT_OUTPUT).getCount() + count <= this.itemHandler.get().getStackInSlot(1).getMaxStackSize();
     }
 
@@ -209,7 +233,11 @@ public class GrinderEntity extends MachineFactory {
         return this.fluidTank.getFluid().is(resultFluid.getFluid()) || this.fluidTank.isEmpty();
     }
 
-    private boolean canFitInTank (FluidStack resultFluid) {
+    private boolean canFitInTank(FluidStack resultFluid) {
         return this.fluidTank.getFluid().getAmount() + resultFluid.getAmount() <= this.fluidTank.getCapacity();
+    }
+
+    public ContainerData getSlotData() {
+        return data;
     }
 }

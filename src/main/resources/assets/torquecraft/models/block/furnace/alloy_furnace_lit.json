@@ -1,0 +1,7 @@
+{
+  "credit": "Made with Blockbench",
+  "parent": "torquecraft:block/furnace/alloy_furnace",
+  "textures": {
+    "1": "torquecraft:block/furnace/alloy_furnace_lit"
+  }
+}

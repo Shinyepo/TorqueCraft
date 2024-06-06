@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "torquecraft:alloying/tungsten_ingot"
+        "recipe": "torquecraft:alloy_smelting/tungsten_ingot"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "torquecraft:alloying/tungsten_ingot"
+      "torquecraft:alloy_smelting/tungsten_ingot"
     ]
   }
 }

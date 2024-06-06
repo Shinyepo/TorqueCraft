@@ -35,7 +35,7 @@ public class AlloyFurnaceEntity extends StandaloneMachineFactory {
     public static final int ADDON_SLOT_COUNT = 3;
     public static final int INPUT_SLOT_COUNT = 9;
     public static final int OUTPUT_SLOT_COUNT = 3;
-    public static final int SLOT_COUNT = ADDON_SLOT_COUNT + INPUT_SLOT_COUNT + OUTPUT_SLOT_COUNT;
+    public static final int SLOT_COUNT = ADDON_SLOT_COUNT + INPUT_SLOT_COUNT + OUTPUT_SLOT_COUNT + 1;
     private static final List<TagKey<Item>> validAddonsInputs = List.of(ItemTags.COALS, Tags.Items.GUNPOWDERS, Tags.Items.SANDS, Tags.Items.SANDSTONE_BLOCKS);
     private static final List<TagKey<Item>> validInputs = List.of(Tags.Items.INGOTS);
     private final Lazy<ItemStackHandler> addonItemHandler = createInputItemHandler(ADDON_SLOT_COUNT, validAddonsInputs);

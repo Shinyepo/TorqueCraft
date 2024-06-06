@@ -34,7 +34,6 @@ public class TorqueBlockStateProvider extends BlockStateProvider {
 
         //TEMP
         registerHorizontalMachineWithExistingModel("block/mechanical_fan", TorqueBlocks.MECHANICAL_FAN);
-        registerHorizontalMachineWithExistingModel("block/furnace/alloy_furnace", TorqueBlocks.ALLOY_FURNACE);
         registerHorizontalMachineWithExistingModel("block/steam_engine", TorqueBlocks.STEAM_ENGINE);
         registerHorizontalMachineWithExistingModel("block/grinder", TorqueBlocks.GRINDER);
         registerHorizontalMachineWithExistingModel("block/pump", TorqueBlocks.PUMP);
@@ -45,6 +44,7 @@ public class TorqueBlockStateProvider extends BlockStateProvider {
         registerHorizontalMachineWithExistingModel("block/three_way", TorqueBlocks.THREE_WAY);
         registerHorizontalMachineWithExistingModel("block/fluid_tank", TorqueBlocks.FLUID_TANK);
 
+        makeHorizontalLitBlock("block/furnace/alloy_furnace", TorqueBlocks.ALLOY_FURNACE);
         registerFluid(TorqueBlocks.LUBRICANT_BLOCK);
         registerFluid(TorqueBlocks.JET_FUEL_BLOCK);
     
@@ -71,6 +71,18 @@ public class TorqueBlockStateProvider extends BlockStateProvider {
             var usage = blockState.getValue(((CoolingRadiator) block.get()).getUsage()).getSerializedName();
             return ConfiguredModel.builder()
                     .modelFile(models().getExistingFile(new ResourceLocation(TorqueCraft.MODID, "block/radiator/cooling_radiator_" + usage)))
+                    .rotationY(dir.getAxis().isVertical() ? 0 : (((int) dir.toYRot()) + 180) % 360)
+                    .build();
+        });
+    }
+
+    private void makeHorizontalLitBlock(String modelPath, Supplier<Block> block) {
+        this.getVariantBuilder(block.get()).forAllStates(blockState -> {
+            Direction dir = blockState.getValue(BlockStateProperties.HORIZONTAL_FACING);
+            Boolean lit = blockState.getValue(BlockStateProperties.LIT);
+            ModelFile model = models().getExistingFile(modLoc(modelPath + (lit ? "_lit" : "")));
+            return ConfiguredModel.builder()
+                    .modelFile(model)
                     .rotationY(dir.getAxis().isVertical() ? 0 : (((int) dir.toYRot()) + 180) % 360)
                     .build();
         });

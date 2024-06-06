@@ -5,21 +5,21 @@
       "y": 90
     },
     "facing=east,lit=true": {
-      "model": "torquecraft:block/furnace/alloy_furnace",
+      "model": "torquecraft:block/furnace/alloy_furnace_lit",
       "y": 90
     },
     "facing=north,lit=false": {
       "model": "torquecraft:block/furnace/alloy_furnace"
     },
     "facing=north,lit=true": {
-      "model": "torquecraft:block/furnace/alloy_furnace"
+      "model": "torquecraft:block/furnace/alloy_furnace_lit"
     },
     "facing=south,lit=false": {
       "model": "torquecraft:block/furnace/alloy_furnace",
       "y": 180
     },
     "facing=south,lit=true": {
-      "model": "torquecraft:block/furnace/alloy_furnace",
+      "model": "torquecraft:block/furnace/alloy_furnace_lit",
       "y": 180
     },
     "facing=west,lit=false": {
@@ -27,7 +27,7 @@
       "y": 270
     },
     "facing=west,lit=true": {
-      "model": "torquecraft:block/furnace/alloy_furnace",
+      "model": "torquecraft:block/furnace/alloy_furnace_lit",
       "y": 270
     }
   }
