@@ -107,6 +107,12 @@ public class RotarySource extends RotaryNetworkDevice<SourceConfig> implements I
         }
     }
 
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        update = true;
+    }
+
     public IFluidHandler getFluidTank(Direction dir) {
         if (dir == null) return this.fluidTank.get();
         if (dir == getBlockState().getValue(HorizontalDirectionalBlock.FACING).getOpposite()) {
