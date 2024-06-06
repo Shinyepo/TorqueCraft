@@ -53,7 +53,7 @@ public class RotaryRenderer {
         ModelBlockRenderer renderer = Minecraft.getInstance().getBlockRenderer().getModelRenderer();
         Direction direction = blockEntity.getMonitorFacing();
         if (direction == null) return;
-        BakedModel model = Minecraft.getInstance().getModelManager().getModel(new ResourceLocation(TorqueCraft.MODID, "block/rotary_monitor"));
+        BakedModel model = Minecraft.getInstance().getModelManager().getModel(new ResourceLocation(TorqueCraft.MODID, "block/partial/rotary_monitor"));
 
         RenderType type = RenderType.solid();
         pose.pushPose();
