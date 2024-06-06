@@ -1,5 +1,6 @@
-// 1.20.6	2024-06-06T14:50:51.5234465	Recipes
+// 1.20.6	2024-06-06T15:47:38.5326699	Recipes
 15dc4d493066e150842109e97b0fb25dd8a26878 data/torquecraft/advancements/recipes/building_blocks/silicon.json
+a4ea583a9096a24b5fa574006da595756ccee480 data/torquecraft/advancements/recipes/misc/alloy_furnace.json
 721bc1d12b68dbf30dd172d2e1494b3b7ea80c24 data/torquecraft/advancements/recipes/misc/alloy_smelting/cast_iron_ingot.json
 d40f22400e5999b23129e292f9ac3a37d884dac2 data/torquecraft/advancements/recipes/misc/cast_iron_block.json
 90e90d18be70e1c0f0d1066e7118f806c7a5a095 data/torquecraft/advancements/recipes/misc/cast_iron_ingot.json
@@ -11,6 +12,7 @@ d40f22400e5999b23129e292f9ac3a37d884dac2 data/torquecraft/advancements/recipes/m
 3ff54f10b7fa557089625ae21fcd5426d7aefdb9 data/torquecraft/advancements/recipes/misc/steam_engine.json
 76893d3dc561dc9fb3c6483904833c4438a884f4 data/torquecraft/advancements/recipes/misc/tungsten_block.json
 48d810c72eda863c65a81ac0a791fa9d0ab1dce9 data/torquecraft/advancements/recipes/misc/tungsten_ingot.json
+424655c20bd82b7c483c7c07cf30468f11c97b32 data/torquecraft/recipes/alloy_furnace.json
 3a4f640e24e4b075f4aad0c54f4bf31aaa359fa5 data/torquecraft/recipes/alloy_smelting/cast_iron_ingot.json
 27cf2d318a879d753a57830f1d42e4e2b9665ce1 data/torquecraft/recipes/cast_iron_block.json
 5d2830f7e1060fcccf690d320cb53690cd22696e data/torquecraft/recipes/cast_iron_ingot.json

@@ -44,7 +44,7 @@ public class TorqueRecipeProvider extends RecipeProvider {
     protected void buildRecipes(@NotNull RecipeOutput pRecipeOutput) {
         //Materials
         registerMaterialRecipes(pRecipeOutput);
-
+        registerBlockRecipes(pRecipeOutput);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TorqueItems.TUNGSTEN_INGOT.get(),9)
                 .requires(TorqueItems.TUNGSTEN_BLOCK_ITEM.get())
                 .unlockedBy("criteria", has(TorqueBlocks.TUNGSTEN_BLOCK.get()))
@@ -100,6 +100,17 @@ public class TorqueRecipeProvider extends RecipeProvider {
                 .unlockedBy("criteria", has(TorqueItems.TUNGSTEN_BLOCK_ITEM.get()))
                 .unlockedBy("criteria", has(TorqueItems.TUNGSTEN_INGOT.get()))
                 .save(pRecipeOutput);
+    }
+
+    private void registerBlockRecipes(RecipeOutput output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TorqueBlocks.ALLOY_FURNACE.get())
+                .pattern("SSS")
+                .pattern("SBS")
+                .pattern("SSS")
+                .define('S', Items.BRICK)
+                .define('B', Items.BLAST_FURNACE)
+                .unlockedBy("has_blast_furnace", has(Items.BLAST_FURNACE))
+                .save(output);
     }
 
     private void registerMaterialRecipes(RecipeOutput output) {
