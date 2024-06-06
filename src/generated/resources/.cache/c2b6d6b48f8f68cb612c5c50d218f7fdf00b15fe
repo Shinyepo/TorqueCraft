@@ -1,4 +1,4 @@
-// 1.20.6	2024-06-06T14:33:05.3091788	Item Models: torquecraft
+// 1.20.6	2024-06-06T19:46:03.4416694	Item Models: torquecraft
 e59d6b3d630b1cb3f52cae24f436ff54e71aa420 assets/torquecraft/models/item/alloy_furnace.json
 3fe8dd0fb9cc5117ab768c498aecb97e50ef2187 assets/torquecraft/models/item/bevel_gears.json
 5f52cc675d3896825693098fb2797e0b3b53e704 assets/torquecraft/models/item/canola_seeds.json
@@ -17,6 +17,7 @@ f7f6c81008be610a02e38673326d97361e8ee197 assets/torquecraft/models/item/lubrican
 01298a318b74c2d686ed78753114cf82b690de45 assets/torquecraft/models/item/nether_quartz_dust.json
 96f0fa2f019bf6f35809815abaef8ab8c99c219f assets/torquecraft/models/item/pressure_gauge.json
 d53bc6fa7e2fb1532dc169b010d54da77f2da30d assets/torquecraft/models/item/pump.json
+85483821888dd0a5f17b7dc7247777a20fca55fe assets/torquecraft/models/item/rotary_monitor.json
 08a7ab5bc3ba681cecbde1811b95444a4ad2cb4e assets/torquecraft/models/item/rotary_wrench.json
 6b649130aaf6cc01fb16a40c9f5ff23adcbdc8a1 assets/torquecraft/models/item/shaft.json
 fed243b918c3a84fffaae8dc614c1ff1c810f1eb assets/torquecraft/models/item/silicon.json

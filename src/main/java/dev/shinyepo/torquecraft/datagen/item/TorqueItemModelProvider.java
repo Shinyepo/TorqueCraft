@@ -24,6 +24,8 @@ public class TorqueItemModelProvider extends CustomItemModelProvider {
         withExistingParent(TorqueItems.TUNGSTEN_BLOCK_ITEM.get(), TorqueBlocks.TUNGSTEN_BLOCK.get());
         withExistingParent(TorqueItems.CAST_IRON_BLOCK_ITEM.get(), TorqueBlocks.CAST_IRON_BLOCK.get());
 
+        withExistingParent(TorqueItems.ROTARY_MONITOR.get(), "torquecraft:block/rotary_monitor");
+
         basicItem(TorqueItems.CANOLA_SEEDS.get());
         basicItem(TorqueItems.CRUSHED_SEEDS.get());
         basicItem(TorqueItems.JET_FUEL_BUCKET.get());

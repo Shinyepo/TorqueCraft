@@ -96,6 +96,7 @@ public class TorqueCraft {
             e.register(new ResourceLocation(TorqueCraft.MODID, "block/partial/short_shaft_rod"));
             e.register(new ResourceLocation(TorqueCraft.MODID, "block/partial/fan_blade"));
             e.register(new ResourceLocation(TorqueCraft.MODID, "block/partial/grinder_shaft"));
+            e.register(new ResourceLocation(TorqueCraft.MODID, "block/partial/rotary_monitor"));
         }
 
         @SubscribeEvent

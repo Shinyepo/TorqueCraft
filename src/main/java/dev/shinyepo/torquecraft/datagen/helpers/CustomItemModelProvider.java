@@ -70,4 +70,9 @@ public abstract class CustomItemModelProvider extends ItemModelProvider {
         var name = String.valueOf(item).toLowerCase();
         return super.withExistingParent(name, parent);
     }
+
+    public ItemModelBuilder withExistingParent(Item item, String parent) {
+        var name = String.valueOf(item).toLowerCase();
+        return super.withExistingParent(name, parent);
+    }
 }

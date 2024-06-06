@@ -52,5 +52,6 @@ public class TorqueCreativeTabs {
                 //Tools
                 output.accept(TorqueItems.PRESSURE_GAUGE.get());
                 output.accept(TorqueItems.ROTARY_WRENCH.get());
+                output.accept(TorqueItems.ROTARY_MONITOR.get());
             }).build());
 }

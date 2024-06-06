@@ -22,4 +22,6 @@ public class TorqueNBT {
     public static final String SIDES = "Sides";
     public static final String MAX_BURN_TIME = "Max_BurnTime";
     public static final String BURN_TIME = "BurnTime";
+    public static final String MONITOR = "HasMonitor";
+    public static final String MONITOR_FACING = "MonitorFacing";
 }
