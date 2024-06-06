@@ -1,4 +1,4 @@
-// 1.20.6	2024-06-03T16:22:18.1839123	Item Models: torquecraft
+// 1.20.6	2024-06-06T13:04:56.0178745	Item Models: torquecraft
 e59d6b3d630b1cb3f52cae24f436ff54e71aa420 assets/torquecraft/models/item/alloy_furnace.json
 3fe8dd0fb9cc5117ab768c498aecb97e50ef2187 assets/torquecraft/models/item/bevel_gears.json
 5f52cc675d3896825693098fb2797e0b3b53e704 assets/torquecraft/models/item/canola_seeds.json
@@ -12,6 +12,7 @@ debacd68776ad8d04452e303fece0f765a658151 assets/torquecraft/models/item/grinder.
 868f3f7a7778f74344dc64db0735e74cdd7764a2 assets/torquecraft/models/item/jet_fuel_bucket.json
 f7f6c81008be610a02e38673326d97361e8ee197 assets/torquecraft/models/item/lubricant_bucket.json
 2e1d067fdb3dbb772cb88d01170b75c0494aa3ea assets/torquecraft/models/item/mechanical_fan.json
+01298a318b74c2d686ed78753114cf82b690de45 assets/torquecraft/models/item/nether_quartz_dust.json
 96f0fa2f019bf6f35809815abaef8ab8c99c219f assets/torquecraft/models/item/pressure_gauge.json
 d53bc6fa7e2fb1532dc169b010d54da77f2da30d assets/torquecraft/models/item/pump.json
 08a7ab5bc3ba681cecbde1811b95444a4ad2cb4e assets/torquecraft/models/item/rotary_wrench.json
@@ -20,4 +21,4 @@ d53bc6fa7e2fb1532dc169b010d54da77f2da30d assets/torquecraft/models/item/pump.jso
 c9132467fff67005b589e94e5e19c2d3488d110e assets/torquecraft/models/item/steam_pipe.json
 d9e08afd579feebf152d9216627b79c02f7cb4d6 assets/torquecraft/models/item/three_way.json
 77b58006ef309b6b42818ea8d4d04a4c1b64667b assets/torquecraft/models/item/tungsten_block.json
-ca9eadef4cf1935a1e23bcf10d8f025108c4dbb0 assets/torquecraft/models/item/tungsten_ingot.json
+068fce5115be6e4eba2b172eec896d9597111b42 assets/torquecraft/models/item/tungsten_ingot.json

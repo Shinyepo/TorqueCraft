@@ -105,7 +105,7 @@ public class GrinderRecipe implements Recipe<Container> {
                     p_319738_ -> p_319738_.ingredient,
                     ItemStack.STREAM_CODEC,
                     p_319736_ -> p_319736_.resultItem,
-                    FluidStack.STREAM_CODEC,
+                    FluidStack.OPTIONAL_STREAM_CODEC,
                     p -> p.resultFluid,
                     pFactory::create
             );

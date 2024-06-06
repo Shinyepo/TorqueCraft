@@ -17,8 +17,6 @@ import java.util.Optional;
 
 
 public class GrinderScreen extends AbstractContainerScreen<GrinderContainer> {
-
-
     private final ResourceLocation GUI = new ResourceLocation(TorqueCraft.MODID, "textures/gui/grinder.png");
     private FluidTankRenderer tankRenderer;
     private RotaryInfoRenderer rotaryRenderer;
@@ -80,7 +78,7 @@ public class GrinderScreen extends AbstractContainerScreen<GrinderContainer> {
     }
 
     private void renderProgressArrow(GuiGraphics graphics, int relX, int relY) {
-        int progress = this.menu.getBlockEntity().progress * 22 / this.menu.getBlockEntity().maxProgress;
+        int progress = this.menu.getProgress() * 22 / this.menu.getMaxProgress();
         graphics.blit(GUI, relX + 80, relY + 34, 176, 0, progress, 16);
     }
 }

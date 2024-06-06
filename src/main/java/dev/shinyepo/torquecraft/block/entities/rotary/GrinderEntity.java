@@ -32,7 +32,7 @@ import java.util.Optional;
 
 public class GrinderEntity extends MachineFactory {
     private static final ClientConfig config = ClientConfig.GRINDER;
-    public static final List<TagKey<Item>> validInputs = List.of(Tags.Items.SEEDS);
+    public static final List<TagKey<Item>> validInputs = List.of(Tags.Items.SEEDS, Tags.Items.GEMS_QUARTZ);
     public static final List<TagKey<Item>> validFluidSlotInputs = List.of(Tags.Items.BUCKETS);
 
     private final int fluidCapacity = 8000;
@@ -192,14 +192,16 @@ public class GrinderEntity extends MachineFactory {
         Optional<RecipeHolder<GrinderRecipe>> recipe = getCurrentRecipe();
         ItemStack result = recipe.get().value().getResultItem(null);
         FluidStack resultFluid = recipe.get().value().getResultFluid(null);
-        int fluidAmount = resultFluid.getAmount();
-        if (this.itemHandler.get().getStackInSlot(SLOT_INPUT).is(TorqueItems.CANOLA_SEEDS.get())) {
-            fluidAmount = fluidAmount * 2;
+        if (!resultFluid.isEmpty()) {
+            int fluidAmount = resultFluid.getAmount();
+            if (this.itemHandler.get().getStackInSlot(SLOT_INPUT).is(TorqueItems.CANOLA_SEEDS.get())) {
+                fluidAmount = fluidAmount * 2;
+            }
+            this.fluidTank.fill(new FluidStack(resultFluid.getFluid(), fluidAmount), IFluidHandler.FluidAction.EXECUTE);
         }
         this.itemHandler.get().extractItem(SLOT_INPUT, 1, false);
         this.itemHandler.get().setStackInSlot(SLOT_OUTPUT, new ItemStack(result.getItem(),
                 this.itemHandler.get().getStackInSlot(SLOT_OUTPUT).getCount() + result.getCount()));
-        this.fluidTank.fill(new FluidStack(resultFluid.getFluid(), fluidAmount), IFluidHandler.FluidAction.EXECUTE);
     }
 
 
@@ -210,7 +212,10 @@ public class GrinderEntity extends MachineFactory {
 
         ItemStack result = recipe.get().value().getResultItem(null);
         FluidStack resultFluid = recipe.get().value().getResultFluid(null);
-        return canFitInOutput(result.getCount()) && canOutputItem(result.getItem()) && fluidsMatch(resultFluid) && canFitInTank(resultFluid);
+        boolean fluidSafe = true;
+        if (!resultFluid.isEmpty())
+            fluidSafe = fluidsMatch(resultFluid) && canFitInTank(resultFluid);
+        return canFitInOutput(result.getCount()) && canOutputItem(result.getItem()) && fluidSafe;
     }
 
     private Optional<RecipeHolder<GrinderRecipe>> getCurrentRecipe() {

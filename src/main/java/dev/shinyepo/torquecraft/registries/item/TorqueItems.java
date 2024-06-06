@@ -16,8 +16,11 @@ public class TorqueItems {
     //Main registry for items
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(TorqueCraft.MODID);
 
-    //Items
+    //Materials
     public static final Supplier<Item> TUNGSTEN_INGOT = ITEMS.registerSimpleItem("tungsten_ingot", new Item.Properties().food(new FoodProperties.Builder().fast().alwaysEdible().nutrition(10).build()));
+    public static final Supplier<Item> NETHER_QUARTZ_DUST = ITEMS.registerSimpleItem("nether_quartz_dust", new Item.Properties());
+
+    //Items
     public static final Supplier<Item> CRUSHED_SEEDS = ITEMS.register("crushed_seeds", () -> new CanolaMeal(new Item.Properties()));
 
     //TOOLS

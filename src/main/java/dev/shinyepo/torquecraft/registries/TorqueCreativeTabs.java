@@ -17,10 +17,16 @@ public class TorqueCreativeTabs {
             .withTabsBefore(CreativeModeTabs.COMBAT)
             .icon(() -> TorqueItems.TUNGSTEN_INGOT.get().getDefaultInstance())
             .displayItems((parameters, output) -> {
+                //Materials
+                output.accept(TorqueItems.NETHER_QUARTZ_DUST.get());
+                output.accept(TorqueItems.TUNGSTEN_INGOT.get());
+
+                //Block Materials
+                output.accept(TorqueItems.TUNGSTEN_BLOCK_ITEM.get());
+
+                //
                 output.accept(TorqueItems.CANOLA_SEEDS.get());
                 output.accept(TorqueItems.CRUSHED_SEEDS.get());
-                output.accept(TorqueItems.TUNGSTEN_INGOT.get());
-                output.accept(TorqueItems.TUNGSTEN_BLOCK_ITEM.get());
                 //machines
                 output.accept(TorqueItems.ALLOY_FURNACE_ITEM.get());
                 output.accept(TorqueItems.PUMP_ITEM.get());

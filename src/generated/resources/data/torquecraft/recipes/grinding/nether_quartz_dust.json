@@ -1,0 +1,11 @@
+{
+  "type": "torquecraft:grinding",
+  "ingredient": {
+    "tag": "c:gems/quartz"
+  },
+  "resultFluid": {},
+  "resultItem": {
+    "count": 1,
+    "id": "torquecraft:nether_quartz_dust"
+  }
+}

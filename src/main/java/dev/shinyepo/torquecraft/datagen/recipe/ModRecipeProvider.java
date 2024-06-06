@@ -41,6 +41,9 @@ public class ModRecipeProvider extends RecipeProvider {
 
     @Override
     protected void buildRecipes(@NotNull RecipeOutput pRecipeOutput) {
+        //Materials
+        registerMaterialRecipes(pRecipeOutput);
+
         oreSmelting(pRecipeOutput, SMELTABLES, RecipeCategory.MISC, TorqueBlocks.TUNGSTEN_BLOCK.get(), 0.25f, 100, "tungsten");
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TorqueItems.TUNGSTEN_INGOT.get(),9)
@@ -106,5 +109,11 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("criteria", has(TorqueItems.TUNGSTEN_BLOCK_ITEM.get()))
                 .unlockedBy("criteria", has(TorqueItems.TUNGSTEN_INGOT.get()))
                 .save(pRecipeOutput);
+    }
+
+    private void registerMaterialRecipes(RecipeOutput output) {
+        grinding(Ingredient.of(Tags.Items.GEMS_QUARTZ), TorqueItems.NETHER_QUARTZ_DUST.get(), FluidStack.EMPTY)
+                .unlockedBy("criteria", has(Tags.Items.GEMS_QUARTZ))
+                .save(output);
     }
 }

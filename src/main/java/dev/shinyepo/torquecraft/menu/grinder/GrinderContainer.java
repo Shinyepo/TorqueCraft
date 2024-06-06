@@ -14,6 +14,7 @@ import net.neoforged.neoforge.items.SlotItemHandler;
 public class GrinderContainer extends ContainerBase {
     private final GrinderEntity grinderEntity;
     private FluidStack fluidStack;
+    protected ContainerData data;
 
     public GrinderContainer(int windowId, Player player, BlockPos pos, FluidStack fluidStack) {
         this(windowId, player, pos, fluidStack, new SimpleContainerData(2));
@@ -24,6 +25,7 @@ public class GrinderContainer extends ContainerBase {
         super(TorqueMenus.GRINDER_CONTAINER.get(), windowId, pos, GrinderEntity.SLOT_COUNT, 1, TorqueBlocks.GRINDER.get());
         this.grinderEntity = ((GrinderEntity) player.level().getBlockEntity(pos));
         this.fluidStack = fluidStack;
+        this.data = data;
 
 
         if (player.level().getBlockEntity(pos) instanceof GrinderEntity grinder) {
@@ -46,5 +48,13 @@ public class GrinderContainer extends ContainerBase {
 
     public void setFluidStack(FluidStack fluidStack) {
         this.fluidStack = fluidStack;
+    }
+
+    public int getProgress() {
+        return data.get(0);
+    }
+
+    public int getMaxProgress() {
+        return data.get(1);
     }
 }

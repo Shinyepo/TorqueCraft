@@ -1,21 +1,26 @@
 package dev.shinyepo.torquecraft.datagen.item;
 
 import dev.shinyepo.torquecraft.TorqueCraft;
+import dev.shinyepo.torquecraft.datagen.helpers.CustomItemModelProvider;
 import dev.shinyepo.torquecraft.registries.block.TorqueBlocks;
 import dev.shinyepo.torquecraft.registries.item.TorqueItems;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
-import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
-public class TorqueItemModelProvider extends ItemModelProvider {
+public class TorqueItemModelProvider extends CustomItemModelProvider {
     public TorqueItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
         super(output, TorqueCraft.MODID, existingFileHelper);
     }
 
     @Override
     protected void registerModels() {
-        basicItem(TorqueItems.TUNGSTEN_INGOT.get());
+        //Materials
+        basicMaterialItem(TorqueItems.NETHER_QUARTZ_DUST.get());
+        basicMaterialItem(TorqueItems.TUNGSTEN_INGOT.get());
+
+        //Block Materials
+        withExistingParent(TorqueItems.TUNGSTEN_BLOCK_ITEM.get(), TorqueBlocks.TUNGSTEN_BLOCK.get());
+
         basicItem(TorqueItems.CANOLA_SEEDS.get());
         basicItem(TorqueItems.CRUSHED_SEEDS.get());
         basicItem(TorqueItems.JET_FUEL_BUCKET.get());
@@ -23,47 +28,21 @@ public class TorqueItemModelProvider extends ItemModelProvider {
         basicItem(TorqueItems.PRESSURE_GAUGE.get());
         basicItem(TorqueItems.ROTARY_WRENCH.get());
 
-        withExistingParent(String.valueOf(TorqueItems.FLUID_TANK_ITEM.get()).toLowerCase(),
-                "torquecraft:block/" + BuiltInRegistries.BLOCK.getKey(TorqueBlocks.FLUID_TANK.get()).getPath());
-        withExistingParent(String.valueOf(TorqueItems.FLUID_PIPE_ITEM.get()).toLowerCase(),
-                "torquecraft:block/pipe");
-        withExistingParent(String.valueOf(TorqueItems.STEAM_PIPE_ITEM.get()).toLowerCase(),
-                "torquecraft:block/pipe");
-        withExistingParent(String.valueOf(TorqueItems.TUNGSTEN_BLOCK_ITEM.get()).toLowerCase(),
-                "torquecraft:block/" + BuiltInRegistries.BLOCK.getKey(TorqueBlocks.TUNGSTEN_BLOCK.get()).getPath());
+        withExistingParent(TorqueItems.FLUID_TANK_ITEM.get(), TorqueBlocks.FLUID_TANK.get());
+        withExistingParent(TorqueItems.PUMP_ITEM.get(), TorqueBlocks.PUMP.get());
+        withExistingParent(TorqueItems.STEAM_ENGINE_ITEM.get(), TorqueBlocks.STEAM_ENGINE.get());
+        withExistingParent(TorqueItems.BEVEL_GEARS_ITEM.get(), TorqueBlocks.BEVEL_GEARS.get());
+        withExistingParent(TorqueItems.THREE_WAY_ITEM.get(), TorqueBlocks.THREE_WAY.get());
 
-        withExistingParent(String.valueOf(TorqueItems.ALLOY_FURNACE_ITEM.get()).toLowerCase(),
-                "torquecraft:block/furnace/" + BuiltInRegistries.BLOCK.getKey(TorqueBlocks.ALLOY_FURNACE.get()).getPath());
+        withExistingParent(TorqueItems.FLUID_PIPE_ITEM.get(), "torquecraft:block/pipe");
+        withExistingParent(TorqueItems.STEAM_PIPE_ITEM.get(), "torquecraft:block/pipe");
 
-        withExistingParent(String.valueOf(TorqueItems.STEAM_ENGINE_ITEM.get()).toLowerCase(),
-                "torquecraft:block/" + BuiltInRegistries.BLOCK.getKey(TorqueBlocks.STEAM_ENGINE.get()).getPath());
-
-        withExistingParent(String.valueOf(TorqueItems.MECHANICAL_FAN_ITEM.get()).toLowerCase(),
-                "torquecraft:block/item/" + BuiltInRegistries.BLOCK.getKey(TorqueBlocks.MECHANICAL_FAN.get()).getPath());
-
-        withExistingParent(String.valueOf(TorqueItems.GRINDER_ITEM.get()).toLowerCase(),
-                "torquecraft:block/item/" + BuiltInRegistries.BLOCK.getKey(TorqueBlocks.GRINDER.get()).getPath());
-
-        withExistingParent(String.valueOf(TorqueItems.PUMP_ITEM.get()).toLowerCase(),
-                "torquecraft:block/" + BuiltInRegistries.BLOCK.getKey(TorqueBlocks.PUMP.get()).getPath());
-
-        withExistingParent(String.valueOf(TorqueItems.SHAFT_ITEM.get()).toLowerCase(),
-                "torquecraft:block/item/" + BuiltInRegistries.BLOCK.getKey(TorqueBlocks.SHAFT.get()).getPath());
-
-        withExistingParent(String.valueOf(TorqueItems.THREE_WAY_ITEM.get()).toLowerCase(),
-                "torquecraft:block/" + BuiltInRegistries.BLOCK.getKey(TorqueBlocks.THREE_WAY.get()).getPath());
-
-        withExistingParent(String.valueOf(TorqueItems.BEVEL_GEARS_ITEM.get()).toLowerCase(),
-                "torquecraft:block/" + BuiltInRegistries.BLOCK.getKey(TorqueBlocks.BEVEL_GEARS.get()).getPath());
-
-        withExistingParent(String.valueOf(TorqueItems.GEARBOX1_2_ITEM.get()).toLowerCase(),
-                "torquecraft:block/gearbox/" + BuiltInRegistries.BLOCK.getKey(TorqueBlocks.GEARBOX1_2.get()).getPath());
-
-
-        withExistingParent(String.valueOf(TorqueItems.GEARBOX1_4_ITEM.get()).toLowerCase(),
-                "torquecraft:block/gearbox/" + BuiltInRegistries.BLOCK.getKey(TorqueBlocks.GEARBOX1_4.get()).getPath());
-
-        withExistingParent(String.valueOf(TorqueItems.COOLING_RADIATOR_ITEM.get()).toLowerCase(),
-                "torquecraft:block/radiator/" + BuiltInRegistries.BLOCK.getKey(TorqueBlocks.COOLING_RADIATOR.get()).getPath()+"_full");
+        withExistingParent(TorqueItems.ALLOY_FURNACE_ITEM.get(), "furnace/", TorqueBlocks.ALLOY_FURNACE.get());
+        withExistingParent(TorqueItems.MECHANICAL_FAN_ITEM.get(), "item/", TorqueBlocks.MECHANICAL_FAN.get());
+        withExistingParent(TorqueItems.GRINDER_ITEM.get(), "item/", TorqueBlocks.GRINDER.get());
+        withExistingParent(TorqueItems.SHAFT_ITEM.get(), "item/", TorqueBlocks.SHAFT.get());
+        withExistingParent(TorqueItems.GEARBOX1_2_ITEM.get(), "gearbox/", TorqueBlocks.GEARBOX1_2.get());
+        withExistingParent(TorqueItems.GEARBOX1_4_ITEM.get(), "gearbox/", TorqueBlocks.GEARBOX1_4.get());
+        withExistingParent(TorqueItems.COOLING_RADIATOR_ITEM.get(), "radiator/", TorqueBlocks.COOLING_RADIATOR.get(), "_full");
     }
 }
