@@ -24,6 +24,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 public class RotarySource extends RotaryNetworkDevice<SourceConfig> implements IFluidBuffer, IWrenchInteraction {
     protected Lazy<TorqueFluidTank> fluidTank;
     private boolean spinup = false;
+    private boolean update = false;
 
 
     public RotarySource(BlockEntityType<?> type, BlockPos pos, BlockState blockState, SourceConfig config) {
@@ -53,25 +54,29 @@ public class RotarySource extends RotaryNetworkDevice<SourceConfig> implements I
         if (network == null || network.getNetworkId() != this.getNetworkId()) {
             network = RotaryNetworkRegistry.getInstance().getNetwork(this.getNetworkId());
         } else {
-            if (this.rotaryHandler.get().getPower() > 0) {
+            if (this.rotaryHandler.get().getPower() > 0 && update) {
                 network.emitPower(getBlockPos().relative(getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING)), this.rotaryHandler.get().getAngular(), this.rotaryHandler.get().getTorque(), this);
             }
         }
 
-        if (this.rotaryHandler.get().getPower() == 0) {
-            network.validateTransmittingSources(this);
+        if (this.rotaryHandler.get().getPower() == 0 && update) {
+            network.emitPower(getBlockPos().relative(getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING)), this.rotaryHandler.get().getAngular(), this.rotaryHandler.get().getTorque(), this);
+            update = network.validateTransmittingSources(this);
         }
 
         if (state.getValue(TorqueAttributes.OPERATIONAL) && fluidTank.get().getFluidAmount() > config.getUsage() && rotaryHandler.get().getTemp() > 100) {
             if (rotaryHandler.get().getAngular() < config.getAngular()) {
                 spinup = true;
+                update = true;
                 rotaryHandler.get().spinupSource();
             } else {
+                update = false;
                 spinup = false;
             }
             consumeFuel();
         } else {
             if (rotaryHandler.get().getPower() > 0) {
+                update = true;
                 rotaryHandler.get().slowDownSource();
             }
         }
