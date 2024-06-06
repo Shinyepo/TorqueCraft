@@ -19,6 +19,7 @@ public class TorqueCreativeTabs {
             .displayItems((parameters, output) -> {
                 //Materials
                 output.accept(TorqueItems.NETHER_QUARTZ_DUST.get());
+                output.accept(TorqueItems.SILICON.get());
                 output.accept(TorqueItems.TUNGSTEN_INGOT.get());
 
                 //Block Materials

@@ -16,6 +16,7 @@ public class TorqueItemModelProvider extends CustomItemModelProvider {
     protected void registerModels() {
         //Materials
         basicMaterialItem(TorqueItems.NETHER_QUARTZ_DUST.get());
+        basicMaterialItem(TorqueItems.SILICON.get());
         basicMaterialItem(TorqueItems.TUNGSTEN_INGOT.get());
 
         //Block Materials

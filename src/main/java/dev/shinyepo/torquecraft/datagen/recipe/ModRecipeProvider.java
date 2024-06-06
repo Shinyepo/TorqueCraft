@@ -115,5 +115,7 @@ public class ModRecipeProvider extends RecipeProvider {
         grinding(Ingredient.of(Tags.Items.GEMS_QUARTZ), TorqueItems.NETHER_QUARTZ_DUST.get(), FluidStack.EMPTY)
                 .unlockedBy("criteria", has(Tags.Items.GEMS_QUARTZ))
                 .save(output);
+
+        smeltingResultFromBase(output, TorqueItems.SILICON.get(), TorqueItems.NETHER_QUARTZ_DUST.get());
     }
 }
