@@ -66,7 +66,8 @@ public class RotaryRenderer {
         pose.pushPose();
 
         pose.translate(0.5F, 0.5F, 0.5F);
-        pose.mulPose(Axis.YP.rotationDegrees((direction.toYRot() + 180F) % 360F));
+        var offset = direction.getAxis() == Direction.Axis.X ? 180F : 0F;
+        pose.mulPose(Axis.YP.rotationDegrees((direction.toYRot() + offset) % 360F));
         pose.translate(-0.5F, -0.5F, -0.5F);
 
         Vec3 pos = new Vec3(0F, 1F, 1.005F);
