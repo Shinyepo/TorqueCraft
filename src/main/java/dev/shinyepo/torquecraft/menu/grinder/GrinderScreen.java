@@ -78,6 +78,8 @@ public class GrinderScreen extends AbstractContainerScreen<GrinderContainer> {
     }
 
     private void renderProgressArrow(GuiGraphics graphics, int relX, int relY) {
+        var maxProgress = this.menu.getMaxProgress();
+        if (maxProgress < 1) return;
         int progress = this.menu.getProgress() * 22 / this.menu.getMaxProgress();
         graphics.blit(GUI, relX + 80, relY + 34, 176, 0, progress, 16);
     }
