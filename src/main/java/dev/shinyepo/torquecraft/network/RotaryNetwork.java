@@ -170,6 +170,9 @@ public class RotaryNetwork {
     }
 
     private void updateNetwork() {
+        if (!sources.isEmpty()) {
+            sources.forEach((pos, source) -> source.forceEmit());
+        }
         if (!transmitters.isEmpty()) {
             transmitters.forEach((pos, transmitter) -> transmitter.setRotaryPower(0, 0));
         }

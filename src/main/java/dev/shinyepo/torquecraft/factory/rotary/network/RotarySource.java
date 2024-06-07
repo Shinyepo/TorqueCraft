@@ -110,7 +110,7 @@ public class RotarySource extends RotaryNetworkDevice<SourceConfig> implements I
     @Override
     public void onLoad() {
         super.onLoad();
-        update = true;
+        forceEmit();
     }
 
     public IFluidHandler getFluidTank(Direction dir) {
@@ -123,5 +123,9 @@ public class RotarySource extends RotaryNetworkDevice<SourceConfig> implements I
 
     public void setFluidStack(FluidStack fluidStack) {
         this.fluidTank.get().setFluid(fluidStack);
+    }
+
+    public void forceEmit() {
+        this.update = true;
     }
 }
