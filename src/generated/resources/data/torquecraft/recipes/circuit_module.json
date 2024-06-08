@@ -6,7 +6,7 @@
       "tag": "c:ingots/gold"
     },
     "I": {
-      "item": "torquecraft:tungsten_ingot"
+      "tag": "c:ingots/iron"
     },
     "R": {
       "tag": "c:dusts/redstone"
@@ -18,7 +18,7 @@
   "pattern": [
     "IGI",
     "SRS",
-    "III"
+    "ISI"
   ],
   "result": {
     "count": 1,

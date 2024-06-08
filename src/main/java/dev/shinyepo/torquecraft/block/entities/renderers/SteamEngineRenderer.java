@@ -20,7 +20,7 @@ public class SteamEngineRenderer implements BlockEntityRenderer<SteamEngineEntit
 
     @Override
     public void render(SteamEngineEntity blockEntity, float partialTick, PoseStack pose, MultiBufferSource buffer, int packedLight, int packedOverlay) {
-        renderRotation("short_shaft_rod",blockEntity,pose,buffer,partialTick,packedLight);
+        renderRotation("hsla_short_shaft_rod", blockEntity, pose, buffer, partialTick, packedLight);
 
         if (blockEntity.getProgress(partialTick) < 3.0F) {
             IORenderer.renderIOHelper(blockEntity, pose);

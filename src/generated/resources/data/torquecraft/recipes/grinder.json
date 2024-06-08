@@ -2,17 +2,20 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "A": {
-      "item": "torquecraft:tungsten_ingot"
+    "C": {
+      "item": "torquecraft:hsla_casing"
     },
-    "B": {
-      "item": "torquecraft:tungsten_block"
+    "S": {
+      "item": "torquecraft:sharp_hsla_gear"
+    },
+    "T": {
+      "item": "torquecraft:hsla_tank"
     }
   },
   "pattern": [
-    " A ",
-    "BAB",
-    "BBB"
+    "   ",
+    "STS",
+    " C "
   ],
   "result": {
     "count": 1,

@@ -1,0 +1,18 @@
+{
+  "type": "torquecraft:alloy_smelting",
+  "addonIngredient": [
+    {
+      "tag": "minecraft:coals"
+    },
+    {
+      "tag": "c:gunpowders"
+    }
+  ],
+  "ingotIngredient": {
+    "item": "minecraft:iron_ingot"
+  },
+  "resultItem": {
+    "count": 1,
+    "id": "torquecraft:hsla_ingot"
+  }
+}

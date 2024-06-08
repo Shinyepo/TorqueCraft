@@ -33,6 +33,7 @@ public class TorqueBlockStateProvider extends CustomBlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         blockMaterialWithItem(TorqueBlocks.TUNGSTEN_BLOCK.get());
+        blockMaterialWithItem(TorqueBlocks.HSLA_BLOCK.get());
         blockMaterialWithItem(TorqueBlocks.CAST_IRON_BLOCK.get());
         registerPipe(TorqueBlocks.FLUID_PIPE);
         registerPipe(TorqueBlocks.STEAM_PIPE);
@@ -42,11 +43,11 @@ public class TorqueBlockStateProvider extends CustomBlockStateProvider {
         registerHorizontalMachineWithExistingModel("block/steam_engine", TorqueBlocks.STEAM_ENGINE);
         registerHorizontalMachineWithExistingModel("block/grinder", TorqueBlocks.GRINDER);
         registerHorizontalMachineWithExistingModel("block/pump", TorqueBlocks.PUMP);
-        registerHorizontalMachineWithExistingModel("block/shaft", TorqueBlocks.SHAFT);
-        registerHorizontalMachineWithExistingModel("block/bevel_gears", TorqueBlocks.BEVEL_GEARS);
-        registerHorizontalMachineWithExistingModel("block/gearbox/gearbox1_2", TorqueBlocks.GEARBOX1_2);
-        registerHorizontalMachineWithExistingModel("block/gearbox/gearbox1_4", TorqueBlocks.GEARBOX1_4);
-        registerHorizontalMachineWithExistingModel("block/three_way", TorqueBlocks.THREE_WAY);
+        registerHorizontalMachineWithExistingModel("block/hsla_shaft", TorqueBlocks.HSLA_SHAFT);
+        registerHorizontalMachineWithExistingModel("block/hsla_bevel_gears", TorqueBlocks.HSLA_BEVEL_GEARS);
+        registerHorizontalMachineWithExistingModel("block/gearbox/hsla_gearbox1_2", TorqueBlocks.HSLA_GEARBOX1_2);
+        registerHorizontalMachineWithExistingModel("block/gearbox/hsla_gearbox1_4", TorqueBlocks.HSLA_GEARBOX1_4);
+        registerHorizontalMachineWithExistingModel("block/hsla_three_way", TorqueBlocks.HSLA_THREE_WAY);
         registerHorizontalMachineWithExistingModel("block/fluid_tank", TorqueBlocks.FLUID_TANK);
 
         makeHorizontalLitBlock("block/furnace/alloy_furnace", TorqueBlocks.ALLOY_FURNACE);

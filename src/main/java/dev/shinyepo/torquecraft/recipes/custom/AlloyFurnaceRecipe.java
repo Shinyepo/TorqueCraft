@@ -5,7 +5,6 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.shinyepo.torquecraft.registries.recipe.TorqueRecipes;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -17,18 +16,19 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AlloyFurnaceRecipe implements Recipe<Container> {
     protected final String group;
-    protected final NonNullList<Ingredient> addonIngredient;
+    protected final List<Ingredient> addonIngredient;
     protected final Ingredient ingotIngredient;
     protected final ItemStack resultItem;
 
     private final RecipeType<?> type;
     private final RecipeSerializer<?> serializer;
 
-    public AlloyFurnaceRecipe(String pGroup, NonNullList<Ingredient> addonIngredient, Ingredient ingotIngredient, ItemStack itemStack) {
+    public AlloyFurnaceRecipe(String pGroup, List<Ingredient> addonIngredient, Ingredient ingotIngredient, ItemStack itemStack) {
         this.type = TorqueRecipes.Types.ALLOY_SMELTING;
         this.serializer = TorqueRecipes.Serializers.ALLOY_SMELTING_SERIALIZER.get();
         this.group = pGroup;
@@ -50,29 +50,26 @@ public class AlloyFurnaceRecipe implements Recipe<Container> {
 
     public boolean matches(Container container, Level level) {
         if (level.isClientSide()) return false;
-        var addons = getAddonIngredients();
         var ingots = getIngotIngredient();
-        var containerItems = new ItemStack[]{container.getItem(0), container.getItem(1), container.getItem(2)};
-        var matchingAddons = false;
-        for (ItemStack item : containerItems) {
-            if (Arrays.stream(addons).anyMatch(x -> x.is(item.getItem()))) {
-                matchingAddons = true;
-            } else {
-                matchingAddons = false;
-                break;
-            }
+        var addonItems = new ArrayList<ItemStack>();
+        for (int i = 0; i < container.getContainerSize() - 1; i++) {
+            addonItems.add(container.getItem(i));
         }
-        var matches = ingots.test(container.getItem(3));
+        var matchingAddons = false;
+        for (int i = 0; i < addonIngredient.size(); i++) {
+            for (ItemStack item : addonItems) {
+                matchingAddons = addonIngredient.get(i).test(item);
+                if (matchingAddons) break;
+            }
+            if (!matchingAddons) return false;
+        }
+        var matches = ingots.test(container.getItem(container.getContainerSize() - 1));
 
         return matches && matchingAddons;
     }
 
     public Ingredient getIngotIngredient() {
         return ingotIngredient;
-    }
-
-    public ItemStack[] getAddonIngredients() {
-        return addonIngredient.stream().flatMap(x -> Arrays.stream(x.getItems())).distinct().toArray(ItemStack[]::new);
     }
 
     @Override
@@ -96,7 +93,7 @@ public class AlloyFurnaceRecipe implements Recipe<Container> {
     }
 
     public interface Factory<T extends AlloyFurnaceRecipe> {
-        T create(String pGroup, NonNullList<Ingredient> addonIngredient, Ingredient ingotIngredient, ItemStack pResultItem);
+        T create(String pGroup, List<Ingredient> addonIngredient, Ingredient ingotIngredient, ItemStack pResultItem);
     }
 
     public static class Serializer implements RecipeSerializer<AlloyFurnaceRecipe> {
@@ -109,7 +106,7 @@ public class AlloyFurnaceRecipe implements Recipe<Container> {
             this.codec = RecordCodecBuilder.mapCodec(
                     p_340781_ -> p_340781_.group(
                                     Codec.STRING.optionalFieldOf("group", "").forGetter(p -> p.group),
-                                    NonNullList.codecOf(Ingredient.CODEC_NONEMPTY).fieldOf("addonIngredient").forGetter(i -> i.addonIngredient),
+                                    Ingredient.LIST_CODEC.fieldOf("addonIngredient").forGetter(i -> i.addonIngredient),
                                     Ingredient.CODEC_NONEMPTY.fieldOf("ingotIngredient").forGetter(p_301068_ -> p_301068_.ingotIngredient),
                                     ItemStack.STRICT_CODEC.fieldOf("resultItem").forGetter(p_302316_ -> p_302316_.resultItem)
                             )
@@ -118,7 +115,7 @@ public class AlloyFurnaceRecipe implements Recipe<Container> {
             this.streamCodec = StreamCodec.composite(
                     ByteBufCodecs.STRING_UTF8,
                     p_319737_ -> p_319737_.group,
-                    ByteBufCodecs.collection(NonNullList::createWithCapacity, Ingredient.CONTENTS_STREAM_CODEC),
+                    ByteBufCodecs.collection(ArrayList::new, Ingredient.CONTENTS_STREAM_CODEC),
                     p_319738_ -> p_319738_.addonIngredient,
                     Ingredient.CONTENTS_STREAM_CODEC,
                     p -> p.ingotIngredient,

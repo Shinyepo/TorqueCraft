@@ -18,8 +18,8 @@ public abstract class CustomItemModelProvider extends ItemModelProvider {
         super(output, modid, existingFileHelper);
     }
 
-    public ItemModelBuilder basicItem(Item item, String folder) {
-        return basicItem(key(item), folder);
+    public ItemModelBuilder basicComponentItem(Item item) {
+        return basicItem(key(item), "components/");
     }
 
 

@@ -3,9 +3,9 @@
   "parent": "torquecraft:parent/block",
   "loader": "neoforge:elements",
 	"textures": {
-		"1": "torquecraft:block/shared/machine_casing",
-		"2": "torquecraft:block/shared/default_shaft",
-		"particle": "torquecraft:block/shared/default_shaft"
+      "1": "torquecraft:block/shared/hsla_casing",
+      "2": "torquecraft:block/shared/hsla_shaft",
+      "particle": "torquecraft:block/shared/hsla_shaft"
 	},
 	"elements": [
 		{

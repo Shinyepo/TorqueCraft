@@ -204,7 +204,9 @@ public class AlloyFurnaceEntity extends StandaloneMachineFactory {
     private Optional<RecipeHolder<AlloyFurnaceRecipe>> getCurrentRecipe() {
         SimpleContainer inventory = new SimpleContainer(4);
         for (int i = 0; i < ADDON_SLOT_COUNT; i++) {
-            inventory.setItem(i, addonItemHandler.get().getStackInSlot(i));
+            var itemInSlot = addonItemHandler.get().getStackInSlot(i);
+            if (itemInSlot != ItemStack.EMPTY)
+                inventory.setItem(i, addonItemHandler.get().getStackInSlot(i));
         }
         for (int i = 0; i < INPUT_SLOT_COUNT; i++) {
             var ingot = inputItemHandler.get().getStackInSlot(i);

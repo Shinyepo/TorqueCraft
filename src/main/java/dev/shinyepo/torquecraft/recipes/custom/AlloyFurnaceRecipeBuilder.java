@@ -5,7 +5,6 @@ import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
-import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -16,16 +15,15 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.ItemLike;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class AlloyFurnaceRecipeBuilder implements RecipeBuilder {
     private final RecipeCategory category;
     private final RecipeType<?> recipeType;
-    private final NonNullList<Ingredient> addonIngredient = NonNullList.create();
+    private final List<Ingredient> addonIngredient = new ArrayList<>();
     private final Ingredient ingotIngredient;
     private final ItemStack resultItem;
 
@@ -62,6 +60,11 @@ public class AlloyFurnaceRecipeBuilder implements RecipeBuilder {
 
     public AlloyFurnaceRecipeBuilder addAddonIngredient(TagKey<Item> tag) {
         addonIngredient.add(Ingredient.of(tag));
+        return this;
+    }
+
+    public AlloyFurnaceRecipeBuilder addAddonIngredient(ItemLike item) {
+        addonIngredient.add(Ingredient.of(item));
         return this;
     }
 

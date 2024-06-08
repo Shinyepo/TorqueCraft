@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "criteria": {
+    "has_hsla_tank": {
       "conditions": {
         "items": [
           {
-            "items": "torquecraft:tungsten_ingot"
+            "items": "torquecraft:hsla_tank"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "criteria"
+      "has_hsla_tank"
     ]
   ],
   "rewards": {

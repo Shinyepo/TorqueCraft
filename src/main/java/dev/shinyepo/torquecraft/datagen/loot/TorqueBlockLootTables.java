@@ -21,20 +21,21 @@ public class TorqueBlockLootTables extends BlockLootSubProvider {
     @Override
     protected void generate() {
         dropSelf(TorqueBlocks.TUNGSTEN_BLOCK.get());
+        dropSelf(TorqueBlocks.HSLA_BLOCK.get());
         dropSelf(TorqueBlocks.CAST_IRON_BLOCK.get());
         dropSelf(TorqueBlocks.ALLOY_FURNACE.get());
         dropSelf(TorqueBlocks.STEAM_ENGINE.get());
         dropSelf(TorqueBlocks.MECHANICAL_FAN.get());
         dropSelf(TorqueBlocks.GRINDER.get());
         dropSelf(TorqueBlocks.PUMP.get());
-        dropSelf(TorqueBlocks.SHAFT.get());
-        dropSelf(TorqueBlocks.BEVEL_GEARS.get());
-        dropSelf(TorqueBlocks.THREE_WAY.get());
+        dropSelf(TorqueBlocks.HSLA_SHAFT.get());
+        dropSelf(TorqueBlocks.HSLA_BEVEL_GEARS.get());
+        dropSelf(TorqueBlocks.HSLA_THREE_WAY.get());
         dropSelf(TorqueBlocks.FLUID_PIPE.get());
         dropSelf(TorqueBlocks.STEAM_PIPE.get());
         dropSelf(TorqueBlocks.FLUID_TANK.get());
-        dropSelf(TorqueBlocks.GEARBOX1_2.get());
-        dropSelf(TorqueBlocks.GEARBOX1_4.get());
+        dropSelf(TorqueBlocks.HSLA_GEARBOX1_2.get());
+        dropSelf(TorqueBlocks.HSLA_GEARBOX1_4.get());
         dropSelf(TorqueBlocks.COOLING_RADIATOR.get());
 
         //Crops

@@ -30,20 +30,22 @@ public class TorqueBlocks {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(TorqueCraft.MODID);
 
     public static final Supplier<Block> CAST_IRON_BLOCK = BLOCKS.registerSimpleBlock("cast_iron_block", BlockBehaviour.Properties.of().destroyTime(2f).requiresCorrectToolForDrops().mapColor(MapColor.STONE));
+    public static final Supplier<Block> HSLA_BLOCK = BLOCKS.registerSimpleBlock("hsla_block", BlockBehaviour.Properties.of().destroyTime(2f).requiresCorrectToolForDrops().mapColor(MapColor.STONE));
     public static final Supplier<Block> TUNGSTEN_BLOCK = BLOCKS.registerSimpleBlock("tungsten_block", BlockBehaviour.Properties.of().destroyTime(2f).requiresCorrectToolForDrops().mapColor(MapColor.STONE));
     public static final Supplier<Block> ALLOY_FURNACE = BLOCKS.register("alloy_furnace", () -> new AlloyFurnace(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().requiresCorrectToolForDrops().mapColor(MapColor.STONE)));
 
+    //Gears/Shafts
+    public static final Supplier<Block> HSLA_SHAFT = BLOCKS.register("hsla_shaft", () -> new Shaft(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE)));
+    public static final Supplier<Block> HSLA_THREE_WAY = BLOCKS.register("hsla_three_way", () -> new ThreeWay(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE)));
+    public static final Supplier<Block> HSLA_BEVEL_GEARS = BLOCKS.register("hsla_bevel_gears", () -> new BevelGears(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE)));
+    public static final Supplier<Block> HSLA_GEARBOX1_2 = BLOCKS.register("hsla_gearbox1_2", () -> new Gearbox(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE), GearboxRatio.RATIO_2));
+    public static final Supplier<Block> HSLA_GEARBOX1_4 = BLOCKS.register("hsla_gearbox1_4", () -> new Gearbox(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE), GearboxRatio.RATIO_4));
 
     //Machines
     public static final Supplier<Block> STEAM_ENGINE = BLOCKS.register("steam_engine",() -> new SteamEngine(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().requiresCorrectToolForDrops().mapColor(MapColor.STONE)));
     public static final Supplier<Block> MECHANICAL_FAN = BLOCKS.register("mechanical_fan",() -> new MechanicalFan(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().requiresCorrectToolForDrops().mapColor(MapColor.STONE)));
     public static final Supplier<Block> GRINDER = BLOCKS.register("grinder",() -> new Grinder(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().requiresCorrectToolForDrops().mapColor(MapColor.STONE)));
     public static final Supplier<Block> PUMP = BLOCKS.register("pump",() -> new Pump(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE)));
-    public static final Supplier<Block> SHAFT = BLOCKS.register("shaft",() -> new Shaft(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE)));
-    public static final Supplier<Block> THREE_WAY = BLOCKS.register("three_way", () -> new ThreeWay(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE)));
-    public static final Supplier<Block> BEVEL_GEARS = BLOCKS.register("bevel_gears", () -> new BevelGears(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE)));
-    public static final Supplier<Block> GEARBOX1_2 = BLOCKS.register("gearbox1_2", () -> new Gearbox(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE), GearboxRatio.RATIO_2));
-    public static final Supplier<Block> GEARBOX1_4 = BLOCKS.register("gearbox1_4", () -> new Gearbox(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE), GearboxRatio.RATIO_4));
     public static final Supplier<Block> COOLING_RADIATOR = BLOCKS.register("cooling_radiator",() -> new CoolingRadiator(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE)));
 
     //Crops

@@ -92,7 +92,9 @@ public class TorqueCraft {
 
         @SubscribeEvent
         public static void registerBakedModels(ModelEvent.RegisterAdditional e) {
+            e.register(new ResourceLocation(TorqueCraft.MODID, "block/partial/hsla_shaft_rod"));
             e.register(new ResourceLocation(TorqueCraft.MODID, "block/partial/shaft_rod"));
+            e.register(new ResourceLocation(TorqueCraft.MODID, "block/partial/hsla_short_shaft_rod"));
             e.register(new ResourceLocation(TorqueCraft.MODID, "block/partial/short_shaft_rod"));
             e.register(new ResourceLocation(TorqueCraft.MODID, "block/partial/fan_blade"));
             e.register(new ResourceLocation(TorqueCraft.MODID, "block/partial/grinder_shaft"));

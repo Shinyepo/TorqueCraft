@@ -46,13 +46,15 @@ public class TorqueRecipeProvider extends RecipeProvider {
         registerMaterialRecipes(pRecipeOutput);
         registerBlockRecipes(pRecipeOutput);
         registerComponents(pRecipeOutput);
+        registerGears(pRecipeOutput);
+        registerMachines(pRecipeOutput);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TorqueItems.TUNGSTEN_INGOT.get(),9)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TorqueItems.TUNGSTEN_INGOT.get(), 9)
                 .requires(TorqueItems.TUNGSTEN_BLOCK_ITEM.get())
                 .unlockedBy("criteria", has(TorqueBlocks.TUNGSTEN_BLOCK.get()))
                 .save(pRecipeOutput);
 
-        grinding(Ingredient.of(Tags.Items.SEEDS), TorqueItems.CRUSHED_SEEDS.get(), new FluidStack(TorqueFluids.SOURCE_LUBRICANT.get(),100))
+        grinding(Ingredient.of(Tags.Items.SEEDS), TorqueItems.CRUSHED_SEEDS.get(), new FluidStack(TorqueFluids.SOURCE_LUBRICANT.get(), 100))
                 .unlockedBy("criteria", has(Tags.Items.SEEDS))
                 .save(pRecipeOutput);
 
@@ -63,45 +65,92 @@ public class TorqueRecipeProvider extends RecipeProvider {
                 .define('S', TorqueItems.TUNGSTEN_INGOT.get())
                 .unlockedBy("criteria", has(TorqueItems.TUNGSTEN_INGOT.get()))
                 .save(pRecipeOutput);
+    }
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TorqueItems.STEAM_ENGINE_ITEM.get())
-                .pattern("AAA")
-                .pattern("BBB")
-                .define('A', TorqueItems.TUNGSTEN_INGOT.get())
-                .define('B', TorqueItems.TUNGSTEN_BLOCK_ITEM.get())
-                .unlockedBy("criteria", has(TorqueItems.TUNGSTEN_BLOCK_ITEM.get()))
-                .unlockedBy("criteria", has(TorqueItems.TUNGSTEN_INGOT.get()))
-                .save(pRecipeOutput);
+    private void registerGears(RecipeOutput output) {
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TorqueItems.HSLA_SHAFT_ITEM.get())
+                .requires(TorqueItems.HSLA_STEEL_SHAFT.get())
+                .requires(TorqueItems.HSLA_CASING.get())
+                .unlockedBy("has_hsla_steel_shaft", has(TorqueItems.HSLA_STEEL_SHAFT.get()))
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TorqueItems.MECHANICAL_FAN_ITEM.get())
-                .pattern(" A ")
-                .pattern("ABA")
-                .pattern(" A ")
-                .define('A', TorqueItems.TUNGSTEN_INGOT.get())
-                .define('B', TorqueItems.TUNGSTEN_BLOCK_ITEM.get())
-                .unlockedBy("criteria", has(TorqueItems.TUNGSTEN_BLOCK_ITEM.get()))
-                .unlockedBy("criteria", has(TorqueItems.TUNGSTEN_INGOT.get()))
-                .save(pRecipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TorqueBlocks.HSLA_THREE_WAY.get())
+                .pattern(" R ")
+                .pattern("RRR")
+                .pattern(" C ")
+                .define('R', TorqueItems.HSLA_GEAR.get())
+                .define('C', TorqueItems.HSLA_CASING.get())
+                .unlockedBy("has_hsla_gear", has(TorqueItems.HSLA_GEAR.get()))
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TorqueItems.GRINDER_ITEM.get())
-                .pattern(" A ")
-                .pattern("BAB")
-                .pattern("BBB")
-                .define('A', TorqueItems.TUNGSTEN_INGOT.get())
-                .define('B', TorqueItems.TUNGSTEN_BLOCK_ITEM.get())
-                .unlockedBy("criteria", has(TorqueItems.TUNGSTEN_BLOCK_ITEM.get()))
-                .unlockedBy("criteria", has(TorqueItems.TUNGSTEN_INGOT.get()))
-                .save(pRecipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TorqueBlocks.HSLA_BEVEL_GEARS.get())
+                .pattern("   ")
+                .pattern(" R ")
+                .pattern("RC ")
+                .define('R', TorqueItems.HSLA_GEAR.get())
+                .define('C', TorqueItems.HSLA_CASING.get())
+                .unlockedBy("has_hsla_gear", has(TorqueItems.HSLA_GEAR.get()))
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TorqueItems.PUMP_ITEM.get())
-                .pattern(" A ")
-                .pattern(" BA")
-                .pattern(" A ")
-                .define('B', TorqueItems.TUNGSTEN_INGOT.get())
-                .define('A', TorqueItems.TUNGSTEN_BLOCK_ITEM.get())
-                .unlockedBy("criteria", has(TorqueItems.TUNGSTEN_BLOCK_ITEM.get()))
-                .unlockedBy("criteria", has(TorqueItems.TUNGSTEN_INGOT.get()))
-                .save(pRecipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TorqueBlocks.HSLA_GEARBOX1_2.get())
+                .pattern("   ")
+                .pattern(" G ")
+                .pattern(" C ")
+                .define('G', TorqueItems.HSLA_GEARS_2.get())
+                .define('C', TorqueItems.HSLA_CASING.get())
+                .unlockedBy("has_hsla_gear", has(TorqueItems.HSLA_GEAR.get()))
+                .save(output);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TorqueBlocks.HSLA_GEARBOX1_4.get())
+                .pattern("   ")
+                .pattern(" G ")
+                .pattern(" C ")
+                .define('G', TorqueItems.HSLA_GEARS_4.get())
+                .define('C', TorqueItems.HSLA_CASING.get())
+                .unlockedBy("has_hsla_gear", has(TorqueItems.HSLA_GEAR.get()))
+                .save(output);
+    }
+
+    private void registerMachines(RecipeOutput output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TorqueBlocks.GRINDER.get())
+                .pattern("   ")
+                .pattern("STS")
+                .pattern(" C ")
+                .define('S', TorqueItems.SHARP_HSLA_GEAR.get())
+                .define('T', TorqueItems.HSLA_TANK.get())
+                .define('C', TorqueItems.HSLA_CASING.get())
+                .unlockedBy("has_sharp_hsla_gear", has(TorqueItems.SHARP_HSLA_GEAR.get()))
+                .save(output);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TorqueBlocks.MECHANICAL_FAN.get())
+                .pattern("II ")
+                .pattern("SSG")
+                .pattern("II ")
+                .define('I', TorqueItems.HSLA_INGOT.get())
+                .define('S', TorqueItems.HSLA_STEEL_SHAFT.get())
+                .define('G', TorqueItems.HSLA_GEAR.get())
+                .unlockedBy("has_hsla_gear", has(TorqueItems.HSLA_GEAR.get()))
+                .save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TorqueBlocks.PUMP.get())
+                .pattern("III")
+                .pattern("ICS")
+                .pattern("III")
+                .define('I', TorqueItems.HSLA_INGOT.get())
+                .define('C', TorqueItems.HSLA_TANK.get())
+                .define('S', TorqueItems.HSLA_STEEL_SHAFT.get())
+                .unlockedBy("has_hsla_tank", has(TorqueItems.HSLA_TANK.get()))
+                .save(output);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TorqueBlocks.STEAM_ENGINE.get())
+                .pattern("G G")
+                .pattern("PTP")
+                .pattern("III")
+                .define('I', TorqueItems.HSLA_INGOT.get())
+                .define('T', TorqueItems.HSLA_TANK.get())
+                .define('P', TorqueItems.HSLA_PISTON.get())
+                .define('G', TorqueItems.HSLA_GEAR.get())
+                .unlockedBy("has_hsla_tank", has(TorqueItems.HSLA_TANK.get()))
+                .save(output);
     }
 
     private void registerBlockRecipes(RecipeOutput output) {
@@ -118,10 +167,10 @@ public class TorqueRecipeProvider extends RecipeProvider {
                 .pattern("III")
                 .pattern("ICI")
                 .pattern("IGI")
+                //Change to HSLA ?
                 .define('I', Tags.Items.INGOTS_IRON)
                 .define('C', TorqueItems.CIRCUIT_MODULE.get())
-                //Add gear
-                .define('G', TorqueItems.TUNGSTEN_INGOT.get())
+                .define('G', TorqueItems.HSLA_GEAR.get())
                 .unlockedBy("has_circuit_module", has(TorqueItems.CIRCUIT_MODULE.get()))
                 .save(output);
     }
@@ -130,13 +179,101 @@ public class TorqueRecipeProvider extends RecipeProvider {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TorqueItems.CIRCUIT_MODULE.get())
                 .pattern("IGI")
                 .pattern("SRS")
-                .pattern("III")
+                .pattern("ISI")
                 .define('S', TorqueItems.SILICON.get())
                 .define('G', Tags.Items.INGOTS_GOLD)
                 .define('R', Tags.Items.DUSTS_REDSTONE)
                 //Replace with new ingot?
-                .define('I', TorqueItems.TUNGSTEN_INGOT.get())
+                .define('I', Tags.Items.INGOTS_IRON)
                 .unlockedBy("has_silicon", has(TorqueItems.SILICON.get()))
+                .save(output);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TorqueItems.HSLA_CASING.get())
+                .pattern("I I")
+                .pattern("I I")
+                .pattern("III")
+                .define('I', TorqueItems.HSLA_INGOT.get())
+                .unlockedBy("has_hsla_ingot", has(TorqueItems.HSLA_INGOT.get()))
+                .save(output);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TorqueItems.HSLA_STEEL_SHAFT.get())
+                .pattern("  I")
+                .pattern(" I ")
+                .pattern("I  ")
+                .define('I', TorqueItems.HSLA_ROD.get())
+                .unlockedBy("has_hsla_rod", has(TorqueItems.HSLA_ROD.get()))
+                .save(output);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TorqueItems.HSLA_PISTON.get())
+                .pattern(" P ")
+                .pattern(" R ")
+                .pattern(" G ")
+                .define('P', TorqueItems.HSLA_PLATE.get())
+                .define('R', TorqueItems.HSLA_ROD.get())
+                .define('G', TorqueItems.HSLA_GEAR.get())
+                .unlockedBy("has_hsla_gear", has(TorqueItems.HSLA_GEAR.get()))
+                .save(output);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TorqueItems.HSLA_TANK.get())
+                .pattern("I I")
+                .pattern("I I")
+                .pattern("III")
+                .define('I', TorqueItems.HSLA_PLATE.get())
+                .unlockedBy("has_hsla_plate", has(TorqueItems.HSLA_PLATE.get()))
+                .save(output);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TorqueItems.HSLA_PLATE.get())
+                .pattern("   ")
+                .pattern("   ")
+                .pattern("III")
+                .define('I', TorqueItems.HSLA_INGOT.get())
+                .unlockedBy("has_hsla_ingot", has(TorqueItems.HSLA_INGOT.get()))
+                .save(output);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TorqueItems.HSLA_GEAR.get())
+                .pattern(" S ")
+                .pattern("SIS")
+                .pattern(" S ")
+                .define('I', TorqueItems.HSLA_INGOT.get())
+                .define('S', TorqueItems.HSLA_ROD.get())
+                .unlockedBy("has_hsla_rod", has(TorqueItems.HSLA_ROD.get()))
+                .save(output);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TorqueItems.SHARP_HSLA_GEAR.get())
+                .pattern("S S")
+                .pattern(" I ")
+                .pattern("S S")
+                .define('I', TorqueItems.HSLA_INGOT.get())
+                .define('S', TorqueItems.HSLA_ROD.get())
+                .unlockedBy("has_hsla_rod", has(TorqueItems.HSLA_ROD.get()))
+                .save(output);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TorqueItems.HSLA_ROD.get())
+                .requires(TorqueItems.HSLA_INGOT.get(), 2)
+                .unlockedBy("has_hsla_ingot", has(TorqueItems.HSLA_INGOT.get()))
+                .save(output);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TorqueItems.HSLA_GEARS_2.get())
+                .requires(TorqueItems.HSLA_GEAR.get(), 2)
+                .unlockedBy("has_hsla_gear", has(TorqueItems.HSLA_GEAR.get()))
+                .save(output);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TorqueItems.HSLA_GEARS_4.get())
+                .requires(TorqueItems.HSLA_GEARS_2.get())
+                .requires(TorqueItems.HSLA_GEAR.get())
+                .unlockedBy("has_hsla_gear", has(TorqueItems.HSLA_GEAR.get()))
+                .save(output);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TorqueItems.HSLA_GEARS_8.get())
+                .requires(TorqueItems.HSLA_GEARS_4.get())
+                .requires(TorqueItems.HSLA_GEAR.get())
+                .unlockedBy("has_hsla_gear", has(TorqueItems.HSLA_GEAR.get()))
+                .save(output);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TorqueItems.HSLA_GEARS_16.get())
+                .requires(TorqueItems.HSLA_GEARS_8.get())
+                .requires(TorqueItems.HSLA_GEAR.get())
+                .unlockedBy("has_hsla_gear", has(TorqueItems.HSLA_GEAR.get()))
                 .save(output);
     }
 
@@ -154,6 +291,25 @@ public class TorqueRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_alloy_furnace", has(TorqueItems.ALLOY_FURNACE_ITEM.get()))
                 .save(output);
 
+        alloying(Ingredient.of(Items.IRON_INGOT), TorqueItems.HSLA_INGOT.get())
+                .addAddonIngredient(ItemTags.COALS)
+                .addAddonIngredient(Tags.Items.GUNPOWDERS)
+                .unlockedBy("has_alloy_furnace", has(TorqueItems.ALLOY_FURNACE_ITEM.get()))
+                .save(output);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TorqueItems.HSLA_INGOT.get(), 9)
+                .requires(TorqueBlocks.HSLA_BLOCK.get())
+                .unlockedBy("has_hsla_block", has(TorqueBlocks.HSLA_BLOCK.get()))
+                .save(output);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TorqueBlocks.HSLA_BLOCK.get())
+                .pattern("SSS")
+                .pattern("SSS")
+                .pattern("SSS")
+                .define('S', TorqueItems.HSLA_INGOT.get())
+                .unlockedBy("has_hsla_ingot", has(TorqueItems.HSLA_INGOT.get()))
+                .save(output);
+
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TorqueItems.CAST_IRON_INGOT.get(), 9)
                 .requires(TorqueBlocks.CAST_IRON_BLOCK.get())
                 .unlockedBy("has_cast_iron_block", has(TorqueBlocks.CAST_IRON_BLOCK.get()))
@@ -166,5 +322,6 @@ public class TorqueRecipeProvider extends RecipeProvider {
                 .define('S', TorqueItems.CAST_IRON_INGOT.get())
                 .unlockedBy("has_cast_iron_ingot", has(TorqueItems.CAST_IRON_INGOT.get()))
                 .save(output);
+
     }
 }

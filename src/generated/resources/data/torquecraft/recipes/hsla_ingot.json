@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "torquecraft:hsla_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "torquecraft:hsla_ingot"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": {
+      "item": "torquecraft:hsla_ingot"
+    },
+    "S": {
+      "item": "torquecraft:hsla_rod"
+    }
+  },
+  "pattern": [
+    " S ",
+    "SIS",
+    " S "
+  ],
+  "result": {
+    "count": 1,
+    "id": "torquecraft:hsla_gear"
+  }
+}

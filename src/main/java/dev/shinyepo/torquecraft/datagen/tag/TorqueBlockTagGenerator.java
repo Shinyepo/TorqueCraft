@@ -39,11 +39,11 @@ public class TorqueBlockTagGenerator extends BlockTagsProvider {
                 .add(TorqueBlocks.FLUID_TANK.get())
                 .add(TorqueBlocks.PUMP.get())
                 .add(TorqueBlocks.COOLING_RADIATOR.get())
-                .add(TorqueBlocks.THREE_WAY.get())
-                .add(TorqueBlocks.BEVEL_GEARS.get())
-                .add(TorqueBlocks.GEARBOX1_2.get())
-                .add(TorqueBlocks.GEARBOX1_4.get())
-                .add(TorqueBlocks.SHAFT.get());
+                .add(TorqueBlocks.HSLA_THREE_WAY.get())
+                .add(TorqueBlocks.HSLA_BEVEL_GEARS.get())
+                .add(TorqueBlocks.HSLA_GEARBOX1_2.get())
+                .add(TorqueBlocks.HSLA_GEARBOX1_4.get())
+                .add(TorqueBlocks.HSLA_SHAFT.get());
 
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(TorqueBlocks.ALLOY_FURNACE.get())
@@ -54,10 +54,10 @@ public class TorqueBlockTagGenerator extends BlockTagsProvider {
                 .add(TorqueBlocks.FLUID_TANK.get())
                 .add(TorqueBlocks.PUMP.get())
                 .add(TorqueBlocks.COOLING_RADIATOR.get())
-                .add(TorqueBlocks.THREE_WAY.get())
-                .add(TorqueBlocks.BEVEL_GEARS.get())
-                .add(TorqueBlocks.GEARBOX1_2.get())
-                .add(TorqueBlocks.GEARBOX1_4.get())
-                .add(TorqueBlocks.SHAFT.get());
+                .add(TorqueBlocks.HSLA_THREE_WAY.get())
+                .add(TorqueBlocks.HSLA_BEVEL_GEARS.get())
+                .add(TorqueBlocks.HSLA_GEARBOX1_2.get())
+                .add(TorqueBlocks.HSLA_GEARBOX1_4.get())
+                .add(TorqueBlocks.HSLA_SHAFT.get());
     }
 }

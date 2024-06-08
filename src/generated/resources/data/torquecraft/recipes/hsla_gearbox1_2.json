@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "torquecraft:hsla_casing"
+    },
+    "G": {
+      "item": "torquecraft:hsla_gears_2"
+    }
+  },
+  "pattern": [
+    "   ",
+    " G ",
+    " C "
+  ],
+  "result": {
+    "count": 1,
+    "id": "torquecraft:hsla_gearbox1_2"
+  }
+}

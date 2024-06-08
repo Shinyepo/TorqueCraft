@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": {
+      "item": "torquecraft:hsla_plate"
+    }
+  },
+  "pattern": [
+    "I I",
+    "I I",
+    "III"
+  ],
+  "result": {
+    "count": 1,
+    "id": "torquecraft:hsla_tank"
+  }
+}
