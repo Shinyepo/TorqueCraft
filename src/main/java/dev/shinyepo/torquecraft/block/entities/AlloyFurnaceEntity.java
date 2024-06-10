@@ -7,6 +7,7 @@ import dev.shinyepo.torquecraft.recipes.custom.AlloyFurnaceRecipe;
 import dev.shinyepo.torquecraft.registries.block.TorqueBlockEntities;
 import dev.shinyepo.torquecraft.registries.recipe.TorqueRecipes;
 import dev.shinyepo.torquecraft.registries.tag.TorqueTags;
+import dev.shinyepo.torquecraft.utils.IHeatedEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -17,11 +18,10 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.util.Lazy;
 import net.neoforged.neoforge.items.IItemHandler;
@@ -32,28 +32,31 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public class AlloyFurnaceEntity extends StandaloneMachineFactory {
-    public static final int ADDON_SLOT_COUNT = 3;
-    public static final int INPUT_SLOT_COUNT = 9;
-    public static final int OUTPUT_SLOT_COUNT = 3;
+import static dev.shinyepo.torquecraft.utils.HeatSource.adjustTemp;
+
+public class AlloyFurnaceEntity extends StandaloneMachineFactory implements IHeatedEntity {
+    private static final int ADDON_SLOT_COUNT = 3;
+    private static final int INPUT_SLOT_COUNT = 9;
+    private static final int OUTPUT_SLOT_COUNT = 3;
     public static final int SLOT_COUNT = ADDON_SLOT_COUNT + INPUT_SLOT_COUNT + OUTPUT_SLOT_COUNT + 1;
     private static final List<TagKey<Item>> validAddonsInputs = List.of(ItemTags.COALS, Tags.Items.GUNPOWDERS, Tags.Items.SANDS, Tags.Items.SANDSTONE_BLOCKS, TorqueTags.SILICON);
     private static final List<TagKey<Item>> validInputs = List.of(Tags.Items.INGOTS);
     private final Lazy<ItemStackHandler> addonItemHandler = createInputItemHandler(ADDON_SLOT_COUNT, validAddonsInputs);
     private final Lazy<ItemStackHandler> inputItemHandler = createInputItemHandler(INPUT_SLOT_COUNT, validInputs);
     private final Lazy<ItemStackHandler> outputItemHandler = createOutputItemHandler(OUTPUT_SLOT_COUNT);
-    private final Lazy<ItemStackHandler> fuelItemHandler = createInputItemHandler(1, List.of(ItemTags.COALS));
 
     private final Lazy<AdaptedItemHandler> addonInput = createAutoInputHandler(addonItemHandler.get());
     private final Lazy<AdaptedItemHandler> craftInput = createAutoInputHandler(inputItemHandler.get());
     private final Lazy<AdaptedItemHandler> resultOutput = createAutoOutputHandler(outputItemHandler.get());
 
+    protected double temp = 0;
+    protected float maxTemp = 2100;
     protected final ContainerData data = new ContainerData() {
         @Override
         public int get(int pIndex) {
             return switch (pIndex) {
-                case 0 -> burnTime;
-                case 1 -> maxBurnTime;
+                case 0 -> (int) temp;
+                case 1 -> (int) maxTemp;
                 case 2 -> progress;
                 case 3 -> maxProgress;
                 default -> 0;
@@ -63,8 +66,8 @@ public class AlloyFurnaceEntity extends StandaloneMachineFactory {
         @Override
         public void set(int pIndex, int pValue) {
             switch (pIndex) {
-                case 0 -> burnTime = pValue;
-                case 1 -> maxBurnTime = pValue;
+                case 0 -> temp = pValue;
+                case 1 -> maxTemp = pValue;
                 case 2 -> progress = pValue;
                 case 3 -> maxProgress = pValue;
             }
@@ -76,6 +79,7 @@ public class AlloyFurnaceEntity extends StandaloneMachineFactory {
             return 4;
         }
     };
+    private AlloyFurnaceRecipe recipe;
 
     public AlloyFurnaceEntity(BlockPos pPos, BlockState pBlockState) {
         super(TorqueBlockEntities.ALLOY_FURNACE_ENTITY.get(), pPos, pBlockState);
@@ -87,7 +91,6 @@ public class AlloyFurnaceEntity extends StandaloneMachineFactory {
         toRegister.put(TorqueNBT.INPUT, inputItemHandler.get());
         toRegister.put(TorqueNBT.OUTPUT, outputItemHandler.get());
         toRegister.put(TorqueNBT.ADDON, addonItemHandler.get());
-        toRegister.put(TorqueNBT.FUEL, fuelItemHandler.get());
         super.registerHandlers(toRegister);
     }
 
@@ -109,10 +112,6 @@ public class AlloyFurnaceEntity extends StandaloneMachineFactory {
         return outputItemHandler.get();
     }
 
-    public IItemHandler getFuelHandler() {
-        return fuelItemHandler.get();
-    }
-
     public IItemHandler getAddon() {
         return addonItemHandler.get();
     }
@@ -122,33 +121,18 @@ public class AlloyFurnaceEntity extends StandaloneMachineFactory {
     }
     //GUI end
 
-    private int getBurnTime(ItemStack fuel) {
-        return fuel.getBurnTime(RecipeType.SMELTING);
-    }
-
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
-        if (this.burnTime > 0) {
-            this.burnTime--;
-        } else {
-            ItemStack fuel = fuelItemHandler.get().getStackInSlot(0);
-            int burnTime = getBurnTime(fuel);
-            this.maxBurnTime = burnTime;
-            if (!fuel.isEmpty() && getBurnTime(fuel) > 0 && hasRecipe()) {
-                this.burnTime = burnTime;
-                fuel.setCount(fuel.getCount() - 1);
-                fuelItemHandler.get().setStackInSlot(0, fuel);
-                pLevel.setBlockAndUpdate(pPos, pState.setValue(BlockStateProperties.LIT, true));
-            } else {
-                this.maxBurnTime = 0;
-                pLevel.setBlockAndUpdate(pPos, pState.setValue(BlockStateProperties.LIT, false));
-            }
-        }
-        if (hasRecipe() && burnTime > 0) {
-            increaseCraftingProgress();
-            setChanged(pLevel, pPos, pState);
-            if (hasProgressFinished()) {
-                craftItem();
-                resetProgress();
+        if (this.level.getGameTime() % 20 == 0)
+            adjustTemp(this);
+
+        if (hasRecipe()) {
+            if (temp > this.recipe.getTemp()) {
+                increaseCraftingProgress();
+                setChanged(pLevel, pPos, pState);
+                if (hasProgressFinished()) {
+                    craftItem();
+                    resetProgress();
+                }
             }
         } else {
             resetProgress();
@@ -166,10 +150,19 @@ public class AlloyFurnaceEntity extends StandaloneMachineFactory {
 //        }
     }
 
+    public double getTemp() {
+        return temp;
+    }
+
+    public void setTemp(double temp) {
+        this.temp = temp;
+    }
+
     private void craftItem() {
         Optional<RecipeHolder<AlloyFurnaceRecipe>> recipe = getCurrentRecipe();
         ItemStack result = recipe.get().value().getResultItem(null);
         ItemStack ingot = recipe.get().value().getIngotIngredient().getItems()[0];
+        List<Ingredient> addons = recipe.get().value().getAddonIngredient();
         for (int i = 0; i < INPUT_SLOT_COUNT; i++) {
             if (inputItemHandler.get().getStackInSlot(i).is(ingot.getItem())) {
                 int outputSlot = canFitInOutput(1, result.getItem());
@@ -179,13 +172,19 @@ public class AlloyFurnaceEntity extends StandaloneMachineFactory {
                 }
             }
         }
-        useAddonItems();
+        useAddonItems(addons);
     }
 
-    private void useAddonItems() {
-        for (int i = 0; i < ADDON_SLOT_COUNT; i++) {
-            var stack = addonItemHandler.get().getStackInSlot(i);
-            addonItemHandler.get().setStackInSlot(i, new ItemStack(stack.getItem(), stack.getCount() - 1));
+    private void useAddonItems(List<Ingredient> addons) {
+
+        for (Ingredient addon : addons) {
+            for (int j = 0; j < 3; j++) {
+                var item = addonItemHandler.get().getStackInSlot(j);
+                var matches = addon.test(item);
+                if (matches) {
+                    addonItemHandler.get().setStackInSlot(j, new ItemStack(item.getItem(), item.getCount() - 1));
+                }
+            }
         }
     }
 
@@ -198,10 +197,17 @@ public class AlloyFurnaceEntity extends StandaloneMachineFactory {
         if (recipe.isEmpty()) return false;
 
         ItemStack result = recipe.get().value().getResultItem(null);
+        this.recipe = recipe.get().value();
         return canOutputItem(result.getItem()) && canFitInOutput(1, result.getItem()) != -1;
     }
 
     private Optional<RecipeHolder<AlloyFurnaceRecipe>> getCurrentRecipe() {
+        SimpleContainer inventory = getItemsInSlots();
+
+        return this.level.getRecipeManager().getRecipeFor(TorqueRecipes.Types.ALLOY_SMELTING, inventory, this.level);
+    }
+
+    private SimpleContainer getItemsInSlots() {
         SimpleContainer inventory = new SimpleContainer(4);
         for (int i = 0; i < ADDON_SLOT_COUNT; i++) {
             var itemInSlot = addonItemHandler.get().getStackInSlot(i);
@@ -215,8 +221,7 @@ public class AlloyFurnaceEntity extends StandaloneMachineFactory {
                 break;
             }
         }
-
-        return this.level.getRecipeManager().getRecipeFor(TorqueRecipes.Types.ALLOY_SMELTING, inventory, this.level);
+        return inventory;
     }
 
     private boolean canOutputItem(Item item) {
@@ -239,6 +244,11 @@ public class AlloyFurnaceEntity extends StandaloneMachineFactory {
         return -1;
     }
 
+    @Override
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
+        super.saveAdditional(tag, provider);
+        tag.putDouble(TorqueNBT.TEMP, (double) Math.round(getTemp() * 100) / 100);
+    }
 
     @Override
     public void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
@@ -252,8 +262,8 @@ public class AlloyFurnaceEntity extends StandaloneMachineFactory {
         if (tag.contains(TorqueNBT.OUTPUT)) {
             outputItemHandler.get().deserializeNBT(provider, tag.getCompound(TorqueNBT.OUTPUT));
         }
-        if (tag.contains(TorqueNBT.FUEL)) {
-            fuelItemHandler.get().deserializeNBT(provider, tag.getCompound(TorqueNBT.FUEL));
+        if (tag.contains(TorqueNBT.TEMP)) {
+            temp = tag.getDouble(TorqueNBT.TEMP);
         }
     }
 }

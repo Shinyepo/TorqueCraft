@@ -288,12 +288,14 @@ public class TorqueRecipeProvider extends RecipeProvider {
                 .addAddonIngredient(ItemTags.COALS)
                 .addAddonIngredient(Tags.Items.GUNPOWDERS)
                 .addAddonIngredient(TorqueTags.SILICON)
+                .setTemp(1400)
                 .unlockedBy("has_alloy_furnace", has(TorqueItems.ALLOY_FURNACE_ITEM.get()))
                 .save(output);
 
         alloying(Ingredient.of(Items.IRON_INGOT), TorqueItems.HSLA_INGOT.get())
                 .addAddonIngredient(ItemTags.COALS)
                 .addAddonIngredient(Tags.Items.GUNPOWDERS)
+                .setTemp(1100)
                 .unlockedBy("has_alloy_furnace", has(TorqueItems.ALLOY_FURNACE_ITEM.get()))
                 .save(output);
 

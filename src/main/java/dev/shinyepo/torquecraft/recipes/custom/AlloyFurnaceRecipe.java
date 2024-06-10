@@ -23,12 +23,14 @@ public class AlloyFurnaceRecipe implements Recipe<Container> {
     protected final String group;
     protected final List<Ingredient> addonIngredient;
     protected final Ingredient ingotIngredient;
+    protected final double temp;
     protected final ItemStack resultItem;
 
     private final RecipeType<?> type;
     private final RecipeSerializer<?> serializer;
 
-    public AlloyFurnaceRecipe(String pGroup, List<Ingredient> addonIngredient, Ingredient ingotIngredient, ItemStack itemStack) {
+    public AlloyFurnaceRecipe(String pGroup, List<Ingredient> addonIngredient, Ingredient ingotIngredient, double temp, ItemStack itemStack) {
+        this.temp = temp;
         this.type = TorqueRecipes.Types.ALLOY_SMELTING;
         this.serializer = TorqueRecipes.Serializers.ALLOY_SMELTING_SERIALIZER.get();
         this.group = pGroup;
@@ -46,6 +48,10 @@ public class AlloyFurnaceRecipe implements Recipe<Container> {
     @Override
     public ItemStack assemble(Container container, HolderLookup.Provider provider) {
         return this.resultItem.copy();
+    }
+
+    public double getTemp() {
+        return temp;
     }
 
     public boolean matches(Container container, Level level) {
@@ -72,6 +78,10 @@ public class AlloyFurnaceRecipe implements Recipe<Container> {
         return ingotIngredient;
     }
 
+    public List<Ingredient> getAddonIngredient() {
+        return addonIngredient;
+    }
+
     @Override
     public boolean isSpecial() {
         return true;
@@ -93,7 +103,7 @@ public class AlloyFurnaceRecipe implements Recipe<Container> {
     }
 
     public interface Factory<T extends AlloyFurnaceRecipe> {
-        T create(String pGroup, List<Ingredient> addonIngredient, Ingredient ingotIngredient, ItemStack pResultItem);
+        T create(String pGroup, List<Ingredient> addonIngredient, Ingredient ingotIngredient, double temp, ItemStack pResultItem);
     }
 
     public static class Serializer implements RecipeSerializer<AlloyFurnaceRecipe> {
@@ -108,6 +118,7 @@ public class AlloyFurnaceRecipe implements Recipe<Container> {
                                     Codec.STRING.optionalFieldOf("group", "").forGetter(p -> p.group),
                                     Ingredient.LIST_CODEC.fieldOf("addonIngredient").forGetter(i -> i.addonIngredient),
                                     Ingredient.CODEC_NONEMPTY.fieldOf("ingotIngredient").forGetter(p_301068_ -> p_301068_.ingotIngredient),
+                                    Codec.DOUBLE.fieldOf("temperature").forGetter(p_301068_ -> p_301068_.temp),
                                     ItemStack.STRICT_CODEC.fieldOf("resultItem").forGetter(p_302316_ -> p_302316_.resultItem)
                             )
                             .apply(p_340781_, pFactory::create)
@@ -119,6 +130,8 @@ public class AlloyFurnaceRecipe implements Recipe<Container> {
                     p_319738_ -> p_319738_.addonIngredient,
                     Ingredient.CONTENTS_STREAM_CODEC,
                     p -> p.ingotIngredient,
+                    ByteBufCodecs.DOUBLE,
+                    p -> p.temp,
                     ItemStack.STREAM_CODEC,
                     p -> p.resultItem,
                     pFactory::create

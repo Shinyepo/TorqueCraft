@@ -25,6 +25,7 @@ public class AlloyFurnaceRecipeBuilder implements RecipeBuilder {
     private final RecipeType<?> recipeType;
     private final List<Ingredient> addonIngredient = new ArrayList<>();
     private final Ingredient ingotIngredient;
+    private double temp = 0;
     private final ItemStack resultItem;
 
 
@@ -68,6 +69,11 @@ public class AlloyFurnaceRecipeBuilder implements RecipeBuilder {
         return this;
     }
 
+    public AlloyFurnaceRecipeBuilder setTemp(double temp) {
+        this.temp = temp;
+        return this;
+    }
+
     private String getResultPath() {
         return BuiltInRegistries.ITEM.getKey(getResult().asItem()).getPath();
     }
@@ -86,7 +92,7 @@ public class AlloyFurnaceRecipeBuilder implements RecipeBuilder {
                 .requirements(AdvancementRequirements.Strategy.OR);
         this.criteria.forEach(advancement$builder::addCriterion);
         AlloyFurnaceRecipe alloyFurnaceRecipe = this.factory
-                .create(Objects.requireNonNullElse(this.group, ""), addonIngredient, ingotIngredient, resultItem);
+                .create(Objects.requireNonNullElse(this.group, ""), addonIngredient, ingotIngredient, temp, resultItem);
         pRecipeOutput.accept(pId, alloyFurnaceRecipe, advancement$builder.build(pId.withPrefix("recipes/" + this.category.getFolderName() + "/")));
     }
 

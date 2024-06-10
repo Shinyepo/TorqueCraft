@@ -1,27 +1,24 @@
 package dev.shinyepo.torquecraft.block.entities.rotary;
 
-import dev.shinyepo.torquecraft.block.prefab.CoolingRadiator;
 import dev.shinyepo.torquecraft.config.SourceConfig;
-import dev.shinyepo.torquecraft.constants.TorqueAttributes;
 import dev.shinyepo.torquecraft.factory.rotary.network.RotarySource;
 import dev.shinyepo.torquecraft.registries.block.TorqueBlockEntities;
 import dev.shinyepo.torquecraft.utils.DirectionUtils;
+import dev.shinyepo.torquecraft.utils.ICoolable;
+import dev.shinyepo.torquecraft.utils.IHeatedEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.level.ExplosionDamageCalculator;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
-import static dev.shinyepo.torquecraft.utils.HeatSource.getAmbientTemp;
-import static dev.shinyepo.torquecraft.utils.HeatSource.getBaseTemp;
+import static dev.shinyepo.torquecraft.utils.HeatSource.adjustTemp;
 
-public class SteamEngineEntity extends RotarySource {
-    private float ambientTemp;
+public class SteamEngineEntity extends RotarySource implements IHeatedEntity, ICoolable {
     private int fuse = 120;
     private static final SourceConfig config = SourceConfig.STEAM_ENGINE;
 
@@ -37,12 +34,11 @@ public class SteamEngineEntity extends RotarySource {
         }
         if (level.getGameTime() % 20 != 0) return;
         if (this.fluidTank.get().getFluidAmount() > config.getUsage()) {
-            adjustTemp();
+            adjustTemp(this);
         }
         if (rotaryHandler.get().getTemp() < 150 && fuse != 120) {
             resetExplosion();
         }
-
     }
 
     private void resetExplosion() {
@@ -71,14 +67,6 @@ public class SteamEngineEntity extends RotarySource {
         level.addParticle(particle,offset2.x, offset2.y, offset2.z,0,speed,0);
     }
 
-    @Override
-    public void onLoad() {
-        super.onLoad();
-        if (this.level != null) {
-            ambientTemp = getAmbientTemp(this.level, this.worldPosition);
-        }
-    }
-
     private void initExplosion() {
         fuse--;
         if (fuse < 0) {
@@ -89,24 +77,15 @@ public class SteamEngineEntity extends RotarySource {
         }
     }
 
-    private void adjustTemp() {
-        float heatSource = getBaseTemp(this.level.getBlockState(this.worldPosition.below()));
-        if (heatSource == 0) heatSource = ambientTemp;
-        double coef = 0.1267 - (ambientTemp / 1500);
-        double temp = rotaryHandler.get().getTemp();
+    public double getTemp() {
+        return rotaryHandler.get().getTemp();
+    }
 
-        double heating = heatSource + (temp - heatSource) * (1 / Math.pow(Math.E, 0.01867));
-        double heatLoss = coef * (temp - ambientTemp);
+    public void setTemp(double temp) {
+        rotaryHandler.get().setTemp(temp);
+    }
 
-        BlockState aboveState = this.level.getBlockState(this.worldPosition.above());
-        Block radiator = aboveState.getBlock();
-
-        if(radiator instanceof CoolingRadiator && temp > 101) {
-            var usage = aboveState.getValue(TorqueAttributes.USAGE);
-            double cooling = (usage.getPercent()*0.13/100) * (temp - 101);
-            rotaryHandler.get().setTemp(heating - heatLoss - cooling);
-            return;
-        }
-        rotaryHandler.get().setTemp(heating - heatLoss);
+    public double getCoef(double ambient) {
+        return 0.1267 - (ambient / 1500);
     }
 }

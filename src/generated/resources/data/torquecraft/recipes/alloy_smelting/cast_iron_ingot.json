@@ -17,5 +17,6 @@
   "resultItem": {
     "count": 1,
     "id": "torquecraft:cast_iron_ingot"
-  }
+  },
+  "temperature": 1400.0
 }

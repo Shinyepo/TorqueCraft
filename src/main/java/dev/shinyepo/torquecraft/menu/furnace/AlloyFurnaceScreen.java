@@ -1,6 +1,8 @@
 package dev.shinyepo.torquecraft.menu.furnace;
 
 import dev.shinyepo.torquecraft.TorqueCraft;
+import dev.shinyepo.torquecraft.config.HeatConfig;
+import dev.shinyepo.torquecraft.menu.renderer.TempInfoRenderer;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
@@ -10,10 +12,19 @@ import net.minecraft.world.entity.player.Inventory;
 
 public class AlloyFurnaceScreen extends AbstractContainerScreen<AlloyFurnaceContainer> {
     private final ResourceLocation GUI = new ResourceLocation(TorqueCraft.MODID, "textures/gui/alloy_furnace.png");
+    private TempInfoRenderer tempInfoRenderer;
 
     public AlloyFurnaceScreen(AlloyFurnaceContainer container, Inventory inventory, Component title) {
         super(container, inventory, title);
         this.inventoryLabelY = this.imageHeight - 94;
+        this.titleLabelX = 32;
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+        tempInfoRenderer = new TempInfoRenderer(HeatConfig.ALLOY_FURNACE, this.font);
+
     }
 
     @Override
@@ -29,11 +40,15 @@ public class AlloyFurnaceScreen extends AbstractContainerScreen<AlloyFurnaceCont
         graphics.blit(GUI, relX, relY, 0, 0, this.imageWidth, this.imageHeight);
         renderBurnProgress(graphics, relX, relY);
         renderProgressArrow(graphics, relX, relY);
+        tempInfoRenderer.render(graphics, this.menu.data.get(0), relX, relY);
     }
 
     @Override
     protected void renderLabels(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY) {
+        int relX = (this.width - this.imageWidth) / 2;
+        int relY = (this.height - this.imageHeight) / 2;
         pGuiGraphics.drawString(this.font, this.title, this.titleLabelX, this.titleLabelY, 4210752, false);
+        tempInfoRenderer.renderTempTooltips(pGuiGraphics, this.menu.data.get(0), pMouseX, pMouseY, relX, relY);
     }
 
     private void renderBurnProgress(GuiGraphics graphics, int relX, int relY) {

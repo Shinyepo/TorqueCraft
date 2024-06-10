@@ -57,13 +57,23 @@
   "torquecraft.tooltip.rotary.info.tooltip.max" : "Machine is operating at its full speed",
 
   "torquecraft.tooltip.rotary.info.title.sufficient" : "Requirements met",
-  "torquecraft.tooltip.rotary.info.tooltip.sufficient" : "Provided power is sufficient for machine operation. More power will result in lower operation time.",
+  "torquecraft.tooltip.rotary.info.tooltip.sufficient": "Provided power is sufficient for machine operation.",
 
   "torquecraft.tooltip.rotary.info.title.notenough" : "Low power",
   "torquecraft.tooltip.rotary.info.tooltip.notenough" : "Power requirements are not met.",
 
   "torquecraft.tooltip.rotary.info.title.nopower" : "No power",
   "torquecraft.tooltip.rotary.info.tooltip.nopower" : "This machine is not getting any power.",
+  "torquecraft.tooltip.temp.info.title.max": "Max Heat",
+  "torquecraft.tooltip.temp.info.tooltip.max": "Machine has enough heat to run all recipes.",
+  "torquecraft.tooltip.temp.info.title.sufficient": "Requirements met",
+  "torquecraft.tooltip.temp.info.tooltip.sufficient": "Provided heat is sufficient for basic machine operation.",
+  "torquecraft.tooltip.temp.info.title.notenough": "Low Heat",
+  "torquecraft.tooltip.temp.info.tooltip.notenough": "Heat requirements are not met.",
+  "torquecraft.tooltip.temp.info.title.noheat": "No Heat",
+  "torquecraft.tooltip.temp.info.tooltip.noheat": "Missing valid heat source.",
+
+
 
   "torquecraft.chatmsg.fluid_content": "%s - %s mB"
 
