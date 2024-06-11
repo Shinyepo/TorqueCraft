@@ -188,9 +188,6 @@ public class AlloyFurnaceEntity extends StandaloneMachineFactory implements IHea
         }
     }
 
-    //
-//
-//
     private boolean hasRecipe() {
         Optional<RecipeHolder<AlloyFurnaceRecipe>> recipe = getCurrentRecipe();
 

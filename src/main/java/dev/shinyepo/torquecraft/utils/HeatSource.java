@@ -41,9 +41,11 @@ public class HeatSource {
             double coef = heatedEntity.getCoef(ambientTemp);
             double temp = heatedEntity.getTemp();
 
-            double heating = heatSource + (temp - heatSource) * (1 / Math.pow(Math.E, 0.01867));
-            double heatLoss = coef * (temp - ambientTemp);
-            double resultTemp = heating - heatLoss;
+            double q = 900 * (heatSource - temp);
+            double heating = q / (16 * 4180);
+            double heatLoss = 0;
+            if (temp > 90) heatLoss = coef * (temp - 90);
+            double resultTemp = temp + (heating - heatLoss);
             if (entity instanceof ICoolable) {
                 BlockState aboveState = level.getBlockState(entity.getBlockPos().above());
                 Block radiator = aboveState.getBlock();
@@ -55,7 +57,7 @@ public class HeatSource {
                     return;
                 }
             }
-            heatedEntity.setTemp(heating - heatLoss);
+            heatedEntity.setTemp(resultTemp);
         }
     }
 }

@@ -86,6 +86,6 @@ public class SteamEngineEntity extends RotarySource implements IHeatedEntity, IC
     }
 
     public double getCoef(double ambient) {
-        return 0.1267 - (ambient / 1500);
+        return 0.2167 - (ambient / 1500);
     }
 }
