@@ -7,6 +7,7 @@ import dev.shinyepo.torquecraft.menu.furnace.AlloyFurnaceScreen;
 import dev.shinyepo.torquecraft.menu.grinder.GrinderScreen;
 import dev.shinyepo.torquecraft.model.baker.helpers.PipeModelLoader;
 import dev.shinyepo.torquecraft.network.RotaryNetworkRegistry;
+import dev.shinyepo.torquecraft.network.fluid.PressureFluidNetworkRegistry;
 import dev.shinyepo.torquecraft.registries.TorqueCapabilities;
 import dev.shinyepo.torquecraft.registries.TorqueCreativeTabs;
 import dev.shinyepo.torquecraft.registries.TorqueMenus;
@@ -61,10 +62,12 @@ public class TorqueCraft {
 
     private void commonSetup(FMLCommonSetupEvent event) {
         RotaryNetworkRegistry.init();
+        PressureFluidNetworkRegistry.init();
     }
 
     private void serverStopped(ServerStoppedEvent event) {
         RotaryNetworkRegistry.reset();
+        PressureFluidNetworkRegistry.reset();
     }
 
 

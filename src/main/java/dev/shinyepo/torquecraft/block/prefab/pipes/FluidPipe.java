@@ -1,11 +1,14 @@
 package dev.shinyepo.torquecraft.block.prefab.pipes;
 
 import dev.shinyepo.torquecraft.block.entities.pipes.FluidPipeEntity;
-import dev.shinyepo.torquecraft.model.baker.helpers.PipeConnection;
 import dev.shinyepo.torquecraft.factory.pipe.PipeBlock;
+import dev.shinyepo.torquecraft.factory.pipe.network.IPressureTransmitter;
+import dev.shinyepo.torquecraft.factory.pipe.network.PressureFluidTransmitter;
+import dev.shinyepo.torquecraft.model.baker.helpers.PipeConnection;
 import dev.shinyepo.torquecraft.utils.PipeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -25,6 +28,7 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
+import java.util.UUID;
 
 public class FluidPipe extends PipeBlock implements SimpleWaterloggedBlock, EntityBlock {
     public FluidPipe() {
@@ -38,7 +42,7 @@ public class FluidPipe extends PipeBlock implements SimpleWaterloggedBlock, Enti
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new FluidPipeEntity(blockPos, blockState);
+        return new PressureFluidTransmitter(blockPos, blockState);
     }
 
     @Nullable
@@ -61,12 +65,26 @@ public class FluidPipe extends PipeBlock implements SimpleWaterloggedBlock, Enti
         if (!level.isClientSide && level.getBlockEntity(pos) instanceof FluidPipeEntity pipe) {
             pipe.markDirty();
         }
+        if (!level.isClientSide() && level.getBlockEntity(pos) instanceof PressureFluidTransmitter transmitter) {
+            transmitter.fetchCapabilities();
+        }
     }
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         if (!player.getMainHandItem().isEmpty()) return InteractionResult.PASS;
         if (level.isClientSide()) return InteractionResult.CONSUME;
+
+        BlockEntity entity = level.getBlockEntity(pos);
+        if (entity instanceof IPressureTransmitter transmitter) {
+            var handler = transmitter.getTank();
+            if (handler != null) {
+                UUID networkId = transmitter.getNetworkId();
+                Component msg = Component.literal("Fluid amount: " + handler.getFluidAmount() + " Network Id: " + networkId);
+                player.displayClientMessage(msg, false);
+                return InteractionResult.SUCCESS_NO_ITEM_USED;
+            }
+        }
 
         Direction clickedDir = calcDirection(hit.getLocation(), pos);
         if (clickedDir != null) {
@@ -82,7 +100,7 @@ public class FluidPipe extends PipeBlock implements SimpleWaterloggedBlock, Enti
             } else if (currCon == PipeConnection.INPUT) {
                 val = PipeConnection.OUTPUT;
             }
-            level.setBlock(pos, state.setValue(prop, val),3);
+            level.setBlock(pos, state.setValue(prop, val), 3);
             if (!level.isClientSide && level.getBlockEntity(pos) instanceof FluidPipeEntity pipe) {
                 pipe.markDirty();
             }
@@ -123,5 +141,18 @@ public class FluidPipe extends PipeBlock implements SimpleWaterloggedBlock, Enti
         if (state != blockState) {
             level.setBlockAndUpdate(pos, blockState);
         }
+    }
+
+    @Override
+    protected void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
+        if (pState.getBlock() != pNewState.getBlock()) {
+            BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
+            if (blockEntity instanceof IPressureTransmitter transmitter) {
+                pLevel.removeBlockEntity(pPos);
+                transmitter.removeTransmitter();
+            }
+        }
+        super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
+
     }
 }

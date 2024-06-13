@@ -6,6 +6,8 @@ import dev.shinyepo.torquecraft.networking.packets.SyncFluidS2C;
 import dev.shinyepo.torquecraft.registries.block.TorqueBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -76,6 +78,18 @@ public class FluidTankEntity extends BlockEntity {
                 this.worldPosition.relative(Direction.DOWN),
                 null
         );
+    }
+
+    @Override
+    protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
+        super.saveAdditional(pTag, pRegistries);
+        fluidTank.writeToNBT(pRegistries, pTag);
+    }
+
+    @Override
+    protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
+        super.loadAdditional(pTag, pRegistries);
+        fluidTank.readFromNBT(pRegistries, pTag);
     }
 
     public void setFluidStack(FluidStack fluidStack) {
