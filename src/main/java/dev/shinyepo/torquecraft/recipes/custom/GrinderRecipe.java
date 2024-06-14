@@ -9,16 +9,12 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.fluids.FluidStack;
 
-public class GrinderRecipe implements Recipe<Container> {
+public class GrinderRecipe implements Recipe<RecipeInput> {
     protected final Ingredient ingredient;
     protected final ItemStack resultItem;
     protected final FluidStack resultFluid;
@@ -46,11 +42,11 @@ public class GrinderRecipe implements Recipe<Container> {
     }
 
     @Override
-    public ItemStack assemble(Container container, HolderLookup.Provider provider) {
+    public ItemStack assemble(RecipeInput container, HolderLookup.Provider provider) {
         return this.resultItem.copy();
     }
 
-    public boolean matches(Container container, Level level) {
+    public boolean matches(RecipeInput container, Level level) {
         if(level.isClientSide()) return false;
 
         return getIngredient().get(0).test(container.getItem(0));

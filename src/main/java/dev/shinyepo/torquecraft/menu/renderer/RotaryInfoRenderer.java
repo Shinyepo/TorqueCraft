@@ -16,8 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
+
 public class RotaryInfoRenderer {
-    private static final ResourceLocation ROTARY = new ResourceLocation(TorqueCraft.MODID, "textures/gui/rotary_info.png");
+    private static final ResourceLocation ROTARY = fromNamespaceAndPath(TorqueCraft.MODID, "textures/gui/rotary_info.png");
     private final ClientConfig CONFIG;
 
     private static final int ATLAS_SIZE = 256;

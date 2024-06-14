@@ -10,11 +10,14 @@ import org.joml.Vector3f;
 
 import java.util.function.Supplier;
 
+import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
+import static net.minecraft.resources.ResourceLocation.withDefaultNamespace;
+
 public class TorqueFluidTypes {
-    public static final ResourceLocation WATER_STILL_RL = new ResourceLocation("block/water_still");
-    public static final ResourceLocation WATER_FLOWING_RL = new ResourceLocation("block/water_flow");
-    public static final ResourceLocation LUBRICANT_OVERLAY_RL = new ResourceLocation("misc/in_lubricant");
-    public static final ResourceLocation JET_FUEL_OVERLAY_RL = new ResourceLocation(TorqueCraft.MODID,"misc/in_jet_fuel");
+    public static final ResourceLocation WATER_STILL_RL = withDefaultNamespace("block/water_still");
+    public static final ResourceLocation WATER_FLOWING_RL = withDefaultNamespace("block/water_flow");
+    public static final ResourceLocation LUBRICANT_OVERLAY_RL = withDefaultNamespace("misc/in_lubricant");
+    public static final ResourceLocation JET_FUEL_OVERLAY_RL = fromNamespaceAndPath(TorqueCraft.MODID, "misc/in_jet_fuel");
 
     public static final DeferredRegister<FluidType> FLUID_TYPES = DeferredRegister.create(NeoForgeRegistries.Keys.FLUID_TYPES, TorqueCraft.MODID);
 

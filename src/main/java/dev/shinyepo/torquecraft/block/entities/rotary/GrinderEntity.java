@@ -10,12 +10,12 @@ import dev.shinyepo.torquecraft.registries.recipe.TorqueRecipes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -219,11 +219,7 @@ public class GrinderEntity extends MachineFactory {
     }
 
     private Optional<RecipeHolder<GrinderRecipe>> getCurrentRecipe() {
-        SimpleContainer inventory = new SimpleContainer(1);
-        for (int i = 0; i < 1; i++) {
-            inventory.setItem(i, this.itemHandler.get().getStackInSlot(0));
-        }
-        return this.level.getRecipeManager().getRecipeFor(TorqueRecipes.Types.GRINDING, inventory, this.level);
+        return this.level.getRecipeManager().getRecipeFor(TorqueRecipes.Types.GRINDING, new SingleRecipeInput(this.itemHandler.get().getStackInSlot(0)), this.level);
     }
 
     private boolean canOutputItem(Item item) {

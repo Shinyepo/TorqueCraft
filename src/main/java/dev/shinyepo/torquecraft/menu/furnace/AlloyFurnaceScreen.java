@@ -9,9 +9,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
+import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
+
 
 public class AlloyFurnaceScreen extends AbstractContainerScreen<AlloyFurnaceContainer> {
-    private final ResourceLocation GUI = new ResourceLocation(TorqueCraft.MODID, "textures/gui/alloy_furnace.png");
+    private final ResourceLocation GUI = fromNamespaceAndPath(TorqueCraft.MODID, "textures/gui/alloy_furnace.png");
     private TempInfoRenderer tempInfoRenderer;
 
     public AlloyFurnaceScreen(AlloyFurnaceContainer container, Inventory inventory, Component title) {

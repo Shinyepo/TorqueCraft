@@ -9,6 +9,8 @@ import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.client.model.generators.ModelProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
+import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
+
 public abstract class CustomBlockStateProvider extends BlockStateProvider {
 
     public CustomBlockStateProvider(PackOutput output, String modid, ExistingFileHelper exFileHelper) {
@@ -30,7 +32,7 @@ public abstract class CustomBlockStateProvider extends BlockStateProvider {
 
     public ResourceLocation blockTexture(Block block, String folder) {
         ResourceLocation name = key(block);
-        return new ResourceLocation(name.getNamespace(), ModelProvider.BLOCK_FOLDER + "/" + folder + name.getPath());
+        return fromNamespaceAndPath(name.getNamespace(), ModelProvider.BLOCK_FOLDER + "/" + folder + name.getPath());
     }
 
     private String name(Block block) {

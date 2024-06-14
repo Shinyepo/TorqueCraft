@@ -15,8 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
+
 public class TempInfoRenderer {
-    private static final ResourceLocation TEMP = new ResourceLocation(TorqueCraft.MODID, "textures/gui/temp_info.png");
+    private static final ResourceLocation TEMP = fromNamespaceAndPath(TorqueCraft.MODID, "textures/gui/temp_info.png");
     private static final int ATLAS_SIZE = 256;
     private static final int BAR_X = 8;
     private static final int BAR_Y = 72;

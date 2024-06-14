@@ -17,8 +17,10 @@ import net.neoforged.neoforge.client.model.geometry.IUnbakedGeometry;
 
 import java.util.function.Function;
 
+import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
+
 public class PipeModelLoader implements IGeometryLoader<PipeModelLoader.PipeModelGeometry> {
-    public static final ResourceLocation GENERATOR_LOADER = new ResourceLocation(TorqueCraft.MODID, "pipe_loader");
+    public static final ResourceLocation GENERATOR_LOADER = fromNamespaceAndPath(TorqueCraft.MODID, "pipe_loader");
 
     @Override
     public PipeModelGeometry read(JsonObject jsonObject, JsonDeserializationContext deserializationContext) throws JsonParseException {
@@ -35,7 +37,7 @@ public class PipeModelLoader implements IGeometryLoader<PipeModelLoader.PipeMode
         }
 
         @Override
-        public PipeBakedModel bake(IGeometryBakingContext context, ModelBaker baker, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, ItemOverrides overrides, ResourceLocation modelLocation) {
+        public PipeBakedModel bake(IGeometryBakingContext context, ModelBaker baker, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, ItemOverrides overrides) {
             return new PipeBakedModel(context);
         }
     }

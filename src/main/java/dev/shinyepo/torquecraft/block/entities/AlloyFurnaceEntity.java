@@ -14,10 +14,10 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
@@ -27,10 +27,7 @@ import net.neoforged.neoforge.common.util.Lazy;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import static dev.shinyepo.torquecraft.utils.HeatSource.adjustTemp;
 
@@ -199,26 +196,29 @@ public class AlloyFurnaceEntity extends StandaloneMachineFactory implements IHea
     }
 
     private Optional<RecipeHolder<AlloyFurnaceRecipe>> getCurrentRecipe() {
-        SimpleContainer inventory = getItemsInSlots();
+        CraftingInput inventory = getItemsInSlots();
 
         return this.level.getRecipeManager().getRecipeFor(TorqueRecipes.Types.ALLOY_SMELTING, inventory, this.level);
     }
 
-    private SimpleContainer getItemsInSlots() {
-        SimpleContainer inventory = new SimpleContainer(4);
+    private CraftingInput getItemsInSlots() {
+
+        List<ItemStack> inputs = new ArrayList<>(4);
         for (int i = 0; i < ADDON_SLOT_COUNT; i++) {
-            var itemInSlot = addonItemHandler.get().getStackInSlot(i);
-            if (itemInSlot != ItemStack.EMPTY)
-                inventory.setItem(i, addonItemHandler.get().getStackInSlot(i));
+            inputs.add(addonItemHandler.get().getStackInSlot(i));
         }
         for (int i = 0; i < INPUT_SLOT_COUNT; i++) {
             var ingot = inputItemHandler.get().getStackInSlot(i);
+            if (i == 8) {
+                inputs.add(3, ingot);
+                break;
+            }
             if (!ingot.isEmpty()) {
-                inventory.setItem(3, ingot);
+                inputs.add(ingot);
                 break;
             }
         }
-        return inventory;
+        return CraftingInput.of(4, 1, inputs);
     }
 
     private boolean canOutputItem(Item item) {

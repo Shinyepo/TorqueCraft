@@ -15,7 +15,6 @@ import net.minecraft.client.renderer.block.ModelBlockRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.Vec3;
@@ -25,6 +24,9 @@ import org.joml.Vector3f;
 
 import java.util.List;
 
+import static net.minecraft.client.resources.model.ModelResourceLocation.standalone;
+import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
+
 public class RotaryRenderer {
     public static void renderRotation(String modelPath, BlockEntity blockEntity, PoseStack pose, MultiBufferSource buffer, float partialTick, int packedLight) {
         IRotaryHandler handler = Minecraft.getInstance().level.getCapability(TorqueCustomCapabilities.ROTARY_HANDLER_BLOCK,blockEntity.getBlockPos(),blockEntity.getBlockState(),blockEntity,null);
@@ -33,7 +35,7 @@ public class RotaryRenderer {
         }
         ModelBlockRenderer renderer = Minecraft.getInstance().getBlockRenderer().getModelRenderer();
         Direction direction = blockEntity.getBlockState().getValue(HorizontalDirectionalBlock.FACING);
-        BakedModel model = Minecraft.getInstance().getModelManager().getModel(new ResourceLocation(TorqueCraft.MODID, "block/partial/"+modelPath));
+        BakedModel model = Minecraft.getInstance().getModelManager().getModel(standalone(fromNamespaceAndPath(TorqueCraft.MODID, "block/partial/" + modelPath)));
 
         RenderType type = RenderType.solid();
         pose.pushPose();
@@ -53,7 +55,7 @@ public class RotaryRenderer {
         ModelBlockRenderer renderer = Minecraft.getInstance().getBlockRenderer().getModelRenderer();
         Direction direction = blockEntity.getMonitorFacing();
         if (direction == null) return;
-        BakedModel model = Minecraft.getInstance().getModelManager().getModel(new ResourceLocation(TorqueCraft.MODID, "block/partial/rotary_monitor"));
+        BakedModel model = Minecraft.getInstance().getModelManager().getModel(standalone(fromNamespaceAndPath(TorqueCraft.MODID, "block/partial/rotary_monitor")));
 
         RenderType type = RenderType.solid();
         pose.pushPose();

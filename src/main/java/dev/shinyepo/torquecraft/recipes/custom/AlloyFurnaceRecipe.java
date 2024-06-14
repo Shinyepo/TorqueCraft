@@ -8,18 +8,14 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AlloyFurnaceRecipe implements Recipe<Container> {
+public class AlloyFurnaceRecipe implements Recipe<RecipeInput> {
     protected final String group;
     protected final List<Ingredient> addonIngredient;
     protected final Ingredient ingotIngredient;
@@ -46,7 +42,7 @@ public class AlloyFurnaceRecipe implements Recipe<Container> {
     }
 
     @Override
-    public ItemStack assemble(Container container, HolderLookup.Provider provider) {
+    public ItemStack assemble(RecipeInput container, HolderLookup.Provider provider) {
         return this.resultItem.copy();
     }
 
@@ -54,13 +50,15 @@ public class AlloyFurnaceRecipe implements Recipe<Container> {
         return temp;
     }
 
-    public boolean matches(Container container, Level level) {
+    public boolean matches(RecipeInput container, Level level) {
         if (level.isClientSide()) return false;
         var ingots = getIngotIngredient();
         var addonItems = new ArrayList<ItemStack>();
-        for (int i = 0; i < container.getContainerSize() - 1; i++) {
-            addonItems.add(container.getItem(i));
+        for (int i = 0; i < container.size() - 1; i++) {
+            if (!addonItems.contains(container.getItem(i)))
+                addonItems.add(container.getItem(i));
         }
+        if (addonItems.size() != addonIngredient.size()) return false;
         var matchingAddons = false;
         for (int i = 0; i < addonIngredient.size(); i++) {
             for (ItemStack item : addonItems) {
@@ -69,7 +67,7 @@ public class AlloyFurnaceRecipe implements Recipe<Container> {
             }
             if (!matchingAddons) return false;
         }
-        var matches = ingots.test(container.getItem(container.getContainerSize() - 1));
+        var matches = ingots.test(container.getItem(container.size() - 1));
 
         return matches && matchingAddons;
     }

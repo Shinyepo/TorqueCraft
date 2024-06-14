@@ -12,7 +12,6 @@ import net.minecraft.client.renderer.block.model.ItemOverrides;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.block.state.BlockState;
@@ -28,12 +27,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-import static dev.shinyepo.torquecraft.model.baker.helpers.PipeConnection.*;
-import static dev.shinyepo.torquecraft.model.baker.helpers.PipePatterns.SpriteIdx.*;
-import static dev.shinyepo.torquecraft.model.baker.helpers.PipePatterns.Pattern;
-import static dev.shinyepo.torquecraft.model.baker.helpers.PipePatterns.QuadSetting;
 import static dev.shinyepo.torquecraft.model.baker.helpers.BakedModelHelper.quad;
 import static dev.shinyepo.torquecraft.model.baker.helpers.BakedModelHelper.v;
+import static dev.shinyepo.torquecraft.model.baker.helpers.PipeConnection.*;
+import static dev.shinyepo.torquecraft.model.baker.helpers.PipePatterns.Pattern;
+import static dev.shinyepo.torquecraft.model.baker.helpers.PipePatterns.QuadSetting;
+import static dev.shinyepo.torquecraft.model.baker.helpers.PipePatterns.SpriteIdx.*;
+import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
+import static net.minecraft.resources.ResourceLocation.withDefaultNamespace;
 
 
 public class PipeBakedModel implements IDynamicBakedModel {
@@ -113,7 +114,7 @@ public class PipeBakedModel implements IDynamicBakedModel {
 
     // All textures are baked on a big texture atlas. This function gets the texture from that atlas
     private TextureAtlasSprite getTexture(String path) {
-        return Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(new ResourceLocation(TorqueCraft.MODID, path));
+        return Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(fromNamespaceAndPath(TorqueCraft.MODID, path));
     }
 
     private void setPipeState(BlockState pipeState) {
@@ -376,7 +377,7 @@ public class PipeBakedModel implements IDynamicBakedModel {
     @Override
     public TextureAtlasSprite getParticleIcon() {
         return spriteNormalPipe == null
-                ? Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply((new ResourceLocation("minecraft", "missingno")))
+                ? Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply((withDefaultNamespace("missingno")))
                 : spriteNormalPipe;
     }
 

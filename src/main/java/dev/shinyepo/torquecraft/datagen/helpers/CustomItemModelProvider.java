@@ -13,6 +13,8 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 import java.util.Objects;
 
+import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
+
 public abstract class CustomItemModelProvider extends ItemModelProvider {
     public CustomItemModelProvider(PackOutput output, String modid, ExistingFileHelper existingFileHelper) {
         super(output, modid, existingFileHelper);
@@ -42,19 +44,19 @@ public abstract class CustomItemModelProvider extends ItemModelProvider {
     public ItemModelBuilder basicItem(ResourceLocation item, String folder) {
         return getBuilder(item.toString())
                 .parent(new ModelFile.UncheckedModelFile("item/generated"))
-                .texture("layer0", new ResourceLocation(item.getNamespace(), "item/" + folder + item.getPath()));
+                .texture("layer0", fromNamespaceAndPath(item.getNamespace(), "item/" + folder + item.getPath()));
     }
 
     public ItemModelBuilder basicMaterialItem(ResourceLocation item) {
         return getBuilder(item.toString())
                 .parent(new ModelFile.UncheckedModelFile("item/generated"))
-                .texture("layer0", new ResourceLocation(item.getNamespace(), "item/materials/" + item.getPath()));
+                .texture("layer0", fromNamespaceAndPath(item.getNamespace(), "item/materials/" + item.getPath()));
     }
 
     public ItemModelBuilder basicBlockMaterialItem(ResourceLocation item) {
         return getBuilder(item.toString())
                 .parent(new ModelFile.UncheckedModelFile("item/generated"))
-                .texture("layer0", new ResourceLocation(item.getNamespace(), "block/materials/" + item.getPath()));
+                .texture("layer0", fromNamespaceAndPath(item.getNamespace(), "block/materials/" + item.getPath()));
     }
 
     public ItemModelBuilder withExistingParent(BlockItem item, String folder, Block block) {

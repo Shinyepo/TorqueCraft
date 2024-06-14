@@ -67,7 +67,7 @@ public class TorqueRecipeBuilder implements RecipeBuilder {
 
     @Override
     public void save(RecipeOutput pRecipeOutput) {
-        this.save(pRecipeOutput, new ResourceLocation(this.recipeType + "/" + getResultPath()));
+        this.save(pRecipeOutput, ResourceLocation.parse(this.recipeType + "/" + getResultPath()));
     }
 
     @Override

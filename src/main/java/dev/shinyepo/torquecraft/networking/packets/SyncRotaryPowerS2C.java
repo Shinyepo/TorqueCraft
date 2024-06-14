@@ -2,20 +2,19 @@ package dev.shinyepo.torquecraft.networking.packets;
 
 import dev.shinyepo.torquecraft.TorqueCraft;
 import dev.shinyepo.torquecraft.factory.rotary.network.RotaryNetworkDevice;
-import dev.shinyepo.torquecraft.factory.rotary.network.RotarySource;
-import dev.shinyepo.torquecraft.factory.rotary.network.RotaryTransmitter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import org.jetbrains.annotations.NotNull;
 
+import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
+
 public record SyncRotaryPowerS2C(BlockPos pos, float angular, float torque, double temp) implements CustomPacketPayload {
-    public static final Type<SyncRotaryPowerS2C> TYPE = new Type<>(new ResourceLocation(TorqueCraft.MODID, "sync.rotary.power.s2c"));
+    public static final Type<SyncRotaryPowerS2C> TYPE = new Type<>(fromNamespaceAndPath(TorqueCraft.MODID, "sync.rotary.power.s2c"));
 
     @Override
     public @NotNull Type<SyncRotaryPowerS2C> type() {

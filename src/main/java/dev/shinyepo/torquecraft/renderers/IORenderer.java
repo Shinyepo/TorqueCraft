@@ -45,8 +45,7 @@ public class IORenderer {
         RenderSystem.enableCull();
 //        RenderSystem.enableDepthTest();
 
-        BufferBuilder bufferbuilder = Tesselator.getInstance().getBuilder();
-        bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
+        BufferBuilder bufferbuilder = Tesselator.getInstance().begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
         pose.pushPose();
         if (!Minecraft.getInstance().levelRenderer.getFrustum().isVisible(new AABB(
                 worldSpot.getX(),
@@ -56,7 +55,7 @@ public class IORenderer {
                 worldSpot.getY() + maxCorner,
                 worldSpot.getZ() + maxCorner))) {
             pose.popPose();
-            BufferUploader.drawWithShader(bufferbuilder.end());
+            BufferUploader.drawWithShader(bufferbuilder.buildOrThrow());
 //            RenderSystem.disableDepthTest();
             RenderSystem.disableCull();
             RenderSystem.disableBlend();
@@ -96,7 +95,7 @@ public class IORenderer {
         });
 
         pose.popPose();
-        BufferUploader.drawWithShader(bufferbuilder.end());
+        BufferUploader.drawWithShader(bufferbuilder.buildOrThrow());
 //        RenderSystem.disableDepthTest();
         RenderSystem.disableCull();
         RenderSystem.disableBlend();

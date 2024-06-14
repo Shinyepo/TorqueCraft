@@ -15,9 +15,11 @@ import net.neoforged.neoforge.fluids.FluidStack;
 
 import java.util.Optional;
 
+import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
+
 
 public class GrinderScreen extends AbstractContainerScreen<GrinderContainer> {
-    private final ResourceLocation GUI = new ResourceLocation(TorqueCraft.MODID, "textures/gui/grinder.png");
+    private final ResourceLocation GUI = fromNamespaceAndPath(TorqueCraft.MODID, "textures/gui/grinder.png");
     private FluidTankRenderer tankRenderer;
     private RotaryInfoRenderer rotaryRenderer;
 

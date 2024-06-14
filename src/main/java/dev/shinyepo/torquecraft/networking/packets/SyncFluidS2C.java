@@ -8,12 +8,13 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
+import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
+
 public record SyncFluidS2C(BlockPos pos, FluidStack fluidStack) implements CustomPacketPayload {
-    public static final Type<SyncFluidS2C> TYPE = new Type<>(new ResourceLocation(TorqueCraft.MODID, "sync.fluid.s2c"));
+    public static final Type<SyncFluidS2C> TYPE = new Type<>(fromNamespaceAndPath(TorqueCraft.MODID, "sync.fluid.s2c"));
 
     @Override
     public Type<SyncFluidS2C> type() {

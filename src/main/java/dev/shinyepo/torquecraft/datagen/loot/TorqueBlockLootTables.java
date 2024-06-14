@@ -5,6 +5,7 @@ import dev.shinyepo.torquecraft.registries.block.TorqueBlocks;
 import dev.shinyepo.torquecraft.registries.item.TorqueItems;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.level.block.Block;
@@ -14,8 +15,8 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import java.util.Set;
 
 public class TorqueBlockLootTables extends BlockLootSubProvider {
-    public TorqueBlockLootTables() {
-        super(Set.of(), FeatureFlags.REGISTRY.allFlags());
+    public TorqueBlockLootTables(HolderLookup.Provider provider) {
+        super(Set.of(), FeatureFlags.REGISTRY.allFlags(), provider);
     }
 
     @Override

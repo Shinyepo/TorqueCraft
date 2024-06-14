@@ -25,6 +25,8 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
+
 public class TorqueBlockStateProvider extends CustomBlockStateProvider {
     public TorqueBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
         super(output, TorqueCraft.MODID, exFileHelper);
@@ -72,7 +74,7 @@ public class TorqueBlockStateProvider extends CustomBlockStateProvider {
             Direction dir = blockState.getValue(BlockStateProperties.HORIZONTAL_FACING);
             var usage = blockState.getValue(((CoolingRadiator) block.get()).getUsage()).getSerializedName();
             return ConfiguredModel.builder()
-                    .modelFile(models().getExistingFile(new ResourceLocation(TorqueCraft.MODID, "block/radiator/cooling_radiator_" + usage)))
+                    .modelFile(models().getExistingFile(fromNamespaceAndPath(TorqueCraft.MODID, "block/radiator/cooling_radiator_" + usage)))
                     .rotationY(dir.getAxis().isVertical() ? 0 : (((int) dir.toYRot()) + 180) % 360)
                     .build();
         });
@@ -99,7 +101,7 @@ public class TorqueBlockStateProvider extends CustomBlockStateProvider {
     private ConfiguredModel[] canolaStates(BlockState state, CropBlock block, String modelName, String textureName) {
         ConfiguredModel[] models = new ConfiguredModel[1];
         models[0] = new ConfiguredModel(models().crop(modelName + state.getValue(((CanolaCrop) block).getAgeProperty()),
-                new ResourceLocation(TorqueCraft.MODID, "block/seeds/canola/" + textureName + state.getValue(((CanolaCrop) block).getAgeProperty()))).renderType("cutout"));
+                fromNamespaceAndPath(TorqueCraft.MODID, "block/seeds/canola/" + textureName + state.getValue(((CanolaCrop) block).getAgeProperty()))).renderType("cutout"));
 
         return models;
     }

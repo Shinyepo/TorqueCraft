@@ -20,7 +20,6 @@ import dev.shinyepo.torquecraft.registries.networking.TorquePackets;
 import dev.shinyepo.torquecraft.registries.recipe.TorqueRecipes;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -34,6 +33,9 @@ import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 import org.slf4j.Logger;
+
+import static net.minecraft.client.resources.model.ModelResourceLocation.standalone;
+import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 
 @Mod(TorqueCraft.MODID)
 public class TorqueCraft {
@@ -84,7 +86,7 @@ public class TorqueCraft {
 
         @SubscribeEvent
         public static void registerGeometryLoaders(ModelEvent.RegisterGeometryLoaders event) {
-            event.register(new ResourceLocation(TorqueCraft.MODID, "pipe_loader"), new PipeModelLoader());
+            event.register(fromNamespaceAndPath(TorqueCraft.MODID, "pipe_loader"), new PipeModelLoader());
         }
 
         @SubscribeEvent
@@ -95,13 +97,13 @@ public class TorqueCraft {
 
         @SubscribeEvent
         public static void registerBakedModels(ModelEvent.RegisterAdditional e) {
-            e.register(new ResourceLocation(TorqueCraft.MODID, "block/partial/hsla_shaft_rod"));
-            e.register(new ResourceLocation(TorqueCraft.MODID, "block/partial/shaft_rod"));
-            e.register(new ResourceLocation(TorqueCraft.MODID, "block/partial/hsla_short_shaft_rod"));
-            e.register(new ResourceLocation(TorqueCraft.MODID, "block/partial/short_shaft_rod"));
-            e.register(new ResourceLocation(TorqueCraft.MODID, "block/partial/fan_blade"));
-            e.register(new ResourceLocation(TorqueCraft.MODID, "block/partial/grinder_shaft"));
-            e.register(new ResourceLocation(TorqueCraft.MODID, "block/partial/rotary_monitor"));
+            e.register(standalone(fromNamespaceAndPath(TorqueCraft.MODID, "block/partial/hsla_shaft_rod")));
+            e.register(standalone(fromNamespaceAndPath(TorqueCraft.MODID, "block/partial/shaft_rod")));
+            e.register(standalone(fromNamespaceAndPath(TorqueCraft.MODID, "block/partial/hsla_short_shaft_rod")));
+            e.register(standalone(fromNamespaceAndPath(TorqueCraft.MODID, "block/partial/short_shaft_rod")));
+            e.register(standalone(fromNamespaceAndPath(TorqueCraft.MODID, "block/partial/fan_blade")));
+            e.register(standalone(fromNamespaceAndPath(TorqueCraft.MODID, "block/partial/grinder_shaft")));
+            e.register(standalone(fromNamespaceAndPath(TorqueCraft.MODID, "block/partial/rotary_monitor")));
         }
 
         @SubscribeEvent
