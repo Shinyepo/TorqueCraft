@@ -35,7 +35,7 @@ public class AlloyFurnaceEntity extends StandaloneMachineFactory implements IHea
     private static final int ADDON_SLOT_COUNT = 3;
     private static final int INPUT_SLOT_COUNT = 9;
     private static final int OUTPUT_SLOT_COUNT = 3;
-    public static final int SLOT_COUNT = ADDON_SLOT_COUNT + INPUT_SLOT_COUNT + OUTPUT_SLOT_COUNT + 1;
+    public static final int SLOT_COUNT = ADDON_SLOT_COUNT + INPUT_SLOT_COUNT + OUTPUT_SLOT_COUNT;
     private static final List<TagKey<Item>> validAddonsInputs = List.of(ItemTags.COALS, Tags.Items.GUNPOWDERS, Tags.Items.SANDS, Tags.Items.SANDSTONE_BLOCKS, TorqueTags.SILICON);
     private static final List<TagKey<Item>> validInputs = List.of(Tags.Items.INGOTS);
     private final Lazy<ItemStackHandler> addonItemHandler = createInputItemHandler(ADDON_SLOT_COUNT, validAddonsInputs);
@@ -134,17 +134,6 @@ public class AlloyFurnaceEntity extends StandaloneMachineFactory implements IHea
         } else {
             resetProgress();
         }
-//        if (hasRecipe()) {
-//            increaseCraftingProgress();
-//            setChanged(pLevel,pPos,pState);
-//
-//            if(hasProgressFinished()) {
-//                craftItem();
-//                resetProgress();
-//            }
-//        } else {
-//            resetProgress();
-//        }
     }
 
     public double getTemp() {
@@ -173,13 +162,14 @@ public class AlloyFurnaceEntity extends StandaloneMachineFactory implements IHea
     }
 
     private void useAddonItems(List<Ingredient> addons) {
-
+        List<Item> removed = new ArrayList<>();
         for (Ingredient addon : addons) {
             for (int j = 0; j < 3; j++) {
                 var item = addonItemHandler.get().getStackInSlot(j);
                 var matches = addon.test(item);
-                if (matches) {
+                if (matches && !removed.contains(item.getItem())) {
                     addonItemHandler.get().setStackInSlot(j, new ItemStack(item.getItem(), item.getCount() - 1));
+                    removed.add(item.getItem());
                 }
             }
         }
@@ -191,6 +181,7 @@ public class AlloyFurnaceEntity extends StandaloneMachineFactory implements IHea
         if (recipe.isEmpty()) return false;
 
         ItemStack result = recipe.get().value().getResultItem(null);
+        if (this.recipe != recipe.get().value()) resetProgress();
         this.recipe = recipe.get().value();
         return canOutputItem(result.getItem()) && canFitInOutput(1, result.getItem()) != -1;
     }

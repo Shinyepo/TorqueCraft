@@ -25,8 +25,8 @@ public class AlloyFurnaceContainer extends ContainerBase {
             addItemSlotRange(alloyFurnace.getInput(), 3, 3, 62, 18);
             addItemSlotRange(alloyFurnace.getOutput(), 1, 3, 143, 18);
 
-            addDataSlots(data);
             layoutPlayerInventorySlots(player.getInventory(), 8, 84);
+            addDataSlots(data);
         }
     }
 }
