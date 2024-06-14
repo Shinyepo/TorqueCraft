@@ -5,6 +5,7 @@ import dev.shinyepo.torquecraft.factory.pipe.PipeBlock;
 import dev.shinyepo.torquecraft.factory.pipe.network.IPressureTransmitter;
 import dev.shinyepo.torquecraft.factory.pipe.network.PressureFluidTransmitter;
 import dev.shinyepo.torquecraft.model.baker.helpers.PipeConnection;
+import dev.shinyepo.torquecraft.network.fluid.PressureFluidNetworkRegistry;
 import dev.shinyepo.torquecraft.utils.PipeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -80,9 +81,13 @@ public class FluidPipe extends PipeBlock implements SimpleWaterloggedBlock, Enti
             var handler = transmitter.getTank();
             if (handler != null) {
                 UUID networkId = transmitter.getNetworkId();
-                Component msg = Component.literal("Fluid amount: " + handler.getFluidAmount() + " Network Id: " + networkId);
-                player.displayClientMessage(msg, false);
-                return InteractionResult.SUCCESS_NO_ITEM_USED;
+                var network = PressureFluidNetworkRegistry.getInstance().getNetwork(networkId);
+                if (network != null) {
+                    var networkTank = network.getTank();
+                    Component msg = Component.literal("Fluid amount: " + handler.getFluidAmount() + " Network Tank: " + networkTank.getFluidInTank(0).getAmount());
+                    player.displayClientMessage(msg, false);
+                    return InteractionResult.SUCCESS_NO_ITEM_USED;
+                }
             }
         }
 
