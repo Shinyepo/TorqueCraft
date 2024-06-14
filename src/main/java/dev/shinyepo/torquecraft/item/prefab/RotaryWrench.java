@@ -42,6 +42,7 @@ public class RotaryWrench extends Item {
 
             device.resetSides();
             device.configureSides(newFace);
+            networkDevice.invalidateCapabilities();
             pContext.getLevel().setBlockAndUpdate(pContext.getClickedPos(), state.setValue(BlockStateProperties.HORIZONTAL_FACING, newFace));
 
             networkDevice.updateNetwork(RotaryNetworkRegistry.getInstance().registerDevice(networkDevice));
