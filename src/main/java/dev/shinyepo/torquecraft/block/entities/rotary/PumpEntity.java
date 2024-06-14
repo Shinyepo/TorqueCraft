@@ -2,6 +2,7 @@ package dev.shinyepo.torquecraft.block.entities.rotary;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
+import dev.shinyepo.torquecraft.capabilities.handlers.fluid.AdaptedFluidHandler;
 import dev.shinyepo.torquecraft.capabilities.handlers.fluid.IFluidBuffer;
 import dev.shinyepo.torquecraft.factory.TorqueFluidTank;
 import dev.shinyepo.torquecraft.networking.TorqueMessages;
@@ -33,6 +34,13 @@ public class PumpEntity extends BlockEntity implements IFluidBuffer {
             }
         }
     };
+    private final AdaptedFluidHandler adaptedFluidTank = new AdaptedFluidHandler(fluidTank) {
+        @Override
+        public int fill(FluidStack resource, FluidAction action) {
+            return 0;
+        }
+    };
+
     private final List<BlockPos> validSources = Lists.newArrayList();
     public static final ImmutableList<Direction> POSSIBLE_DIRECTIONS = ImmutableList.of(
             Direction.DOWN, Direction.SOUTH, Direction.NORTH, Direction.EAST, Direction.WEST
@@ -43,7 +51,7 @@ public class PumpEntity extends BlockEntity implements IFluidBuffer {
     }
 
     public void tick(Level level, BlockPos pos) {
-        if(level.getGameTime() % 20 == 0) {
+        if (level.getGameTime() % 5 == 0) {
             if (isSource(level, pos.below()) && canFitWater()) {
                 if (validSources.isEmpty()) {
                     fetchSources(level, pos);
@@ -97,10 +105,10 @@ public class PumpEntity extends BlockEntity implements IFluidBuffer {
             }
     }
 
-    public TorqueFluidTank getFluidTank(Direction dir) {
+    public IFluidHandler getFluidTank(Direction dir) {
         if (dir == null) return fluidTank;
         if (dir == Direction.UP) {
-            return fluidTank;
+            return adaptedFluidTank;
         }
         return null;
     }
@@ -142,12 +150,13 @@ public class PumpEntity extends BlockEntity implements IFluidBuffer {
         }
         IFluidHandler fHandler = level.getCapability(Capabilities.FluidHandler.BLOCK, getBlockPos().relative(Direction.UP),Direction.UP);
         if (fHandler != null) {
-            canAcceptFluid(fHandler);
+            if (!canAcceptFluid(fHandler)) return;
             int remainingSpace = fHandler.getTankCapacity(0) - fHandler.getFluidInTank(0).getAmount();
-            int amount = Math.min(remainingSpace, 100);
+            int amount = Math.min(remainingSpace, Math.min(1000, fluidTank.getFluidAmount()));
 
-            fHandler.fill(new FluidStack(fluidTank.getFluid().getFluid(), amount), IFluidHandler.FluidAction.EXECUTE);
-            fluidTank.drain(amount, IFluidHandler.FluidAction.EXECUTE);
+            var filled = fHandler.fill(new FluidStack(fluidTank.getFluid().getFluid(), amount), IFluidHandler.FluidAction.EXECUTE);
+            fluidTank.drain(filled, IFluidHandler.FluidAction.EXECUTE);
+
             setChanged();
         }
     }
