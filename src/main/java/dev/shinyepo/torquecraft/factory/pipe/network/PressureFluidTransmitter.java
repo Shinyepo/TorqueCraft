@@ -94,7 +94,7 @@ public class PressureFluidTransmitter extends BlockEntity implements IPressureTr
                         Capabilities.FluidHandler.BLOCK,
                         (ServerLevel) getLevel(),
                         relativeCap,
-                        dir
+                        dir.getOpposite()
                 );
                 if (cap.getCapability() != null) {
                     this.capCacheMap.put(relativeCap, cap);

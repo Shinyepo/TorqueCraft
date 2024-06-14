@@ -50,7 +50,8 @@ public class PressureFluidNetwork {
                         if (tillFilled > 0) {
                             var toDrain = Math.min(tillFilled, Math.min(pressureFluidHandler.getTransferRate(), pressureFluidHandler.getTank().getFluidAmount()));
                             var filledAmount = handler.fill(new FluidStack(pressureFluidHandler.getTank().getFluid().getFluid(), toDrain), IFluidHandler.FluidAction.EXECUTE);
-                            pressureFluidHandler.getTank().drain(toDrain, IFluidHandler.FluidAction.EXECUTE);
+                            if (filledAmount > 0)
+                                pressureFluidHandler.getTank().drain(filledAmount, IFluidHandler.FluidAction.EXECUTE);
                         }
                     }
                 });
