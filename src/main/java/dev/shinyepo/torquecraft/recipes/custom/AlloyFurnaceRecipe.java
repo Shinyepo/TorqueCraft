@@ -55,13 +55,15 @@ public class AlloyFurnaceRecipe implements Recipe<RecipeInput> {
         var ingots = getIngotIngredient();
         var addonItems = new ArrayList<ItemStack>();
         for (int i = 0; i < container.size() - 1; i++) {
-            if (!addonItems.contains(container.getItem(i)))
-                addonItems.add(container.getItem(i));
+            if (container.getItem(i).is(ItemStack.EMPTY.getItem())) continue;
+            var item = container.getItem(i);
+            if (addonItems.stream().anyMatch(x -> x.getItem() == item.getItem())) continue;
+            addonItems.add(container.getItem(i));
         }
         if (addonItems.size() != addonIngredient.size()) return false;
         var matchingAddons = false;
         for (int i = 0; i < addonIngredient.size(); i++) {
-            for (ItemStack item : addonItems) {
+            for (var item : addonItems) {
                 matchingAddons = addonIngredient.get(i).test(item);
                 if (matchingAddons) break;
             }
