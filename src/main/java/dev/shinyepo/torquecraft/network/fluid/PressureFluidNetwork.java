@@ -59,6 +59,7 @@ public class PressureFluidNetwork {
     }
 
     private void updateTransmitterTank() {
+        if (transmitters.isEmpty()) return;
         int transmitterCount = transmitters.size();
         int amountToSplit = ((int) pressureFluidHandler.getTank().getFluidAmount() / transmitterCount);
         transmitters.forEach((blockPos, transmitter) -> transmitter.fillTank(new FluidStack(pressureFluidHandler.getTank().getFluid().getFluid(), amountToSplit)));
@@ -99,7 +100,6 @@ public class PressureFluidNetwork {
         var transmitterCapCache = transmitter.getClientCapabilities();
         transmitterCapCache.forEach((capPos, cache) -> capabilityCacheMap.remove(capPos));
         transmitters.remove(pos, transmitter);
-//        splitFluid();
     }
 
     public IFluidHandler getTank() {
@@ -109,6 +109,4 @@ public class PressureFluidNetwork {
     public void updateCapabilities(IPressureTransmitter transmitter, Map<BlockPos, BlockCapabilityCache<IFluidHandler, Direction>> capMap) {
         capabilityCacheMap.put(transmitter, capMap);
     }
-
-
 }
