@@ -6,7 +6,6 @@ import dev.shinyepo.torquecraft.factory.rotary.network.RotaryClient;
 import dev.shinyepo.torquecraft.registries.block.TorqueBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
@@ -32,38 +31,34 @@ public class MechanicalFanEntity extends RotaryClient {
         super(TorqueBlockEntities.MECHANICAL_FAN_ENTITY.get(), pPos, pBlockState, config);
 
         this.workingBoundary = getWorkingBoundary(pPos, pBlockState);
-        BlockPos.betweenClosedStream(workingBoundary).forEach(x-> {
-            workingArea.add(x.immutable());
-        });
+        BlockPos.betweenClosedStream(workingBoundary).forEach(x -> workingArea.add(x.immutable()));
     }
 
     private void calculateWorkingArea() {
         this.workingBoundary = getWorkingBoundary(this.getBlockPos(), this.getBlockState());
-        BlockPos.betweenClosedStream(workingBoundary).forEach(x-> {
-            workingArea.add(x.immutable());
-        });
+        BlockPos.betweenClosedStream(workingBoundary).forEach(x -> workingArea.add(x.immutable()));
     }
 
     private AABB getWorkingBoundary(BlockPos pPos, BlockState pState) {
         Direction facing = pState.getValue(BlockStateProperties.HORIZONTAL_FACING);
-        int distance = (int) Math.ceil(4.5714 + (this.rotaryHandler.get().getAngular()*3/112));
+        int distance = (int) Math.ceil(4.5714 + (this.rotaryHandler.get().getAngular() * 3 / 112));
         switch (facing) {
             case NORTH -> {
-                return new AABB(new Vec3(pPos.getX()-1, pPos.getY()-0.5, pPos.getZ()-0.1),
-                        new Vec3(pPos.getX()+1.9, pPos.getY()+2, pPos.getZ()-distance));
+                return new AABB(new Vec3(pPos.getX() - 1, pPos.getY() - 0.5, pPos.getZ() - 0.1),
+                        new Vec3(pPos.getX() + 1.9, pPos.getY() + 2, pPos.getZ() - distance));
             }
             case EAST -> {
-                return new AABB(new Vec3(pPos.getX()+1, pPos.getY()-0.5, pPos.getZ()-1),
-                        new Vec3(pPos.getX()+distance, pPos.getY()+2, pPos.getZ()+1.9));
+                return new AABB(new Vec3(pPos.getX() + 1, pPos.getY() - 0.5, pPos.getZ() - 1),
+                        new Vec3(pPos.getX() + distance, pPos.getY() + 2, pPos.getZ() + 1.9));
 
             }
             case SOUTH -> {
-                return new AABB(new Vec3(pPos.getX()-1, pPos.getY()-0.5, pPos.getZ()+1),
-                        new Vec3(pPos.getX()+1.9, pPos.getY()+2, pPos.getZ()+distance));
+                return new AABB(new Vec3(pPos.getX() - 1, pPos.getY() - 0.5, pPos.getZ() + 1),
+                        new Vec3(pPos.getX() + 1.9, pPos.getY() + 2, pPos.getZ() + distance));
             }
             case WEST -> {
-                return new AABB(new Vec3(pPos.getX(), pPos.getY()-0.5, pPos.getZ()-1),
-                        new Vec3(pPos.getX()-distance, pPos.getY()+2, pPos.getZ()+1.9));
+                return new AABB(new Vec3(pPos.getX(), pPos.getY() - 0.5, pPos.getZ() - 1),
+                        new Vec3(pPos.getX() - distance, pPos.getY() + 2, pPos.getZ() + 1.9));
             }
             default -> {
                 return null;
@@ -86,7 +81,7 @@ public class MechanicalFanEntity extends RotaryClient {
 
     public void tick(Level pLevel, BlockState pState) {
         if (this.rotaryHandler.get().getAngular() == 0) return;
-        List<Entity> entities = pLevel.getEntities(null,workingBoundary);
+        List<Entity> entities = pLevel.getEntities(null, workingBoundary);
         if (!entities.isEmpty()) {
             for (Entity en : entities) {
                 if (!en.isShiftKeyDown()) {
@@ -129,10 +124,8 @@ public class MechanicalFanEntity extends RotaryClient {
     }
 
     @Override
-    public void setRotaryPower(float angular, float torque, double temp) {
-        super.setRotaryPower(angular, torque, temp);
-        if (!this.level.isClientSide) {
-            calculateWorkingArea();
-        }
+    public void setRotaryPower(float angular, float torque) {
+        super.setRotaryPower(angular, torque);
+        calculateWorkingArea();
     }
 }
