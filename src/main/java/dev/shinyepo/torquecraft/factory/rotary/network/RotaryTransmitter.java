@@ -20,6 +20,7 @@ import net.minecraft.world.phys.Vec3;
 public class RotaryTransmitter extends RotaryNetworkDevice<TransmitterConfig> implements IWrenchInteraction {
     private final TransmitterConfig transmitterConfig;
     private boolean meltdown = false;
+    private boolean update = false;
 
     public RotaryTransmitter(BlockEntityType<?> type, BlockPos pos, BlockState blockState, TransmitterConfig config) {
         super(type, pos, blockState, config);
@@ -57,9 +58,16 @@ public class RotaryTransmitter extends RotaryNetworkDevice<TransmitterConfig> im
             this.rotaryHandler.get().setTorque(0);
         }
 
-        if (getNetwork() != null) {
+        if (getNetwork() != null && update) {
             getNetwork().emitPower(this.getBlockPos().relative(this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING)), this.rotaryHandler.get().getAngular(), this.rotaryHandler.get().getTorque());
+            update = false;
         }
+    }
+
+    @Override
+    public void setRotaryPower(float angular, float torque) {
+        super.setRotaryPower(angular, torque);
+        update = true;
     }
 
     @Override
