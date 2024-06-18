@@ -1,0 +1,11 @@
+{
+  "type": "torquecraft:grinding",
+  "ingredient": {
+    "item": "minecraft:raw_gold_block"
+  },
+  "resultFluid": {},
+  "resultItem": {
+    "count": 9,
+    "id": "torquecraft:gold_dust"
+  }
+}

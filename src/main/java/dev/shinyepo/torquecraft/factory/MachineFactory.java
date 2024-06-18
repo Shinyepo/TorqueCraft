@@ -122,7 +122,7 @@ public class MachineFactory extends RotaryClient implements IFluidBuffer {
                 if (!validInputs.isEmpty()) {
                     return stack.getTags().anyMatch((tag) -> validInputs.contains(tag));
                 }
-                return false;
+                return true;
             }
         };
     }

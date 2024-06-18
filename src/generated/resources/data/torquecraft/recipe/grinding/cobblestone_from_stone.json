@@ -1,0 +1,11 @@
+{
+  "type": "torquecraft:grinding",
+  "ingredient": {
+    "item": "minecraft:stone"
+  },
+  "resultFluid": {},
+  "resultItem": {
+    "count": 1,
+    "id": "minecraft:cobblestone"
+  }
+}

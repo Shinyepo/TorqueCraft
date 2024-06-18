@@ -78,7 +78,7 @@ public class GrinderEntity extends MachineFactory {
 
     public GrinderEntity(BlockPos pPos, BlockState pBlockState) {
         super(TorqueBlockEntities.GRINDER_ENTITY.get(), pPos, pBlockState, config);
-        setValidInputs(validInputs);
+//        setValidInputs(validInputs);
         setValidFluidSlotInputs(validFluidSlotInputs);
         this.rotaryHandler.get().setMaxTorque(config.getTorque());
         this.rotaryHandler.get().setMaxAngular(config.getAngular());
@@ -227,7 +227,7 @@ public class GrinderEntity extends MachineFactory {
     }
 
     private boolean canFitInOutput(int count) {
-        return this.itemHandler.get().getStackInSlot(SLOT_OUTPUT).getCount() + count <= this.itemHandler.get().getStackInSlot(1).getMaxStackSize();
+        return this.itemHandler.get().getStackInSlot(SLOT_OUTPUT).isEmpty() || this.itemHandler.get().getStackInSlot(SLOT_OUTPUT).getCount() + count <= this.itemHandler.get().getStackInSlot(SLOT_OUTPUT).getMaxStackSize();
     }
 
     private boolean fluidsMatch(FluidStack resultFluid) {

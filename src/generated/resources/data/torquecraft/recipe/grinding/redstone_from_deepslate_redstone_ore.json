@@ -1,0 +1,11 @@
+{
+  "type": "torquecraft:grinding",
+  "ingredient": {
+    "item": "minecraft:deepslate_redstone_ore"
+  },
+  "resultFluid": {},
+  "resultItem": {
+    "count": 12,
+    "id": "minecraft:redstone"
+  }
+}

@@ -19,6 +19,13 @@ public class TorqueCreativeTabs {
             .displayItems((parameters, output) -> {
                 //Materials
                 output.accept(TorqueItems.NETHER_QUARTZ_DUST.get());
+                output.accept(TorqueItems.IRON_DUST.get());
+                output.accept(TorqueItems.COPPER_DUST.get());
+                output.accept(TorqueItems.GOLD_DUST.get());
+                output.accept(TorqueItems.EMERALD_DUST.get());
+                output.accept(TorqueItems.DIAMOND_DUST.get());
+                output.accept(TorqueItems.NETHERITE_DUST.get());
+                output.accept(TorqueItems.OBSIDIAN_DUST.get());
                 output.accept(TorqueItems.SILICON.get());
                 output.accept(TorqueItems.HSLA_INGOT.get());
                 output.accept(TorqueItems.CAST_IRON_INGOT.get());

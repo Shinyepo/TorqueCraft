@@ -20,6 +20,13 @@ public class TorqueItemModelProvider extends CustomItemModelProvider {
         basicMaterialItem(TorqueItems.TUNGSTEN_INGOT.get());
         basicMaterialItem(TorqueItems.HSLA_INGOT.get());
         basicMaterialItem(TorqueItems.CAST_IRON_INGOT.get());
+        basicMaterialItem(TorqueItems.IRON_DUST.get());
+        basicMaterialItem(TorqueItems.COPPER_DUST.get());
+        basicMaterialItem(TorqueItems.GOLD_DUST.get());
+        basicMaterialItem(TorqueItems.DIAMOND_DUST.get());
+        basicMaterialItem(TorqueItems.EMERALD_DUST.get());
+        basicMaterialItem(TorqueItems.NETHERITE_DUST.get());
+        basicMaterialItem(TorqueItems.OBSIDIAN_DUST.get());
 
         //Block Materials
         withExistingParent(TorqueItems.TUNGSTEN_BLOCK_ITEM.get(), TorqueBlocks.TUNGSTEN_BLOCK.get());

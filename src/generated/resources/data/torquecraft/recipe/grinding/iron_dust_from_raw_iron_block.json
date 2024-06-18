@@ -1,0 +1,11 @@
+{
+  "type": "torquecraft:grinding",
+  "ingredient": {
+    "item": "minecraft:raw_iron_block"
+  },
+  "resultFluid": {},
+  "resultItem": {
+    "count": 9,
+    "id": "torquecraft:iron_dust"
+  }
+}

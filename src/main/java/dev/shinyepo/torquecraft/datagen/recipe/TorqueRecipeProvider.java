@@ -1,48 +1,42 @@
 package dev.shinyepo.torquecraft.datagen.recipe;
 
-import dev.shinyepo.torquecraft.recipes.TorqueRecipeBuilder;
-import dev.shinyepo.torquecraft.recipes.custom.AlloyFurnaceRecipe;
-import dev.shinyepo.torquecraft.recipes.custom.AlloyFurnaceRecipeBuilder;
-import dev.shinyepo.torquecraft.recipes.custom.GrinderRecipe;
 import dev.shinyepo.torquecraft.registries.block.TorqueBlocks;
 import dev.shinyepo.torquecraft.registries.fluid.TorqueFluids;
 import dev.shinyepo.torquecraft.registries.item.TorqueItems;
-import dev.shinyepo.torquecraft.registries.recipe.TorqueRecipes;
 import dev.shinyepo.torquecraft.registries.tag.TorqueTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.recipes.*;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.level.ItemLike;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.fluids.FluidStack;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public class TorqueRecipeProvider extends RecipeProvider {
-    private static final List<ItemLike> SMELTABLES = List.of(TorqueItems.TUNGSTEN_INGOT.get());
-
+public class TorqueRecipeProvider extends CustomRecipeProvider {
     public TorqueRecipeProvider(PackOutput pOutput, CompletableFuture<HolderLookup.Provider> pHolder) {
         super(pOutput, pHolder);
-    }
-
-
-    public static TorqueRecipeBuilder grinding(Ingredient ingredient, ItemLike result, FluidStack resultFluid) {
-        return new TorqueRecipeBuilder(TorqueRecipes.Types.GRINDING, RecipeCategory.MISC, GrinderRecipe::new, ingredient, new ItemStack(result, 1), resultFluid);
-    }
-
-    private static AlloyFurnaceRecipeBuilder alloying(Ingredient ingotIngredient, ItemLike result) {
-        return new AlloyFurnaceRecipeBuilder(TorqueRecipes.Types.ALLOY_SMELTING, RecipeCategory.MISC, AlloyFurnaceRecipe::new, ingotIngredient, new ItemStack(result, 1));
     }
 
     @Override
     protected void buildRecipes(@NotNull RecipeOutput pRecipeOutput) {
         //Materials
+        registerDustRecipes(TorqueItems.COPPER_DUST.get(), pRecipeOutput);
+        registerDustRecipes(TorqueItems.IRON_DUST.get(), pRecipeOutput);
+        registerDustRecipes(TorqueItems.GOLD_DUST.get(), pRecipeOutput);
+        registerDustRecipes(TorqueItems.DIAMOND_DUST.get(), pRecipeOutput);
+        registerDustRecipes(TorqueItems.EMERALD_DUST.get(), pRecipeOutput);
+        registerDustRecipes(TorqueItems.NETHERITE_DUST.get(), pRecipeOutput);
+        registerDustRecipes(TorqueItems.OBSIDIAN_DUST.get(), pRecipeOutput);
+
+        buildVanillaRecipes(pRecipeOutput);
+
         registerMaterialRecipes(pRecipeOutput);
         registerBlockRecipes(pRecipeOutput);
         registerComponents(pRecipeOutput);
@@ -54,9 +48,7 @@ public class TorqueRecipeProvider extends RecipeProvider {
                 .unlockedBy("criteria", has(TorqueBlocks.TUNGSTEN_BLOCK.get()))
                 .save(pRecipeOutput);
 
-        grinding(Ingredient.of(Tags.Items.SEEDS), TorqueItems.CRUSHED_SEEDS.get(), new FluidStack(TorqueFluids.SOURCE_LUBRICANT.get(), 100))
-                .unlockedBy("criteria", has(Tags.Items.SEEDS))
-                .save(pRecipeOutput);
+        grinding(Tags.Items.SEEDS, TorqueItems.CRUSHED_SEEDS.get(), new FluidStack(TorqueFluids.SOURCE_LUBRICANT.get(), 100), pRecipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TorqueBlocks.TUNGSTEN_BLOCK.get())
                 .pattern("SSS")
@@ -278,9 +270,7 @@ public class TorqueRecipeProvider extends RecipeProvider {
     }
 
     private void registerMaterialRecipes(RecipeOutput output) {
-        grinding(Ingredient.of(Tags.Items.GEMS_QUARTZ), TorqueItems.NETHER_QUARTZ_DUST.get(), FluidStack.EMPTY)
-                .unlockedBy("has_quartz", has(Tags.Items.GEMS_QUARTZ))
-                .save(output);
+        grinding(Tags.Items.GEMS_QUARTZ, TorqueItems.NETHER_QUARTZ_DUST.get(), output);
 
         smeltingResultFromBase(output, TorqueItems.SILICON.get(), TorqueItems.NETHER_QUARTZ_DUST.get());
 

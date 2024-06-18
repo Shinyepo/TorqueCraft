@@ -1,0 +1,11 @@
+{
+  "type": "torquecraft:grinding",
+  "ingredient": {
+    "item": "minecraft:deepslate_copper_ore"
+  },
+  "resultFluid": {},
+  "resultItem": {
+    "count": 2,
+    "id": "torquecraft:copper_dust"
+  }
+}

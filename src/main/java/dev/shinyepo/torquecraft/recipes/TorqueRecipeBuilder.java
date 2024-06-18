@@ -61,13 +61,23 @@ public class TorqueRecipeBuilder implements RecipeBuilder {
         return this.resultItem.getItem();
     }
 
-    private String getResultPath() {
-        return BuiltInRegistries.ITEM.getKey(getResult().asItem()).getPath();
+    private String getItemPath(Item item) {
+        return BuiltInRegistries.ITEM.getKey(item.asItem()).getPath();
+    }
+
+    private String getTagPath() {
+        var value = ingredient.getValues()[0];
+        if (value instanceof Ingredient.TagValue val) {
+            var tagPath = val.tag().location().getPath();
+            return String.join("_", tagPath.split("/"));
+        }
+        return getItemPath(ingredient.getItems()[0].getItem());
     }
 
     @Override
     public void save(RecipeOutput pRecipeOutput) {
-        this.save(pRecipeOutput, ResourceLocation.parse(this.recipeType + "/" + getResultPath()));
+        getTagPath();
+        this.save(pRecipeOutput, ResourceLocation.parse(this.recipeType + "/" + getItemPath(resultItem.getItem()) + "_from_" + getTagPath()));
     }
 
     @Override

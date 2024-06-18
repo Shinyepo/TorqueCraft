@@ -1,0 +1,11 @@
+{
+  "type": "torquecraft:grinding",
+  "ingredient": {
+    "item": "minecraft:ancient_debris"
+  },
+  "resultFluid": {},
+  "resultItem": {
+    "count": 2,
+    "id": "minecraft:netherite_scrap"
+  }
+}

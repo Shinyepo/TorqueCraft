@@ -23,6 +23,13 @@ public class TorqueItems {
     public static final Supplier<Item> SILICON = ITEMS.registerSimpleItem("silicon", new Item.Properties());
     public static final Supplier<Item> CAST_IRON_INGOT = ITEMS.registerSimpleItem("cast_iron_ingot", new Item.Properties());
     public static final Supplier<Item> HSLA_INGOT = ITEMS.registerSimpleItem("hsla_ingot", new Item.Properties());
+    public static final Supplier<Item> COPPER_DUST = ITEMS.registerSimpleItem("copper_dust", new Item.Properties());
+    public static final Supplier<Item> IRON_DUST = ITEMS.registerSimpleItem("iron_dust", new Item.Properties());
+    public static final Supplier<Item> GOLD_DUST = ITEMS.registerSimpleItem("gold_dust", new Item.Properties());
+    public static final Supplier<Item> DIAMOND_DUST = ITEMS.registerSimpleItem("diamond_dust", new Item.Properties());
+    public static final Supplier<Item> EMERALD_DUST = ITEMS.registerSimpleItem("emerald_dust", new Item.Properties());
+    public static final Supplier<Item> NETHERITE_DUST = ITEMS.registerSimpleItem("netherite_dust", new Item.Properties());
+    public static final Supplier<Item> OBSIDIAN_DUST = ITEMS.registerSimpleItem("obsidian_dust", new Item.Properties());
 
     //Components
     public static final Supplier<Item> HSLA_ROD = ITEMS.registerSimpleItem("hsla_rod", new Item.Properties());

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "torquecraft:item/materials/diamond_dust"
+  }
+}
