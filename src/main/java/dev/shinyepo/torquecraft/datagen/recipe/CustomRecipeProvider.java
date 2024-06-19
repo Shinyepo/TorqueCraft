@@ -9,9 +9,7 @@ import net.minecraft.advancements.Criterion;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.recipes.RecipeCategory;
-import net.minecraft.data.recipes.RecipeOutput;
-import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.recipes.*;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -82,9 +80,25 @@ public abstract class CustomRecipeProvider extends RecipeProvider {
         return item.toString().split(":")[1].split("_")[0];
     }
 
+    protected void registerPackageRecipe(ItemLike ingot, ItemLike block, RecipeOutput output) {
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ingot, 9)
+                .requires(block)
+                .unlockedBy(getHasName(block), has(block))
+                .save(output);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, block)
+                .pattern("SSS")
+                .pattern("SSS")
+                .pattern("SSS")
+                .define('S', ingot)
+                .unlockedBy(getHasName(ingot), has(ingot))
+                .save(output);
+    }
+
     protected void registerDustRecipes(ItemLike dustItem, RecipeOutput output) {
         String dustName = getMaterialName(dustItem);
         var ingot = BuiltInRegistries.ITEM.getOptional(withDefaultNamespace(dustName + "_ingot"));
+        var gem = BuiltInRegistries.ITEM.getOptional(withDefaultNamespace(dustName));
         var ore = BuiltInRegistries.ITEM.getOptional(withDefaultNamespace(dustName + "_ore"));
         var deepslateOre = BuiltInRegistries.ITEM.getOptional(withDefaultNamespace("deepslate_" + dustName + "_ore"));
         var raw = BuiltInRegistries.ITEM.getOptional(withDefaultNamespace("raw_" + dustName));
@@ -94,7 +108,12 @@ public abstract class CustomRecipeProvider extends RecipeProvider {
         ingot.ifPresent(item -> {
             grinding(item, dustItem, FluidStack.EMPTY, output);
             smeltingResultFromBase(output, item, dustItem);
-            oreBlasting(output, List.of(dustItem), RecipeCategory.MISC, item, 0.7F, 100, dustName + "_ingot");
+            oreBlasting(output, List.of(dustItem), RecipeCategory.MISC, item, 0.2F, 100, dustName + "_ingot");
+        });
+        gem.ifPresent(item -> {
+            grinding(item, dustItem, FluidStack.EMPTY, output);
+            smeltingResultFromBase(output, item, dustItem);
+            oreBlasting(output, List.of(dustItem), RecipeCategory.MISC, item, 0.2F, 100, dustName);
         });
         ore.ifPresent(item -> grinding(item, dustItem, 2, FluidStack.EMPTY, output));
         deepslateOre.ifPresent(item -> grinding(item, dustItem, 2, FluidStack.EMPTY, output));
