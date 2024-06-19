@@ -1,5 +1,12 @@
 {
   "item.torquecraft.nether_quartz_dust": "Nether Quartz Dust",
+  "item.torquecraft.copper_dust": "Copper Dust",
+  "item.torquecraft.iron_dust": "Iron Dust",
+  "item.torquecraft.gold_dust": "Gold Dust",
+  "item.torquecraft.diamond_dust": "Diamond Dust",
+  "item.torquecraft.emerald_dust": "Emerald Dust",
+  "item.torquecraft.netherite_dust": "Netherite Dust",
+  "item.torquecraft.obsidian_dust": "Obsidian Dust",
   "item.torquecraft.silicon": "Silicon",
   "item.torquecraft.cast_iron_ingot": "Cast Iron Ingot",
   "item.torquecraft.hsla_ingot": "HSLA Steel Ingot",
@@ -72,10 +79,7 @@
   "torquecraft.tooltip.temp.info.tooltip.notenough": "Heat requirements are not met.",
   "torquecraft.tooltip.temp.info.title.noheat": "No Heat",
   "torquecraft.tooltip.temp.info.tooltip.noheat": "Missing valid heat source.",
-
-
-
-  "torquecraft.chatmsg.fluid_content": "%s - %s mB"
-
-
+  "torquecraft.chatmsg.fluid_content": "%s - %s mB",
+  "emi.category.torquecraft.grinding": "Grinding",
+  "emi.category.torquecraft.alloying": "Alloy Smelting"
 }

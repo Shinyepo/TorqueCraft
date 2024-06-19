@@ -5,7 +5,6 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.shinyepo.torquecraft.registries.recipe.TorqueRecipes;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -49,13 +48,11 @@ public class GrinderRecipe implements Recipe<RecipeInput> {
     public boolean matches(RecipeInput container, Level level) {
         if(level.isClientSide()) return false;
 
-        return getIngredient().get(0).test(container.getItem(0));
+        return getIngredient().test(container.getItem(0));
     }
 
-    public NonNullList<Ingredient> getIngredient() {
-        NonNullList<Ingredient> nonnulllist = NonNullList.create();
-        nonnulllist.add(this.ingredient);
-        return nonnulllist;
+    public Ingredient getIngredient() {
+        return ingredient;
     }
 
     @Override

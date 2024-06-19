@@ -76,7 +76,6 @@ public class TorqueRecipeBuilder implements RecipeBuilder {
 
     @Override
     public void save(RecipeOutput pRecipeOutput) {
-        getTagPath();
         this.save(pRecipeOutput, ResourceLocation.parse(this.recipeType + "/" + getItemPath(resultItem.getItem()) + "_from_" + getTagPath()));
     }
 

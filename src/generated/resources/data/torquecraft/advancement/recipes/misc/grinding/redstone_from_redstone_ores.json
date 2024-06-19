@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_deepslate_redstone_ore": {
+    "has_redstone_ores": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:deepslate_redstone_ore"
+            "items": "#minecraft:redstone_ores"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "torquecraft:grinding/redstone_from_deepslate_redstone_ore"
+        "recipe": "torquecraft:grinding/redstone_from_redstone_ores"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_deepslate_redstone_ore"
+      "has_redstone_ores"
     ]
   ],
   "rewards": {
     "recipes": [
-      "torquecraft:grinding/redstone_from_deepslate_redstone_ore"
+      "torquecraft:grinding/redstone_from_redstone_ores"
     ]
   }
 }

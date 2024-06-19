@@ -3,7 +3,10 @@
   "ingredient": {
     "tag": "c:seeds"
   },
-  "resultFluid": {},
+  "resultFluid": {
+    "amount": 100,
+    "id": "torquecraft:lubricant_fluid"
+  },
   "resultItem": {
     "count": 1,
     "id": "torquecraft:crushed_seeds"

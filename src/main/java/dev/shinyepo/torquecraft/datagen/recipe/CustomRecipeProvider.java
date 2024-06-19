@@ -12,6 +12,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -51,12 +52,20 @@ public abstract class CustomRecipeProvider extends RecipeProvider {
         grinding(Ingredient.of(ingredient), "has_" + formatTagName(ingredient), has(ingredient), result, 1, FluidStack.EMPTY, output);
     }
 
+    protected static void grinding(TagKey<Item> ingredient, ItemLike result, int count, RecipeOutput output) {
+        grinding(Ingredient.of(ingredient), "has_" + formatTagName(ingredient), has(ingredient), result, count, FluidStack.EMPTY, output);
+    }
+
     protected static void grinding(TagKey<Item> ingredient, ItemLike result, FluidStack resultFluid, RecipeOutput output) {
         grinding(Ingredient.of(ingredient), "has_" + formatTagName(ingredient), has(ingredient), result, 1, resultFluid, output);
     }
 
+    protected static void grinding(TagKey<Item> ingredient, ItemLike result, int count, FluidStack resultFluid, RecipeOutput output) {
+        grinding(Ingredient.of(ingredient), "has_" + formatTagName(ingredient), has(ingredient), result, count, resultFluid, output);
+    }
+
     protected static void grinding(Ingredient ingredient, String criterionName, Criterion<?> criterion, ItemLike result, int count, FluidStack resultFluid, RecipeOutput output) {
-        new TorqueRecipeBuilder(TorqueRecipes.Types.GRINDING, RecipeCategory.MISC, GrinderRecipe::new, ingredient, new ItemStack(result, count), FluidStack.EMPTY)
+        new TorqueRecipeBuilder(TorqueRecipes.Types.GRINDING, RecipeCategory.MISC, GrinderRecipe::new, ingredient, new ItemStack(result, count), resultFluid)
                 .unlockedBy(criterionName, criterion)
                 .save(output);
     }
@@ -81,6 +90,7 @@ public abstract class CustomRecipeProvider extends RecipeProvider {
         var raw = BuiltInRegistries.ITEM.getOptional(withDefaultNamespace("raw_" + dustName));
         var rawBlock = BuiltInRegistries.ITEM.getOptional(withDefaultNamespace("raw_" + dustName + "_block"));
 
+
         ingot.ifPresent(item -> {
             grinding(item, dustItem, FluidStack.EMPTY, output);
             smeltingResultFromBase(output, item, dustItem);
@@ -97,8 +107,8 @@ public abstract class CustomRecipeProvider extends RecipeProvider {
         grinding(Items.COBBLESTONE, Items.GRAVEL, output);
         grinding(Items.GRAVEL, Items.SAND, output);
 
-        grinding(Items.REDSTONE_ORE, Items.REDSTONE, 12, output);
-        grinding(Items.DEEPSLATE_REDSTONE_ORE, Items.REDSTONE, 12, output);
+
+        grinding(ItemTags.REDSTONE_ORES, Items.REDSTONE, 12, output);
         grinding(Items.ANCIENT_DEBRIS, Items.NETHERITE_SCRAP, 2, output);
         grinding(Items.CLAY, Items.CLAY_BALL, 4, output);
     }
