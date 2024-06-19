@@ -13,12 +13,15 @@
     },
     "T": {
       "item": "torquecraft:hsla_tank"
+    },
+    "X": {
+      "item": "torquecraft:fluid_pipe"
     }
   },
   "pattern": [
     "G G",
     "PTP",
-    "III"
+    "IXI"
   ],
   "result": {
     "count": 1,

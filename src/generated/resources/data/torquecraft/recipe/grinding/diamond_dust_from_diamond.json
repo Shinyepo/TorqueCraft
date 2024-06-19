@@ -1,0 +1,11 @@
+{
+  "type": "torquecraft:grinding",
+  "ingredient": {
+    "item": "minecraft:diamond"
+  },
+  "resultFluid": {},
+  "resultItem": {
+    "count": 1,
+    "id": "torquecraft:diamond_dust"
+  }
+}

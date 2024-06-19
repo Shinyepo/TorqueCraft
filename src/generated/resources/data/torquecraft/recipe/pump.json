@@ -5,17 +5,23 @@
     "C": {
       "item": "torquecraft:hsla_tank"
     },
+    "G": {
+      "item": "torquecraft:hsla_gear"
+    },
     "I": {
       "item": "torquecraft:hsla_ingot"
+    },
+    "P": {
+      "item": "torquecraft:fluid_pipe"
     },
     "S": {
       "item": "torquecraft:hsla_steel_shaft"
     }
   },
   "pattern": [
-    "III",
-    "ICS",
-    "III"
+    "IPI",
+    "GCS",
+    "IPI"
   ],
   "result": {
     "count": 1,

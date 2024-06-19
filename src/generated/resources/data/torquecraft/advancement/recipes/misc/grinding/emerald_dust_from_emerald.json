@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_gems_quartz": {
+    "has_emerald": {
       "conditions": {
         "items": [
           {
-            "items": "#c:gems/quartz"
+            "items": "minecraft:emerald"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "torquecraft:grinding/nether_quartz_dust_from_gems_quartz"
+        "recipe": "torquecraft:grinding/emerald_dust_from_emerald"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_gems_quartz"
+      "has_emerald"
     ]
   ],
   "rewards": {
     "recipes": [
-      "torquecraft:grinding/nether_quartz_dust_from_gems_quartz"
+      "torquecraft:grinding/emerald_dust_from_emerald"
     ]
   }
 }

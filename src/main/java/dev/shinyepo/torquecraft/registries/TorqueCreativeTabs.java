@@ -18,7 +18,7 @@ public class TorqueCreativeTabs {
             .icon(() -> TorqueItems.GRINDER_ITEM.get().getDefaultInstance())
             .displayItems((parameters, output) -> {
                 //Materials
-                output.accept(TorqueItems.NETHER_QUARTZ_DUST.get());
+                output.accept(TorqueItems.QUARTZ_DUST.get());
                 output.accept(TorqueItems.IRON_DUST.get());
                 output.accept(TorqueItems.COPPER_DUST.get());
                 output.accept(TorqueItems.GOLD_DUST.get());

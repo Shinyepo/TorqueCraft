@@ -1,6 +1,16 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
+    "has_hsla_casing": {
+      "conditions": {
+        "items": [
+          {
+            "items": "torquecraft:hsla_casing"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "has_hsla_steel_shaft": {
       "conditions": {
         "items": [
@@ -21,7 +31,8 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_hsla_steel_shaft"
+      "has_hsla_steel_shaft",
+      "has_hsla_casing"
     ]
   ],
   "rewards": {

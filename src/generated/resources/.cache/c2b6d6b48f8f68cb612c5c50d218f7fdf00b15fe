@@ -1,4 +1,4 @@
-// 1.21	2024-06-18T19:43:34.1251578	Item Models: torquecraft
+// 1.21	2024-06-19T17:23:41.7141766	Item Models: torquecraft
 e59d6b3d630b1cb3f52cae24f436ff54e71aa420 assets/torquecraft/models/item/alloy_furnace.json
 5f52cc675d3896825693098fb2797e0b3b53e704 assets/torquecraft/models/item/canola_seeds.json
 b9b386c2e28e8c70e124a8d3bc6061e2ae6989c3 assets/torquecraft/models/item/cast_iron_block.json
@@ -36,10 +36,10 @@ ea187b873847f038fac062df0583335c9a8d5e9d assets/torquecraft/models/item/iron_dus
 f7f6c81008be610a02e38673326d97361e8ee197 assets/torquecraft/models/item/lubricant_bucket.json
 2e1d067fdb3dbb772cb88d01170b75c0494aa3ea assets/torquecraft/models/item/mechanical_fan.json
 aec27ca1f63292cfb650c4793f653eaa3a4c4e2e assets/torquecraft/models/item/netherite_dust.json
-01298a318b74c2d686ed78753114cf82b690de45 assets/torquecraft/models/item/nether_quartz_dust.json
 176a1fa1b8175012f555f9b851a2daa8f6cc4bb0 assets/torquecraft/models/item/obsidian_dust.json
 96f0fa2f019bf6f35809815abaef8ab8c99c219f assets/torquecraft/models/item/pressure_gauge.json
 d53bc6fa7e2fb1532dc169b010d54da77f2da30d assets/torquecraft/models/item/pump.json
+10b61927010f834d5e93ab791fc18ab376e70045 assets/torquecraft/models/item/quartz_dust.json
 85483821888dd0a5f17b7dc7247777a20fca55fe assets/torquecraft/models/item/rotary_monitor.json
 08a7ab5bc3ba681cecbde1811b95444a4ad2cb4e assets/torquecraft/models/item/rotary_wrench.json
 05da4d232043d138143fdacf4ebbbce793bd6f94 assets/torquecraft/models/item/sharp_hsla_gear.json

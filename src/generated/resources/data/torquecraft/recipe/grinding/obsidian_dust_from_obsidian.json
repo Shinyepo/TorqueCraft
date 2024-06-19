@@ -1,11 +1,11 @@
 {
   "type": "torquecraft:grinding",
   "ingredient": {
-    "tag": "c:gems/quartz"
+    "item": "minecraft:obsidian"
   },
   "resultFluid": {},
   "resultItem": {
     "count": 1,
-    "id": "torquecraft:nether_quartz_dust"
+    "id": "torquecraft:obsidian_dust"
   }
 }

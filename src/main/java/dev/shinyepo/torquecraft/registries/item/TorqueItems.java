@@ -19,7 +19,7 @@ public class TorqueItems {
 
     //Materials
     public static final Supplier<Item> TUNGSTEN_INGOT = ITEMS.registerSimpleItem("tungsten_ingot", new Item.Properties().food(new FoodProperties.Builder().fast().alwaysEdible().nutrition(10).build()));
-    public static final Supplier<Item> NETHER_QUARTZ_DUST = ITEMS.registerSimpleItem("nether_quartz_dust", new Item.Properties());
+    public static final Supplier<Item> QUARTZ_DUST = ITEMS.registerSimpleItem("quartz_dust", new Item.Properties());
     public static final Supplier<Item> SILICON = ITEMS.registerSimpleItem("silicon", new Item.Properties());
     public static final Supplier<Item> CAST_IRON_INGOT = ITEMS.registerSimpleItem("cast_iron_ingot", new Item.Properties());
     public static final Supplier<Item> HSLA_INGOT = ITEMS.registerSimpleItem("hsla_ingot", new Item.Properties());

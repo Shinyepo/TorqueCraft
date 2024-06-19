@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "P": {
+      "item": "torquecraft:hsla_plate"
+    }
+  },
+  "pattern": [
+    "PPP",
+    "GGG",
+    "PPP"
+  ],
+  "result": {
+    "count": 1,
+    "id": "torquecraft:fluid_pipe"
+  }
+}

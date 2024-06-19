@@ -3,13 +3,13 @@
   "category": "misc",
   "key": {
     "G": {
-      "tag": "c:ingots/gold"
+      "item": "minecraft:gold_ingot"
     },
     "I": {
-      "tag": "c:ingots/iron"
+      "item": "minecraft:iron_ingot"
     },
     "R": {
-      "tag": "c:dusts/redstone"
+      "item": "minecraft:redstone"
     },
     "S": {
       "item": "torquecraft:silicon"

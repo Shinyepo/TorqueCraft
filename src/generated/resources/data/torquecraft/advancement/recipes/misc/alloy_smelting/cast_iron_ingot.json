@@ -1,11 +1,41 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_alloy_furnace": {
+    "has_coal": {
       "conditions": {
         "items": [
           {
-            "items": "torquecraft:alloy_furnace"
+            "items": "minecraft:coal"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_gunpowder": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:gunpowder"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_iron_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:iron_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_silicon": {
+      "conditions": {
+        "items": [
+          {
+            "items": "torquecraft:silicon"
           }
         ]
       },
@@ -21,7 +51,10 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_alloy_furnace"
+      "has_iron_ingot",
+      "has_coal",
+      "has_gunpowder",
+      "has_silicon"
     ]
   ],
   "rewards": {

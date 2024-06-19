@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "L": {
+      "item": "torquecraft:hsla_plate"
+    },
+    "P": {
+      "item": "torquecraft:fluid_pipe"
+    },
+    "T": {
+      "item": "torquecraft:hsla_tank"
+    }
+  },
+  "pattern": [
+    "LPL",
+    "LTL",
+    "LPL"
+  ],
+  "result": {
+    "count": 1,
+    "id": "torquecraft:fluid_tank"
+  }
+}

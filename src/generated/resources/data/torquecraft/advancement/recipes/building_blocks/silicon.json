@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_nether_quartz_dust": {
+    "has_quartz_dust": {
       "conditions": {
         "items": [
           {
-            "items": "torquecraft:nether_quartz_dust"
+            "items": "torquecraft:quartz_dust"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_nether_quartz_dust"
+      "has_quartz_dust"
     ]
   ],
   "rewards": {

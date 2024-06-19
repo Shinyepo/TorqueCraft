@@ -1,6 +1,36 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
+    "has_gold_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:gold_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_iron_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:iron_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_redstone": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:redstone"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "has_silicon": {
       "conditions": {
         "items": [
@@ -21,7 +51,10 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_silicon"
+      "has_silicon",
+      "has_gold_ingot",
+      "has_iron_ingot",
+      "has_redstone"
     ]
   ],
   "rewards": {

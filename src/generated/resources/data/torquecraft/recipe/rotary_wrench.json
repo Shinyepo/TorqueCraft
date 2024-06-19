@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": {
+      "item": "torquecraft:hsla_ingot"
+    },
+    "P": {
+      "item": "torquecraft:hsla_rod"
+    }
+  },
+  "pattern": [
+    "  I",
+    " P ",
+    "P  "
+  ],
+  "result": {
+    "count": 1,
+    "id": "torquecraft:rotary_wrench"
+  }
+}

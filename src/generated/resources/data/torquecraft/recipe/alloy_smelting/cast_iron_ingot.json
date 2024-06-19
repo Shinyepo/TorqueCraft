@@ -2,13 +2,13 @@
   "type": "torquecraft:alloy_smelting",
   "addonIngredient": [
     {
-      "tag": "minecraft:coals"
+      "item": "minecraft:coal"
     },
     {
-      "tag": "c:gunpowders"
+      "item": "minecraft:gunpowder"
     },
     {
-      "tag": "c:silicon"
+      "item": "torquecraft:silicon"
     }
   ],
   "ingotIngredient": {

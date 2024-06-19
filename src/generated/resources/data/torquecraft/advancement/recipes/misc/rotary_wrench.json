@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_hsla_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "torquecraft:hsla_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_hsla_rod": {
+      "conditions": {
+        "items": [
+          {
+            "items": "torquecraft:hsla_rod"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "torquecraft:rotary_wrench"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_hsla_rod",
+      "has_hsla_ingot"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "torquecraft:rotary_wrench"
+    ]
+  }
+}

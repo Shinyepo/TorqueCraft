@@ -1,6 +1,16 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
+    "has_hsla_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "torquecraft:hsla_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "has_hsla_rod": {
       "conditions": {
         "items": [
@@ -21,7 +31,8 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_hsla_rod"
+      "has_hsla_rod",
+      "has_hsla_ingot"
     ]
   ],
   "rewards": {

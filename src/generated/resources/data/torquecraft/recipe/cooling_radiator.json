@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "P": {
+      "item": "torquecraft:hsla_plate"
+    },
+    "S": {
+      "item": "torquecraft:hsla_rod"
+    }
+  },
+  "pattern": [
+    "PPP",
+    "PPP",
+    "S S"
+  ],
+  "result": {
+    "count": 1,
+    "id": "torquecraft:cooling_radiator"
+  }
+}

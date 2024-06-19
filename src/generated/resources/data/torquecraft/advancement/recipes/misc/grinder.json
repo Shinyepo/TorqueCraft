@@ -1,6 +1,26 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
+    "has_hsla_casing": {
+      "conditions": {
+        "items": [
+          {
+            "items": "torquecraft:hsla_casing"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_hsla_tank": {
+      "conditions": {
+        "items": [
+          {
+            "items": "torquecraft:hsla_tank"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "has_sharp_hsla_gear": {
       "conditions": {
         "items": [
@@ -21,7 +41,9 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_sharp_hsla_gear"
+      "has_sharp_hsla_gear",
+      "has_hsla_tank",
+      "has_hsla_casing"
     ]
   ],
   "rewards": {

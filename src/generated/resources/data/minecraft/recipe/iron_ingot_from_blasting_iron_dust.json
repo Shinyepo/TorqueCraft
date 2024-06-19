@@ -2,7 +2,7 @@
   "type": "minecraft:blasting",
   "category": "misc",
   "cookingtime": 100,
-  "experience": 0.7,
+  "experience": 0.2,
   "group": "iron_ingot",
   "ingredient": {
     "item": "torquecraft:iron_dust"
