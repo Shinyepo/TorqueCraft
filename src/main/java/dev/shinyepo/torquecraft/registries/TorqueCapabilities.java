@@ -32,6 +32,8 @@ public class TorqueCapabilities {
 
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, TorqueBlockEntities.PUMP_ENTITY.get(), (o, dir) -> o.getFluidTank(dir));
 
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, TorqueBlockEntities.SPRINKLER_ENTITY.get(), (o, dir) -> o.getFluidTank(dir));
+
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, TorqueBlockEntities.FLUID_TANK_ENTITY.get(), (o, dir) -> o.getFluidTank(dir));
 
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, TorqueBlockEntities.FLUID_PIPE_ENTITY.get(), (o, dir) -> o.getFluidTank(dir));

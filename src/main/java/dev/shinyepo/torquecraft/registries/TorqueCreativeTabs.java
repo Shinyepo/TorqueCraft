@@ -63,6 +63,7 @@ public class TorqueCreativeTabs {
                 //machines
                 output.accept(TorqueItems.ALLOY_FURNACE_ITEM.get());
                 output.accept(TorqueItems.PUMP_ITEM.get());
+                output.accept(TorqueItems.SPRINKLER_ITEM.get());
                 output.accept(TorqueItems.STEAM_ENGINE_ITEM.get());
                 output.accept(TorqueItems.GRINDER_ITEM.get());
                 output.accept(TorqueItems.MECHANICAL_FAN_ITEM.get());

@@ -4,6 +4,7 @@ import dev.shinyepo.torquecraft.TorqueCraft;
 import dev.shinyepo.torquecraft.datagen.block.TorqueBlockStateProvider;
 import dev.shinyepo.torquecraft.datagen.item.TorqueItemModelProvider;
 import dev.shinyepo.torquecraft.datagen.loot.TorqueLootTableProvider;
+import dev.shinyepo.torquecraft.datagen.particle.TorqueParticleProvider;
 import dev.shinyepo.torquecraft.datagen.recipe.TorqueRecipeProvider;
 import dev.shinyepo.torquecraft.datagen.tag.TorqueBlockTagGenerator;
 import dev.shinyepo.torquecraft.datagen.tag.TorqueItemTagGenerator;
@@ -35,6 +36,6 @@ public class DataGenerators {
         TorqueBlockTagGenerator blockTagGenerator = generator.addProvider(event.includeServer(), new TorqueBlockTagGenerator(packOutput, lookupProvider, existingFileHelper));
         generator.addProvider(event.includeServer(), new TorqueItemTagGenerator(packOutput, lookupProvider, blockTagGenerator.contentsGetter(), existingFileHelper));
 
-
+        generator.addProvider(event.includeClient(), new TorqueParticleProvider(packOutput, existingFileHelper));
     }
 }

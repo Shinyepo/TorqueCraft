@@ -1,4 +1,4 @@
-package dev.shinyepo.torquecraft.datagen.recipe;
+package dev.shinyepo.torquecraft.datagen.helpers;
 
 import dev.shinyepo.torquecraft.recipes.TorqueRecipeBuilder;
 import dev.shinyepo.torquecraft.recipes.custom.AlloyFurnaceRecipe;

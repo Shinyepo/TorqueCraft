@@ -1,5 +1,6 @@
 package dev.shinyepo.torquecraft.datagen.recipe;
 
+import dev.shinyepo.torquecraft.datagen.helpers.CustomRecipeProvider;
 import dev.shinyepo.torquecraft.registries.block.TorqueBlocks;
 import dev.shinyepo.torquecraft.registries.fluid.TorqueFluids;
 import dev.shinyepo.torquecraft.registries.item.TorqueItems;
@@ -158,6 +159,17 @@ public class TorqueRecipeProvider extends CustomRecipeProvider {
                 .unlockedBy(getHasName(TorqueItems.HSLA_GEAR.get()), has(TorqueItems.HSLA_GEAR.get()))
                 .unlockedBy(getHasName(TorqueItems.HSLA_STEEL_SHAFT.get()), has(TorqueItems.HSLA_STEEL_SHAFT.get()))
                 .unlockedBy(getHasName(TorqueItems.HSLA_INGOT.get()), has(TorqueItems.HSLA_INGOT.get()))
+                .save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TorqueBlocks.SPRINKLER.get())
+                .pattern(" P ")
+                .pattern("RPR")
+                .pattern(" G ")
+                .define('P', TorqueItems.FLUID_PIPE_ITEM.get())
+                .define('R', TorqueItems.HSLA_ROD.get())
+                .define('G', TorqueItems.HSLA_GEAR.get())
+                .unlockedBy(getHasName(TorqueItems.FLUID_PIPE_ITEM.get()), has(TorqueItems.FLUID_PIPE_ITEM.get()))
+                .unlockedBy(getHasName(TorqueItems.HSLA_ROD.get()), has(TorqueItems.HSLA_ROD.get()))
+                .unlockedBy(getHasName(TorqueItems.HSLA_GEAR.get()), has(TorqueItems.HSLA_GEAR.get()))
                 .save(output);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TorqueBlocks.PUMP.get())

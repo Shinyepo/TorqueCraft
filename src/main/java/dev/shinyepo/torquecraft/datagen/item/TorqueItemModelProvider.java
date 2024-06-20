@@ -61,6 +61,7 @@ public class TorqueItemModelProvider extends CustomItemModelProvider {
         withExistingParent(TorqueItems.STEAM_ENGINE_ITEM.get(), TorqueBlocks.STEAM_ENGINE.get());
         withExistingParent(TorqueItems.HSLA_BEVEL_GEARS_ITEM.get(), TorqueBlocks.HSLA_BEVEL_GEARS.get());
         withExistingParent(TorqueItems.HSLA_THREE_WAY_ITEM.get(), TorqueBlocks.HSLA_THREE_WAY.get());
+        withExistingParent(TorqueItems.SPRINKLER_ITEM.get(), TorqueBlocks.SPRINKLER.get());
 
         withExistingParent(TorqueItems.FLUID_PIPE_ITEM.get(), "torquecraft:block/pipe");
         withExistingParent(TorqueItems.STEAM_PIPE_ITEM.get(), "torquecraft:block/pipe");

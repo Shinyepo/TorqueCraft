@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "item": "torquecraft:hsla_gear"
+    },
+    "P": {
+      "item": "torquecraft:fluid_pipe"
+    },
+    "R": {
+      "item": "torquecraft:hsla_rod"
+    }
+  },
+  "pattern": [
+    " P ",
+    "RPR",
+    " G "
+  ],
+  "result": {
+    "count": 1,
+    "id": "torquecraft:sprinkler"
+  }
+}

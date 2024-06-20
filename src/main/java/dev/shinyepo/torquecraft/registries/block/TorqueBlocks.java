@@ -7,10 +7,7 @@ import dev.shinyepo.torquecraft.block.prefab.CoolingRadiator;
 import dev.shinyepo.torquecraft.block.prefab.FluidTank;
 import dev.shinyepo.torquecraft.block.prefab.pipes.FluidPipe;
 import dev.shinyepo.torquecraft.block.prefab.pipes.SteamPipe;
-import dev.shinyepo.torquecraft.block.prefab.rotary.Grinder;
-import dev.shinyepo.torquecraft.block.prefab.rotary.MechanicalFan;
-import dev.shinyepo.torquecraft.block.prefab.rotary.Pump;
-import dev.shinyepo.torquecraft.block.prefab.rotary.SteamEngine;
+import dev.shinyepo.torquecraft.block.prefab.rotary.*;
 import dev.shinyepo.torquecraft.block.prefab.rotary.transmitters.BevelGears;
 import dev.shinyepo.torquecraft.block.prefab.rotary.transmitters.Gearbox;
 import dev.shinyepo.torquecraft.block.prefab.rotary.transmitters.Shaft;
@@ -46,6 +43,7 @@ public class TorqueBlocks {
     public static final Supplier<Block> MECHANICAL_FAN = BLOCKS.register("mechanical_fan",() -> new MechanicalFan(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().requiresCorrectToolForDrops().mapColor(MapColor.STONE)));
     public static final Supplier<Block> GRINDER = BLOCKS.register("grinder",() -> new Grinder(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().requiresCorrectToolForDrops().mapColor(MapColor.STONE)));
     public static final Supplier<Block> PUMP = BLOCKS.register("pump",() -> new Pump(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE)));
+    public static final Supplier<Block> SPRINKLER = BLOCKS.register("sprinkler", () -> new Sprinkler(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE)));
     public static final Supplier<Block> COOLING_RADIATOR = BLOCKS.register("cooling_radiator",() -> new CoolingRadiator(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE)));
 
     //Crops

@@ -1,4 +1,4 @@
-// 1.21	2024-06-14T00:06:05.4218218	Loot Tables
+// 1.21	2024-06-19T19:10:28.4268434	Loot Tables
 ddb896cf32b30d4472a280819f7286a4b360a767 data/torquecraft/loot_table/blocks/alloy_furnace.json
 be7f38dc86567c22d91629586c09e13f0450256b data/torquecraft/loot_table/blocks/canola_crop.json
 9ba8208a8a5731f31c6f253d5c2b6cbe2b02c214 data/torquecraft/loot_table/blocks/cast_iron_block.json
@@ -14,6 +14,7 @@ f829fde024b1580c03a2cc51e20ff4368fa623e1 data/torquecraft/loot_table/blocks/grin
 5635f6e5797700e1ffc9337450d412f08856edcc data/torquecraft/loot_table/blocks/hsla_three_way.json
 9f5bd3b03ac0134bc5f54e261d6b6aa5dde34e02 data/torquecraft/loot_table/blocks/mechanical_fan.json
 77afd223ce8ddd8e406f310c54f6fe14fbf5239f data/torquecraft/loot_table/blocks/pump.json
+1b12bf6f3b56656cd1b5f2fe1ba401901fab5e2e data/torquecraft/loot_table/blocks/sprinkler.json
 bc5294eb5d465375d902ebaabbc732a404a8ef67 data/torquecraft/loot_table/blocks/steam_engine.json
 6b03aba98ddd4ffd2ecb2ce163b78be792c592f9 data/torquecraft/loot_table/blocks/steam_pipe.json
 395be25172b3ead72510becf6475ed9ff44b17c8 data/torquecraft/loot_table/blocks/tungsten_block.json

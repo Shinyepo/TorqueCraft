@@ -8,6 +8,7 @@ import dev.shinyepo.torquecraft.menu.grinder.GrinderScreen;
 import dev.shinyepo.torquecraft.model.baker.helpers.PipeModelLoader;
 import dev.shinyepo.torquecraft.network.RotaryNetworkRegistry;
 import dev.shinyepo.torquecraft.network.fluid.PressureFluidNetworkRegistry;
+import dev.shinyepo.torquecraft.particle.sprinkler.SprinklerWaterProvider;
 import dev.shinyepo.torquecraft.registries.TorqueCapabilities;
 import dev.shinyepo.torquecraft.registries.TorqueCreativeTabs;
 import dev.shinyepo.torquecraft.registries.TorqueMenus;
@@ -17,6 +18,7 @@ import dev.shinyepo.torquecraft.registries.fluid.TorqueFluidTypes;
 import dev.shinyepo.torquecraft.registries.fluid.TorqueFluids;
 import dev.shinyepo.torquecraft.registries.item.TorqueItems;
 import dev.shinyepo.torquecraft.registries.networking.TorquePackets;
+import dev.shinyepo.torquecraft.registries.particle.TorqueParticles;
 import dev.shinyepo.torquecraft.registries.recipe.TorqueRecipes;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -30,6 +32,7 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 import org.slf4j.Logger;
@@ -57,6 +60,7 @@ public class TorqueCraft {
         TorqueMenus.MENU_TYPES.register(modEventBus);
         TorqueRecipes.Types.RECIPE_WRITING.register(modEventBus);
         TorqueRecipes.Serializers.RECIPE_SERIALIZERS.register(modEventBus);
+        TorqueParticles.PARTICLE_TYPES.register(modEventBus);
 
         modEventBus.addListener(TorqueCapabilities::registerCapabilities);
         modEventBus.addListener(TorquePackets::registerPayloadHandler);
@@ -120,6 +124,11 @@ public class TorqueCraft {
             event.registerBlockEntityRenderer(TorqueBlockEntities.THREE_WAY_ENTITY.get(), ThreeWayRenderer::new);
             event.registerBlockEntityRenderer(TorqueBlockEntities.BEVEL_GEARS_ENTITY.get(), BevelGearsRenderer::new);
             event.registerBlockEntityRenderer(TorqueBlockEntities.GEARBOX_ENTITY.get(), GearboxRenderer::new);
+        }
+
+        @SubscribeEvent
+        public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
+            event.registerSprite(TorqueParticles.SPRINKLER_WATER.get(), SprinklerWaterProvider::createSprinklerParticle);
         }
     }
 }

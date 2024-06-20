@@ -1,4 +1,4 @@
-// 1.21	2024-06-19T18:01:25.2550051	Recipes
+// 1.21	2024-06-19T19:10:28.4288739	Recipes
 08dcf47fd11f5b725c48ecb740754109bca3cd2e data/minecraft/advancement/recipes/building_blocks/copper_ingot.json
 383a5433e6c34fef1724cc1b8547ca9bd46b199f data/minecraft/advancement/recipes/building_blocks/diamond.json
 fd0b4ea9d4375e0903a7ffc58cc81b7754c0a595 data/minecraft/advancement/recipes/building_blocks/emerald.json
@@ -92,6 +92,7 @@ a58b590612b251da28639cfef04dfa2eeb3fc5d6 data/torquecraft/advancement/recipes/mi
 3248618feafc4069fe305614ada0b4d5bac85282 data/torquecraft/advancement/recipes/misc/rotary_monitor.json
 ce6a4bf167892a7684e25014e47c048d979c45ef data/torquecraft/advancement/recipes/misc/rotary_wrench.json
 a01155cafa63dd002a3a79c10d70177e17964b24 data/torquecraft/advancement/recipes/misc/sharp_hsla_gear.json
+4c1ade73305cf4bba28f9f67cde659ebf5552d84 data/torquecraft/advancement/recipes/misc/sprinkler.json
 03779066d4721a444a9016bacb848c45cade641a data/torquecraft/advancement/recipes/misc/steam_engine.json
 424655c20bd82b7c483c7c07cf30468f11c97b32 data/torquecraft/recipe/alloy_furnace.json
 cf104d3be07d05e146383a8900d054776a16a23e data/torquecraft/recipe/alloy_smelting/cast_iron_ingot.json
@@ -158,4 +159,5 @@ ac1e484094121f991ca4f73684986b1f862ec9e3 data/torquecraft/recipe/rotary_monitor.
 4d2a833b7ac2505c19660d91996e74ae5dfacb1f data/torquecraft/recipe/rotary_wrench.json
 3a94840414588ba091c845db2f58f18466214769 data/torquecraft/recipe/sharp_hsla_gear.json
 acd22a5ecb16b1122fa398cef1a188c889f1efda data/torquecraft/recipe/silicon.json
+1cdef324b029f148a7531317fa00f9cc244b56b5 data/torquecraft/recipe/sprinkler.json
 afe568c537596015e710171aa04b7d8103200c11 data/torquecraft/recipe/steam_engine.json
