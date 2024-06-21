@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "item": "torquecraft:hsla_gear"
+    },
+    "P": {
+      "item": "torquecraft:hsla_plate"
+    }
+  },
+  "pattern": [
+    "PGP",
+    "GGG",
+    "PPP"
+  ],
+  "result": {
+    "count": 1,
+    "id": "torquecraft:vacuum"
+  }
+}

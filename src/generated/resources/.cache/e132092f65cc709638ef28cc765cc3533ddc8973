@@ -1,4 +1,4 @@
-// 1.21	2024-06-19T19:10:28.4334577	Block States: torquecraft
+// 1.21	2024-06-21T13:12:01.4268406	Block States: torquecraft
 5dec53dc132503e4f4e4687aec858a0e5ac35193 assets/torquecraft/blockstates/alloy_furnace.json
 5849e6e0fdf54a743c2f8b51e3a890dfbd088f0a assets/torquecraft/blockstates/canola_crop.json
 7d3fb2993a69a3ccc629db0bddc2fc82deb2bef0 assets/torquecraft/blockstates/cast_iron_block.json
@@ -20,6 +20,7 @@ f77b6d1df0e05b6fcaf445d9e08cef42be2283e4 assets/torquecraft/blockstates/lubrican
 fd8880b6490147976e573ea212a76979a8062e8e assets/torquecraft/blockstates/steam_engine.json
 db8ffb440367dbd01ff3f11f4676dbe78d2f1313 assets/torquecraft/blockstates/steam_pipe.json
 9f6258cded6e593511671e5efa52c0b894e868d4 assets/torquecraft/blockstates/tungsten_block.json
+7dfcfc415e8bcd9743001909afa489609cf843a0 assets/torquecraft/blockstates/vacuum.json
 42134fa2970acc1181db07874965e7aad03c977e assets/torquecraft/models/block/canola_stage0.json
 160c6ad3fca049da2f42d2d9ef8917422bc4d820 assets/torquecraft/models/block/canola_stage1.json
 2f2d29d0c20e3a0e6d60be777a816914d6ab5e12 assets/torquecraft/models/block/canola_stage2.json

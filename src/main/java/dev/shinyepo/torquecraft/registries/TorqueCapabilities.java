@@ -1,6 +1,8 @@
 package dev.shinyepo.torquecraft.registries;
 
+import dev.shinyepo.torquecraft.block.entities.rotary.VacuumEntity;
 import dev.shinyepo.torquecraft.capabilities.TorqueCustomCapabilities;
+import dev.shinyepo.torquecraft.factory.rotary.network.RotaryNetworkDevice;
 import dev.shinyepo.torquecraft.registries.block.TorqueBlockEntities;
 import net.minecraft.core.Direction;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -43,5 +45,7 @@ public class TorqueCapabilities {
 
         event.registerBlockEntity(TorqueCustomCapabilities.ROTARY_HANDLER_BLOCK, TorqueBlockEntities.SHAFT_ENTITY.get(), (o,dir) -> o.getRotaryHandler(dir));
         event.registerBlockEntity(TorqueCustomCapabilities.ROTARY_HANDLER_BLOCK, TorqueBlockEntities.MECHANICAL_FAN_ENTITY.get(), (o,dir) -> o.getRotaryHandler(dir));
+        event.registerBlockEntity(TorqueCustomCapabilities.ROTARY_HANDLER_BLOCK, TorqueBlockEntities.VACUUM_ENTITY.get(), RotaryNetworkDevice::getRotaryHandler);
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, TorqueBlockEntities.VACUUM_ENTITY.get(), VacuumEntity::getItemHandler);
     }
 }

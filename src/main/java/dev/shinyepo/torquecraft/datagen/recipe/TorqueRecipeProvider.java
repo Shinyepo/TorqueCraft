@@ -203,6 +203,16 @@ public class TorqueRecipeProvider extends CustomRecipeProvider {
                 .unlockedBy(getHasName(TorqueItems.HSLA_PISTON.get()), has(TorqueItems.HSLA_PISTON.get()))
                 .unlockedBy(getHasName(TorqueItems.HSLA_GEAR.get()), has(TorqueItems.HSLA_GEAR.get()))
                 .save(output);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TorqueBlocks.VACUUM.get())
+                .pattern("PGP")
+                .pattern("GGG")
+                .pattern("PPP")
+                .define('P', TorqueItems.HSLA_PLATE.get())
+                .define('G', TorqueItems.HSLA_GEAR.get())
+                .unlockedBy(getHasName(TorqueItems.HSLA_PLATE.get()), has(TorqueItems.HSLA_PLATE.get()))
+                .unlockedBy(getHasName(TorqueItems.HSLA_GEAR.get()), has(TorqueItems.HSLA_GEAR.get()))
+                .save(output);
     }
 
     private void registerBlockRecipes(RecipeOutput output) {

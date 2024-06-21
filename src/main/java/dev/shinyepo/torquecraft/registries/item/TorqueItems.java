@@ -74,6 +74,7 @@ public class TorqueItems {
     public static final Supplier<BlockItem> GRINDER_ITEM = ITEMS.registerSimpleBlockItem("grinder", TorqueBlocks.GRINDER);
     public static final Supplier<BlockItem> PUMP_ITEM = ITEMS.registerSimpleBlockItem("pump", TorqueBlocks.PUMP);
     public static final Supplier<BlockItem> SPRINKLER_ITEM = ITEMS.registerSimpleBlockItem("sprinkler", TorqueBlocks.SPRINKLER);
+    public static final Supplier<BlockItem> VACUUM_ITEM = ITEMS.registerSimpleBlockItem("vacuum", TorqueBlocks.VACUUM);
 
     public static final Supplier<BlockItem> COOLING_RADIATOR_ITEM = ITEMS.registerSimpleBlockItem("cooling_radiator", TorqueBlocks.COOLING_RADIATOR);
 

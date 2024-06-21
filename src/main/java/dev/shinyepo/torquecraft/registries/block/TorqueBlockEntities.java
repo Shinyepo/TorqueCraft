@@ -32,5 +32,6 @@ public class TorqueBlockEntities {
     public static final Supplier<BlockEntityType<ThreeWayEntity>> THREE_WAY_ENTITY = BLOCK_ENTITIES.register("three_way_be", () -> BlockEntityType.Builder.of(ThreeWayEntity::new, TorqueBlocks.HSLA_THREE_WAY.get()).build(null));
     public static final Supplier<BlockEntityType<BevelGearsEntity>> BEVEL_GEARS_ENTITY = BLOCK_ENTITIES.register("bevel_gears_be", () -> BlockEntityType.Builder.of(BevelGearsEntity::new, TorqueBlocks.HSLA_BEVEL_GEARS.get()).build(null));
     public static final Supplier<BlockEntityType<GearboxEntity>> GEARBOX_ENTITY = BLOCK_ENTITIES.register("gearbox_be", () -> BlockEntityType.Builder.of(GearboxEntity::new, TorqueBlocks.HSLA_GEARBOX1_2.get(), TorqueBlocks.HSLA_GEARBOX1_4.get()).build(null));
+    public static final Supplier<BlockEntityType<VacuumEntity>> VACUUM_ENTITY = BLOCK_ENTITIES.register("vacuum_be", () -> BlockEntityType.Builder.of(VacuumEntity::new, TorqueBlocks.VACUUM.get()).build(null));
 
 }

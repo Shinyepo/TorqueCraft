@@ -1,4 +1,4 @@
-// 1.21	2024-06-19T19:10:28.4232609	Item Models: torquecraft
+// 1.21	2024-06-21T13:12:01.4176549	Item Models: torquecraft
 e59d6b3d630b1cb3f52cae24f436ff54e71aa420 assets/torquecraft/models/item/alloy_furnace.json
 5f52cc675d3896825693098fb2797e0b3b53e704 assets/torquecraft/models/item/canola_seeds.json
 b9b386c2e28e8c70e124a8d3bc6061e2ae6989c3 assets/torquecraft/models/item/cast_iron_block.json
@@ -49,3 +49,4 @@ fed243b918c3a84fffaae8dc614c1ff1c810f1eb assets/torquecraft/models/item/silicon.
 c9132467fff67005b589e94e5e19c2d3488d110e assets/torquecraft/models/item/steam_pipe.json
 77b58006ef309b6b42818ea8d4d04a4c1b64667b assets/torquecraft/models/item/tungsten_block.json
 068fce5115be6e4eba2b172eec896d9597111b42 assets/torquecraft/models/item/tungsten_ingot.json
+0018624c63d3edb083dd75755656ed10c88b4911 assets/torquecraft/models/item/vacuum.json

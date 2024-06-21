@@ -39,6 +39,7 @@ public class TorqueBlockLootTables extends BlockLootSubProvider {
         dropSelf(TorqueBlocks.HSLA_GEARBOX1_4.get());
         dropSelf(TorqueBlocks.COOLING_RADIATOR.get());
         dropSelf(TorqueBlocks.SPRINKLER.get());
+        dropSelf(TorqueBlocks.VACUUM.get());
 
         //Crops
         LootItemCondition.Builder licBuilder = LootItemBlockStatePropertyCondition
