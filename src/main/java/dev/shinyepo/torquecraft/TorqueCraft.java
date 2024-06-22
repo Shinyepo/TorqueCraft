@@ -124,6 +124,7 @@ public class TorqueCraft {
             event.registerBlockEntityRenderer(TorqueBlockEntities.THREE_WAY_ENTITY.get(), ThreeWayRenderer::new);
             event.registerBlockEntityRenderer(TorqueBlockEntities.BEVEL_GEARS_ENTITY.get(), BevelGearsRenderer::new);
             event.registerBlockEntityRenderer(TorqueBlockEntities.GEARBOX_ENTITY.get(), GearboxRenderer::new);
+            event.registerBlockEntityRenderer(TorqueBlockEntities.VACUUM_ENTITY.get(), VacuumRenderer::new);
         }
 
         @SubscribeEvent
