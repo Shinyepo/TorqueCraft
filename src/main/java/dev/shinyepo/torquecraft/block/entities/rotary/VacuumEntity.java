@@ -19,7 +19,6 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.HopperBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -35,7 +34,12 @@ import java.util.List;
 
 public class VacuumEntity extends RotaryClient {
     private static final ClientConfig config = ClientConfig.VACUUM;
-    private static final Lazy<ItemStackHandler> itemHandler = Lazy.of(() -> new ItemStackHandler(4));
+    private final Lazy<ItemStackHandler> itemHandler = Lazy.of(() -> new ItemStackHandler(4) {
+        @Override
+        protected void onContentsChanged(int slot) {
+            setChanged();
+        }
+    });
     private final Lazy<AdaptedItemHandler> adaptedItemHandler = Lazy.of(() -> new AdaptedItemHandler(itemHandler.get()) {
         @Override
         public @NotNull ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
@@ -85,29 +89,29 @@ public class VacuumEntity extends RotaryClient {
     }
 
     public void tick(Level pLevel, BlockState pState) {
-        if (!(pLevel.getBlockState(getBlockPos().below()).getBlock() instanceof HopperBlock)) {
-            var handler = capCache.getCapability();
-            if (handler != null && pLevel.getGameTime() % 4 == 0) {
-
-                var slots = itemHandler.get().getSlots();
-                for (int i = 0; i < slots; i++) {
-                    var item = itemHandler.get().getStackInSlot(i);
-                    if (item.isEmpty()) continue;
-                    var targetSlots = handler.getSlots();
-                    for (int j = 0; j < targetSlots; j++) {
-                        var inSlot = handler.getStackInSlot(j);
-                        if (inSlot.isEmpty() || (inSlot.is(item.getItem()) && inSlot.getCount() < inSlot.getMaxStackSize())) {
-                            //TODO: Amount dependant on machine power?
-                            var amount = Math.min(4, item.getCount());
-                            handler.insertItem(j, itemHandler.get().extractItem(i, amount, false), false);
-                            setChanged();
-                            break;
-                        }
-                    }
-                    if (!itemHandler.get().getStackInSlot(i).isEmpty()) break;
-                }
-            }
-        }
+        //TODO: Should we push items ourselves or let "pipes" pull them?
+//        if (!(pLevel.getBlockState(getBlockPos().below()).getBlock() instanceof HopperBlock)) {
+//            var handler = capCache.getCapability();
+//            if (handler != null && pLevel.getGameTime() % 4 == 0) {
+//
+//                var slots = itemHandler.get().getSlots();
+//                for (int i = 0; i < slots; i++) {
+//                    var item = itemHandler.get().getStackInSlot(i);
+//                    if (item.isEmpty()) continue;
+//                    var targetSlots = handler.getSlots();
+//                    for (int j = 0; j < targetSlots; j++) {
+//                        var inSlot = handler.getStackInSlot(j);
+//                        if (inSlot.isEmpty() || (inSlot.is(item.getItem()) && inSlot.getCount() < inSlot.getMaxStackSize())) {
+//                            //TODO: Amount dependant on machine power?
+//                            var amount = Math.min(4, item.getCount());
+//                            handler.insertItem(j, itemHandler.get().extractItem(i, amount, false), false);
+//                            break;
+//                        }
+//                    }
+//                    if (!itemHandler.get().getStackInSlot(i).isEmpty()) break;
+//                }
+//            }
+//        }
         if (this.rotaryHandler.get().getAngular() < config.getMinAngular() && this.rotaryHandler.get().getTorque() < config.getMinTorque())
             return;
         List<Entity> entities = pLevel.getEntities(null, workingBoundary);
@@ -130,7 +134,6 @@ public class VacuumEntity extends RotaryClient {
                 if (en instanceof LivingEntity) return;
                 if (en instanceof ItemEntity item) {
                     suckItemIn(item);
-                    setChanged();
                 }
             }
         }
