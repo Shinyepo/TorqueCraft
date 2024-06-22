@@ -11,6 +11,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.FarmBlock;
@@ -81,6 +82,13 @@ public class SprinklerEntity extends BlockEntity implements IFluidBuffer {
                     }
                 }
                 nextTick = getAgeTick();
+            }
+            List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class, workingBoundary);
+            if (!entities.isEmpty()) {
+                for (LivingEntity livingEntity : entities) {
+                    if (livingEntity.isOnFire())
+                        livingEntity.extinguishFire();
+                }
             }
             fluidTank.drain(usage, IFluidHandler.FluidAction.EXECUTE);
         }
