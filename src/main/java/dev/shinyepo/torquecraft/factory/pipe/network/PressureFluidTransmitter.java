@@ -53,6 +53,7 @@ public class PressureFluidTransmitter extends BlockEntity implements IPressureTr
 
     @Override
     public Map<IPressureTransmitter, Map<BlockPos, BlockCapabilityCache<IFluidHandler, Direction>>> getClientCapabilities() {
+        if (capCacheMap.isEmpty()) return null;
         return Map.of(this, capCacheMap);
     }
 
@@ -70,6 +71,7 @@ public class PressureFluidTransmitter extends BlockEntity implements IPressureTr
     public void updateNetwork(PressureFluidNetwork network) {
         this.network = network;
         this.networkId = network.getNetworkId();
+        fetchCapabilities();
         setChanged();
     }
 

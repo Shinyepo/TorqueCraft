@@ -89,7 +89,8 @@ public class PressureFluidNetwork {
     public <T extends IPressureTransmitter> void registerTransmitter(T transmitter) {
         if (!validDevice(transmitter)) return;
         BlockPos pos = transmitter.getBlockPos();
-        capabilityCacheMap.putAll(transmitter.getClientCapabilities());
+        if (transmitter.getClientCapabilities() != null)
+            capabilityCacheMap.putAll(transmitter.getClientCapabilities());
         transmitters.put(pos, transmitter);
         splitFluid();
     }
@@ -97,8 +98,7 @@ public class PressureFluidNetwork {
     public <T extends IPressureTransmitter> void unregisterTransmitter(T transmitter) {
         if (validDevice(transmitter)) return;
         BlockPos pos = transmitter.getBlockPos();
-        var transmitterCapCache = transmitter.getClientCapabilities();
-        transmitterCapCache.forEach((capPos, cache) -> capabilityCacheMap.remove(capPos));
+        capabilityCacheMap.remove(transmitter);
         transmitters.remove(pos, transmitter);
     }
 
@@ -107,6 +107,7 @@ public class PressureFluidNetwork {
     }
 
     public void updateCapabilities(IPressureTransmitter transmitter, Map<BlockPos, BlockCapabilityCache<IFluidHandler, Direction>> capMap) {
+        if (capMap.isEmpty()) return;
         capabilityCacheMap.put(transmitter, capMap);
     }
 }

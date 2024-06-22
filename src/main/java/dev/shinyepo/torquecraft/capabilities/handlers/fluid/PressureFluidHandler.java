@@ -3,6 +3,7 @@ package dev.shinyepo.torquecraft.capabilities.handlers.fluid;
 import dev.shinyepo.torquecraft.factory.TorqueFluidTank;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 
 public class PressureFluidHandler implements IPressureFluidHandler {
     protected final TorqueFluidTank fluidTank;
@@ -15,6 +16,13 @@ public class PressureFluidHandler implements IPressureFluidHandler {
             protected void onContentsChanged() {
                 super.onContentsChanged();
                 markDirty();
+            }
+
+            @Override
+            public FluidTank setCapacity(int capacity) {
+                var result = super.setCapacity(capacity);
+                updatePressure();
+                return result;
             }
         };
     }
@@ -38,6 +46,10 @@ public class PressureFluidHandler implements IPressureFluidHandler {
     }
 
     public void markDirty() {
+        updatePressure();
+    }
+
+    private void updatePressure() {
         calculatePressure();
         calculateTransferRate();
     }

@@ -58,7 +58,7 @@ public class SprinklerEntity extends BlockEntity implements IFluidBuffer {
     }
 
     public void tick(Level level, BlockPos pos) {
-        if (fluidTank.getFluidInTank(0).getAmount() > usage) {
+        if (fluidTank.getFluidInTank(0).getAmount() >= usage) {
             if (level.getGameTime() % nextTick == 0) {
                 for (BlockPos land : workingArea) {
                     BlockState targetState = level.getBlockState(land);
@@ -87,6 +87,7 @@ public class SprinklerEntity extends BlockEntity implements IFluidBuffer {
     }
 
     public void animateTick(Level pLevel, BlockPos pPos) {
+        if (this.fluidTank.getFluidAmount() < usage) return;
         if (level.getGameTime() % 4 != 0) return;
         Vec3 center = new Vec3(pPos.getX() + 0.5, pPos.getY() + 0.35, pPos.getZ() + 0.5);
 
