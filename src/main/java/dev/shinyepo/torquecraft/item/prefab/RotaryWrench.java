@@ -1,7 +1,5 @@
 package dev.shinyepo.torquecraft.item.prefab;
 
-import dev.shinyepo.torquecraft.config.RotaryMode;
-import dev.shinyepo.torquecraft.constants.TorqueAttributes;
 import dev.shinyepo.torquecraft.factory.IModeMachine;
 import dev.shinyepo.torquecraft.factory.IWrenchInteraction;
 import dev.shinyepo.torquecraft.factory.rotary.network.RotaryNetworkDevice;
@@ -50,11 +48,8 @@ public class RotaryWrench extends Item {
         }
 
         //Change machine mode
-        if (entity instanceof IModeMachine) {
-            BlockState state = pContext.getLevel().getBlockState(pContext.getClickedPos());
-            RotaryMode oldValue = state.getValue(TorqueAttributes.MODE);
-            pContext.getLevel().setBlockAndUpdate(pContext.getClickedPos(), state.setValue(TorqueAttributes.MODE, oldValue.getNext()));
-
+        if (entity instanceof IModeMachine modeMachine) {
+            modeMachine.cycleMode();
             return InteractionResult.SUCCESS_NO_ITEM_USED;
         }
         return InteractionResult.PASS;
