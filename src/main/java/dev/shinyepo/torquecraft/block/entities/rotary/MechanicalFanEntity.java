@@ -2,6 +2,7 @@ package dev.shinyepo.torquecraft.block.entities.rotary;
 
 import com.google.common.collect.Lists;
 import dev.shinyepo.torquecraft.config.ClientConfig;
+import dev.shinyepo.torquecraft.factory.IModeMachine;
 import dev.shinyepo.torquecraft.factory.rotary.network.RotaryClient;
 import dev.shinyepo.torquecraft.registries.block.TorqueBlockEntities;
 import net.minecraft.core.BlockPos;
@@ -20,11 +21,13 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
-public class MechanicalFanEntity extends RotaryClient {
+public class MechanicalFanEntity extends RotaryClient implements IModeMachine {
     private AABB workingBoundary;
     private final List<BlockPos> workingArea = Lists.newArrayList();
     private final List<BlockPos> validFarmlands = Lists.newArrayList();
     private static final ClientConfig config = ClientConfig.MECHANICAL_FAN;
+    private FanMode mode = FanMode.PUSH;
+    private BlockPos targetPos;
 
 
     public MechanicalFanEntity(BlockPos pPos, BlockState pBlockState) {
@@ -44,19 +47,23 @@ public class MechanicalFanEntity extends RotaryClient {
         int distance = (int) Math.ceil(4.5714 + (this.rotaryHandler.get().getAngular() * 3 / 112));
         switch (facing) {
             case NORTH -> {
+                this.targetPos = getBlockPos().north(distance).above(1);
                 return new AABB(new Vec3(pPos.getX() - 1, pPos.getY() - 0.5, pPos.getZ() - 0.1),
                         new Vec3(pPos.getX() + 1.9, pPos.getY() + 2, pPos.getZ() - distance));
             }
             case EAST -> {
+                this.targetPos = getBlockPos().east(distance).above(1);
                 return new AABB(new Vec3(pPos.getX() + 1, pPos.getY() - 0.5, pPos.getZ() - 1),
                         new Vec3(pPos.getX() + distance, pPos.getY() + 2, pPos.getZ() + 1.9));
 
             }
             case SOUTH -> {
+                this.targetPos = getBlockPos().south(distance).above(1);
                 return new AABB(new Vec3(pPos.getX() - 1, pPos.getY() - 0.5, pPos.getZ() + 1),
                         new Vec3(pPos.getX() + 1.9, pPos.getY() + 2, pPos.getZ() + distance));
             }
             case WEST -> {
+                this.targetPos = getBlockPos().west(distance).above(1);
                 return new AABB(new Vec3(pPos.getX(), pPos.getY() - 0.5, pPos.getZ() - 1),
                         new Vec3(pPos.getX() - distance, pPos.getY() + 2, pPos.getZ() + 1.9));
             }
@@ -85,12 +92,15 @@ public class MechanicalFanEntity extends RotaryClient {
         if (!entities.isEmpty()) {
             for (Entity en : entities) {
                 if (!en.isShiftKeyDown()) {
-                    Direction direction = pState.getValue(BlockStateProperties.HORIZONTAL_FACING);
                     en.hurtMarked = true;
+                    Vec3 fanCenter = getBlockPos().getCenter();
+                    Vec3 targetForce;
+                    if (mode == FanMode.PUSH)
+                        targetForce = new Vec3(fanCenter.x, fanCenter.y, fanCenter.z).vectorTo(Vec3.atCenterOf(targetPos)).multiply(0.02F, 0.03F, 0.02F);
+                    else
+                        targetForce = new Vec3(en.position().x, en.position().y, en.position().z).vectorTo(Vec3.atCenterOf(getBlockPos())).multiply(0.04F, 0.03F, 0.04F);
                     en.setDeltaMovement(en.getDeltaMovement()
-                            .add(0.15d * (direction.getStepX() * 1.5),
-                                    0,
-                                    0.15d * (direction.getStepZ() * 1.5)));
+                            .add(targetForce));
                 }
             }
         }
@@ -127,5 +137,21 @@ public class MechanicalFanEntity extends RotaryClient {
     public void setRotaryPower(float angular, float torque) {
         super.setRotaryPower(angular, torque);
         calculateWorkingArea();
+    }
+
+    @Override
+    public void cycleMode() {
+        mode = mode.getNext();
+    }
+
+    private enum FanMode {
+        PUSH,
+        PULL;
+
+        private static final FanMode[] VALUES = values();
+
+        public FanMode getNext() {
+            return VALUES[(this.ordinal() + 1) % VALUES.length];
+        }
     }
 }
