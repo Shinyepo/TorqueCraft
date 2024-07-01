@@ -5,10 +5,17 @@ import dev.shinyepo.torquecraft.block.entities.rotary.MechanicalFanEntity;
 import dev.shinyepo.torquecraft.factory.rotary.network.RotaryClient;
 import dev.shinyepo.torquecraft.factory.rotary.network.RotaryNetworkDevice;
 import dev.shinyepo.torquecraft.factory.rotary.render.IRotaryIO;
+import dev.shinyepo.torquecraft.menu.mechanicalfan.MechanicalFanContainer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -22,6 +29,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
@@ -104,6 +112,32 @@ public class MechanicalFan extends HorizontalDirectionalBlock implements EntityB
                 rIO.setProgress(0F);
             }
         }
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHit) {
+        if (!pLevel.isClientSide) {
+            BlockEntity be = pLevel.getBlockEntity(pPos);
+            if (be instanceof MechanicalFanEntity) {
+                MenuProvider containerProvider = new MenuProvider() {
+                    @Override
+                    public Component getDisplayName() {
+                        return Component.translatable("block.torquecraft.mechanical_fan");
+                    }
+
+                    @Override
+                    public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player playerEntity) {
+                        return new MechanicalFanContainer(windowId, playerEntity, pPos);
+                    }
+                };
+                pPlayer.openMenu(containerProvider, buf -> {
+                    buf.writeBlockPos(pPos);
+                });
+            } else {
+                throw new IllegalStateException("Our named container provider is missing!");
+            }
+        }
+        return InteractionResult.SUCCESS;
     }
 
     @Override

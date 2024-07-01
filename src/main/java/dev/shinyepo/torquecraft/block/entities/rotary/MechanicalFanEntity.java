@@ -144,7 +144,16 @@ public class MechanicalFanEntity extends RotaryClient implements IModeMachine {
         mode = mode.getNext();
     }
 
-    private enum FanMode {
+    public void changeMode(int mode) {
+        this.mode = FanMode.values()[mode];
+        setChanged();
+    }
+
+    public FanMode getMode() {
+        return mode;
+    }
+
+    public enum FanMode {
         PUSH,
         PULL;
 
