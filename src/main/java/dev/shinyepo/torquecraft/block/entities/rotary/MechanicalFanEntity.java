@@ -18,6 +18,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.common.util.Lazy;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 import java.util.List;
 
@@ -28,6 +31,7 @@ public class MechanicalFanEntity extends RotaryClient implements IModeMachine {
     private static final ClientConfig config = ClientConfig.MECHANICAL_FAN;
     private FanMode mode = FanMode.PUSH;
     private BlockPos targetPos;
+    private Lazy<ItemStackHandler> fanSlot = Lazy.of(() -> new ItemStackHandler(1));
 
 
     public MechanicalFanEntity(BlockPos pPos, BlockState pBlockState) {
@@ -151,6 +155,10 @@ public class MechanicalFanEntity extends RotaryClient implements IModeMachine {
 
     public FanMode getMode() {
         return mode;
+    }
+
+    public IItemHandler getFanSlotHandler() {
+        return fanSlot.get();
     }
 
     public enum FanMode {
