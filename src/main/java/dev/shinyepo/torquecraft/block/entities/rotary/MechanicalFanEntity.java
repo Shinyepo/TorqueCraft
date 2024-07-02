@@ -2,11 +2,14 @@ package dev.shinyepo.torquecraft.block.entities.rotary;
 
 import com.google.common.collect.Lists;
 import dev.shinyepo.torquecraft.config.ClientConfig;
+import dev.shinyepo.torquecraft.constants.TorqueNBT;
 import dev.shinyepo.torquecraft.factory.IModeMachine;
 import dev.shinyepo.torquecraft.factory.rotary.network.RotaryClient;
 import dev.shinyepo.torquecraft.registries.block.TorqueBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
@@ -155,6 +158,19 @@ public class MechanicalFanEntity extends RotaryClient implements IModeMachine {
 
     public FanMode getMode() {
         return mode;
+    }
+
+    @Override
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
+        super.saveAdditional(tag, provider);
+        tag.putInt(TorqueNBT.MODE, mode.ordinal());
+    }
+
+    @Override
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
+        super.loadAdditional(tag, provider);
+        if (tag.contains(TorqueNBT.MODE))
+            mode = FanMode.values()[tag.getInt(TorqueNBT.MODE)];
     }
 
     public IItemHandler getFanSlotHandler() {
