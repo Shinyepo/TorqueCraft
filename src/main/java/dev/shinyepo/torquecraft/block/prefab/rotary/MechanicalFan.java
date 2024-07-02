@@ -11,7 +11,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -151,13 +150,4 @@ public class MechanicalFan extends HorizontalDirectionalBlock implements EntityB
         }
         super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
     }
-
-    @Override
-    protected void entityInside(BlockState pState, Level pLevel, BlockPos pPos, Entity pEntity) {
-        if (pEntity instanceof LivingEntity mob) {
-//            mob.hurtMarked = true;
-            mob.hurt(pLevel.damageSources().generic(), 0.5F);
-        }
-    }
-
 }

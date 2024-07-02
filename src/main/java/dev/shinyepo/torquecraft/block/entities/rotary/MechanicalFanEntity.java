@@ -13,6 +13,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
@@ -32,6 +33,7 @@ public class MechanicalFanEntity extends RotaryClient implements IModeMachine {
     private final List<BlockPos> workingArea = Lists.newArrayList();
     private final List<BlockPos> validFarmlands = Lists.newArrayList();
     private static final ClientConfig config = ClientConfig.MECHANICAL_FAN;
+    private AABB cutArea;
     private FanMode mode = FanMode.PUSH;
     private BlockPos targetPos;
     private Lazy<ItemStackHandler> fanSlot = Lazy.of(() -> new ItemStackHandler(1));
@@ -40,37 +42,44 @@ public class MechanicalFanEntity extends RotaryClient implements IModeMachine {
     public MechanicalFanEntity(BlockPos pPos, BlockState pBlockState) {
         super(TorqueBlockEntities.MECHANICAL_FAN_ENTITY.get(), pPos, pBlockState, config);
 
-        this.workingBoundary = getWorkingBoundary(pPos, pBlockState);
+
+        this.workingBoundary = getBoundary(pPos, pBlockState, 0, false);
+
+        this.cutArea = getBoundary(pPos, pBlockState, 0.5F, false);
         BlockPos.betweenClosedStream(workingBoundary).forEach(x -> workingArea.add(x.immutable()));
     }
 
     private void calculateWorkingArea() {
-        this.workingBoundary = getWorkingBoundary(this.getBlockPos(), this.getBlockState());
+        int distance = (int) Math.ceil(4.5714 + (this.rotaryHandler.get().getAngular() * 3 / 112));
+        this.workingBoundary = getBoundary(this.getBlockPos(), this.getBlockState(), distance, true);
         BlockPos.betweenClosedStream(workingBoundary).forEach(x -> workingArea.add(x.immutable()));
     }
 
-    private AABB getWorkingBoundary(BlockPos pPos, BlockState pState) {
+    private AABB getBoundary(BlockPos pPos, BlockState pState, float distance, boolean calcTargetPos) {
         Direction facing = pState.getValue(BlockStateProperties.HORIZONTAL_FACING);
-        int distance = (int) Math.ceil(4.5714 + (this.rotaryHandler.get().getAngular() * 3 / 112));
         switch (facing) {
             case NORTH -> {
-                this.targetPos = getBlockPos().north(distance).above(1);
+                if (calcTargetPos)
+                    this.targetPos = getBlockPos().north((int) distance).above(1);
                 return new AABB(new Vec3(pPos.getX() - 1, pPos.getY() - 0.5, pPos.getZ() - 0.1),
                         new Vec3(pPos.getX() + 1.9, pPos.getY() + 2, pPos.getZ() - distance));
             }
             case EAST -> {
-                this.targetPos = getBlockPos().east(distance).above(1);
+                if (calcTargetPos)
+                    this.targetPos = getBlockPos().east((int) distance).above(1);
                 return new AABB(new Vec3(pPos.getX() + 1, pPos.getY() - 0.5, pPos.getZ() - 1),
                         new Vec3(pPos.getX() + distance, pPos.getY() + 2, pPos.getZ() + 1.9));
 
             }
             case SOUTH -> {
-                this.targetPos = getBlockPos().south(distance).above(1);
+                if (calcTargetPos)
+                    this.targetPos = getBlockPos().south((int) distance).above(1);
                 return new AABB(new Vec3(pPos.getX() - 1, pPos.getY() - 0.5, pPos.getZ() + 1),
                         new Vec3(pPos.getX() + 1.9, pPos.getY() + 2, pPos.getZ() + distance));
             }
             case WEST -> {
-                this.targetPos = getBlockPos().west(distance).above(1);
+                if (calcTargetPos)
+                    this.targetPos = getBlockPos().west((int) distance).above(1);
                 return new AABB(new Vec3(pPos.getX(), pPos.getY() - 0.5, pPos.getZ() - 1),
                         new Vec3(pPos.getX() - distance, pPos.getY() + 2, pPos.getZ() + 1.9));
             }
@@ -111,6 +120,15 @@ public class MechanicalFanEntity extends RotaryClient implements IModeMachine {
                 }
             }
         }
+        List<LivingEntity> livingEntities = pLevel.getEntitiesOfClass(LivingEntity.class, cutArea);
+        if (!livingEntities.isEmpty()) {
+            for (LivingEntity en : livingEntities) {
+                //TODO: Calc dmg based on RotarySpeed
+                //TODO: Make endermans stay and get hurt! >:)
+                en.hurt(pLevel.damageSources().generic(), 2F);
+            }
+        }
+
         if (pLevel.getGameTime() % 20 == 0) {
             getFarmlands(pLevel);
             if (!validFarmlands.isEmpty()) {
