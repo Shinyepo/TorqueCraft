@@ -124,7 +124,7 @@ public class StandaloneMachineFactory extends BlockEntity {
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.loadAdditional(tag, provider);
         if (tag.contains(TorqueNBT.PROGRESS)) {
-            this.progress = tag.getInt(TorqueNBT.PROGRESS);
+            this.progress = tag.getInt(TorqueNBT.PROGRESS).get();
         }
     }
 

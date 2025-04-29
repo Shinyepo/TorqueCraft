@@ -238,13 +238,13 @@ public class MachineFactory extends RotaryClient implements IFluidBuffer {
             fluidTank.readFromNBT(provider,tag);
         }
         if (tag.contains(TorqueNBT.INPUT)) {
-            inputItems.deserializeNBT(provider, tag.getCompound(TorqueNBT.INPUT));
+            inputItems.deserializeNBT(provider, tag.getCompound(TorqueNBT.INPUT).get());
         }
         if (tag.contains(TorqueNBT.OUTPUT)) {
-            outputItems.deserializeNBT(provider, tag.getCompound(TorqueNBT.OUTPUT));
+            outputItems.deserializeNBT(provider, tag.getCompound(TorqueNBT.OUTPUT).get());
         }
         if (tag.contains(TorqueNBT.DRAIN)) {
-            tankDrainItems.deserializeNBT(provider, tag.getCompound(TorqueNBT.DRAIN));
+            tankDrainItems.deserializeNBT(provider, tag.getCompound(TorqueNBT.DRAIN).get());
         }
         if (tag.contains(TorqueNBT.PROGRESS)) {
             tag.getInt(TorqueNBT.PROGRESS);
