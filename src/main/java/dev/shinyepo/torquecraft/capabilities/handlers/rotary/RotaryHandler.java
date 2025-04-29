@@ -139,9 +139,9 @@ public class RotaryHandler implements IRotaryHandler {
     }
 
     public void deserializeNBT(HolderLookup.Provider provider, CompoundTag nbt) {
-        setAngular(nbt.contains(TorqueNBT.ANGULAR) ? nbt.getFloat(TorqueNBT.ANGULAR) : 0);
-        setTorque(nbt.contains(TorqueNBT.TORQUE) ? nbt.getFloat(TorqueNBT.TORQUE) : 0);
-        setTemp(nbt.contains(TorqueNBT.TEMP) ? nbt.getFloat(TorqueNBT.TEMP) : 0);
+        setAngular(nbt.contains(TorqueNBT.ANGULAR) ? nbt.getFloat(TorqueNBT.ANGULAR).get() : 0);
+        setTorque(nbt.contains(TorqueNBT.TORQUE) ? nbt.getFloat(TorqueNBT.TORQUE).get() : 0);
+        setTemp(nbt.contains(TorqueNBT.TEMP) ? nbt.getFloat(TorqueNBT.TEMP).get() : 0);
     }
 
     public Tag serializeNBT(HolderLookup.Provider provider) {

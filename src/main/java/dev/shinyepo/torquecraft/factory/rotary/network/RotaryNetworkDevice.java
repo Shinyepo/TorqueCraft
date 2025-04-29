@@ -13,6 +13,7 @@ import dev.shinyepo.torquecraft.networking.packets.SyncRotaryPowerS2C;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.UUIDUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -104,17 +105,23 @@ public class RotaryNetworkDevice<CONFIG extends IRotaryConfig> extends AnimatedE
     }
 
     @Override
+    public void preRemoveSideEffects(BlockPos pPos, BlockState pState) {
+        network.unregisterDevice(this);
+        super.preRemoveSideEffects(pPos, pState);
+    }
+
+    @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.loadAdditional(tag, provider);
         if (tag.contains(TorqueNBT.POWER)) {
-            rotaryHandler.get().deserializeNBT(provider, tag.getCompound(TorqueNBT.POWER));
+            rotaryHandler.get().deserializeNBT(provider, tag.getCompound(TorqueNBT.POWER).get());
             rotaryHandler.get().calculatePower();
         }
         if (tag.contains(TorqueNBT.NETWORK_ID)) {
-            this.networkId = tag.getUUID(TorqueNBT.NETWORK_ID);
+            this.networkId = tag.read(TorqueNBT.NETWORK_ID, UUIDUtil.CODEC).get();
         }
         if (tag.contains(TorqueNBT.SIDES)) {
-            var sides = tag.getIntArray(TorqueNBT.SIDES);
+            var sides = tag.getIntArray(TorqueNBT.SIDES).get();
             for (int i = 0; i < sides.length; i++) {
                 loadSide(i, sides[i]);
             }
@@ -128,7 +135,7 @@ public class RotaryNetworkDevice<CONFIG extends IRotaryConfig> extends AnimatedE
             tag.put(TorqueNBT.POWER, rotaryHandler.get().serializeNBT(provider));
         }
         if (this.networkId != null) {
-            tag.putUUID(TorqueNBT.NETWORK_ID, this.networkId);
+            tag.store(TorqueNBT.NETWORK_ID, UUIDUtil.CODEC, this.networkId);
         }
         int[] sides = new int[this.sides.length];
         for (int i = 0; i < this.sides.length; i++) {
