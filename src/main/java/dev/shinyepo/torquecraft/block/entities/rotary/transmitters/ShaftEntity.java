@@ -52,9 +52,9 @@ public class ShaftEntity extends RotaryTransmitter {
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.loadAdditional(tag, provider);
-        hasMonitor = tag.getBoolean(TorqueNBT.MONITOR);
+        hasMonitor = tag.getBoolean(TorqueNBT.MONITOR).get();
         if (tag.contains(TorqueNBT.MONITOR_FACING)) {
-            monitorFacing = Direction.byName(tag.getString(TorqueNBT.MONITOR_FACING));
+            monitorFacing = Direction.byName(tag.getString(TorqueNBT.MONITOR_FACING).get());
         }
     }
 

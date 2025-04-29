@@ -188,7 +188,7 @@ public class MechanicalFanEntity extends RotaryClient implements IModeMachine {
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.loadAdditional(tag, provider);
         if (tag.contains(TorqueNBT.MODE))
-            mode = FanMode.values()[tag.getInt(TorqueNBT.MODE)];
+            mode = FanMode.values()[tag.getInt(TorqueNBT.MODE).get()];
     }
 
     public IItemHandler getFanSlotHandler() {

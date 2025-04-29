@@ -242,16 +242,16 @@ public class AlloyFurnaceEntity extends StandaloneMachineFactory implements IHea
     public void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.loadAdditional(tag, provider);
         if (tag.contains(TorqueNBT.ADDON)) {
-            addonItemHandler.get().deserializeNBT(provider, tag.getCompound(TorqueNBT.ADDON));
+            addonItemHandler.get().deserializeNBT(provider, tag.getCompound(TorqueNBT.ADDON).get());
         }
         if (tag.contains(TorqueNBT.INPUT)) {
-            inputItemHandler.get().deserializeNBT(provider, tag.getCompound(TorqueNBT.INPUT));
+            inputItemHandler.get().deserializeNBT(provider, tag.getCompound(TorqueNBT.INPUT).get());
         }
         if (tag.contains(TorqueNBT.OUTPUT)) {
-            outputItemHandler.get().deserializeNBT(provider, tag.getCompound(TorqueNBT.OUTPUT));
+            outputItemHandler.get().deserializeNBT(provider, tag.getCompound(TorqueNBT.OUTPUT).get());
         }
         if (tag.contains(TorqueNBT.TEMP)) {
-            temp = tag.getDouble(TorqueNBT.TEMP);
+            temp = tag.getDouble(TorqueNBT.TEMP).get();
         }
     }
 }

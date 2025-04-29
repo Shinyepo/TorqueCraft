@@ -183,7 +183,7 @@ public class VacuumEntity extends RotaryClient {
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.loadAdditional(tag, provider);
         if (tag.contains(TorqueNBT.INVENTORY))
-            itemHandler.get().deserializeNBT(provider, tag.getCompound(TorqueNBT.INVENTORY));
+            itemHandler.get().deserializeNBT(provider, tag.getCompound(TorqueNBT.INVENTORY).get());
     }
 
     @Override
