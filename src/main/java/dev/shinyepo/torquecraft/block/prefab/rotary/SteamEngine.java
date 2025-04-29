@@ -32,7 +32,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -41,7 +43,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.Nullable;
 
 public class SteamEngine extends HorizontalDirectionalBlock implements EntityBlock {
-    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
+    public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty OPERATIONAL = TorqueAttributes.OPERATIONAL;
     private static final VoxelShape SHAPE = Block.box(0,0,0,16,11,16);
 
@@ -70,7 +72,7 @@ public class SteamEngine extends HorizontalDirectionalBlock implements EntityBlo
     }
 
     @Override
-    public void neighborChanged(BlockState pState, Level pLevel, BlockPos pPos, Block pNeighborBlock, BlockPos pNeighborPos, boolean pMovedByPiston) {
+    public void neighborChanged(BlockState pState, Level pLevel, BlockPos pPos, Block pNeighborBlock, Orientation orientation, boolean pMovedByPiston) {
         boolean isHeatSource = pLevel.getBlockState(pPos.below()).is(TorqueTags.HEAT_SOURCE);
         boolean isPowered = pState.getValue(OPERATIONAL);
         if (isPowered != isHeatSource) {
@@ -114,19 +116,6 @@ public class SteamEngine extends HorizontalDirectionalBlock implements EntityBlo
         }
 
         return InteractionResult.SUCCESS;
-    }
-
-    @Override
-    protected void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
-        if (pState.getBlock() != pNewState.getBlock()) {
-            BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-            if (blockEntity instanceof RotaryNetworkDevice<?> device) {
-                pLevel.removeBlockEntity(pPos);
-                device.removeDevice();
-
-            }
-        }
-        super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
     }
 
     @Nullable

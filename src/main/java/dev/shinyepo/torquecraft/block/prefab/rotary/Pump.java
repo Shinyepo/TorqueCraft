@@ -15,13 +15,13 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 public class Pump extends HorizontalDirectionalBlock implements EntityBlock {
-    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+    public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
     private static final VoxelShape SHAPE_N = Block.box(4, 0, 0, 12, 16, 12);
     private static final VoxelShape SHAPE_E = Block.box(4, 0, 4, 16, 16, 12);
     private static final VoxelShape SHAPE_S = Block.box(4, 0, 4, 12, 16, 16);
@@ -85,16 +85,5 @@ public class Pump extends HorizontalDirectionalBlock implements EntityBlock {
                 pE.tick(pLevel1, pPos);
             }
         };
-    }
-
-    @Override
-    protected void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
-        if (pState.getBlock() != pNewState.getBlock()) {
-            BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-            if (blockEntity instanceof PumpEntity) {
-                pLevel.removeBlockEntity(pPos);
-            }
-        }
-        super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
     }
 }

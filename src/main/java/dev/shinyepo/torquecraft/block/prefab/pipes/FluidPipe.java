@@ -24,6 +24,7 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
@@ -61,8 +62,8 @@ public class FluidPipe extends PipeBlock implements SimpleWaterloggedBlock, Enti
     }
 
     @Override
-    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
-        super.neighborChanged(state, level, pos, block, fromPos, isMoving);
+    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, Orientation orientation, boolean isMoving) {
+        super.neighborChanged(state, level, pos, block, orientation, isMoving);
         if (!level.isClientSide && level.getBlockEntity(pos) instanceof FluidPipeEntity pipe) {
             pipe.markDirty();
         }
@@ -86,7 +87,7 @@ public class FluidPipe extends PipeBlock implements SimpleWaterloggedBlock, Enti
                     var networkTank = network.getTank();
                     Component msg = Component.literal("Fluid amount: " + handler.getFluidAmount() + " Network Tank: " + networkTank.getFluidInTank(0).getAmount());
                     player.displayClientMessage(msg, false);
-                    return InteractionResult.SUCCESS_NO_ITEM_USED;
+                    return InteractionResult.SUCCESS;
                 }
             }
         }
@@ -146,18 +147,5 @@ public class FluidPipe extends PipeBlock implements SimpleWaterloggedBlock, Enti
         if (state != blockState) {
             level.setBlockAndUpdate(pos, blockState);
         }
-    }
-
-    @Override
-    protected void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
-        if (pState.getBlock() != pNewState.getBlock()) {
-            BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-            if (blockEntity instanceof IPressureTransmitter transmitter) {
-                pLevel.removeBlockEntity(pPos);
-                transmitter.removeTransmitter();
-            }
-        }
-        super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
-
     }
 }
