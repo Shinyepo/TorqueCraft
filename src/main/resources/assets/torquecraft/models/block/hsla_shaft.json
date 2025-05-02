@@ -1,6 +1,6 @@
 {
 	"credit": "Made with Blockbench",
-  "loader": "neoforge:elements",
+	"parent": "torquecraft:parent/block",
 	"textures": {
       "1": "torquecraft:block/shared/hsla_casing",
       "particle": "torquecraft:block/shared/hsla_shaft"

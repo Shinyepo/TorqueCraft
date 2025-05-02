@@ -1,6 +1,6 @@
 {
 	"credit": "Made with Blockbench",
-  "loader": "neoforge:elements",
+	"parent": "torquecraft:parent/block_inverted",
 	"textures": {
 		"0": "torquecraft:block/mechanical_fan",
 		"particle": "torquecraft:block/mechanical_fan"

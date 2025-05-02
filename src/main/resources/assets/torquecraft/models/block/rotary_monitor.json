@@ -1,7 +1,6 @@
 {
   "credit": "Made with Blockbench",
   "parent": "torquecraft:parent/block",
-  "loader": "neoforge:elements",
   "textures": {
     "0": "torquecraft:block/monitor_texture",
     "particle": "torquecraft:block/monitor_texture"

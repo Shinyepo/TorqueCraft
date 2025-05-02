@@ -1,7 +1,6 @@
 {
 	"credit": "Made with Blockbench",
 	"parent": "torquecraft:parent/block_smaller",
-	"loader": "neoforge:elements",
 	"textures": {
 		"0": "torquecraft:block/shared/machine_casing",
 		"1": "torquecraft:block/shared/default_shaft",
