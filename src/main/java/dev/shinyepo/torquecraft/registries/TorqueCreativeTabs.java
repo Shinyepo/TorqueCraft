@@ -58,7 +58,7 @@ public class TorqueCreativeTabs {
                 output.accept(TorqueItems.HSLA_GEARBOX1_2_ITEM.get());
                 output.accept(TorqueItems.HSLA_GEARBOX1_4_ITEM.get());
                 //
-//                output.accept(TorqueItems.CANOLA_SEEDS.get());
+                output.accept(TorqueItems.CANOLA_SEEDS.get());
                 output.accept(TorqueItems.CRUSHED_SEEDS.get());
                 //machines
                 output.accept(TorqueItems.ALLOY_FURNACE_ITEM.get());

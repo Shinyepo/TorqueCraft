@@ -11,7 +11,6 @@
   "item.torquecraft.cast_iron_ingot": "Cast Iron Ingot",
   "item.torquecraft.hsla_ingot": "HSLA Steel Ingot",
   "item.torquecraft.tungsten_ingot": "Tungsten Ingot",
-  "item.torquecraft.canola_seeds": "Canola Seeds",
   "item.torquecraft.crushed_seeds": "Crushed Seeds",
   "item.torquecraft.lubricant_bucket": "Bucket of Lubricant",
   "item.torquecraft.jet_fuel_bucket": "Bucket of Jet Fuel",
@@ -46,6 +45,7 @@
   "block.torquecraft.cooling_radiator": "Radiator",
   "block.torquecraft.fluid_tank": "Fluid Tank",
   "block.torquecraft.vacuum": "Vacuum",
+  "block.torquecraft.canola_seeds": "Canola Seeds",
 
   "block.torquecraft.fluid_pipe": "Water Pipe",
   "block.torquecraft.steam_pipe": "Steam Pipe",

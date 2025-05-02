@@ -50,7 +50,7 @@ public class TorqueBlocks {
     public static final Supplier<Block> VACUUM = BLOCKS.register("vacuum", (r) -> new Vacuum(BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK,r)).destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE)));
 
     //Crops
-    public static final Supplier<Block> CANOLA_CROP = BLOCKS.register("canola_crop", (r) -> new CanolaCrop(BlockBehaviour.Properties.ofFullCopy(Blocks.WHEAT).setId(ResourceKey.create(Registries.BLOCK,r)).noOcclusion().noCollission()));
+    public static final Supplier<Block> CANOLA_CROP = BLOCKS.register("canola_crop", (r) -> new CanolaCrop(BlockBehaviour.Properties.of().randomTicks().instabreak().sound(SoundType.CROP).pushReaction(PushReaction.DESTROY).mapColor(MapColor.PLANT).noCollission().noOcclusion().setId(ResourceKey.create(Registries.BLOCK,r))));
 //    public static final Supplier<Block> FLUID_TANK = BLOCKS.register("fluid_tank", (r) -> new Vacuum(BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK,r)).destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE)));
 
     //FLUIDS

@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:block/crop",
+  "render_type": "minecraft:cutout",
   "textures": {
-    "crop": "torquecraft:block/canola_crop_stage0"
+    "crop": "torquecraft:block/seeds/canola/canola_stage0"
   }
 }
