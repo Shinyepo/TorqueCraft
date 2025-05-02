@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "torquecraft:hsla_ingot"
-    },
-    {
-      "item": "torquecraft:hsla_ingot"
-    }
+    "torquecraft:hsla_ingot",
+    "torquecraft:hsla_ingot"
   ],
   "result": {
     "count": 1,

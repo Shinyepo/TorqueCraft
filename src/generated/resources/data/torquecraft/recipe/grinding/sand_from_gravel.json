@@ -1,11 +1,15 @@
 {
   "type": "torquecraft:grinding",
   "ingredient": {
-    "item": "minecraft:gravel"
+    "count": 1,
+    "ingredient": "minecraft:gravel"
   },
-  "resultFluid": {},
-  "resultItem": {
+  "result": {
     "count": 1,
     "id": "minecraft:sand"
+  },
+  "resultFluid": {
+    "amount": 100,
+    "id": "minecraft:water"
   }
 }

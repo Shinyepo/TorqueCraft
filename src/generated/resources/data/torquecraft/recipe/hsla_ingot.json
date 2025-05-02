@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "torquecraft:hsla_block"
-    }
+    "torquecraft:hsla_block"
   ],
   "result": {
     "count": 9,

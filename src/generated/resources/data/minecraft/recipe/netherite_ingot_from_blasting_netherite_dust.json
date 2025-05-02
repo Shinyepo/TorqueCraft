@@ -4,9 +4,7 @@
   "cookingtime": 100,
   "experience": 0.2,
   "group": "netherite_ingot",
-  "ingredient": {
-    "item": "torquecraft:netherite_dust"
-  },
+  "ingredient": "torquecraft:netherite_dust",
   "result": {
     "count": 1,
     "id": "minecraft:netherite_ingot"

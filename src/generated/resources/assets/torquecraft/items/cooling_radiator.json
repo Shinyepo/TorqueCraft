@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "torquecraft:block/radiator/cooling_radiator_full"
+  }
+}

@@ -3,9 +3,7 @@
   "category": "misc",
   "cookingtime": 200,
   "experience": 0.1,
-  "ingredient": {
-    "item": "torquecraft:copper_dust"
-  },
+  "ingredient": "torquecraft:copper_dust",
   "result": {
     "count": 1,
     "id": "minecraft:copper_ingot"

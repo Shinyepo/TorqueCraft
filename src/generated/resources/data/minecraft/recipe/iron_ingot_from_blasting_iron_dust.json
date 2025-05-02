@@ -4,9 +4,7 @@
   "cookingtime": 100,
   "experience": 0.2,
   "group": "iron_ingot",
-  "ingredient": {
-    "item": "torquecraft:iron_dust"
-  },
+  "ingredient": "torquecraft:iron_dust",
   "result": {
     "count": 1,
     "id": "minecraft:iron_ingot"

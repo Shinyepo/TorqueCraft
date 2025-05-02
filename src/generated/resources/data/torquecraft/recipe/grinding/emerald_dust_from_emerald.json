@@ -1,11 +1,15 @@
 {
   "type": "torquecraft:grinding",
   "ingredient": {
-    "item": "minecraft:emerald"
+    "count": 1,
+    "ingredient": "minecraft:emerald"
   },
-  "resultFluid": {},
-  "resultItem": {
+  "result": {
     "count": 1,
     "id": "torquecraft:emerald_dust"
+  },
+  "resultFluid": {
+    "amount": 100,
+    "id": "minecraft:water"
   }
 }

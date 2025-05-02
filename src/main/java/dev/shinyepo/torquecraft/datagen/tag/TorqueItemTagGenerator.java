@@ -8,21 +8,21 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CompletableFuture;
 
 public class TorqueItemTagGenerator extends ItemTagsProvider {
-    public TorqueItemTagGenerator(PackOutput p_275343_, CompletableFuture<HolderLookup.Provider> p_275729_, CompletableFuture<TagLookup<Block>> p_275322_, @Nullable ExistingFileHelper existingFileHelper) {
-        super(p_275343_, p_275729_, p_275322_, TorqueCraft.MODID, existingFileHelper);
+
+    public TorqueItemTagGenerator(PackOutput pOutput, CompletableFuture<HolderLookup.Provider> pLookupProvider, CompletableFuture<TagLookup<Block>> pBlockTags) {
+        super(pOutput, pLookupProvider, pBlockTags, TorqueCraft.MODID);
     }
 
     @Override
-    protected void addTags(HolderLookup.Provider pProvider) {
-        tag(Tags.Items.SEEDS)
-                .add(TorqueItems.CANOLA_SEEDS.get())
-                .replace(false);
+    protected void addTags(HolderLookup.@NotNull Provider pProvider) {
+//        tag(Tags.Items.SEEDS)
+//                .add(TorqueItems.CANOLA_SEEDS.get())
+//                .replace(false);
 
         tag(Tags.Items.BUCKETS)
                 .add(TorqueItems.JET_FUEL_BUCKET.get())

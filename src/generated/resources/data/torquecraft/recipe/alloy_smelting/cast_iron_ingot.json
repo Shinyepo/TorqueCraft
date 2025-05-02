@@ -1,19 +1,11 @@
 {
   "type": "torquecraft:alloy_smelting",
   "addonIngredient": [
-    {
-      "item": "minecraft:coal"
-    },
-    {
-      "item": "minecraft:gunpowder"
-    },
-    {
-      "item": "torquecraft:silicon"
-    }
+    "minecraft:coal",
+    "minecraft:gunpowder",
+    "torquecraft:silicon"
   ],
-  "ingotIngredient": {
-    "item": "minecraft:iron_ingot"
-  },
+  "ingotIngredient": "minecraft:iron_ingot",
   "resultItem": {
     "count": 1,
     "id": "torquecraft:cast_iron_ingot"

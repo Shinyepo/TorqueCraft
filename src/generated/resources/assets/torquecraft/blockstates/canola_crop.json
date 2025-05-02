@@ -1,22 +1,28 @@
 {
   "variants": {
     "age=0": {
-      "model": "torquecraft:block/canola_stage0"
+      "model": "torquecraft:block/canola_crop_stage0"
     },
     "age=1": {
-      "model": "torquecraft:block/canola_stage1"
+      "model": "torquecraft:block/canola_crop_stage1"
     },
     "age=2": {
-      "model": "torquecraft:block/canola_stage2"
+      "model": "torquecraft:block/canola_crop_stage1"
     },
     "age=3": {
-      "model": "torquecraft:block/canola_stage3"
+      "model": "torquecraft:block/canola_crop_stage2"
     },
     "age=4": {
-      "model": "torquecraft:block/canola_stage4"
+      "model": "torquecraft:block/canola_crop_stage3"
     },
     "age=5": {
-      "model": "torquecraft:block/canola_stage5"
+      "model": "torquecraft:block/canola_crop_stage4"
+    },
+    "age=6": {
+      "model": "torquecraft:block/canola_crop_stage4"
+    },
+    "age=7": {
+      "model": "torquecraft:block/canola_crop_stage5"
     }
   }
 }

@@ -4,9 +4,7 @@
   "cookingtime": 100,
   "experience": 0.2,
   "group": "obsidian",
-  "ingredient": {
-    "item": "torquecraft:obsidian_dust"
-  },
+  "ingredient": "torquecraft:obsidian_dust",
   "result": {
     "count": 1,
     "id": "minecraft:obsidian"

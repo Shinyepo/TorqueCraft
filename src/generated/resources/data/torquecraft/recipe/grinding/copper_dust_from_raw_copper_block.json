@@ -1,11 +1,15 @@
 {
   "type": "torquecraft:grinding",
   "ingredient": {
-    "item": "minecraft:raw_copper_block"
+    "count": 1,
+    "ingredient": "minecraft:raw_copper_block"
   },
-  "resultFluid": {},
-  "resultItem": {
+  "result": {
     "count": 9,
     "id": "torquecraft:copper_dust"
+  },
+  "resultFluid": {
+    "amount": 100,
+    "id": "minecraft:water"
   }
 }

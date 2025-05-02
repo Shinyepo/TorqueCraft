@@ -3,9 +3,7 @@
   "category": "misc",
   "cookingtime": 200,
   "experience": 0.1,
-  "ingredient": {
-    "item": "torquecraft:netherite_dust"
-  },
+  "ingredient": "torquecraft:netherite_dust",
   "result": {
     "count": 1,
     "id": "minecraft:netherite_ingot"

@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "torquecraft:hsla_gears_2"
-    },
-    {
-      "item": "torquecraft:hsla_gear"
-    }
+    "torquecraft:hsla_gears_2",
+    "torquecraft:hsla_gear"
   ],
   "result": {
     "count": 1,

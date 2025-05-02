@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "I": {
-      "item": "torquecraft:hsla_ingot"
-    }
+    "I": "torquecraft:hsla_ingot"
   },
   "pattern": [
     "III"

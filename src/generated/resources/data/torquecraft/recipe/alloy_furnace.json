@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "B": {
-      "item": "minecraft:blast_furnace"
-    },
-    "S": {
-      "item": "minecraft:brick"
-    }
+    "B": "minecraft:blast_furnace",
+    "S": "minecraft:brick"
   },
   "pattern": [
     "SSS",

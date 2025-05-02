@@ -2,21 +2,11 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "G": {
-      "item": "torquecraft:hsla_gear"
-    },
-    "I": {
-      "item": "torquecraft:hsla_ingot"
-    },
-    "P": {
-      "item": "torquecraft:hsla_piston"
-    },
-    "T": {
-      "item": "torquecraft:hsla_tank"
-    },
-    "X": {
-      "item": "torquecraft:fluid_pipe"
-    }
+    "G": "torquecraft:hsla_gear",
+    "I": "torquecraft:hsla_ingot",
+    "P": "torquecraft:hsla_piston",
+    "T": "torquecraft:hsla_tank",
+    "X": "torquecraft:hsla_ingot"
   },
   "pattern": [
     "G G",

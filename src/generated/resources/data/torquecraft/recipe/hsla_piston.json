@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "G": {
-      "item": "torquecraft:hsla_gear"
-    },
-    "P": {
-      "item": "torquecraft:hsla_plate"
-    },
-    "R": {
-      "item": "torquecraft:hsla_rod"
-    }
+    "G": "torquecraft:hsla_gear",
+    "P": "torquecraft:hsla_plate",
+    "R": "torquecraft:hsla_rod"
   },
   "pattern": [
     " P ",

@@ -1,145 +1,157 @@
 package dev.shinyepo.torquecraft.datagen.block;
 
-import com.google.gson.JsonObject;
 import dev.shinyepo.torquecraft.TorqueCraft;
-import dev.shinyepo.torquecraft.block.prefab.CanolaCrop;
-import dev.shinyepo.torquecraft.block.prefab.CoolingRadiator;
-import dev.shinyepo.torquecraft.datagen.helpers.CustomBlockStateProvider;
-import dev.shinyepo.torquecraft.model.baker.helpers.PipeModelLoader;
+import dev.shinyepo.torquecraft.config.ModelType;
 import dev.shinyepo.torquecraft.registries.block.TorqueBlocks;
-import net.minecraft.core.Direction;
-import net.minecraft.core.registries.BuiltInRegistries;
+import dev.shinyepo.torquecraft.registries.item.TorqueItems;
+import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.client.data.models.ItemModelGenerators;
+import net.minecraft.client.data.models.ModelProvider;
+import net.minecraft.client.data.models.MultiVariant;
+import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
+import net.minecraft.client.data.models.model.*;
+import net.minecraft.client.renderer.block.model.Variant;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.random.WeightedList;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.CropBlock;
-import net.minecraft.world.level.block.LiquidBlock;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
-import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
-import net.neoforged.neoforge.client.model.generators.CustomLoaderBuilder;
-import net.neoforged.neoforge.client.model.generators.ModelFile;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.function.Function;
-import java.util.function.Supplier;
-
-import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
-
-public class TorqueBlockStateProvider extends CustomBlockStateProvider {
-    public TorqueBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
-        super(output, TorqueCraft.MODID, exFileHelper);
+public class TorqueBlockStateProvider extends ModelProvider {
+    public TorqueBlockStateProvider(PackOutput output) {
+        super(output, TorqueCraft.MODID);
     }
 
     @Override
-    protected void registerStatesAndModels() {
-        blockMaterialWithItem(TorqueBlocks.TUNGSTEN_BLOCK.get());
-        blockMaterialWithItem(TorqueBlocks.HSLA_BLOCK.get());
-        blockMaterialWithItem(TorqueBlocks.CAST_IRON_BLOCK.get());
-        registerPipe(TorqueBlocks.FLUID_PIPE);
-        registerPipe(TorqueBlocks.STEAM_PIPE);
+    protected void registerModels(@NotNull BlockModelGenerators blockModels, @NotNull ItemModelGenerators itemModels) {
+        createTrivialBlock(blockModels,TorqueBlocks.TUNGSTEN_BLOCK.get(), ModelType.MATERIALS);
+        createTrivialBlock(blockModels,TorqueBlocks.HSLA_BLOCK.get(), ModelType.MATERIALS);
+        createTrivialBlock(blockModels,TorqueBlocks.CAST_IRON_BLOCK.get(), ModelType.MATERIALS);
+//        registerPipe(TorqueBlocks.FLUID_PIPE);
+//        registerPipe(TorqueBlocks.STEAM_PIPE);
 
-        //TEMP
-        registerHorizontalMachineWithExistingModel("block/mechanical_fan", TorqueBlocks.MECHANICAL_FAN);
-        registerHorizontalMachineWithExistingModel("block/steam_engine", TorqueBlocks.STEAM_ENGINE);
-        registerHorizontalMachineWithExistingModel("block/grinder", TorqueBlocks.GRINDER);
-        registerHorizontalMachineWithExistingModel("block/pump", TorqueBlocks.PUMP);
-        registerHorizontalMachineWithExistingModel("block/sprinkler", TorqueBlocks.SPRINKLER);
-        registerHorizontalMachineWithExistingModel("block/hsla_shaft", TorqueBlocks.HSLA_SHAFT);
-        registerHorizontalMachineWithExistingModel("block/hsla_bevel_gears", TorqueBlocks.HSLA_BEVEL_GEARS);
-        registerHorizontalMachineWithExistingModel("block/gearbox/hsla_gearbox1_2", TorqueBlocks.HSLA_GEARBOX1_2);
-        registerHorizontalMachineWithExistingModel("block/gearbox/hsla_gearbox1_4", TorqueBlocks.HSLA_GEARBOX1_4);
-        registerHorizontalMachineWithExistingModel("block/hsla_three_way", TorqueBlocks.HSLA_THREE_WAY);
-        registerHorizontalMachineWithExistingModel("block/fluid_tank", TorqueBlocks.FLUID_TANK);
-        registerHorizontalMachineWithExistingModel("block/vacuum", TorqueBlocks.VACUUM);
+        horizontalWithExistingModel(itemModels, blockModels, TorqueBlocks.MECHANICAL_FAN.get());
+        horizontalWithExistingModel(itemModels, blockModels, TorqueBlocks.STEAM_ENGINE.get());
+        horizontalWithExistingModel(itemModels, blockModels, TorqueBlocks.GRINDER.get());
+        horizontalWithExistingModel(itemModels, blockModels, TorqueBlocks.PUMP.get());
+        horizontalWithExistingModel(itemModels, blockModels, TorqueBlocks.SPRINKLER.get());
+        horizontalWithExistingModel(itemModels, blockModels, TorqueBlocks.HSLA_SHAFT.get());
+        horizontalWithExistingModel(itemModels, blockModels, TorqueBlocks.HSLA_BEVEL_GEARS.get());
+        horizontalWithExistingModel(itemModels, blockModels, TorqueBlocks.HSLA_THREE_WAY.get());
+        horizontalWithExistingModel(itemModels, blockModels, TorqueBlocks.VACUUM.get());
+        horizontalWithExistingModel(itemModels, blockModels, TorqueBlocks.COOLING_RADIATOR.get(), "block/radiator/cooling_radiator_full");
+        horizontalWithExistingModel(itemModels, blockModels, TorqueBlocks.ALLOY_FURNACE.get(), "block/furnace/alloy_furnace");
+        horizontalWithExistingModel(itemModels, blockModels, TorqueBlocks.HSLA_GEARBOX1_2.get(), "block/gearbox/hsla_gearbox1_2");
+        horizontalWithExistingModel(itemModels, blockModels, TorqueBlocks.HSLA_GEARBOX1_4.get(), "block/gearbox/hsla_gearbox1_4");
 
-        makeHorizontalLitBlock("block/furnace/alloy_furnace", TorqueBlocks.ALLOY_FURNACE);
-        registerFluid(TorqueBlocks.LUBRICANT_BLOCK);
-        registerFluid(TorqueBlocks.JET_FUEL_BLOCK);
-    
-        makeCanolaCrop((CropBlock) TorqueBlocks.CANOLA_CROP.get(), "canola_stage", "canola_stage");
-        makeRadiator(TorqueBlocks.COOLING_RADIATOR);
+
+//        horizontalWithExistingModel(blockModels, TorqueBlocks.FLUID_TANK.get());
+
+        blockModels.createCropBlock(TorqueBlocks.CANOLA_CROP.get(), BlockStateProperties.AGE_7, 0, 1, 1, 2, 3, 4, 4, 5);
+
+        blockModels.createNonTemplateModelBlock(TorqueBlocks.LUBRICANT_BLOCK.get());
+        blockModels.createNonTemplateModelBlock(TorqueBlocks.JET_FUEL_BLOCK.get());
+
+        //Flat items
+        itemModels.generateFlatItem(TorqueItems.CRUSHED_SEEDS.get(), ModelTemplates.FLAT_ITEM);
+//        itemModels.generateFlatItem(TorqueItems.CANOLA_SEEDS.get(), ModelTemplates.FLAT_ITEM);
+//        itemModels.generateFlatItem(TorqueItems.CANOLA_MEAL.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(TorqueItems.PRESSURE_GAUGE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(TorqueItems.ROTARY_WRENCH.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(TorqueItems.LUBRICANT_BUCKET.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(TorqueItems.JET_FUEL_BUCKET.get(), ModelTemplates.FLAT_ITEM);
+
+        //Materials
+        generateFlatItemWithType(itemModels, TorqueItems.CAST_IRON_INGOT.get(), ModelType.MATERIALS);
+        generateFlatItemWithType(itemModels, TorqueItems.COPPER_DUST.get(), ModelType.MATERIALS);
+        generateFlatItemWithType(itemModels, TorqueItems.DIAMOND_DUST.get(), ModelType.MATERIALS);
+        generateFlatItemWithType(itemModels, TorqueItems.EMERALD_DUST.get(), ModelType.MATERIALS);
+        generateFlatItemWithType(itemModels, TorqueItems.GOLD_DUST.get(), ModelType.MATERIALS);
+        generateFlatItemWithType(itemModels, TorqueItems.HSLA_INGOT.get(), ModelType.MATERIALS);
+        generateFlatItemWithType(itemModels, TorqueItems.IRON_DUST.get(), ModelType.MATERIALS);
+        generateFlatItemWithType(itemModels, TorqueItems.NETHERITE_DUST.get(), ModelType.MATERIALS);
+        generateFlatItemWithType(itemModels, TorqueItems.OBSIDIAN_DUST.get(), ModelType.MATERIALS);
+        generateFlatItemWithType(itemModels, TorqueItems.QUARTZ_DUST.get(), ModelType.MATERIALS);
+        generateFlatItemWithType(itemModels, TorqueItems.SILICON.get(), ModelType.MATERIALS);
+        generateFlatItemWithType(itemModels, TorqueItems.TUNGSTEN_INGOT.get(), ModelType.MATERIALS);
+
+        //Components
+        generateFlatItemWithType(itemModels, TorqueItems.CIRCUIT_MODULE.get(), ModelType.COMPONENTS);
+        generateFlatItemWithType(itemModels, TorqueItems.HSLA_CASING.get(), ModelType.COMPONENTS);
+        generateFlatItemWithType(itemModels, TorqueItems.HSLA_GEAR.get(), ModelType.COMPONENTS);
+        generateFlatItemWithType(itemModels, TorqueItems.HSLA_GEARS_2.get(), ModelType.COMPONENTS);
+        generateFlatItemWithType(itemModels, TorqueItems.HSLA_GEARS_4.get(), ModelType.COMPONENTS);
+        generateFlatItemWithType(itemModels, TorqueItems.HSLA_GEARS_8.get(), ModelType.COMPONENTS);
+        generateFlatItemWithType(itemModels, TorqueItems.HSLA_GEARS_16.get(), ModelType.COMPONENTS);
+        generateFlatItemWithType(itemModels, TorqueItems.HSLA_PISTON.get(), ModelType.COMPONENTS);
+        generateFlatItemWithType(itemModels, TorqueItems.HSLA_PLATE.get(), ModelType.COMPONENTS);
+        generateFlatItemWithType(itemModels, TorqueItems.HSLA_ROD.get(), ModelType.COMPONENTS);
+        generateFlatItemWithType(itemModels, TorqueItems.HSLA_STEEL_SHAFT.get(), ModelType.COMPONENTS);
+        generateFlatItemWithType(itemModels, TorqueItems.HSLA_TANK.get(), ModelType.COMPONENTS);
+        generateFlatItemWithType(itemModels, TorqueItems.SHARP_HSLA_GEAR.get(), ModelType.COMPONENTS);
+
+        itemWithBlockParent(itemModels, TorqueItems.ROTARY_MONITOR.get(), "rotary_monitor");
 
     }
 
-    private void registerPipe(Supplier<Block> pipe) {
-        BlockModelBuilder model = models().getBuilder("pipe")
-                .parent(models().getExistingFile(mcLoc("cube")))
-                .customLoader((builder, helper) -> new PipeLoaderBuilder(PipeModelLoader.GENERATOR_LOADER, builder, helper))
-                .end();
-        simpleBlock(pipe.get(), model);
+    private static void horizontalWithExistingModel(ItemModelGenerators itemModels, BlockModelGenerators blockModels, Block block, String path) {
+        var blockRLocation = ResourceLocation.fromNamespaceAndPath(TorqueCraft.MODID, path);
+        var variant = new Variant(blockRLocation);
+        blockModels.blockStateOutput.accept(
+                MultiVariantGenerator.dispatch(block,
+                        new MultiVariant(
+                                WeightedList.of(variant))
+                ).with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING));
+        itemWithBlockParent(itemModels, block.asItem(), blockRLocation);
     }
 
-    public void makeRadiator(Supplier<Block> block) {
-        this.getVariantBuilder(block.get()).forAllStatesExcept(blockState ->{
-            Direction dir = blockState.getValue(BlockStateProperties.HORIZONTAL_FACING);
-            var usage = blockState.getValue(((CoolingRadiator) block.get()).getUsage()).getSerializedName();
-            return ConfiguredModel.builder()
-                    .modelFile(models().getExistingFile(fromNamespaceAndPath(TorqueCraft.MODID, "block/radiator/cooling_radiator_" + usage)))
-                    .rotationY(dir.getAxis().isVertical() ? 0 : (((int) dir.toYRot()) + 180) % 360)
-                    .build();
-        });
+    private static void itemWithBlockParent(ItemModelGenerators itemModels, Item item, ResourceLocation parent) {
+        itemModels.itemModelOutput.accept(
+                item,
+                ItemModelUtils.plainModel(parent)
+        );
     }
 
-    private void makeHorizontalLitBlock(String modelPath, Supplier<Block> block) {
-        this.getVariantBuilder(block.get()).forAllStates(blockState -> {
-            Direction dir = blockState.getValue(BlockStateProperties.HORIZONTAL_FACING);
-            Boolean lit = blockState.getValue(BlockStateProperties.LIT);
-            ModelFile model = models().getExistingFile(modLoc(modelPath + (lit ? "_lit" : "")));
-            return ConfiguredModel.builder()
-                    .modelFile(model)
-                    .rotationY(dir.getAxis().isVertical() ? 0 : (((int) dir.toYRot()) + 180) % 360)
-                    .build();
-        });
+    private static void itemWithBlockParent(ItemModelGenerators itemModels, Item item, String parent) {
+        var parentLocation = ResourceLocation.fromNamespaceAndPath(TorqueCraft.MODID, "block/" + parent);
+        itemModels.itemModelOutput.accept(
+                item,
+                ItemModelUtils.plainModel(parentLocation)
+        );
     }
 
-    public void makeCanolaCrop(CropBlock block, String modelName, String textureName) {
-        Function<BlockState, ConfiguredModel[]> function = state -> canolaStates(state, block, modelName, textureName);
-
-        getVariantBuilder(block).forAllStates(function);
+    private static void horizontalWithExistingModel(ItemModelGenerators itemModels, BlockModelGenerators blockModels, Block block) {
+        var blockRLocation = ModelLocationUtils.getModelLocation(block);
+        var variant = new Variant(blockRLocation);
+        blockModels.blockStateOutput.accept(
+                MultiVariantGenerator.dispatch(block,
+                        new MultiVariant(
+                                WeightedList.of(variant))
+                ).with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING));
+        itemModels.itemModelOutput.accept(
+                block.asItem(),
+                ItemModelUtils.plainModel(blockRLocation)
+        );
     }
 
-    private ConfiguredModel[] canolaStates(BlockState state, CropBlock block, String modelName, String textureName) {
-        ConfiguredModel[] models = new ConfiguredModel[1];
-        models[0] = new ConfiguredModel(models().crop(modelName + state.getValue(((CanolaCrop) block).getAgeProperty()),
-                fromNamespaceAndPath(TorqueCraft.MODID, "block/seeds/canola/" + textureName + state.getValue(((CanolaCrop) block).getAgeProperty()))).renderType("cutout"));
-
-        return models;
+    private static void generateFlatItemWithType(ItemModelGenerators itemModels, Item item, ModelType type) {
+        var name = item.getName().getString().split("\\.")[2];
+        var rl = ResourceLocation.fromNamespaceAndPath(TorqueCraft.MODID, "item/" + type.getSerializedName() + "/" + name);
+        var template = ModelTemplates.FLAT_ITEM.create(rl, TextureMapping.layer0(rl), itemModels.modelOutput);
+        itemModels.itemModelOutput.accept(
+                item,
+                ItemModelUtils.plainModel(template)
+        );
     }
 
-    public void registerHorizontalMachineWithExistingModel(String modelPath, Supplier<Block> block) {
-        ModelFile machineModel = models().getExistingFile(modLoc(modelPath));
-        this.getVariantBuilder(block.get()).forAllStatesExcept(blockState ->{
-            Direction dir = blockState.getValue(BlockStateProperties.HORIZONTAL_FACING);
-            return ConfiguredModel.builder()
-                    .modelFile(machineModel)
-                    .rotationY(dir.getAxis().isVertical() ? 0 : (((int) dir.toYRot()) + 180) % 360)
-                    .build();
-        });
-    }
-
-    public void registerFluid(Supplier<LiquidBlock> block) {
-        ResourceLocation location = BuiltInRegistries.BLOCK.getKey(block.get());
-        BlockModelBuilder model = models().getBuilder(location.getPath()).texture("particle", "minecraft:block/water_still");
-
-        getVariantBuilder(block.get()).partialState().setModels(new ConfiguredModel(model));
-    }
-
-    public static class PipeLoaderBuilder extends CustomLoaderBuilder<BlockModelBuilder> {
-
-//        private final boolean facade;
-
-        public PipeLoaderBuilder(ResourceLocation loader, BlockModelBuilder parent, ExistingFileHelper existingFileHelper) {
-            super(loader, parent, existingFileHelper, false);
-//            this.facade = facade;
-        }
-
-        @Override
-        public JsonObject toJson(JsonObject json) {
-            JsonObject obj = super.toJson(json);
-//            obj.addProperty("facade", facade);
-            return obj;
-        }
+    private static void createTrivialBlock(BlockModelGenerators blockModels, Block block, ModelType type) {
+        var name = block.getName().getString().split("\\.")[2];
+        var rl = ResourceLocation.fromNamespaceAndPath(TorqueCraft.MODID, "block/" + type.getSerializedName() + "/" + name);
+        var texturedModel = TexturedModel.CUBE.updateTexture((t) ->
+                t.put(TextureSlot.ALL, rl)
+        );
+        blockModels.createTrivialBlock(block, texturedModel);
     }
 }

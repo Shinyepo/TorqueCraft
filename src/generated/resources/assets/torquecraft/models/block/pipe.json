@@ -1,4 +1,0 @@
-{
-  "parent": "minecraft:block/cube",
-  "loader": "torquecraft:pipe_loader"
-}

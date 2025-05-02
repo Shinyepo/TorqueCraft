@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "G": {
-      "item": "torquecraft:hsla_gear"
-    },
-    "P": {
-      "item": "torquecraft:hsla_plate"
-    }
+    "G": "torquecraft:hsla_gear",
+    "P": "torquecraft:hsla_plate"
   },
   "pattern": [
     "PGP",

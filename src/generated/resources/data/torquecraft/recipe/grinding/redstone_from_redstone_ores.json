@@ -1,11 +1,15 @@
 {
   "type": "torquecraft:grinding",
   "ingredient": {
-    "tag": "minecraft:redstone_ores"
+    "count": 1,
+    "ingredient": "#minecraft:redstone_ores"
   },
-  "resultFluid": {},
-  "resultItem": {
+  "result": {
     "count": 12,
     "id": "minecraft:redstone"
+  },
+  "resultFluid": {
+    "amount": 100,
+    "id": "minecraft:water"
   }
 }

@@ -1,11 +1,15 @@
 {
   "type": "torquecraft:grinding",
   "ingredient": {
-    "item": "minecraft:raw_iron"
+    "count": 1,
+    "ingredient": "minecraft:raw_iron"
   },
-  "resultFluid": {},
-  "resultItem": {
+  "result": {
     "count": 1,
     "id": "torquecraft:iron_dust"
+  },
+  "resultFluid": {
+    "amount": 100,
+    "id": "minecraft:water"
   }
 }
