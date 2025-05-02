@@ -3,7 +3,8 @@ package dev.shinyepo.torquecraft.block.entities;
 import dev.shinyepo.torquecraft.capabilities.handlers.AdaptedItemHandler;
 import dev.shinyepo.torquecraft.constants.TorqueNBT;
 import dev.shinyepo.torquecraft.factory.StandaloneMachineFactory;
-import dev.shinyepo.torquecraft.recipes.custom.AlloyFurnaceRecipe;
+import dev.shinyepo.torquecraft.recipes.alloyfurnace.AlloyFurnaceInput;
+import dev.shinyepo.torquecraft.recipes.alloyfurnace.AlloyFurnaceRecipe;
 import dev.shinyepo.torquecraft.registries.block.TorqueBlockEntities;
 import dev.shinyepo.torquecraft.registries.recipe.TorqueRecipes;
 import dev.shinyepo.torquecraft.registries.tag.TorqueTags;
@@ -12,12 +13,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
@@ -146,11 +147,11 @@ public class AlloyFurnaceEntity extends StandaloneMachineFactory implements IHea
 
     private void craftItem() {
         Optional<RecipeHolder<AlloyFurnaceRecipe>> recipe = getCurrentRecipe();
-        ItemStack result = recipe.get().value().getResultItem(null);
-        ItemStack ingot = recipe.get().value().getIngotIngredient().getItems()[0];
+        ItemStack result = recipe.get().value().getResultItem();
+        Item ingot = recipe.get().value().getIngotIngredient().getValues().get(0).value();
         List<Ingredient> addons = recipe.get().value().getAddonIngredient();
         for (int i = 0; i < INPUT_SLOT_COUNT; i++) {
-            if (inputItemHandler.get().getStackInSlot(i).is(ingot.getItem())) {
+            if (inputItemHandler.get().getStackInSlot(i).is(ingot)) {
                 int outputSlot = canFitInOutput(1, result.getItem());
                 if (outputSlot != -1) {
                     inputItemHandler.get().extractItem(i, 1, false);
@@ -180,19 +181,19 @@ public class AlloyFurnaceEntity extends StandaloneMachineFactory implements IHea
 
         if (recipe.isEmpty()) return false;
 
-        ItemStack result = recipe.get().value().getResultItem(null);
+        ItemStack result = recipe.get().value().getResultItem();
         if (this.recipe != recipe.get().value()) resetProgress();
         this.recipe = recipe.get().value();
         return canOutputItem(result.getItem()) && canFitInOutput(1, result.getItem()) != -1;
     }
 
     private Optional<RecipeHolder<AlloyFurnaceRecipe>> getCurrentRecipe() {
-        CraftingInput inventory = getItemsInSlots();
+        AlloyFurnaceInput inventory = getItemsInSlots();
 
-        return this.level.getRecipeManager().getRecipeFor(TorqueRecipes.Types.ALLOY_SMELTING, inventory, this.level);
+        return ((ServerLevel) level).recipeAccess().getRecipeFor(TorqueRecipes.Types.ALLOY_SMELTING.get(), inventory, this.level);
     }
 
-    private CraftingInput getItemsInSlots() {
+    private AlloyFurnaceInput getItemsInSlots() {
 
         List<ItemStack> inputs = new ArrayList<>(4);
         for (int i = 0; i < ADDON_SLOT_COUNT; i++) {
@@ -209,7 +210,7 @@ public class AlloyFurnaceEntity extends StandaloneMachineFactory implements IHea
                 break;
             }
         }
-        return CraftingInput.of(4, 1, inputs);
+        return new AlloyFurnaceInput(inputs);
     }
 
     private boolean canOutputItem(Item item) {

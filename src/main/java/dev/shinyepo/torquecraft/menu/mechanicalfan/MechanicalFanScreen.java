@@ -9,6 +9,7 @@ import dev.shinyepo.torquecraft.networking.packets.ChangeModeC2S;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -29,7 +30,7 @@ public class MechanicalFanScreen extends AbstractContainerScreen<MechanicalFanCo
     @Override
     protected void init() {
         super.init();
-        rotaryInforRenderer = new RotaryInfoRenderer(ClientConfig.MECHANICAL_FAN, this.font);
+        rotaryInforRenderer = new RotaryInfoRenderer(ClientConfig.MECHANICAL_FAN, this.font, width, height);
         int relX = (this.width - this.imageWidth) / 2;
         int relY = (this.height - this.imageHeight) / 2;
         addRenderableWidget(Button.builder(Component.literal(this.menu.getMode().name()), pButton -> cycleMode(pButton)).width(40).pos(relX + 129, relY + 59).build());
@@ -50,7 +51,7 @@ public class MechanicalFanScreen extends AbstractContainerScreen<MechanicalFanCo
     protected void renderBg(GuiGraphics graphics, float partialTicks, int mouseX, int mouseY) {
         int relX = (this.width - this.imageWidth) / 2;
         int relY = (this.height - this.imageHeight) / 2;
-        graphics.blit(GUI, relX, relY, 0, 0, this.imageWidth, this.imageHeight);
+        graphics.blit(RenderType::guiTextured,GUI, relX, relY, 0, 0, this.imageWidth, this.imageHeight,width,height);
         rotaryInforRenderer.render(graphics, this.menu.getRotaryHandler(), relX, relY);
     }
 

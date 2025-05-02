@@ -40,9 +40,9 @@ public class IORenderer {
 
         BlockPos.MutableBlockPos worldSpot = new BlockPos.MutableBlockPos(blockEntity.getBlockPos().getX(), blockEntity.getBlockPos().getY(), blockEntity.getBlockPos().getZ());
 
-        RenderSystem.setShader(GameRenderer::getPositionColorShader);
-        RenderSystem.enableBlend();
-        RenderSystem.enableCull();
+//        RenderSystem.setShader(GameRenderer::getPositionColorShader);
+//        RenderSystem.enableBlend();
+//        RenderSystem.enableCull();
 //        RenderSystem.enableDepthTest();
 
         BufferBuilder bufferbuilder = Tesselator.getInstance().begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
@@ -55,10 +55,10 @@ public class IORenderer {
                 worldSpot.getY() + maxCorner,
                 worldSpot.getZ() + maxCorner))) {
             pose.popPose();
-            BufferUploader.drawWithShader(bufferbuilder.buildOrThrow());
+            bufferbuilder.buildOrThrow().close();
 //            RenderSystem.disableDepthTest();
-            RenderSystem.disableCull();
-            RenderSystem.disableBlend();
+//            RenderSystem.disableCull();
+//            RenderSystem.disableBlend();
             return;
         }
         Map<Direction, SideType> ios = getIOs(blockEntity);
@@ -95,9 +95,9 @@ public class IORenderer {
         });
 
         pose.popPose();
-        BufferUploader.drawWithShader(bufferbuilder.buildOrThrow());
+        bufferbuilder.buildOrThrow().close();
 //        RenderSystem.disableDepthTest();
-        RenderSystem.disableCull();
-        RenderSystem.disableBlend();
+//        RenderSystem.disableCull();
+//        RenderSystem.disableBlend();
     }
 }

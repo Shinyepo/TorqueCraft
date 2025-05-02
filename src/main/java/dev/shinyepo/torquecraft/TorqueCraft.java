@@ -6,7 +6,6 @@ import dev.shinyepo.torquecraft.events.HoverEvent;
 import dev.shinyepo.torquecraft.menu.furnace.AlloyFurnaceScreen;
 import dev.shinyepo.torquecraft.menu.grinder.GrinderScreen;
 import dev.shinyepo.torquecraft.menu.mechanicalfan.MechanicalFanScreen;
-import dev.shinyepo.torquecraft.model.baker.helpers.PipeModelLoader;
 import dev.shinyepo.torquecraft.network.RotaryNetworkRegistry;
 import dev.shinyepo.torquecraft.network.fluid.PressureFluidNetworkRegistry;
 import dev.shinyepo.torquecraft.particle.sprinkler.SprinklerWaterProvider;
@@ -23,6 +22,7 @@ import dev.shinyepo.torquecraft.registries.particle.TorqueParticles;
 import dev.shinyepo.torquecraft.registries.recipe.TorqueRecipes;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -34,11 +34,15 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
+import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
+import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
+import net.neoforged.neoforge.client.model.standalone.StandaloneModelBaker;
+import net.neoforged.neoforge.client.model.standalone.StandaloneModelKey;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
-import static net.minecraft.client.resources.model.ModelResourceLocation.standalone;
 import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 
 @Mod(TorqueCraft.MODID)
@@ -59,7 +63,7 @@ public class TorqueCraft {
         TorqueFluids.FLUIDS.register(modEventBus);
         TorqueCreativeTabs.CREATIVE_MODE_TABS.register(modEventBus);
         TorqueMenus.MENU_TYPES.register(modEventBus);
-        TorqueRecipes.Types.RECIPE_WRITING.register(modEventBus);
+        TorqueRecipes.Types.RECIPE_TYPES.register(modEventBus);
         TorqueRecipes.Serializers.RECIPE_SERIALIZERS.register(modEventBus);
         TorqueParticles.PARTICLE_TYPES.register(modEventBus);
 
@@ -90,8 +94,8 @@ public class TorqueCraft {
         }
 
         @SubscribeEvent
-        public static void registerGeometryLoaders(ModelEvent.RegisterGeometryLoaders event) {
-            event.register(fromNamespaceAndPath(TorqueCraft.MODID, "pipe_loader"), new PipeModelLoader());
+        public static void registerGeometryLoaders(ModelEvent.RegisterLoaders event) {
+//            event.register(fromNamespaceAndPath(TorqueCraft.MODID, "pipe_loader"), new PipeModelLoader());
         }
 
         @SubscribeEvent
@@ -102,14 +106,61 @@ public class TorqueCraft {
         }
 
         @SubscribeEvent
-        public static void registerBakedModels(ModelEvent.RegisterAdditional e) {
-            e.register(standalone(fromNamespaceAndPath(TorqueCraft.MODID, "block/partial/hsla_shaft_rod")));
-            e.register(standalone(fromNamespaceAndPath(TorqueCraft.MODID, "block/partial/shaft_rod")));
-            e.register(standalone(fromNamespaceAndPath(TorqueCraft.MODID, "block/partial/hsla_short_shaft_rod")));
-            e.register(standalone(fromNamespaceAndPath(TorqueCraft.MODID, "block/partial/short_shaft_rod")));
-            e.register(standalone(fromNamespaceAndPath(TorqueCraft.MODID, "block/partial/fan_blade")));
-            e.register(standalone(fromNamespaceAndPath(TorqueCraft.MODID, "block/partial/grinder_shaft")));
-            e.register(standalone(fromNamespaceAndPath(TorqueCraft.MODID, "block/partial/rotary_monitor")));
+        public static void registerBakedModels(ModelEvent.RegisterStandalone e) {
+            e.register(new StandaloneModelKey<>(fromNamespaceAndPath(TorqueCraft.MODID, "block/partial/hsla_shaft_rod")), StandaloneModelBaker.blockStateModel());
+            e.register(new StandaloneModelKey<>(fromNamespaceAndPath(TorqueCraft.MODID, "block/partial/shaft_rod")), StandaloneModelBaker.blockStateModel());
+            e.register(new StandaloneModelKey<>(fromNamespaceAndPath(TorqueCraft.MODID, "block/partial/hsla_short_shaft_rod")), StandaloneModelBaker.blockStateModel());
+            e.register(new StandaloneModelKey<>(fromNamespaceAndPath(TorqueCraft.MODID, "block/partial/short_shaft_rod")), StandaloneModelBaker.blockStateModel());
+            e.register(new StandaloneModelKey<>(fromNamespaceAndPath(TorqueCraft.MODID, "block/partial/fan_blade")), StandaloneModelBaker.blockStateModel());
+            e.register(new StandaloneModelKey<>(fromNamespaceAndPath(TorqueCraft.MODID, "block/partial/grinder_shaft")), StandaloneModelBaker.blockStateModel());
+            e.register(new StandaloneModelKey<>(fromNamespaceAndPath(TorqueCraft.MODID, "block/partial/rotary_monitor")), StandaloneModelBaker.blockStateModel());
+        }
+
+        @SubscribeEvent
+        public static void initializeClient(RegisterClientExtensionsEvent e) {
+            e.registerFluidType(new IClientFluidTypeExtensions() {
+                @Override
+                public ResourceLocation getStillTexture() {
+                    return TorqueFluidTypes.WATER_STILL_RL;
+                }
+
+                @Override
+                public ResourceLocation getFlowingTexture() {
+                    return TorqueFluidTypes.WATER_FLOWING_RL;
+                }
+
+                @Override
+                public @Nullable ResourceLocation getOverlayTexture() {
+                    return TorqueFluidTypes.JET_FUEL_OVERLAY_RL;
+                }
+
+                @Override
+                public int getTintColor() {
+                    return 0xA1ADD8E6;
+                }
+            }, TorqueFluidTypes.JET_FUEL_TYPE.get());
+
+            e.registerFluidType(new IClientFluidTypeExtensions() {
+                @Override
+                public ResourceLocation getStillTexture() {
+                    return TorqueFluidTypes.WATER_STILL_RL;
+                }
+
+                @Override
+                public ResourceLocation getFlowingTexture() {
+                    return TorqueFluidTypes.WATER_FLOWING_RL;
+                }
+
+                @Override
+                public @Nullable ResourceLocation getOverlayTexture() {
+                    return TorqueFluidTypes.LUBRICANT_OVERLAY_RL;
+                }
+
+                @Override
+                public int getTintColor() {
+                    return 0xA1FFFF84;
+                }
+            }, TorqueFluidTypes.LUBRICANT_TYPE.get());
         }
 
         @SubscribeEvent
@@ -131,7 +182,7 @@ public class TorqueCraft {
 
         @SubscribeEvent
         public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
-            event.registerSprite(TorqueParticles.SPRINKLER_WATER.get(), SprinklerWaterProvider::createSprinklerParticle);
+            event.registerSpriteSet(TorqueParticles.SPRINKLER_WATER.get(), SprinklerWaterProvider::new);
         }
     }
 }

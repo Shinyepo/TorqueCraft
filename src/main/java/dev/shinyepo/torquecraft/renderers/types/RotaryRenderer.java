@@ -12,19 +12,20 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.ModelBlockRenderer;
+import net.minecraft.client.renderer.block.model.BlockModel;
+import net.minecraft.client.renderer.block.model.BlockStateModel;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.client.model.data.ModelData;
+import net.neoforged.neoforge.client.model.standalone.StandaloneModelKey;
+import net.neoforged.neoforge.model.data.ModelData;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
 import java.util.List;
 
-import static net.minecraft.client.resources.model.ModelResourceLocation.standalone;
 import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 
 public class RotaryRenderer {
@@ -33,9 +34,8 @@ public class RotaryRenderer {
         if (handler == null) {
             return;
         }
-        ModelBlockRenderer renderer = Minecraft.getInstance().getBlockRenderer().getModelRenderer();
         Direction direction = blockEntity.getBlockState().getValue(HorizontalDirectionalBlock.FACING);
-        BakedModel model = Minecraft.getInstance().getModelManager().getModel(standalone(fromNamespaceAndPath(TorqueCraft.MODID, "block/partial/" + modelPath)));
+        BlockStateModel model = Minecraft.getInstance().getModelManager().getStandaloneModel(new StandaloneModelKey<>(fromNamespaceAndPath(TorqueCraft.MODID, "block/partial/" + modelPath)));
 
         RenderType type = RenderType.solid();
         pose.pushPose();
@@ -47,7 +47,8 @@ public class RotaryRenderer {
         pose.mulPose(new Quaternionf().rotateAxis((float)Math.toRadians(angle % 360), new Vector3f(-direction.getStepX(), 0, -direction.getStepZ())));
         pose.mulPose(direction.getRotation());
 
-        renderer.renderModel(pose.last(), buffer.getBuffer(type), null, model, 1F, 1F, 1F, packedLight, OverlayTexture.NO_OVERLAY, ModelData.EMPTY, type);
+        ModelBlockRenderer.renderModel(pose.last(), buffer, model,1.0F,1.0F,1.0F, packedLight,OverlayTexture.NO_OVERLAY,Minecraft.getInstance().level,blockEntity.getBlockPos(),blockEntity.getBlockState());
+//        ModelBlockRenderer.renderModel(pose.last(), buffer.getBuffer(type), null, model, 1F, 1F, 1F, packedLight, OverlayTexture.NO_OVERLAY, ModelData.EMPTY, type);
         pose.popPose();
     }
 
@@ -55,7 +56,7 @@ public class RotaryRenderer {
         ModelBlockRenderer renderer = Minecraft.getInstance().getBlockRenderer().getModelRenderer();
         Direction direction = blockEntity.getMonitorFacing();
         if (direction == null) return;
-        BakedModel model = Minecraft.getInstance().getModelManager().getModel(standalone(fromNamespaceAndPath(TorqueCraft.MODID, "block/partial/rotary_monitor")));
+        BlockStateModel model = Minecraft.getInstance().getModelManager().getStandaloneModel(new StandaloneModelKey<>(fromNamespaceAndPath(TorqueCraft.MODID, "block/partial/rotary_monitor")));
 
         RenderType type = RenderType.solid();
         pose.pushPose();
@@ -63,7 +64,8 @@ public class RotaryRenderer {
         pose.translate(0.5F, 0.5F, 0.5F);
         pose.mulPose(direction.getRotation());
 
-        renderer.renderModel(pose.last(), buffer.getBuffer(type), null, model, 0F, 0F, 0F, packedLight, OverlayTexture.NO_OVERLAY, ModelData.EMPTY, type);
+        ModelBlockRenderer.renderModel(pose.last(), buffer, model,1.0F,1.0F,1.0F, packedLight,OverlayTexture.NO_OVERLAY,Minecraft.getInstance().level,blockEntity.getBlockPos(),blockEntity.getBlockState());
+//        renderer.renderModel(pose.last(), buffer.getBuffer(type), null, model, 0F, 0F, 0F, packedLight, OverlayTexture.NO_OVERLAY, ModelData.EMPTY, type);
         pose.popPose();
         pose.pushPose();
 

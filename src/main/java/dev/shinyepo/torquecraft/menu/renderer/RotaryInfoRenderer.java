@@ -8,6 +8,7 @@ import dev.shinyepo.torquecraft.utils.MouseUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -35,9 +36,14 @@ public class RotaryInfoRenderer {
     private final Font FONT;
     private RotaryType ROTARY_TYPE = RotaryType.NOT_ENOUGH;
 
-    public RotaryInfoRenderer(ClientConfig config, Font font) {
+    private final int width;
+    private final int height;
+
+    public RotaryInfoRenderer(ClientConfig config, Font font, int width, int height) {
         this.CONFIG = config;
         this.FONT = font;
+        this.width = width;
+        this.height = height;
     }
 
     private void drawRotary(GuiGraphics graphics, IRotaryHandler handler) {
@@ -71,15 +77,15 @@ public class RotaryInfoRenderer {
     }
 
     private void drawBackground(GuiGraphics graphics) {
-        graphics.blit(ROTARY, 5, 5, 0, 110, 24, 74);
-        graphics.blit(ROTARY, BG_X, BG_Y, 0, 72, 18, BAR_HEIGHT);
+        graphics.blit(RenderType::guiTextured, ROTARY, 5, 5, 0, 110, 24, 74,width,height);
+        graphics.blit(RenderType::guiTextured,ROTARY, BG_X, BG_Y, 0, 72, 18, BAR_HEIGHT,width,height);
     }
 
     private void drawInfo(GuiGraphics graphics, RotaryType type) {
         int x = 8;
         int y = 8;
 
-        graphics.blit(ROTARY, x, y, 0, 18 * type.ordinal(), 18, 18);
+        graphics.blit(RenderType::guiTextured,ROTARY, x, y, 0, 18 * type.ordinal(), 18, 18,width,height);
     }
 
     public void render(GuiGraphics graphics, IRotaryHandler handler, int x, int y) {
@@ -108,7 +114,7 @@ public class RotaryInfoRenderer {
         float uMin = BAR_X / (float) ATLAS_SIZE;
         float vMin = (BAR_Y + BAR_HEIGHT - scaledValue) / (float) ATLAS_SIZE;
 
-        graphics.blit(ROTARY, x, y + (BAR_HEIGHT - scaledValue), (int) (uMin * ATLAS_SIZE), (int) (vMin * ATLAS_SIZE), BAR_WIDTH, scaledValue);
+        graphics.blit(RenderType::guiTextured,ROTARY, x, y + (BAR_HEIGHT - scaledValue), (int) (uMin * ATLAS_SIZE), (int) (vMin * ATLAS_SIZE), BAR_WIDTH, scaledValue, width, height);
     }
 
     public void renderRotaryTooltips(GuiGraphics pGuiGraphics, IRotaryHandler handler, int pMouseX, int pMouseY, int relX, int relY) {

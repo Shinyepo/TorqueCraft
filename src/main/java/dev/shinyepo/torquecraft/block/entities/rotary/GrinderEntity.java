@@ -3,12 +3,14 @@ package dev.shinyepo.torquecraft.block.entities.rotary;
 import dev.shinyepo.torquecraft.config.ClientConfig;
 import dev.shinyepo.torquecraft.factory.MachineFactory;
 import dev.shinyepo.torquecraft.factory.TorqueFluidTank;
-import dev.shinyepo.torquecraft.recipes.custom.GrinderRecipe;
+import dev.shinyepo.torquecraft.recipes.grinding.GrinderRecipe;
+import dev.shinyepo.torquecraft.recipes.grinding.GrinderRecipeInput;
 import dev.shinyepo.torquecraft.registries.block.TorqueBlockEntities;
 import dev.shinyepo.torquecraft.registries.item.TorqueItems;
 import dev.shinyepo.torquecraft.registries.recipe.TorqueRecipes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.Item;
@@ -190,11 +192,11 @@ public class GrinderEntity extends MachineFactory {
 
     private void craftItem() {
         Optional<RecipeHolder<GrinderRecipe>> recipe = getCurrentRecipe();
-        ItemStack result = recipe.get().value().getResultItem(null);
-        FluidStack resultFluid = recipe.get().value().getResultFluid(null);
+        ItemStack result = recipe.get().value().getResult();
+        FluidStack resultFluid = recipe.get().value().getResultFluid();
         if (!resultFluid.isEmpty()) {
             int fluidAmount = resultFluid.getAmount();
-            if (this.itemHandler.get().getStackInSlot(SLOT_INPUT).is(TorqueItems.CANOLA_SEEDS.get())) {
+            if (this.itemHandler.get().getStackInSlot(SLOT_INPUT).is(Items.BUCKET)) {
                 fluidAmount = fluidAmount * 2;
             }
             this.fluidTank.fill(new FluidStack(resultFluid.getFluid(), fluidAmount), IFluidHandler.FluidAction.EXECUTE);
@@ -210,8 +212,8 @@ public class GrinderEntity extends MachineFactory {
 
         if (recipe.isEmpty()) return false;
 
-        ItemStack result = recipe.get().value().getResultItem(null);
-        FluidStack resultFluid = recipe.get().value().getResultFluid(null);
+        ItemStack result = recipe.get().value().getResult();
+        FluidStack resultFluid = recipe.get().value().getResultFluid();
         boolean fluidSafe = true;
         if (!resultFluid.isEmpty())
             fluidSafe = fluidsMatch(resultFluid) && canFitInTank(resultFluid);
@@ -219,7 +221,7 @@ public class GrinderEntity extends MachineFactory {
     }
 
     private Optional<RecipeHolder<GrinderRecipe>> getCurrentRecipe() {
-        return this.level.getRecipeManager().getRecipeFor(TorqueRecipes.Types.GRINDING, new SingleRecipeInput(this.itemHandler.get().getStackInSlot(0)), this.level);
+        return ((ServerLevel) level).recipeAccess().getRecipeFor(TorqueRecipes.Types.GRINDING.get(), new GrinderRecipeInput(this.itemHandler.get().getStackInSlot(0)), this.level);
     }
 
     private boolean canOutputItem(Item item) {

@@ -7,6 +7,7 @@ import dev.shinyepo.torquecraft.utils.MouseUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -28,12 +29,17 @@ public class TempInfoRenderer {
     private static final int BG_Y = 31;
     private final HeatConfig CONFIG;
     private final Font FONT;
+    private final int width;
+    private final int height;
     private TempType TEMP_TYPE = TempType.NO_HEAT;
 
-    public TempInfoRenderer(HeatConfig config, Font font) {
+    public TempInfoRenderer(HeatConfig config, Font font, int width, int height) {
         this.CONFIG = config;
         this.FONT = font;
+        this.width = width;
+        this.height = height;
     }
+
 
     private void drawTemp(GuiGraphics graphics, int temp) {
         if (temp <= 0) {
@@ -60,15 +66,15 @@ public class TempInfoRenderer {
     }
 
     private void drawBackground(GuiGraphics graphics) {
-        graphics.blit(TEMP, 5, 5, 0, 110, 24, 74);
-        graphics.blit(TEMP, BG_X, BG_Y, 0, 72, 8, BAR_HEIGHT);
+        graphics.blit(RenderType::guiTextured, TEMP, 5, 5, 0, 110, 24, 74,width, height);
+        graphics.blit(RenderType::guiTextured, TEMP, BG_X, BG_Y, 0, 72, 8, BAR_HEIGHT,width, height);
     }
 
     private void drawInfo(GuiGraphics graphics, TempType type) {
         int x = 8;
         int y = 8;
 
-        graphics.blit(TEMP, x, y, 0, 18 * type.ordinal(), 18, 18);
+        graphics.blit(RenderType::guiTextured, TEMP, x, y, 0, 18 * type.ordinal(), 18, 18,width, height);
     }
 
     public void render(GuiGraphics graphics, int temp, int x, int y) {
@@ -96,7 +102,7 @@ public class TempInfoRenderer {
         float uMin = BAR_X / (float) ATLAS_SIZE;
         float vMin = (BAR_Y + BAR_HEIGHT - scaledValue) / (float) ATLAS_SIZE;
 
-        graphics.blit(TEMP, x, y + (BAR_HEIGHT - scaledValue), (int) (uMin * ATLAS_SIZE), (int) (vMin * ATLAS_SIZE), BAR_WIDTH, scaledValue);
+        graphics.blit(RenderType::guiTextured, TEMP, x, y + (BAR_HEIGHT - scaledValue), (int) (uMin * ATLAS_SIZE), (int) (vMin * ATLAS_SIZE), BAR_WIDTH, scaledValue,width, height);
     }
 
     public void renderTempTooltips(GuiGraphics pGuiGraphics, int temp, int pMouseX, int pMouseY, int relX, int relY) {

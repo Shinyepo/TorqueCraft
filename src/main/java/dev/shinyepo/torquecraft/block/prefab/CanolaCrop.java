@@ -14,12 +14,14 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class CanolaCrop extends CropBlock {
-    public static final int MAX_AGE = 5;
-    public static final IntegerProperty AGE = BlockStateProperties.AGE_5;
+    public static final int MAX_AGE = 7;
+    public static final IntegerProperty AGE = BlockStateProperties.AGE_7;
     public static final VoxelShape[] SHAPE_BY_AGE = new VoxelShape[]{
             Block.box(0,0,0,16,3,16),
             Block.box(0,0,0,16,5,16),
             Block.box(0,0,0,16,11,16),
+            Block.box(0,0,0,16,15,16),
+            Block.box(0,0,0,16,15,16),
             Block.box(0,0,0,16,15,16),
             Block.box(0,0,0,16,15,16),
             Block.box(0,0,0,16,15,16),

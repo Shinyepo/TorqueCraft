@@ -6,7 +6,7 @@ import com.mojang.blaze3d.vertex.*;
 import dev.shinyepo.torquecraft.TorqueCraft;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -59,7 +59,7 @@ public class FluidTankRenderer {
     }
 
     public void render(PoseStack poseStack, int x, int y, FluidStack fluidStack) {
-        RenderSystem.enableBlend();
+//        RenderSystem().enableBlend();
         poseStack.pushPose();
         {
             poseStack.translate(x, y, 0);
@@ -67,7 +67,7 @@ public class FluidTankRenderer {
         }
         poseStack.popPose();
         RenderSystem.setShaderColor(1, 1, 1, 1);
-        RenderSystem.disableBlend();
+//        RenderSystem.disableBlend();
     }
 
     private void drawFluid(PoseStack poseStack, final int width, final int height, FluidStack fluidStack) {
@@ -98,7 +98,7 @@ public class FluidTankRenderer {
         ResourceLocation fluidStill = renderProperties.getStillTexture(fluidStack);
 
         Minecraft minecraft = Minecraft.getInstance();
-        return minecraft.getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(fluidStill);
+        return minecraft.getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(fluidStill);
     }
 
     private int getColorTint(FluidStack ingredient) {
@@ -108,7 +108,7 @@ public class FluidTankRenderer {
     }
 
     private static void drawTiledSprite(PoseStack poseStack, final int tiledWidth, final int tiledHeight, int color, long scaledAmount, TextureAtlasSprite sprite) {
-        RenderSystem.setShaderTexture(0, InventoryMenu.BLOCK_ATLAS);
+//        RenderSystem.setSha(0, TextureAtlas.LOCATION_BLOCKS);
         Matrix4f matrix = poseStack.last().pose();
         setGLColorFromInt(color);
 
@@ -152,7 +152,7 @@ public class FluidTankRenderer {
         uMax = uMax - (maskRight / 16F * (uMax - uMin));
         vMax = vMax - (maskTop / 16F * (vMax - vMin));
 
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+//        RenderSystem.setShader(GameRenderer::getPositionTexShader);
 
         Tesselator tessellator = Tesselator.getInstance();
         BufferBuilder bufferBuilder = tessellator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
@@ -160,7 +160,8 @@ public class FluidTankRenderer {
         bufferBuilder.addVertex(matrix, xCoord + 16 - maskRight, yCoord + 16, zLevel).setUv(uMax, vMax);
         bufferBuilder.addVertex(matrix, xCoord + 16 - maskRight, yCoord + maskTop, zLevel).setUv(uMax, vMin);
         bufferBuilder.addVertex(matrix, xCoord, yCoord + maskTop, zLevel).setUv(uMin, vMin);
-        BufferUploader.drawWithShader(bufferBuilder.buildOrThrow());
+        var mesh = bufferBuilder.buildOrThrow();
+        mesh.close();
     }
 
     public List<Component> getTooltip(FluidStack fluidStack, TooltipFlag tooltipFlag) {

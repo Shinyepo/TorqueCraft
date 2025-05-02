@@ -6,6 +6,7 @@ import dev.shinyepo.torquecraft.renderers.IORenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.world.phys.Vec3;
 
 import static dev.shinyepo.torquecraft.renderers.types.RotaryRenderer.renderRotation;
 
@@ -15,7 +16,7 @@ public class MechanicalFanRenderer implements BlockEntityRenderer<MechanicalFanE
     }
 
     @Override
-    public void render(MechanicalFanEntity blockEntity, float partialTick, PoseStack pose, MultiBufferSource buffer, int packedLight, int packedOverlay) {
+    public void render(MechanicalFanEntity blockEntity, float partialTick, PoseStack pose, MultiBufferSource buffer, int packedLight, int packedOverlay, Vec3 pCameraPos) {
         renderRotation("fan_blade",blockEntity,pose,buffer,partialTick,packedLight);
 
         if (blockEntity.getProgress(partialTick) < 3.0F) {

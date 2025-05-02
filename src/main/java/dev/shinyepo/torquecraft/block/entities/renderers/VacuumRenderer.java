@@ -6,6 +6,7 @@ import dev.shinyepo.torquecraft.renderers.IORenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.world.phys.Vec3;
 
 public class VacuumRenderer implements BlockEntityRenderer<VacuumEntity> {
     public VacuumRenderer(BlockEntityRendererProvider.Context context) {
@@ -13,7 +14,7 @@ public class VacuumRenderer implements BlockEntityRenderer<VacuumEntity> {
     }
 
     @Override
-    public void render(VacuumEntity blockEntity, float partialTick, PoseStack pose, MultiBufferSource buffer, int packedLight, int packedOverlay) {
+    public void render(VacuumEntity blockEntity, float partialTick, PoseStack pose, MultiBufferSource buffer, int packedLight, int packedOverlay, Vec3 pCameraPos) {
         if (blockEntity.getProgress(partialTick) < 3.0F) {
             IORenderer.renderIOHelper(blockEntity, pose);
         }

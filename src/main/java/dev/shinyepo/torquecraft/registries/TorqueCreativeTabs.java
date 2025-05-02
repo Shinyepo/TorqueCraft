@@ -58,7 +58,7 @@ public class TorqueCreativeTabs {
                 output.accept(TorqueItems.HSLA_GEARBOX1_2_ITEM.get());
                 output.accept(TorqueItems.HSLA_GEARBOX1_4_ITEM.get());
                 //
-                output.accept(TorqueItems.CANOLA_SEEDS.get());
+//                output.accept(TorqueItems.CANOLA_SEEDS.get());
                 output.accept(TorqueItems.CRUSHED_SEEDS.get());
                 //machines
                 output.accept(TorqueItems.ALLOY_FURNACE_ITEM.get());
@@ -70,12 +70,10 @@ public class TorqueCreativeTabs {
                 output.accept(TorqueItems.COOLING_RADIATOR_ITEM.get());
                 output.accept(TorqueItems.VACUUM_ITEM.get());
                 //fluids
-                output.accept(TorqueItems.FLUID_TANK_ITEM.get());
+//                output.accept(TorqueItems.FLUID_TANK_ITEM.get());
                 output.accept(TorqueItems.LUBRICANT_BUCKET.get());
                 output.accept(TorqueItems.JET_FUEL_BUCKET.get());
                 //Pipe
-                output.accept(TorqueItems.FLUID_PIPE_ITEM.get());
-                output.accept(TorqueItems.STEAM_PIPE_ITEM.get());
                 //Tools
                 output.accept(TorqueItems.PRESSURE_GAUGE.get());
                 output.accept(TorqueItems.ROTARY_WRENCH.get());

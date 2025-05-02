@@ -32,9 +32,7 @@ public class TorqueBlockLootTables extends BlockLootSubProvider {
         dropSelf(TorqueBlocks.HSLA_SHAFT.get());
         dropSelf(TorqueBlocks.HSLA_BEVEL_GEARS.get());
         dropSelf(TorqueBlocks.HSLA_THREE_WAY.get());
-        dropSelf(TorqueBlocks.FLUID_PIPE.get());
-        dropSelf(TorqueBlocks.STEAM_PIPE.get());
-        dropSelf(TorqueBlocks.FLUID_TANK.get());
+//        dropSelf(TorqueBlocks.FLUID_TANK.get());
         dropSelf(TorqueBlocks.HSLA_GEARBOX1_2.get());
         dropSelf(TorqueBlocks.HSLA_GEARBOX1_4.get());
         dropSelf(TorqueBlocks.COOLING_RADIATOR.get());
@@ -44,8 +42,8 @@ public class TorqueBlockLootTables extends BlockLootSubProvider {
         //Crops
         LootItemCondition.Builder licBuilder = LootItemBlockStatePropertyCondition
                 .hasBlockStateProperties(TorqueBlocks.CANOLA_CROP.get())
-                .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CanolaCrop.AGE, 5));
-
+                .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CanolaCrop.AGE, 7));
+//
         add(TorqueBlocks.CANOLA_CROP.get(), createCropDrops(TorqueBlocks.CANOLA_CROP.get(), TorqueItems.CANOLA_SEEDS.get(), TorqueItems.CANOLA_SEEDS.get(), licBuilder));
 
 //        add(TCBlocks.ORE.get(),
@@ -54,6 +52,6 @@ public class TorqueBlockLootTables extends BlockLootSubProvider {
 
     @Override
     protected Iterable<Block> getKnownBlocks() {
-        return TorqueBlocks.BLOCKS.getEntries().stream().map(Holder::value)::iterator;
+        return TorqueBlocks.BLOCKS.getEntries().stream().map(e -> (Block) e.value()).toList();
     }
 }

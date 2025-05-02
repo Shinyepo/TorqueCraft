@@ -24,7 +24,7 @@ public class RotaryWrench extends Item {
             var entity = pContext.getLevel().getBlockEntity(pContext.getClickedPos());
             if (entity instanceof AnimatedEntity animated)
                 animated.setProgress(1.5F);
-            return InteractionResult.SUCCESS_NO_ITEM_USED;
+            return InteractionResult.SUCCESS;
         }
 
 
@@ -44,13 +44,13 @@ public class RotaryWrench extends Item {
             pContext.getLevel().setBlockAndUpdate(pContext.getClickedPos(), state.setValue(BlockStateProperties.HORIZONTAL_FACING, newFace));
 
             networkDevice.updateNetwork(RotaryNetworkRegistry.getInstance().registerDevice(networkDevice));
-            return InteractionResult.SUCCESS_NO_ITEM_USED;
+            return InteractionResult.SUCCESS;
         }
 
         //Change machine mode
         if (entity instanceof IModeMachine modeMachine) {
             modeMachine.cycleMode();
-            return InteractionResult.SUCCESS_NO_ITEM_USED;
+            return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;
     }

@@ -7,6 +7,8 @@ import dev.shinyepo.torquecraft.item.prefab.RotaryMonitor;
 import dev.shinyepo.torquecraft.item.prefab.RotaryWrench;
 import dev.shinyepo.torquecraft.registries.block.TorqueBlocks;
 import dev.shinyepo.torquecraft.registries.fluid.TorqueFluids;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -18,17 +20,17 @@ public class TorqueItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(TorqueCraft.MODID);
 
     //Materials
-    public static final Supplier<Item> TUNGSTEN_INGOT = ITEMS.registerSimpleItem("tungsten_ingot", new Item.Properties().food(new FoodProperties.Builder().fast().alwaysEdible().nutrition(10).build()));
-    public static final Supplier<Item> QUARTZ_DUST = ITEMS.registerSimpleItem("quartz_dust", new Item.Properties());
-    public static final Supplier<Item> SILICON = ITEMS.registerSimpleItem("silicon", new Item.Properties());
-    public static final Supplier<Item> CAST_IRON_INGOT = ITEMS.registerSimpleItem("cast_iron_ingot", new Item.Properties());
-    public static final Supplier<Item> HSLA_INGOT = ITEMS.registerSimpleItem("hsla_ingot", new Item.Properties());
-    public static final Supplier<Item> COPPER_DUST = ITEMS.registerSimpleItem("copper_dust", new Item.Properties());
-    public static final Supplier<Item> IRON_DUST = ITEMS.registerSimpleItem("iron_dust", new Item.Properties());
-    public static final Supplier<Item> GOLD_DUST = ITEMS.registerSimpleItem("gold_dust", new Item.Properties());
-    public static final Supplier<Item> DIAMOND_DUST = ITEMS.registerSimpleItem("diamond_dust", new Item.Properties());
-    public static final Supplier<Item> EMERALD_DUST = ITEMS.registerSimpleItem("emerald_dust", new Item.Properties());
-    public static final Supplier<Item> NETHERITE_DUST = ITEMS.registerSimpleItem("netherite_dust", new Item.Properties());
+    public static final Supplier<Item> TUNGSTEN_INGOT = ITEMS.registerSimpleItem("tungsten_ingot", new Item.Properties().food(new FoodProperties.Builder().alwaysEdible().nutrition(10).build()));
+    public static final Supplier<Item> QUARTZ_DUST = ITEMS.registerSimpleItem("quartz_dust");
+    public static final Supplier<Item> SILICON = ITEMS.registerSimpleItem("silicon");
+    public static final Supplier<Item> CAST_IRON_INGOT = ITEMS.registerSimpleItem("cast_iron_ingot");
+    public static final Supplier<Item> HSLA_INGOT = ITEMS.registerSimpleItem("hsla_ingot");
+    public static final Supplier<Item> COPPER_DUST = ITEMS.registerSimpleItem("copper_dust");
+    public static final Supplier<Item> IRON_DUST = ITEMS.registerSimpleItem("iron_dust");
+    public static final Supplier<Item> GOLD_DUST = ITEMS.registerSimpleItem("gold_dust");
+    public static final Supplier<Item> DIAMOND_DUST = ITEMS.registerSimpleItem("diamond_dust");
+    public static final Supplier<Item> EMERALD_DUST = ITEMS.registerSimpleItem("emerald_dust");
+    public static final Supplier<Item> NETHERITE_DUST = ITEMS.registerSimpleItem("netherite_dust");
     public static final Supplier<Item> OBSIDIAN_DUST = ITEMS.registerSimpleItem("obsidian_dust", new Item.Properties());
 
     //Components
@@ -55,12 +57,12 @@ public class TorqueItems {
     public static final Supplier<BlockItem> HSLA_GEARBOX1_4_ITEM = ITEMS.registerSimpleBlockItem("hsla_gearbox1_4", TorqueBlocks.HSLA_GEARBOX1_4);
 
     //Items
-    public static final Supplier<Item> CRUSHED_SEEDS = ITEMS.register("crushed_seeds", () -> new CanolaMeal(new Item.Properties()));
+    public static final Supplier<Item> CRUSHED_SEEDS = ITEMS.register("crushed_seeds", (r) -> new CanolaMeal(new Item.Properties().setId(ResourceKey.create(Registries.ITEM,r))));
 
     //TOOLS
-    public static final Supplier<Item> PRESSURE_GAUGE = ITEMS.register("pressure_gauge", () -> new PressureGauge(new Item.Properties()));
-    public static final Supplier<Item> ROTARY_MONITOR = ITEMS.register("rotary_monitor", () -> new RotaryMonitor(new Item.Properties()));
-    public static final Supplier<Item> ROTARY_WRENCH = ITEMS.register("rotary_wrench", () -> new RotaryWrench(new Item.Properties()));
+    public static final Supplier<Item> PRESSURE_GAUGE = ITEMS.register("pressure_gauge", (r) -> new PressureGauge(new Item.Properties().setId(ResourceKey.create(Registries.ITEM,r))));
+    public static final Supplier<Item> ROTARY_MONITOR = ITEMS.register("rotary_monitor", (r) -> new RotaryMonitor(new Item.Properties().setId(ResourceKey.create(Registries.ITEM,r))));
+    public static final Supplier<Item> ROTARY_WRENCH = ITEMS.register("rotary_wrench", (r) -> new RotaryWrench(new Item.Properties().setId(ResourceKey.create(Registries.ITEM,r))));
 
     //Block items
     public static final Supplier<BlockItem> TUNGSTEN_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("tungsten_block", TorqueBlocks.TUNGSTEN_BLOCK);
@@ -79,20 +81,20 @@ public class TorqueItems {
     public static final Supplier<BlockItem> COOLING_RADIATOR_ITEM = ITEMS.registerSimpleBlockItem("cooling_radiator", TorqueBlocks.COOLING_RADIATOR);
 
     //PIPES
-    public static final Supplier<BlockItem> FLUID_PIPE_ITEM = ITEMS.registerSimpleBlockItem("fluid_pipe", TorqueBlocks.FLUID_PIPE);
-    public static final Supplier<BlockItem> STEAM_PIPE_ITEM = ITEMS.registerSimpleBlockItem("steam_pipe", TorqueBlocks.STEAM_PIPE);
+//    public static final Supplier<BlockItem> FLUID_PIPE_ITEM = ITEMS.registerSimpleBlockItem("fluid_pipe", TorqueBlocks.FLUID_PIPE);
+//    public static final Supplier<BlockItem> STEAM_PIPE_ITEM = ITEMS.registerSimpleBlockItem("steam_pipe", TorqueBlocks.STEAM_PIPE);
 
-    public static final Supplier<BlockItem> FLUID_TANK_ITEM = ITEMS.registerSimpleBlockItem("fluid_tank", TorqueBlocks.FLUID_TANK);
+//    public static final Supplier<BlockItem> FLUID_TANK_ITEM = ITEMS.registerSimpleBlockItem("fluid_tank", TorqueBlocks.FLUID_TANK);
 
     //Seeds
-    public static final Supplier<Item> CANOLA_SEEDS = ITEMS.register("canola_seeds", () -> new ItemNameBlockItem(TorqueBlocks.CANOLA_CROP.get(), new Item.Properties()));
+    public static final Supplier<BlockItem> CANOLA_SEEDS = ITEMS.registerSimpleBlockItem("canola_seeds", TorqueBlocks.CANOLA_CROP);
 
     //fluid buckets
-    public static final Supplier<BucketItem> LUBRICANT_BUCKET = ITEMS.register("lubricant_bucket", () -> new BucketItem(TorqueFluids.SOURCE_LUBRICANT.get(),
-            new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+    public static final Supplier<BucketItem> LUBRICANT_BUCKET = ITEMS.register("lubricant_bucket", (r) -> new BucketItem(TorqueFluids.SOURCE_LUBRICANT.get(),
+            new Item.Properties().setId(ResourceKey.create(Registries.ITEM,r)).craftRemainder(Items.BUCKET).stacksTo(1)));
 
-    public static final Supplier<BucketItem> JET_FUEL_BUCKET = ITEMS.register("jet_fuel_bucket", () -> new BucketItem(TorqueFluids.SOURCE_JET_FUEL.get(),
-            new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+    public static final Supplier<BucketItem> JET_FUEL_BUCKET = ITEMS.register("jet_fuel_bucket", (r) -> new BucketItem(TorqueFluids.SOURCE_JET_FUEL.get(),
+            new Item.Properties().setId(ResourceKey.create(Registries.ITEM,r)).craftRemainder(Items.BUCKET).stacksTo(1)));
 
 
 }

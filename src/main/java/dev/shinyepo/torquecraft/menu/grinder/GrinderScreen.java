@@ -7,6 +7,7 @@ import dev.shinyepo.torquecraft.menu.renderer.RotaryInfoRenderer;
 import dev.shinyepo.torquecraft.utils.MouseUtil;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -33,7 +34,7 @@ public class GrinderScreen extends AbstractContainerScreen<GrinderContainer> {
     protected void init() {
         super.init();
         assignTankRenderer();
-        rotaryRenderer = new RotaryInfoRenderer(ClientConfig.GRINDER, this.font);
+        rotaryRenderer = new RotaryInfoRenderer(ClientConfig.GRINDER, this.font, width, height);
     }
 
 
@@ -51,7 +52,7 @@ public class GrinderScreen extends AbstractContainerScreen<GrinderContainer> {
     protected void renderBg(GuiGraphics graphics, float partialTicks, int mouseX, int mouseY) {
         int relX = (this.width - this.imageWidth) / 2;
         int relY = (this.height - this.imageHeight) / 2;
-        graphics.blit(GUI, relX, relY, 0, 0, this.imageWidth, this.imageHeight);
+        graphics.blit(RenderType::guiTextured, GUI, relX, relY, 0, 0, this.imageWidth, this.imageHeight,width,height);
 
         renderProgressArrow(graphics, relX, relY);
         tankRenderer.render(graphics.pose(), relX + 152, relY + 13, this.menu.getFluidStack());
@@ -83,6 +84,6 @@ public class GrinderScreen extends AbstractContainerScreen<GrinderContainer> {
         var maxProgress = this.menu.getMaxProgress();
         if (maxProgress < 1) return;
         int progress = this.menu.getProgress() * 22 / this.menu.getMaxProgress();
-        graphics.blit(GUI, relX + 80, relY + 34, 176, 0, progress, 16);
+        graphics.blit(RenderType::guiTextured, GUI, relX + 80, relY + 34, 176, 0, progress, 16,width,height);
     }
 }
