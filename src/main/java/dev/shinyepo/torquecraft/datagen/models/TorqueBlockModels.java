@@ -50,7 +50,7 @@ public class TorqueBlockModels extends BlockModelGenerators {
         generateHorizontalWithExistingModel(TorqueBlocks.HSLA_THREE_WAY.get());
         generateHorizontalWithExistingModel(TorqueBlocks.VACUUM.get());
         generateHorizontalWithExistingModel(TorqueBlocks.FLUID_TANK.get());
-        generateLitHorizontalWithExistingModel(TorqueBlocks.ALLOY_FURNACE.get());
+        generateAlloyFurnaceWithExistingModel(TorqueBlocks.ALLOY_FURNACE.get());
         generateHorizontalWithExistingModel(TorqueBlocks.HSLA_GEARBOX1_2.get(), ModelType.GEARBOX);
         generateHorizontalWithExistingModel(TorqueBlocks.HSLA_GEARBOX1_4.get(), ModelType.GEARBOX);
 
@@ -65,6 +65,13 @@ public class TorqueBlockModels extends BlockModelGenerators {
         return "block/" + type.getSerializedName() + "/" + block.getName().getString().split("\\.")[2];
     }
 
+    private void generateItemModelBasedOnBlock(Block block, ResourceLocation modelLocation) {
+        itemModelOutput.accept(
+                block.asItem(),
+                ItemModelUtils.plainModel(modelLocation)
+        );
+    }
+
     private void generateHorizontalWithExistingModel(Block block, ResourceLocation modelLocation) {
         blockStateOutput.accept(
                 MultiVariantGenerator.dispatch(block,
@@ -73,28 +80,30 @@ public class TorqueBlockModels extends BlockModelGenerators {
                                         new Variant(modelLocation)
                                 ))
                 ).with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING));
-        itemModelOutput.accept(
-                block.asItem(),
-                ItemModelUtils.plainModel(modelLocation)
-        );
+        generateItemModelBasedOnBlock(block, modelLocation);
     }
 
-    private void generateLitHorizontalWithExistingModel(Block block) {
+    private void generateAlloyFurnaceWithExistingModel(Block block) {
+        var modelLocation = fromNamespaceAndPath(TorqueCraft.MODID, "block/furnace/alloy_furnace");
         blockStateOutput.accept(
                 MultiVariantGenerator.dispatch(block)
                         .with(PropertyDispatch.initial(BlockStateProperties.LIT)
-                                .generate(state -> plainVariant(fromNamespaceAndPath(TorqueCraft.MODID, "block/furnace/alloy_furnace" + (state ? "_lit" : "")))
+                                .generate(state -> plainVariant(modelLocation.withSuffix(state ? "_lit" : ""))
                                 ))
                         .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING));
+        generateItemModelBasedOnBlock(block, modelLocation);
     }
 
     private void generateRadiatorWithExistingModel(Block block) {
+        var modelLocation = fromNamespaceAndPath(TorqueCraft.MODID, "block/radiator/cooling_radiator");
         blockStateOutput.accept(
                 MultiVariantGenerator.dispatch(block)
                         .with(PropertyDispatch.initial(TorqueAttributes.USAGE)
-                                .generate(state -> plainVariant(fromNamespaceAndPath(TorqueCraft.MODID, "block/radiator/cooling_radiator_" + state.getSerializedName()))
+                                .generate(state -> plainVariant(modelLocation.withSuffix("_" + state.getSerializedName()))
                                 ))
                         .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING));
+        generateItemModelBasedOnBlock(block, modelLocation.withSuffix("_full"));
+
     }
 
 
