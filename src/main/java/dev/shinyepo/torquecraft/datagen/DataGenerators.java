@@ -5,8 +5,8 @@ import dev.shinyepo.torquecraft.datagen.loot.TorqueLootTableProvider;
 import dev.shinyepo.torquecraft.datagen.models.TorqueModelProvider;
 import dev.shinyepo.torquecraft.datagen.particle.TorqueParticleProvider;
 import dev.shinyepo.torquecraft.datagen.recipe.TorqueRecipeProvider;
-import dev.shinyepo.torquecraft.datagen.tag.TorqueBlockTagGenerator;
-import dev.shinyepo.torquecraft.datagen.tag.TorqueItemTagGenerator;
+import dev.shinyepo.torquecraft.datagen.tag.TorqueBlockTagProvider;
+import dev.shinyepo.torquecraft.datagen.tag.TorqueItemTagProvider;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
@@ -22,8 +22,8 @@ public class DataGenerators {
         generator.addProvider(true, new TorqueModelProvider(packOutput));
         generator.addProvider(true, new TorqueParticleProvider(packOutput));
         generator.addProvider(true, TorqueLootTableProvider.create(packOutput, lookupProvider));
-        TorqueBlockTagGenerator blockTagGenerator = generator.addProvider(true, new TorqueBlockTagGenerator(packOutput, lookupProvider));
-        generator.addProvider(true, new TorqueItemTagGenerator(packOutput, lookupProvider, blockTagGenerator.contentsGetter()));
+        TorqueBlockTagProvider blockTagGenerator = generator.addProvider(true, new TorqueBlockTagProvider(packOutput, lookupProvider));
+        generator.addProvider(true, new TorqueItemTagProvider(packOutput, lookupProvider, blockTagGenerator.contentsGetter()));
 
         generator.addProvider(true, new TorqueRecipeProvider.Runner(packOutput, lookupProvider));
     }

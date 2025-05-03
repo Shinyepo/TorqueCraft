@@ -13,8 +13,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CompletableFuture;
 
-public class TorqueBlockTagGenerator extends BlockTagsProvider {
-    public TorqueBlockTagGenerator(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+public class TorqueBlockTagProvider extends BlockTagsProvider {
+    public TorqueBlockTagProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
         super(output, lookupProvider, TorqueCraft.MODID);
     }
 
@@ -22,6 +22,8 @@ public class TorqueBlockTagGenerator extends BlockTagsProvider {
     protected void addTags(HolderLookup.@NotNull Provider pProvider) {
         tag(Tags.Blocks.STORAGE_BLOCKS)
                 .add(TorqueBlocks.CAST_IRON_BLOCK.get())
+                .add(TorqueBlocks.HSLA_BLOCK.get())
+                .add(TorqueBlocks.TUNGSTEN_BLOCK.get())
                 .replace(false);
 
         tag(TorqueTags.HEAT_SOURCE)
@@ -32,11 +34,15 @@ public class TorqueBlockTagGenerator extends BlockTagsProvider {
         tag(BlockTags.NEEDS_IRON_TOOL)
                 .add(TorqueBlocks.ALLOY_FURNACE.get())
                 .add(TorqueBlocks.TUNGSTEN_BLOCK.get())
+                .add(TorqueBlocks.CAST_IRON_BLOCK.get())
+                .add(TorqueBlocks.TUNGSTEN_BLOCK.get())
                 .add(TorqueBlocks.STEAM_ENGINE.get())
                 .add(TorqueBlocks.MECHANICAL_FAN.get())
                 .add(TorqueBlocks.GRINDER.get())
-//                .add(TorqueBlocks.FLUID_TANK.get())
+                .add(TorqueBlocks.FLUID_TANK.get())
                 .add(TorqueBlocks.PUMP.get())
+                .add(TorqueBlocks.SPRINKLER.get())
+                .add(TorqueBlocks.VACUUM.get())
                 .add(TorqueBlocks.COOLING_RADIATOR.get())
                 .add(TorqueBlocks.HSLA_THREE_WAY.get())
                 .add(TorqueBlocks.HSLA_BEVEL_GEARS.get())
@@ -47,11 +53,15 @@ public class TorqueBlockTagGenerator extends BlockTagsProvider {
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(TorqueBlocks.ALLOY_FURNACE.get())
                 .add(TorqueBlocks.TUNGSTEN_BLOCK.get())
+                .add(TorqueBlocks.CAST_IRON_BLOCK.get())
+                .add(TorqueBlocks.TUNGSTEN_BLOCK.get())
                 .add(TorqueBlocks.STEAM_ENGINE.get())
                 .add(TorqueBlocks.MECHANICAL_FAN.get())
                 .add(TorqueBlocks.GRINDER.get())
-//                .add(TorqueBlocks.FLUID_TANK.get())
+                .add(TorqueBlocks.FLUID_TANK.get())
                 .add(TorqueBlocks.PUMP.get())
+                .add(TorqueBlocks.SPRINKLER.get())
+                .add(TorqueBlocks.VACUUM.get())
                 .add(TorqueBlocks.COOLING_RADIATOR.get())
                 .add(TorqueBlocks.HSLA_THREE_WAY.get())
                 .add(TorqueBlocks.HSLA_BEVEL_GEARS.get())
