@@ -1,5 +1,6 @@
 package dev.shinyepo.torquecraft.registries;
 
+import dev.shinyepo.torquecraft.block.entities.FluidTankEntity;
 import dev.shinyepo.torquecraft.block.entities.rotary.VacuumEntity;
 import dev.shinyepo.torquecraft.capabilities.TorqueCustomCapabilities;
 import dev.shinyepo.torquecraft.factory.rotary.network.RotaryNetworkDevice;
@@ -40,6 +41,7 @@ public class TorqueCapabilities {
 
         event.registerBlockEntity(TorqueCustomCapabilities.ROTARY_HANDLER_BLOCK, TorqueBlockEntities.STEAM_ENGINE_ENTITY.get(), (o, dir) -> o.getRotaryHandler(dir));
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, TorqueBlockEntities.STEAM_ENGINE_ENTITY.get(), (o, dir) -> o.getFluidTank(dir));
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, TorqueBlockEntities.FLUID_TANK_ENTITY.get(), FluidTankEntity::getFluidTank);
 
         event.registerBlockEntity(TorqueCustomCapabilities.ROTARY_HANDLER_BLOCK, TorqueBlockEntities.SHAFT_ENTITY.get(), (o,dir) -> o.getRotaryHandler(dir));
         event.registerBlockEntity(TorqueCustomCapabilities.ROTARY_HANDLER_BLOCK, TorqueBlockEntities.MECHANICAL_FAN_ENTITY.get(), (o,dir) -> o.getRotaryHandler(dir));

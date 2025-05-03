@@ -23,7 +23,7 @@ public class TorqueBlockEntities {
     public static final Supplier<BlockEntityType<GrinderEntity>> GRINDER_ENTITY = BLOCK_ENTITIES.register("grinder_be", () -> new BlockEntityType<>(GrinderEntity::new, TorqueBlocks.GRINDER.get()));
     public static final Supplier<BlockEntityType<PumpEntity>> PUMP_ENTITY = BLOCK_ENTITIES.register("pump_be", () -> new BlockEntityType<>(PumpEntity::new, TorqueBlocks.PUMP.get()));
     public static final Supplier<BlockEntityType<SprinklerEntity>> SPRINKLER_ENTITY = BLOCK_ENTITIES.register("sprinkler_be", () -> new BlockEntityType<>(SprinklerEntity::new, TorqueBlocks.SPRINKLER.get()));
-    public static final Supplier<BlockEntityType<FluidTankEntity>> FLUID_TANK_ENTITY = BLOCK_ENTITIES.register("fluid_tank_be", () -> new BlockEntityType<>(FluidTankEntity::new, TorqueBlocks.SPRINKLER.get()));
+    public static final Supplier<BlockEntityType<FluidTankEntity>> FLUID_TANK_ENTITY = BLOCK_ENTITIES.register("fluid_tank_be", () -> new BlockEntityType<>(FluidTankEntity::new, TorqueBlocks.FLUID_TANK.get()));
     public static final Supplier<BlockEntityType<ShaftEntity>> SHAFT_ENTITY = BLOCK_ENTITIES.register("shaft_be", () -> new BlockEntityType<>(ShaftEntity::new, TorqueBlocks.HSLA_SHAFT.get()));
     public static final Supplier<BlockEntityType<ThreeWayEntity>> THREE_WAY_ENTITY = BLOCK_ENTITIES.register("three_way_be", () -> new BlockEntityType<>(ThreeWayEntity::new, TorqueBlocks.HSLA_THREE_WAY.get()));
     public static final Supplier<BlockEntityType<BevelGearsEntity>> BEVEL_GEARS_ENTITY = BLOCK_ENTITIES.register("bevel_gears_be", () -> new BlockEntityType<>(BevelGearsEntity::new, TorqueBlocks.HSLA_BEVEL_GEARS.get()));

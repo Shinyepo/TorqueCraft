@@ -15,7 +15,6 @@ import dev.shinyepo.torquecraft.registries.fluid.TorqueFluids;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -51,14 +50,12 @@ public class TorqueBlocks {
 
     //Crops
     public static final Supplier<Block> CANOLA_CROP = BLOCKS.register("canola_crop", (r) -> new CanolaCrop(BlockBehaviour.Properties.of().randomTicks().instabreak().sound(SoundType.CROP).pushReaction(PushReaction.DESTROY).mapColor(MapColor.PLANT).noCollission().noOcclusion().setId(ResourceKey.create(Registries.BLOCK,r))));
-//    public static final Supplier<Block> FLUID_TANK = BLOCKS.register("fluid_tank", (r) -> new Vacuum(BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK,r)).destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE)));
+    public static final Supplier<Block> FLUID_TANK = BLOCKS.register("fluid_tank", (r) -> new FluidTank(BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, r)).destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE)));
 
     //FLUIDS
     public static final Supplier<LiquidBlock> LUBRICANT_BLOCK = BLOCKS.register("lubricant_block", (r) -> new LiquidBlock(TorqueFluids.SOURCE_LUBRICANT.get(), BlockBehaviour.Properties.of().replaceable().noCollission().strength(100.0F).pushReaction(PushReaction.DESTROY).noLootTable().liquid().sound(SoundType.EMPTY).setId(ResourceKey.create(Registries.BLOCK,r))));
     public static final Supplier<LiquidBlock> JET_FUEL_BLOCK = BLOCKS.register("jet_fuel_block", (r) -> new LiquidBlock(TorqueFluids.SOURCE_JET_FUEL.get(), BlockBehaviour.Properties.of().replaceable().noCollission().strength(100.0F).pushReaction(PushReaction.DESTROY).noLootTable().liquid().sound(SoundType.EMPTY).setId(ResourceKey.create(Registries.BLOCK,r))));
 
-
-//    public static final Supplier<Block> FLUID_TANK = BLOCKS.register("fluid_tank", (r) -> new FluidTank(BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK,r)).destroyTime(1.5f).noOcclusion()));
     //PIPES
 //    public static final Supplier<Block> FLUID_PIPE = BLOCKS.register("fluid_pipe", FluidPipe::new);
 //    public static final Supplier<Block> STEAM_PIPE = BLOCKS.register("steam_pipe", SteamPipe::new);

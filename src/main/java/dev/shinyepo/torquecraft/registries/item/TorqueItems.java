@@ -10,7 +10,10 @@ import dev.shinyepo.torquecraft.registries.fluid.TorqueFluids;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.BucketItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
@@ -46,7 +49,6 @@ public class TorqueItems {
     public static final Supplier<Item> HSLA_PISTON = ITEMS.registerSimpleItem("hsla_piston", new Item.Properties());
     public static final Supplier<Item> HSLA_TANK = ITEMS.registerSimpleItem("hsla_tank", new Item.Properties());
     public static final Supplier<Item> HSLA_PLATE = ITEMS.registerSimpleItem("hsla_plate", new Item.Properties());
-
     public static final Supplier<Item> CIRCUIT_MODULE = ITEMS.registerSimpleItem("circuit_module", new Item.Properties());
 
     //Gears/Shafts
@@ -79,12 +81,12 @@ public class TorqueItems {
     public static final Supplier<BlockItem> VACUUM_ITEM = ITEMS.registerSimpleBlockItem("vacuum", TorqueBlocks.VACUUM);
 
     public static final Supplier<BlockItem> COOLING_RADIATOR_ITEM = ITEMS.registerSimpleBlockItem("cooling_radiator", TorqueBlocks.COOLING_RADIATOR);
+    public static final Supplier<BlockItem> FLUID_TANK_ITEM = ITEMS.registerSimpleBlockItem("fluid_tank", TorqueBlocks.FLUID_TANK);
 
     //PIPES
 //    public static final Supplier<BlockItem> FLUID_PIPE_ITEM = ITEMS.registerSimpleBlockItem("fluid_pipe", TorqueBlocks.FLUID_PIPE);
 //    public static final Supplier<BlockItem> STEAM_PIPE_ITEM = ITEMS.registerSimpleBlockItem("steam_pipe", TorqueBlocks.STEAM_PIPE);
 
-//    public static final Supplier<BlockItem> FLUID_TANK_ITEM = ITEMS.registerSimpleBlockItem("fluid_tank", TorqueBlocks.FLUID_TANK);
 
     //Seeds
     public static final Supplier<BlockItem> CANOLA_SEEDS = ITEMS.registerSimpleBlockItem("canola_seeds", TorqueBlocks.CANOLA_CROP);

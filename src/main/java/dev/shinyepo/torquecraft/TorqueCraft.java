@@ -38,13 +38,10 @@ import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.model.standalone.StandaloneModelBaker;
-import net.neoforged.neoforge.client.model.standalone.StandaloneModelKey;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
-
-import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 
 @Mod(TorqueCraft.MODID)
 public class TorqueCraft {
