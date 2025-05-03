@@ -2,6 +2,7 @@ package dev.shinyepo.torquecraft.datagen.models;
 
 import dev.shinyepo.torquecraft.TorqueCraft;
 import dev.shinyepo.torquecraft.config.ModelType;
+import dev.shinyepo.torquecraft.constants.TorqueAttributes;
 import dev.shinyepo.torquecraft.registries.block.TorqueBlocks;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
@@ -49,10 +50,11 @@ public class TorqueBlockModels extends BlockModelGenerators {
         generateHorizontalWithExistingModel(TorqueBlocks.HSLA_THREE_WAY.get());
         generateHorizontalWithExistingModel(TorqueBlocks.VACUUM.get());
         generateHorizontalWithExistingModel(TorqueBlocks.FLUID_TANK.get());
-        generateHorizontalWithExistingModel(TorqueBlocks.COOLING_RADIATOR.get(), ModelType.RADIATOR);
-        generateHorizontalWithExistingModel(TorqueBlocks.ALLOY_FURNACE.get(), ModelType.FURNACE);
+        generateLitHorizontalWithExistingModel(TorqueBlocks.ALLOY_FURNACE.get());
         generateHorizontalWithExistingModel(TorqueBlocks.HSLA_GEARBOX1_2.get(), ModelType.GEARBOX);
         generateHorizontalWithExistingModel(TorqueBlocks.HSLA_GEARBOX1_4.get(), ModelType.GEARBOX);
+
+        generateRadiatorWithExistingModel(TorqueBlocks.COOLING_RADIATOR.get());
 
         generateCropBlockWithName(TorqueBlocks.CANOLA_CROP.get(), "canola", BlockStateProperties.AGE_5, 0, 1, 2, 3, 4, 5);
 
@@ -76,6 +78,25 @@ public class TorqueBlockModels extends BlockModelGenerators {
                 ItemModelUtils.plainModel(modelLocation)
         );
     }
+
+    private void generateLitHorizontalWithExistingModel(Block block) {
+        blockStateOutput.accept(
+                MultiVariantGenerator.dispatch(block)
+                        .with(PropertyDispatch.initial(BlockStateProperties.LIT)
+                                .generate(state -> plainVariant(fromNamespaceAndPath(TorqueCraft.MODID, "block/furnace/alloy_furnace" + (state ? "_lit" : "")))
+                                ))
+                        .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING));
+    }
+
+    private void generateRadiatorWithExistingModel(Block block) {
+        blockStateOutput.accept(
+                MultiVariantGenerator.dispatch(block)
+                        .with(PropertyDispatch.initial(TorqueAttributes.USAGE)
+                                .generate(state -> plainVariant(fromNamespaceAndPath(TorqueCraft.MODID, "block/radiator/cooling_radiator_" + state.getSerializedName()))
+                                ))
+                        .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING));
+    }
+
 
     private void generateHorizontalWithExistingModel(Block block, ModelType type) {
         generateHorizontalWithExistingModel(block, fromNamespaceAndPath(TorqueCraft.MODID, getPathWithType(block, type)));
