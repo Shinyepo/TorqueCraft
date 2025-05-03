@@ -2,6 +2,7 @@ package dev.shinyepo.torquecraft.block.entities.renderers;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import dev.shinyepo.torquecraft.block.entities.rotary.SteamEngineEntity;
+import dev.shinyepo.torquecraft.constants.TorqueStandaloneModels;
 import dev.shinyepo.torquecraft.renderers.IORenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -21,7 +22,7 @@ public class SteamEngineRenderer implements BlockEntityRenderer<SteamEngineEntit
 
     @Override
     public void render(SteamEngineEntity blockEntity, float partialTick, PoseStack pose, MultiBufferSource buffer, int packedLight, int packedOverlay, Vec3 pCameraPos) {
-        renderRotation("hsla_short_shaft_rod", blockEntity, pose, buffer, partialTick, packedLight);
+        renderRotation(TorqueStandaloneModels.HSLA_SHORT_SHAFT_ROD, blockEntity, pose, buffer, partialTick, packedLight);
 
         if (blockEntity.getProgress(partialTick) < 3.0F) {
             IORenderer.renderIOHelper(blockEntity, pose);

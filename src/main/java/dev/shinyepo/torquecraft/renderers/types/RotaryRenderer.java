@@ -6,13 +6,13 @@ import dev.shinyepo.torquecraft.TorqueCraft;
 import dev.shinyepo.torquecraft.block.entities.rotary.transmitters.ShaftEntity;
 import dev.shinyepo.torquecraft.capabilities.TorqueCustomCapabilities;
 import dev.shinyepo.torquecraft.capabilities.handlers.rotary.IRotaryHandler;
+import dev.shinyepo.torquecraft.constants.TorqueStandaloneModels;
 import dev.shinyepo.torquecraft.factory.rotary.render.IRotational;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.ModelBlockRenderer;
-import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.renderer.block.model.BlockStateModel;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Direction;
@@ -20,22 +20,20 @@ import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.client.model.standalone.StandaloneModelKey;
-import net.neoforged.neoforge.model.data.ModelData;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
 import java.util.List;
 
-import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
-
 public class RotaryRenderer {
-    public static void renderRotation(String modelPath, BlockEntity blockEntity, PoseStack pose, MultiBufferSource buffer, float partialTick, int packedLight) {
+    public static void renderRotation(StandaloneModelKey<BlockStateModel> standaloneModelKey, BlockEntity blockEntity, PoseStack pose, MultiBufferSource buffer, float partialTick, int packedLight) {
         IRotaryHandler handler = Minecraft.getInstance().level.getCapability(TorqueCustomCapabilities.ROTARY_HANDLER_BLOCK,blockEntity.getBlockPos(),blockEntity.getBlockState(),blockEntity,null);
         if (handler == null) {
             return;
         }
         Direction direction = blockEntity.getBlockState().getValue(HorizontalDirectionalBlock.FACING);
-        BlockStateModel model = Minecraft.getInstance().getModelManager().getStandaloneModel(new StandaloneModelKey<>(fromNamespaceAndPath(TorqueCraft.MODID, "block/partial/" + modelPath)));
+        BlockStateModel model = Minecraft.getInstance().getModelManager().getStandaloneModel(standaloneModelKey);
+
 
         RenderType type = RenderType.solid();
         pose.pushPose();
@@ -53,10 +51,9 @@ public class RotaryRenderer {
     }
 
     public static void renderMonitor(ShaftEntity blockEntity, PoseStack pose, MultiBufferSource buffer, int packedLight, Font font) {
-        ModelBlockRenderer renderer = Minecraft.getInstance().getBlockRenderer().getModelRenderer();
         Direction direction = blockEntity.getMonitorFacing();
         if (direction == null) return;
-        BlockStateModel model = Minecraft.getInstance().getModelManager().getStandaloneModel(new StandaloneModelKey<>(fromNamespaceAndPath(TorqueCraft.MODID, "block/partial/rotary_monitor")));
+        BlockStateModel model = Minecraft.getInstance().getModelManager().getStandaloneModel(TorqueStandaloneModels.ROTARY_MONITOR);
 
         RenderType type = RenderType.solid();
         pose.pushPose();

@@ -2,6 +2,7 @@ package dev.shinyepo.torquecraft;
 
 import com.mojang.logging.LogUtils;
 import dev.shinyepo.torquecraft.block.entities.renderers.*;
+import dev.shinyepo.torquecraft.constants.TorqueStandaloneModels;
 import dev.shinyepo.torquecraft.events.HoverEvent;
 import dev.shinyepo.torquecraft.menu.furnace.AlloyFurnaceScreen;
 import dev.shinyepo.torquecraft.menu.grinder.GrinderScreen;
@@ -106,14 +107,14 @@ public class TorqueCraft {
         }
 
         @SubscribeEvent
-        public static void registerBakedModels(ModelEvent.RegisterStandalone e) {
-            e.register(new StandaloneModelKey<>(fromNamespaceAndPath(TorqueCraft.MODID, "block/partial/hsla_shaft_rod")), StandaloneModelBaker.blockStateModel());
-            e.register(new StandaloneModelKey<>(fromNamespaceAndPath(TorqueCraft.MODID, "block/partial/shaft_rod")), StandaloneModelBaker.blockStateModel());
-            e.register(new StandaloneModelKey<>(fromNamespaceAndPath(TorqueCraft.MODID, "block/partial/hsla_short_shaft_rod")), StandaloneModelBaker.blockStateModel());
-            e.register(new StandaloneModelKey<>(fromNamespaceAndPath(TorqueCraft.MODID, "block/partial/short_shaft_rod")), StandaloneModelBaker.blockStateModel());
-            e.register(new StandaloneModelKey<>(fromNamespaceAndPath(TorqueCraft.MODID, "block/partial/fan_blade")), StandaloneModelBaker.blockStateModel());
-            e.register(new StandaloneModelKey<>(fromNamespaceAndPath(TorqueCraft.MODID, "block/partial/grinder_shaft")), StandaloneModelBaker.blockStateModel());
-            e.register(new StandaloneModelKey<>(fromNamespaceAndPath(TorqueCraft.MODID, "block/partial/rotary_monitor")), StandaloneModelBaker.blockStateModel());
+        public static void registerBakedModels(ModelEvent.RegisterStandalone event) {
+            event.register(TorqueStandaloneModels.FAN_BLADE, StandaloneModelBaker.blockStateModel());
+            event.register(TorqueStandaloneModels.SHAFT_ROD, StandaloneModelBaker.blockStateModel());
+            event.register(TorqueStandaloneModels.HSLA_SHAFT_ROD, StandaloneModelBaker.blockStateModel());
+            event.register(TorqueStandaloneModels.HSLA_SHORT_SHAFT_ROD, StandaloneModelBaker.blockStateModel());
+            event.register(TorqueStandaloneModels.SHORT_SHAFT_ROD, StandaloneModelBaker.blockStateModel());
+            event.register(TorqueStandaloneModels.GRINDER_SHAFT, StandaloneModelBaker.blockStateModel());
+            event.register(TorqueStandaloneModels.ROTARY_MONITOR, StandaloneModelBaker.blockStateModel());
         }
 
         @SubscribeEvent

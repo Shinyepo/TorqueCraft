@@ -2,6 +2,7 @@ package dev.shinyepo.torquecraft.block.entities.renderers;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import dev.shinyepo.torquecraft.block.entities.rotary.transmitters.ShaftEntity;
+import dev.shinyepo.torquecraft.constants.TorqueStandaloneModels;
 import dev.shinyepo.torquecraft.renderers.IORenderer;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -21,7 +22,7 @@ public class ShaftRenderer implements BlockEntityRenderer<ShaftEntity> {
 
     @Override
     public void render(ShaftEntity blockEntity, float partialTick, PoseStack pose, MultiBufferSource buffer, int packedLight, int packedOverlay, Vec3 pCameraPos) {
-        renderRotation("hsla_shaft_rod", blockEntity, pose, buffer, partialTick, packedLight);
+        renderRotation(TorqueStandaloneModels.HSLA_SHAFT_ROD, blockEntity, pose, buffer, partialTick, packedLight);
 
         if (blockEntity.getProgress(partialTick) < 3.0F) {
             IORenderer.renderIOHelper(blockEntity, pose);
