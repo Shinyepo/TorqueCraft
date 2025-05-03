@@ -1,5 +1,7 @@
 {
   "values": [
-    "torquecraft:cast_iron_block"
+    "torquecraft:cast_iron_block",
+    "torquecraft:hsla_block",
+    "torquecraft:tungsten_block"
   ]
 }

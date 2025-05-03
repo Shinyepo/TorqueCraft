@@ -1,5 +1,7 @@
 {
   "values": [
-    "torquecraft:cast_iron_ingot"
+    "torquecraft:cast_iron_ingot",
+    "torquecraft:tungsten_ingot",
+    "torquecraft:hsla_ingot"
   ]
 }

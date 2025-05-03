@@ -1,0 +1,16 @@
+{
+  "values": [
+    "torquecraft:hsla_rod",
+    "torquecraft:hsla_steel_shaft",
+    "torquecraft:sharp_hsla_gear",
+    "torquecraft:hsla_gears_2",
+    "torquecraft:hsla_gears_4",
+    "torquecraft:hsla_gears_8",
+    "torquecraft:hsla_gears_16",
+    "torquecraft:hsla_casing",
+    "torquecraft:hsla_piston",
+    "torquecraft:hsla_tank",
+    "torquecraft:hsla_plate",
+    "torquecraft:circuit_module"
+  ]
+}

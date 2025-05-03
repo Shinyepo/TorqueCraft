@@ -1,8 +1,9 @@
-// 1.21.5	2025-05-02T23:36:51.9062704	Model Definitions - torquecraft
-45408b2fd577884379363aca6ce23fa25c51ffd1 assets/torquecraft/blockstates/alloy_furnace.json
+// 1.21.5	2025-05-03T23:37:21.9813763	Model Definitions - torquecraft
+5dec53dc132503e4f4e4687aec858a0e5ac35193 assets/torquecraft/blockstates/alloy_furnace.json
 ab4489e1647a3dcf421c60a8353c92a91d8ef766 assets/torquecraft/blockstates/canola_crop.json
 7d3fb2993a69a3ccc629db0bddc2fc82deb2bef0 assets/torquecraft/blockstates/cast_iron_block.json
-149aef092eb10265c3a4257f43c83abc6e58a4e4 assets/torquecraft/blockstates/cooling_radiator.json
+d231c1283cfc0ba16cf4cedb8b4e34cd26f7d7f4 assets/torquecraft/blockstates/cooling_radiator.json
+0e8842a77033625220956dede5bbc2759131554b assets/torquecraft/blockstates/fluid_tank.json
 0c347759014148e52e2a2fd918a1176088632f99 assets/torquecraft/blockstates/grinder.json
 9e60827a2bb20e8c44267a8502f5f796bf07aa7e assets/torquecraft/blockstates/hsla_bevel_gears.json
 1fd058329d0c4eccaf09f3fe6931201425374012 assets/torquecraft/blockstates/hsla_block.json
@@ -28,6 +29,7 @@ f77b6d1df0e05b6fcaf445d9e08cef42be2283e4 assets/torquecraft/blockstates/lubrican
 6d52a658583ca7af864b5dc0729efd7e6812c4bf assets/torquecraft/items/crushed_seeds.json
 b5541d631fee0de3761ca26d2818a8d7a1d9eb2d assets/torquecraft/items/diamond_dust.json
 581cdc85bd085f600d2d6990c37003fe42c01824 assets/torquecraft/items/emerald_dust.json
+e9c4b5789c7286a20894a08dacdd36bfb1e75254 assets/torquecraft/items/fluid_tank.json
 6dd1210d6d057cb5059a4210f48bbcbca4cac8b4 assets/torquecraft/items/gold_dust.json
 030bc043f497c5bb920c524421ac997b982cee70 assets/torquecraft/items/grinder.json
 20fe0862140e455dd6f64d4a41b95d3a9caf69f1 assets/torquecraft/items/hsla_bevel_gears.json

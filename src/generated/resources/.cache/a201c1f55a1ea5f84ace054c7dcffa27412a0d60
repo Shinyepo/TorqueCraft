@@ -1,5 +1,12 @@
-// 1.21.5	2025-05-02T23:08:00.6071088	Tags for minecraft:item mod id torquecraft
+// 1.21.5	2025-05-03T23:07:54.8390078	Tags for minecraft:item mod id torquecraft
 d99b948141d198797a07e7346983fe95aeff237e data/c/tags/item/buckets.json
-51f5ed97f282c2556939f70fa6001aa67cc307c4 data/c/tags/item/ingots.json
+e87f0f439c154b061745d86dd2c89be94c5a09b9 data/c/tags/item/dusts.json
+539fa3fc796b041acafe0ad01c67f3a0707c7004 data/c/tags/item/ingots.json
+e08ffab1b381f92e50f8119bc536e8574c2a6a41 data/c/tags/item/seeds.json
 6b122f9bdfe9b0d7502170b0b808b0f3500411a4 data/c/tags/item/silicon.json
-c2b53a9d316c1875ab0c6363101bfff8bb7f0f7a data/c/tags/item/storage_blocks.json
+92f7f9489b0c0af98401a1e17720e390e4eb358e data/c/tags/item/tools.json
+ab9e5cc2266cbf6f5290d31b1d1a93eb244ad9ef data/c/tags/item/tools/wrench.json
+5db5692259edf8c900303e9461ffff5a3502f50c data/torquecraft/tags/item/components.json
+9c6fd60d62bb7fcb167c4d76d8e8b22a0c2ba6c7 data/torquecraft/tags/item/machines.json
+f76130397666c3a77b23d8b07218e0b590dca5bb data/torquecraft/tags/item/misc_machines.json
+e1894071374c670a8dcdb975adb54d7ec86725e4 data/torquecraft/tags/item/shafts.json

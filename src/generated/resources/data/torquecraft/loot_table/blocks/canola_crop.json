@@ -19,7 +19,7 @@
                   "block": "torquecraft:canola_crop",
                   "condition": "minecraft:block_state_property",
                   "properties": {
-                    "age": "7"
+                    "age": "5"
                   }
                 }
               ],
@@ -41,7 +41,7 @@
           "block": "torquecraft:canola_crop",
           "condition": "minecraft:block_state_property",
           "properties": {
-            "age": "7"
+            "age": "5"
           }
         }
       ],

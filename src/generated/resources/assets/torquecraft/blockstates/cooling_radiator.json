@@ -1,18 +1,78 @@
 {
   "variants": {
-    "facing=east": {
+    "facing=east,usage=full": {
       "model": "torquecraft:block/radiator/cooling_radiator_full",
       "y": 90
     },
-    "facing=north": {
+    "facing=east,usage=high": {
+      "model": "torquecraft:block/radiator/cooling_radiator_high",
+      "y": 90
+    },
+    "facing=east,usage=low": {
+      "model": "torquecraft:block/radiator/cooling_radiator_low",
+      "y": 90
+    },
+    "facing=east,usage=medium": {
+      "model": "torquecraft:block/radiator/cooling_radiator_medium",
+      "y": 90
+    },
+    "facing=east,usage=zero": {
+      "model": "torquecraft:block/radiator/cooling_radiator_zero",
+      "y": 90
+    },
+    "facing=north,usage=full": {
       "model": "torquecraft:block/radiator/cooling_radiator_full"
     },
-    "facing=south": {
+    "facing=north,usage=high": {
+      "model": "torquecraft:block/radiator/cooling_radiator_high"
+    },
+    "facing=north,usage=low": {
+      "model": "torquecraft:block/radiator/cooling_radiator_low"
+    },
+    "facing=north,usage=medium": {
+      "model": "torquecraft:block/radiator/cooling_radiator_medium"
+    },
+    "facing=north,usage=zero": {
+      "model": "torquecraft:block/radiator/cooling_radiator_zero"
+    },
+    "facing=south,usage=full": {
       "model": "torquecraft:block/radiator/cooling_radiator_full",
       "y": 180
     },
-    "facing=west": {
+    "facing=south,usage=high": {
+      "model": "torquecraft:block/radiator/cooling_radiator_high",
+      "y": 180
+    },
+    "facing=south,usage=low": {
+      "model": "torquecraft:block/radiator/cooling_radiator_low",
+      "y": 180
+    },
+    "facing=south,usage=medium": {
+      "model": "torquecraft:block/radiator/cooling_radiator_medium",
+      "y": 180
+    },
+    "facing=south,usage=zero": {
+      "model": "torquecraft:block/radiator/cooling_radiator_zero",
+      "y": 180
+    },
+    "facing=west,usage=full": {
       "model": "torquecraft:block/radiator/cooling_radiator_full",
+      "y": 270
+    },
+    "facing=west,usage=high": {
+      "model": "torquecraft:block/radiator/cooling_radiator_high",
+      "y": 270
+    },
+    "facing=west,usage=low": {
+      "model": "torquecraft:block/radiator/cooling_radiator_low",
+      "y": 270
+    },
+    "facing=west,usage=medium": {
+      "model": "torquecraft:block/radiator/cooling_radiator_medium",
+      "y": 270
+    },
+    "facing=west,usage=zero": {
+      "model": "torquecraft:block/radiator/cooling_radiator_zero",
       "y": 270
     }
   }
