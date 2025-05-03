@@ -1,8 +1,8 @@
 package dev.shinyepo.torquecraft.datagen;
 
 import dev.shinyepo.torquecraft.TorqueCraft;
-import dev.shinyepo.torquecraft.datagen.block.TorqueBlockStateProvider;
 import dev.shinyepo.torquecraft.datagen.loot.TorqueLootTableProvider;
+import dev.shinyepo.torquecraft.datagen.models.TorqueModelProvider;
 import dev.shinyepo.torquecraft.datagen.particle.TorqueParticleProvider;
 import dev.shinyepo.torquecraft.datagen.recipe.TorqueRecipeProvider;
 import dev.shinyepo.torquecraft.datagen.tag.TorqueBlockTagGenerator;
@@ -24,7 +24,7 @@ public class DataGenerators {
 
         TorqueBlockTagGenerator blockTagGenerator = gen.addProvider(true, new TorqueBlockTagGenerator(packOutput, lProvider));
         gen.addProvider(true, new TorqueItemTagGenerator(packOutput, lProvider, blockTagGenerator.contentsGetter()));
-        gen.addProvider(true, new TorqueBlockStateProvider(gen.getPackOutput()));
+        gen.addProvider(true, new TorqueModelProvider(packOutput));
         gen.addProvider(true, new TorqueParticleProvider(packOutput));
         gen.addProvider(true, new TorqueRecipeProvider.Runner(packOutput, lProvider));
     }
