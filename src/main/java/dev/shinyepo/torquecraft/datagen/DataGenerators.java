@@ -15,17 +15,16 @@ import net.neoforged.neoforge.data.event.GatherDataEvent;
 public class DataGenerators {
     @SubscribeEvent
     public static void gatherClientData(GatherDataEvent.Client event) {
-        var gen = event.getGenerator();
-        var packOutput = gen.getPackOutput();
-        var lProvider = event.getLookupProvider();
+        var generator = event.getGenerator();
+        var packOutput = generator.getPackOutput();
+        var lookupProvider = event.getLookupProvider();
 
-        gen.addProvider(true, TorqueLootTableProvider.create(packOutput,lProvider));
+        generator.addProvider(true, new TorqueModelProvider(packOutput));
+        generator.addProvider(true, new TorqueParticleProvider(packOutput));
+        generator.addProvider(true, TorqueLootTableProvider.create(packOutput, lookupProvider));
+        TorqueBlockTagGenerator blockTagGenerator = generator.addProvider(true, new TorqueBlockTagGenerator(packOutput, lookupProvider));
+        generator.addProvider(true, new TorqueItemTagGenerator(packOutput, lookupProvider, blockTagGenerator.contentsGetter()));
 
-
-        TorqueBlockTagGenerator blockTagGenerator = gen.addProvider(true, new TorqueBlockTagGenerator(packOutput, lProvider));
-        gen.addProvider(true, new TorqueItemTagGenerator(packOutput, lProvider, blockTagGenerator.contentsGetter()));
-        gen.addProvider(true, new TorqueModelProvider(packOutput));
-        gen.addProvider(true, new TorqueParticleProvider(packOutput));
-        gen.addProvider(true, new TorqueRecipeProvider.Runner(packOutput, lProvider));
+        generator.addProvider(true, new TorqueRecipeProvider.Runner(packOutput, lookupProvider));
     }
 }
