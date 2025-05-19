@@ -18,7 +18,7 @@ public class GrinderRenderer implements BlockEntityRenderer<GrinderEntity> {
     public void render(GrinderEntity blockEntity, float partialTick, PoseStack pose, MultiBufferSource buffer, int packedLight, int packedOverlay) {
         renderRotation("grinder_shaft",blockEntity,pose,buffer,partialTick,packedLight);
 
-        if (blockEntity.getProgress(partialTick) < 3.0F) {
+        if (blockEntity.getProgress() < 3.0F) {
             IORenderer.renderIOHelper(blockEntity, pose);
         }
     }

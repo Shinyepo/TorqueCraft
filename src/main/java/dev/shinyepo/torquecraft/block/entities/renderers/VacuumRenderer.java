@@ -14,7 +14,7 @@ public class VacuumRenderer implements BlockEntityRenderer<VacuumEntity> {
 
     @Override
     public void render(VacuumEntity blockEntity, float partialTick, PoseStack pose, MultiBufferSource buffer, int packedLight, int packedOverlay) {
-        if (blockEntity.getProgress(partialTick) < 3.0F) {
+        if (blockEntity.getProgress() < 3.0F) {
             IORenderer.renderIOHelper(blockEntity, pose);
         }
     }

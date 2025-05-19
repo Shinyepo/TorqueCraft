@@ -16,8 +16,8 @@ public class AnimatedEntity extends BlockEntity implements IRotaryIO, IRotationa
     }
 
     @Override
-    public float getProgress(float pPartialTicks) {
-        return Mth.lerp(pPartialTicks, this.progressOld, this.progress);
+    public float getProgress() {
+        return Mth.lerp(0.2F, this.progressOld, this.progress);
     }
 
     public void setAngle(float speed) {

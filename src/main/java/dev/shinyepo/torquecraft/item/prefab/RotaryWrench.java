@@ -20,37 +20,37 @@ public class RotaryWrench extends Item {
 
     @Override
     public InteractionResult useOn(UseOnContext pContext) {
-        if (pContext.getLevel().isClientSide()) {
-            var entity = pContext.getLevel().getBlockEntity(pContext.getClickedPos());
-            if (entity instanceof AnimatedEntity animated)
-                animated.setProgress(1.5F);
-            return InteractionResult.SUCCESS_NO_ITEM_USED;
-        }
-
-
-        //Rotate machine
         BlockEntity entity = pContext.getLevel().getBlockEntity(pContext.getClickedPos());
-        if (entity instanceof IWrenchInteraction device && pContext.getPlayer().isShiftKeyDown()) {
-            BlockState state = pContext.getLevel().getBlockState(pContext.getClickedPos());
-            Direction newFace = state.getValue(BlockStateProperties.HORIZONTAL_FACING).getClockWise();
 
-            var networkDevice = (RotaryNetworkDevice<?>) entity;
+        if (pContext.getLevel().isClientSide()) {
+            if (entity instanceof AnimatedEntity animated) {
+                animated.setProgress(0F);
+            }
+            return InteractionResult.SUCCESS;
+        } else {
+            //Rotate machine
+            if (entity instanceof IWrenchInteraction device && pContext.getPlayer().isShiftKeyDown()) {
+                BlockState state = pContext.getLevel().getBlockState(pContext.getClickedPos());
+                Direction newFace = state.getValue(BlockStateProperties.HORIZONTAL_FACING).getClockWise();
 
-            RotaryNetworkRegistry.getInstance().unregisterDevice(networkDevice.getNetworkId(), networkDevice);
+                var networkDevice = (RotaryNetworkDevice<?>) entity;
 
-            device.resetSides();
-            device.configureSides(newFace);
-            networkDevice.invalidateCapabilities();
-            pContext.getLevel().setBlockAndUpdate(pContext.getClickedPos(), state.setValue(BlockStateProperties.HORIZONTAL_FACING, newFace));
+                RotaryNetworkRegistry.getInstance().unregisterDevice(networkDevice.getNetworkId(), networkDevice);
 
-            networkDevice.updateNetwork(RotaryNetworkRegistry.getInstance().registerDevice(networkDevice));
-            return InteractionResult.SUCCESS_NO_ITEM_USED;
-        }
+                device.resetSides();
+                device.configureSides(newFace);
+                networkDevice.invalidateCapabilities();
+                pContext.getLevel().setBlockAndUpdate(pContext.getClickedPos(), state.setValue(BlockStateProperties.HORIZONTAL_FACING, newFace));
 
-        //Change machine mode
-        if (entity instanceof IModeMachine modeMachine) {
-            modeMachine.cycleMode();
-            return InteractionResult.SUCCESS_NO_ITEM_USED;
+                networkDevice.updateNetwork(RotaryNetworkRegistry.getInstance().registerDevice(networkDevice));
+                return InteractionResult.SUCCESS_NO_ITEM_USED;
+            }
+
+            //Change machine mode
+            if (entity instanceof IModeMachine modeMachine) {
+                modeMachine.cycleMode();
+                return InteractionResult.SUCCESS_NO_ITEM_USED;
+            }
         }
         return InteractionResult.PASS;
     }
