@@ -1,0 +1,124 @@
+{
+  "variants": {
+    "facing=east,ratio=ratio_16,rotary_mode=angular": {
+      "model": "torquecraft:block/gearbox/1_4/block",
+      "y": 90
+    },
+    "facing=east,ratio=ratio_16,rotary_mode=torque": {
+      "model": "torquecraft:block/gearbox/1_4/block",
+      "y": 90
+    },
+    "facing=east,ratio=ratio_2,rotary_mode=angular": {
+      "model": "torquecraft:block/gearbox/1_4/block",
+      "y": 90
+    },
+    "facing=east,ratio=ratio_2,rotary_mode=torque": {
+      "model": "torquecraft:block/gearbox/1_4/block",
+      "y": 90
+    },
+    "facing=east,ratio=ratio_4,rotary_mode=angular": {
+      "model": "torquecraft:block/gearbox/1_4/block",
+      "y": 90
+    },
+    "facing=east,ratio=ratio_4,rotary_mode=torque": {
+      "model": "torquecraft:block/gearbox/1_4/block",
+      "y": 90
+    },
+    "facing=east,ratio=ratio_8,rotary_mode=angular": {
+      "model": "torquecraft:block/gearbox/1_4/block",
+      "y": 90
+    },
+    "facing=east,ratio=ratio_8,rotary_mode=torque": {
+      "model": "torquecraft:block/gearbox/1_4/block",
+      "y": 90
+    },
+    "facing=north,ratio=ratio_16,rotary_mode=angular": {
+      "model": "torquecraft:block/gearbox/1_4/block"
+    },
+    "facing=north,ratio=ratio_16,rotary_mode=torque": {
+      "model": "torquecraft:block/gearbox/1_4/block"
+    },
+    "facing=north,ratio=ratio_2,rotary_mode=angular": {
+      "model": "torquecraft:block/gearbox/1_4/block"
+    },
+    "facing=north,ratio=ratio_2,rotary_mode=torque": {
+      "model": "torquecraft:block/gearbox/1_4/block"
+    },
+    "facing=north,ratio=ratio_4,rotary_mode=angular": {
+      "model": "torquecraft:block/gearbox/1_4/block"
+    },
+    "facing=north,ratio=ratio_4,rotary_mode=torque": {
+      "model": "torquecraft:block/gearbox/1_4/block"
+    },
+    "facing=north,ratio=ratio_8,rotary_mode=angular": {
+      "model": "torquecraft:block/gearbox/1_4/block"
+    },
+    "facing=north,ratio=ratio_8,rotary_mode=torque": {
+      "model": "torquecraft:block/gearbox/1_4/block"
+    },
+    "facing=south,ratio=ratio_16,rotary_mode=angular": {
+      "model": "torquecraft:block/gearbox/1_4/block",
+      "y": 180
+    },
+    "facing=south,ratio=ratio_16,rotary_mode=torque": {
+      "model": "torquecraft:block/gearbox/1_4/block",
+      "y": 180
+    },
+    "facing=south,ratio=ratio_2,rotary_mode=angular": {
+      "model": "torquecraft:block/gearbox/1_4/block",
+      "y": 180
+    },
+    "facing=south,ratio=ratio_2,rotary_mode=torque": {
+      "model": "torquecraft:block/gearbox/1_4/block",
+      "y": 180
+    },
+    "facing=south,ratio=ratio_4,rotary_mode=angular": {
+      "model": "torquecraft:block/gearbox/1_4/block",
+      "y": 180
+    },
+    "facing=south,ratio=ratio_4,rotary_mode=torque": {
+      "model": "torquecraft:block/gearbox/1_4/block",
+      "y": 180
+    },
+    "facing=south,ratio=ratio_8,rotary_mode=angular": {
+      "model": "torquecraft:block/gearbox/1_4/block",
+      "y": 180
+    },
+    "facing=south,ratio=ratio_8,rotary_mode=torque": {
+      "model": "torquecraft:block/gearbox/1_4/block",
+      "y": 180
+    },
+    "facing=west,ratio=ratio_16,rotary_mode=angular": {
+      "model": "torquecraft:block/gearbox/1_4/block",
+      "y": 270
+    },
+    "facing=west,ratio=ratio_16,rotary_mode=torque": {
+      "model": "torquecraft:block/gearbox/1_4/block",
+      "y": 270
+    },
+    "facing=west,ratio=ratio_2,rotary_mode=angular": {
+      "model": "torquecraft:block/gearbox/1_4/block",
+      "y": 270
+    },
+    "facing=west,ratio=ratio_2,rotary_mode=torque": {
+      "model": "torquecraft:block/gearbox/1_4/block",
+      "y": 270
+    },
+    "facing=west,ratio=ratio_4,rotary_mode=angular": {
+      "model": "torquecraft:block/gearbox/1_4/block",
+      "y": 270
+    },
+    "facing=west,ratio=ratio_4,rotary_mode=torque": {
+      "model": "torquecraft:block/gearbox/1_4/block",
+      "y": 270
+    },
+    "facing=west,ratio=ratio_8,rotary_mode=angular": {
+      "model": "torquecraft:block/gearbox/1_4/block",
+      "y": 270
+    },
+    "facing=west,ratio=ratio_8,rotary_mode=torque": {
+      "model": "torquecraft:block/gearbox/1_4/block",
+      "y": 270
+    }
+  }
+}

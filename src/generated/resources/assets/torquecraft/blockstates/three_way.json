@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "torquecraft:block/three_way/block",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "torquecraft:block/three_way/block"
+    },
+    "facing=south": {
+      "model": "torquecraft:block/three_way/block",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "torquecraft:block/three_way/block",
+      "y": 270
+    }
+  }
+}

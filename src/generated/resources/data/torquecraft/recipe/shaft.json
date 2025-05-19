@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "torquecraft:hsla_steel_shaft"
+    },
+    {
+      "item": "torquecraft:hsla_casing"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "torquecraft:shaft"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "torquecraft:block/bevel_gears/block",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "torquecraft:block/bevel_gears/block"
+    },
+    "facing=south": {
+      "model": "torquecraft:block/bevel_gears/block",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "torquecraft:block/bevel_gears/block",
+      "y": 270
+    }
+  }
+}

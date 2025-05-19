@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_hsla_casing": {
+      "conditions": {
+        "items": [
+          {
+            "items": "torquecraft:hsla_casing"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_hsla_gears_4": {
+      "conditions": {
+        "items": [
+          {
+            "items": "torquecraft:hsla_gears_4"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "torquecraft:gearbox1_4"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_hsla_gears_4",
+      "has_hsla_casing"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "torquecraft:gearbox1_4"
+    ]
+  }
+}
