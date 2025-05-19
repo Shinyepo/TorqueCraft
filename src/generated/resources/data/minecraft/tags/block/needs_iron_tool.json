@@ -8,10 +8,10 @@
     "torquecraft:fluid_tank",
     "torquecraft:pump",
     "torquecraft:cooling_radiator",
-    "torquecraft:hsla_three_way",
-    "torquecraft:hsla_bevel_gears",
-    "torquecraft:hsla_gearbox1_2",
-    "torquecraft:hsla_gearbox1_4",
-    "torquecraft:hsla_shaft"
+    "torquecraft:three_way",
+    "torquecraft:bevel_gears",
+    "torquecraft:gearbox1_2",
+    "torquecraft:gearbox1_4",
+    "torquecraft:shaft"
   ]
 }

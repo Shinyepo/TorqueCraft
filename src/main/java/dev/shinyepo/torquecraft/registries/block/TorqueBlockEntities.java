@@ -28,10 +28,10 @@ public class TorqueBlockEntities {
     public static final Supplier<BlockEntityType<PressureFluidTransmitter>> FLUID_PIPE_ENTITY = BLOCK_ENTITIES.register("fluid_pipe_be", () -> BlockEntityType.Builder.of(PressureFluidTransmitter::new, TorqueBlocks.FLUID_PIPE.get()).build(null));
     public static final Supplier<BlockEntityType<SteamPipeEntity>> STEAM_PIPE_ENTITY = BLOCK_ENTITIES.register("steam_pipe_be", () -> BlockEntityType.Builder.of(SteamPipeEntity::new, TorqueBlocks.STEAM_PIPE.get()).build(null));
     public static final Supplier<BlockEntityType<FluidTankEntity>> FLUID_TANK_ENTITY = BLOCK_ENTITIES.register("fluid_tank_be", () -> BlockEntityType.Builder.of(FluidTankEntity::new, TorqueBlocks.FLUID_TANK.get()).build(null));
-    public static final Supplier<BlockEntityType<ShaftEntity>> SHAFT_ENTITY = BLOCK_ENTITIES.register("shaft_be", () -> BlockEntityType.Builder.of(ShaftEntity::new, TorqueBlocks.HSLA_SHAFT.get()).build(null));
-    public static final Supplier<BlockEntityType<ThreeWayEntity>> THREE_WAY_ENTITY = BLOCK_ENTITIES.register("three_way_be", () -> BlockEntityType.Builder.of(ThreeWayEntity::new, TorqueBlocks.HSLA_THREE_WAY.get()).build(null));
-    public static final Supplier<BlockEntityType<BevelGearsEntity>> BEVEL_GEARS_ENTITY = BLOCK_ENTITIES.register("bevel_gears_be", () -> BlockEntityType.Builder.of(BevelGearsEntity::new, TorqueBlocks.HSLA_BEVEL_GEARS.get()).build(null));
-    public static final Supplier<BlockEntityType<GearboxEntity>> GEARBOX_ENTITY = BLOCK_ENTITIES.register("gearbox_be", () -> BlockEntityType.Builder.of(GearboxEntity::new, TorqueBlocks.HSLA_GEARBOX1_2.get(), TorqueBlocks.HSLA_GEARBOX1_4.get()).build(null));
+    public static final Supplier<BlockEntityType<ShaftEntity>> SHAFT_ENTITY = BLOCK_ENTITIES.register("shaft_be", () -> BlockEntityType.Builder.of(ShaftEntity::new, TorqueBlocks.SHAFT.get()).build(null));
+    public static final Supplier<BlockEntityType<ThreeWayEntity>> THREE_WAY_ENTITY = BLOCK_ENTITIES.register("three_way_be", () -> BlockEntityType.Builder.of(ThreeWayEntity::new, TorqueBlocks.THREE_WAY.get()).build(null));
+    public static final Supplier<BlockEntityType<BevelGearsEntity>> BEVEL_GEARS_ENTITY = BLOCK_ENTITIES.register("bevel_gears_be", () -> BlockEntityType.Builder.of(BevelGearsEntity::new, TorqueBlocks.BEVEL_GEARS.get()).build(null));
+    public static final Supplier<BlockEntityType<GearboxEntity>> GEARBOX_ENTITY = BLOCK_ENTITIES.register("gearbox_be", () -> BlockEntityType.Builder.of(GearboxEntity::new, TorqueBlocks.GEARBOX_1_2.get(), TorqueBlocks.GEARBOX_1_4.get()).build(null));
     public static final Supplier<BlockEntityType<VacuumEntity>> VACUUM_ENTITY = BLOCK_ENTITIES.register("vacuum_be", () -> BlockEntityType.Builder.of(VacuumEntity::new, TorqueBlocks.VACUUM.get()).build(null));
 
 }

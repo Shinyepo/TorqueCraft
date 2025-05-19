@@ -55,14 +55,14 @@ public class TorqueRecipeProvider extends CustomRecipeProvider {
     }
 
     private void registerGears(RecipeOutput output) {
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TorqueItems.HSLA_SHAFT_ITEM.get())
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TorqueItems.SHAFT_ITEM.get())
                 .requires(TorqueItems.HSLA_STEEL_SHAFT.get())
                 .requires(TorqueItems.HSLA_CASING.get())
                 .unlockedBy(getHasName(TorqueItems.HSLA_STEEL_SHAFT.get()), has(TorqueItems.HSLA_STEEL_SHAFT.get()))
                 .unlockedBy(getHasName(TorqueItems.HSLA_CASING.get()), has(TorqueItems.HSLA_CASING.get()))
                 .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TorqueBlocks.HSLA_THREE_WAY.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TorqueBlocks.THREE_WAY.get())
                 .pattern(" R ")
                 .pattern("RRR")
                 .pattern(" C ")
@@ -72,7 +72,7 @@ public class TorqueRecipeProvider extends CustomRecipeProvider {
                 .unlockedBy(getHasName(TorqueItems.HSLA_CASING.get()), has(TorqueItems.HSLA_CASING.get()))
                 .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TorqueBlocks.HSLA_BEVEL_GEARS.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TorqueBlocks.BEVEL_GEARS.get())
                 .pattern(" R ")
                 .pattern("RC ")
                 .define('R', TorqueItems.HSLA_GEAR.get())
@@ -81,7 +81,7 @@ public class TorqueRecipeProvider extends CustomRecipeProvider {
                 .unlockedBy(getHasName(TorqueItems.HSLA_CASING.get()), has(TorqueItems.HSLA_CASING.get()))
                 .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TorqueBlocks.HSLA_GEARBOX1_2.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TorqueBlocks.GEARBOX_1_2.get())
                 .pattern(" G ")
                 .pattern(" C ")
                 .define('G', TorqueItems.HSLA_GEARS_2.get())
@@ -90,7 +90,7 @@ public class TorqueRecipeProvider extends CustomRecipeProvider {
                 .unlockedBy(getHasName(TorqueItems.HSLA_CASING.get()), has(TorqueItems.HSLA_CASING.get()))
                 .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TorqueBlocks.HSLA_GEARBOX1_4.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TorqueBlocks.GEARBOX_1_4.get())
                 .pattern(" G ")
                 .pattern(" C ")
                 .define('G', TorqueItems.HSLA_GEARS_4.get())

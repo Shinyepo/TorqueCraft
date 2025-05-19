@@ -1,18 +1,18 @@
 {
   "variants": {
     "facing=east": {
-      "model": "torquecraft:block/mechanical_fan",
+      "model": "torquecraft:block/mechanical_fan/block",
       "y": 90
     },
     "facing=north": {
-      "model": "torquecraft:block/mechanical_fan"
+      "model": "torquecraft:block/mechanical_fan/block"
     },
     "facing=south": {
-      "model": "torquecraft:block/mechanical_fan",
+      "model": "torquecraft:block/mechanical_fan/block",
       "y": 180
     },
     "facing=west": {
-      "model": "torquecraft:block/mechanical_fan",
+      "model": "torquecraft:block/mechanical_fan/block",
       "y": 270
     }
   }

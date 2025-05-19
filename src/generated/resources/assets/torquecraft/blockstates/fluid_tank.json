@@ -1,18 +1,18 @@
 {
   "variants": {
     "facing=east": {
-      "model": "torquecraft:block/fluid_tank",
+      "model": "torquecraft:block/fluid_tank/block",
       "y": 90
     },
     "facing=north": {
-      "model": "torquecraft:block/fluid_tank"
+      "model": "torquecraft:block/fluid_tank/block"
     },
     "facing=south": {
-      "model": "torquecraft:block/fluid_tank",
+      "model": "torquecraft:block/fluid_tank/block",
       "y": 180
     },
     "facing=west": {
-      "model": "torquecraft:block/fluid_tank",
+      "model": "torquecraft:block/fluid_tank/block",
       "y": 270
     }
   }

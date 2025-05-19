@@ -1,33 +1,33 @@
 {
   "variants": {
     "facing=east,operational=false": {
-      "model": "torquecraft:block/steam_engine",
+      "model": "torquecraft:block/steam_engine/block",
       "y": 90
     },
     "facing=east,operational=true": {
-      "model": "torquecraft:block/steam_engine",
+      "model": "torquecraft:block/steam_engine/block",
       "y": 90
     },
     "facing=north,operational=false": {
-      "model": "torquecraft:block/steam_engine"
+      "model": "torquecraft:block/steam_engine/block"
     },
     "facing=north,operational=true": {
-      "model": "torquecraft:block/steam_engine"
+      "model": "torquecraft:block/steam_engine/block"
     },
     "facing=south,operational=false": {
-      "model": "torquecraft:block/steam_engine",
+      "model": "torquecraft:block/steam_engine/block",
       "y": 180
     },
     "facing=south,operational=true": {
-      "model": "torquecraft:block/steam_engine",
+      "model": "torquecraft:block/steam_engine/block",
       "y": 180
     },
     "facing=west,operational=false": {
-      "model": "torquecraft:block/steam_engine",
+      "model": "torquecraft:block/steam_engine/block",
       "y": 270
     },
     "facing=west,operational=true": {
-      "model": "torquecraft:block/steam_engine",
+      "model": "torquecraft:block/steam_engine/block",
       "y": 270
     }
   }

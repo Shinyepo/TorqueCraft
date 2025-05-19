@@ -29,9 +29,9 @@ public class TorqueItemModelProvider extends CustomItemModelProvider {
         basicMaterialItem(TorqueItems.OBSIDIAN_DUST.get());
 
         //Block Materials
-        withExistingParent(TorqueItems.TUNGSTEN_BLOCK_ITEM.get(), TorqueBlocks.TUNGSTEN_BLOCK.get());
-        withExistingParent(TorqueItems.HSLA_BLOCK_ITEM.get(), TorqueBlocks.HSLA_BLOCK.get());
-        withExistingParent(TorqueItems.CAST_IRON_BLOCK_ITEM.get(), TorqueBlocks.CAST_IRON_BLOCK.get());
+        generateCubeItem(TorqueItems.TUNGSTEN_BLOCK_ITEM.get(), TorqueBlocks.TUNGSTEN_BLOCK.get());
+        generateCubeItem(TorqueItems.HSLA_BLOCK_ITEM.get(), TorqueBlocks.HSLA_BLOCK.get());
+        generateCubeItem(TorqueItems.CAST_IRON_BLOCK_ITEM.get(), TorqueBlocks.CAST_IRON_BLOCK.get());
 
         //Components
         basicComponentItem(TorqueItems.HSLA_CASING.get());
@@ -48,7 +48,7 @@ public class TorqueItemModelProvider extends CustomItemModelProvider {
         basicComponentItem(TorqueItems.HSLA_GEARS_8.get());
         basicComponentItem(TorqueItems.HSLA_GEARS_16.get());
 
-        withExistingParent(TorqueItems.ROTARY_MONITOR.get(), "torquecraft:block/rotary_monitor");
+        withExistingParent(TorqueItems.ROTARY_MONITOR.get(), "torquecraft:block/rotary_monitor/block");
         basicItem(TorqueItems.CANOLA_SEEDS.get());
         basicItem(TorqueItems.CRUSHED_SEEDS.get());
         basicItem(TorqueItems.JET_FUEL_BUCKET.get());
@@ -56,23 +56,23 @@ public class TorqueItemModelProvider extends CustomItemModelProvider {
         basicItem(TorqueItems.PRESSURE_GAUGE.get());
         basicItem(TorqueItems.ROTARY_WRENCH.get());
 
-        withExistingParent(TorqueItems.FLUID_TANK_ITEM.get(), TorqueBlocks.FLUID_TANK.get());
+        withExistingParent(TorqueItems.FLUID_TANK_ITEM.get(), "torquecraft:block/fluid_tank/block");
         withExistingParent(TorqueItems.PUMP_ITEM.get(), TorqueBlocks.PUMP.get());
         withExistingParent(TorqueItems.STEAM_ENGINE_ITEM.get(), TorqueBlocks.STEAM_ENGINE.get());
-        withExistingParent(TorqueItems.HSLA_BEVEL_GEARS_ITEM.get(), TorqueBlocks.HSLA_BEVEL_GEARS.get());
-        withExistingParent(TorqueItems.HSLA_THREE_WAY_ITEM.get(), TorqueBlocks.HSLA_THREE_WAY.get());
+        withExistingParent(TorqueItems.BEVEL_GEARS_ITEM.get(), TorqueBlocks.BEVEL_GEARS.get());
+        withExistingParent(TorqueItems.THREE_WAY_ITEM.get(), TorqueBlocks.THREE_WAY.get());
         withExistingParent(TorqueItems.SPRINKLER_ITEM.get(), TorqueBlocks.SPRINKLER.get());
         withExistingParent(TorqueItems.VACUUM_ITEM.get(), TorqueBlocks.VACUUM.get());
+        withExistingParent(TorqueItems.MECHANICAL_FAN_ITEM.get(), TorqueBlocks.MECHANICAL_FAN.get());
+        withExistingParent(TorqueItems.GRINDER_ITEM.get(), TorqueBlocks.GRINDER.get());
+        withExistingParent(TorqueItems.SHAFT_ITEM.get(), TorqueBlocks.SHAFT.get());
 
         withExistingParent(TorqueItems.FLUID_PIPE_ITEM.get(), "torquecraft:block/pipe");
         withExistingParent(TorqueItems.STEAM_PIPE_ITEM.get(), "torquecraft:block/pipe");
 
         withExistingParent(TorqueItems.ALLOY_FURNACE_ITEM.get(), "furnace/", TorqueBlocks.ALLOY_FURNACE.get());
-        withExistingParent(TorqueItems.MECHANICAL_FAN_ITEM.get(), "item/", TorqueBlocks.MECHANICAL_FAN.get());
-        withExistingParent(TorqueItems.GRINDER_ITEM.get(), "item/", TorqueBlocks.GRINDER.get());
-        withExistingParent(TorqueItems.HSLA_SHAFT_ITEM.get(), "item/", TorqueBlocks.HSLA_SHAFT.get());
-        withExistingParent(TorqueItems.HSLA_GEARBOX1_2_ITEM.get(), "gearbox/", TorqueBlocks.HSLA_GEARBOX1_2.get());
-        withExistingParent(TorqueItems.HSLA_GEARBOX1_4_ITEM.get(), "gearbox/", TorqueBlocks.HSLA_GEARBOX1_4.get());
+        generateGearboxItem(TorqueItems.GEARBOX1_2_ITEM.get(), "1_2");
+        generateGearboxItem(TorqueItems.GEARBOX1_4_ITEM.get(), "1_4");
         withExistingParent(TorqueItems.COOLING_RADIATOR_ITEM.get(), "radiator/", TorqueBlocks.COOLING_RADIATOR.get(), "_full");
     }
 }

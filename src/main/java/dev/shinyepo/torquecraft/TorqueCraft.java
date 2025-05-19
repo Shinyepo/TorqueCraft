@@ -3,6 +3,7 @@ package dev.shinyepo.torquecraft;
 import com.mojang.logging.LogUtils;
 import dev.shinyepo.torquecraft.block.entities.renderers.*;
 import dev.shinyepo.torquecraft.events.HoverEvent;
+import dev.shinyepo.torquecraft.instances.TorqueInstances;
 import dev.shinyepo.torquecraft.menu.furnace.AlloyFurnaceScreen;
 import dev.shinyepo.torquecraft.menu.grinder.GrinderScreen;
 import dev.shinyepo.torquecraft.menu.mechanicalfan.MechanicalFanScreen;
@@ -18,6 +19,7 @@ import dev.shinyepo.torquecraft.registries.block.TorqueBlocks;
 import dev.shinyepo.torquecraft.registries.fluid.TorqueFluidTypes;
 import dev.shinyepo.torquecraft.registries.fluid.TorqueFluids;
 import dev.shinyepo.torquecraft.registries.item.TorqueItems;
+import dev.shinyepo.torquecraft.registries.model.partial.TorquePartialModels;
 import dev.shinyepo.torquecraft.registries.networking.TorquePackets;
 import dev.shinyepo.torquecraft.registries.particle.TorqueParticles;
 import dev.shinyepo.torquecraft.registries.recipe.TorqueRecipes;
@@ -70,6 +72,7 @@ public class TorqueCraft {
     private void commonSetup(FMLCommonSetupEvent event) {
         RotaryNetworkRegistry.init();
         PressureFluidNetworkRegistry.init();
+        TorqueInstances.init();
     }
 
     private void serverStopped(ServerStoppedEvent event) {
@@ -103,13 +106,9 @@ public class TorqueCraft {
 
         @SubscribeEvent
         public static void registerBakedModels(ModelEvent.RegisterAdditional e) {
-            e.register(standalone(fromNamespaceAndPath(TorqueCraft.MODID, "block/partial/hsla_shaft_rod")));
-            e.register(standalone(fromNamespaceAndPath(TorqueCraft.MODID, "block/partial/shaft_rod")));
-            e.register(standalone(fromNamespaceAndPath(TorqueCraft.MODID, "block/partial/hsla_short_shaft_rod")));
-            e.register(standalone(fromNamespaceAndPath(TorqueCraft.MODID, "block/partial/short_shaft_rod")));
-            e.register(standalone(fromNamespaceAndPath(TorqueCraft.MODID, "block/partial/fan_blade")));
-            e.register(standalone(fromNamespaceAndPath(TorqueCraft.MODID, "block/partial/grinder_shaft")));
-            e.register(standalone(fromNamespaceAndPath(TorqueCraft.MODID, "block/partial/rotary_monitor")));
+            TorquePartialModels.PARTIAL_CACHE.forEach(model -> {
+                e.register(standalone(model));
+            });
         }
 
         @SubscribeEvent

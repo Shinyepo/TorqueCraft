@@ -1,18 +1,18 @@
 {
   "variants": {
     "facing=east": {
-      "model": "torquecraft:block/vacuum",
+      "model": "torquecraft:block/vacuum/block",
       "y": 90
     },
     "facing=north": {
-      "model": "torquecraft:block/vacuum"
+      "model": "torquecraft:block/vacuum/block"
     },
     "facing=south": {
-      "model": "torquecraft:block/vacuum",
+      "model": "torquecraft:block/vacuum/block",
       "y": 180
     },
     "facing=west": {
-      "model": "torquecraft:block/vacuum",
+      "model": "torquecraft:block/vacuum/block",
       "y": 270
     }
   }

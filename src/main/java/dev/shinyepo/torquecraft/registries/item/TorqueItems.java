@@ -48,11 +48,11 @@ public class TorqueItems {
     public static final Supplier<Item> CIRCUIT_MODULE = ITEMS.registerSimpleItem("circuit_module", new Item.Properties());
 
     //Gears/Shafts
-    public static final Supplier<BlockItem> HSLA_SHAFT_ITEM = ITEMS.registerSimpleBlockItem("hsla_shaft", TorqueBlocks.HSLA_SHAFT);
-    public static final Supplier<BlockItem> HSLA_THREE_WAY_ITEM = ITEMS.registerSimpleBlockItem("hsla_three_way", TorqueBlocks.HSLA_THREE_WAY);
-    public static final Supplier<BlockItem> HSLA_BEVEL_GEARS_ITEM = ITEMS.registerSimpleBlockItem("hsla_bevel_gears", TorqueBlocks.HSLA_BEVEL_GEARS);
-    public static final Supplier<BlockItem> HSLA_GEARBOX1_2_ITEM = ITEMS.registerSimpleBlockItem("hsla_gearbox1_2", TorqueBlocks.HSLA_GEARBOX1_2);
-    public static final Supplier<BlockItem> HSLA_GEARBOX1_4_ITEM = ITEMS.registerSimpleBlockItem("hsla_gearbox1_4", TorqueBlocks.HSLA_GEARBOX1_4);
+    public static final Supplier<BlockItem> SHAFT_ITEM = ITEMS.registerSimpleBlockItem("shaft", TorqueBlocks.SHAFT);
+    public static final Supplier<BlockItem> THREE_WAY_ITEM = ITEMS.registerSimpleBlockItem("three_way", TorqueBlocks.THREE_WAY);
+    public static final Supplier<BlockItem> BEVEL_GEARS_ITEM = ITEMS.registerSimpleBlockItem("bevel_gears", TorqueBlocks.BEVEL_GEARS);
+    public static final Supplier<BlockItem> GEARBOX1_2_ITEM = ITEMS.registerSimpleBlockItem("gearbox1_2", TorqueBlocks.GEARBOX_1_2);
+    public static final Supplier<BlockItem> GEARBOX1_4_ITEM = ITEMS.registerSimpleBlockItem("gearbox1_4", TorqueBlocks.GEARBOX_1_4);
 
     //Items
     public static final Supplier<Item> CRUSHED_SEEDS = ITEMS.register("crushed_seeds", () -> new CanolaMeal(new Item.Properties()));

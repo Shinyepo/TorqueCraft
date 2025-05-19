@@ -71,6 +71,12 @@ public abstract class CustomItemModelProvider extends ItemModelProvider {
         return super.withExistingParent(name, parent);
     }
 
+    public ItemModelBuilder generateGearboxItem(BlockItem item, String path) {
+        var name = String.valueOf(item).toLowerCase();
+        var parent = "torquecraft:block/gearbox/" + path + "/item";
+        return super.withExistingParent(name, parent);
+    }
+
     public ItemModelBuilder withExistingParent(BlockItem item, Block block, String itemModel) {
         var name = String.valueOf(item).toLowerCase();
         var parent = "torquecraft:block/" + key(block).getPath() + itemModel;
@@ -78,6 +84,12 @@ public abstract class CustomItemModelProvider extends ItemModelProvider {
     }
 
     public ItemModelBuilder withExistingParent(BlockItem item, Block block) {
+        var name = String.valueOf(item).toLowerCase();
+        var parent = "torquecraft:block/" + key(block).getPath() + "/item";
+        return super.withExistingParent(name, parent);
+    }
+
+    public ItemModelBuilder generateCubeItem(BlockItem item, Block block) {
         var name = String.valueOf(item).toLowerCase();
         var parent = "torquecraft:block/" + key(block).getPath();
         return super.withExistingParent(name, parent);

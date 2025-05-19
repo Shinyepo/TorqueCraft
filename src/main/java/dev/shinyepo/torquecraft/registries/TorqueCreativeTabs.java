@@ -52,11 +52,11 @@ public class TorqueCreativeTabs {
                 output.accept(TorqueItems.CIRCUIT_MODULE.get());
 
                 //shafts/gears
-                output.accept(TorqueItems.HSLA_SHAFT_ITEM.get());
-                output.accept(TorqueItems.HSLA_THREE_WAY_ITEM.get());
-                output.accept(TorqueItems.HSLA_BEVEL_GEARS_ITEM.get());
-                output.accept(TorqueItems.HSLA_GEARBOX1_2_ITEM.get());
-                output.accept(TorqueItems.HSLA_GEARBOX1_4_ITEM.get());
+                output.accept(TorqueItems.SHAFT_ITEM.get());
+                output.accept(TorqueItems.THREE_WAY_ITEM.get());
+                output.accept(TorqueItems.BEVEL_GEARS_ITEM.get());
+                output.accept(TorqueItems.GEARBOX1_2_ITEM.get());
+                output.accept(TorqueItems.GEARBOX1_4_ITEM.get());
                 //
                 output.accept(TorqueItems.CANOLA_SEEDS.get());
                 output.accept(TorqueItems.CRUSHED_SEEDS.get());
