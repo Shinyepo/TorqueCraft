@@ -53,10 +53,12 @@ public class HeatSource {
                 if (radiator instanceof CoolingRadiator && temp > 101) {
                     var usage = aboveState.getValue(TorqueAttributes.USAGE);
                     double cooling = (usage.getPercent() * 0.13 / 100) * (temp - 101);
+                    if (resultTemp - cooling == temp) return;
                     heatedEntity.setTemp(resultTemp - cooling);
                     return;
                 }
             }
+            if (resultTemp == temp) return;
             heatedEntity.setTemp(resultTemp);
         }
     }
