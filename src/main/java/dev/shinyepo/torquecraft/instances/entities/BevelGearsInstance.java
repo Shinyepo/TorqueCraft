@@ -18,8 +18,8 @@ public class BevelGearsInstance extends MultiModelInstance<BevelGearsEntity> imp
 
     public void setupInstances() {
         lastBlockState = blockEntity.getBlockState();
-        var input = instancerProvider().instancer(TorqueInstanceTypes.ROTATING, Models.partial(PartialModel.of(TorquePartialModels.BEVEL_INPUT))).createInstance();
-        var output = instancerProvider().instancer(TorqueInstanceTypes.ROTATING, Models.partial(PartialModel.of(TorquePartialModels.BEVEL_OUTPUT))).createInstance();
+        var input = instancerProvider().instancer(TorqueInstanceTypes.VARIABLE_ROTATING, Models.partial(PartialModel.of(TorquePartialModels.BEVEL_INPUT))).createInstance();
+        var output = instancerProvider().instancer(TorqueInstanceTypes.VARIABLE_ROTATING, Models.partial(PartialModel.of(TorquePartialModels.BEVEL_OUTPUT))).createInstance();
         var facing = blockEntity.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
 
         input.setup(blockEntity)

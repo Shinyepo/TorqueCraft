@@ -22,8 +22,8 @@ public class GearboxInstance extends MultiModelInstance<GearboxEntity> implement
 
     public void setupInstances() {
         lastBlockState = blockEntity.getBlockState();
-        input = instancerProvider().instancer(TorqueInstanceTypes.ROTATING, Models.partial(PartialModel.of(TorquePartialModels.INPUT_SHAFT_ROD))).createInstance();
-        output = instancerProvider().instancer(TorqueInstanceTypes.ROTATING, Models.partial(PartialModel.of(TorquePartialModels.OUTPUT_SHAFT_ROD))).createInstance();
+        input = instancerProvider().instancer(TorqueInstanceTypes.VARIABLE_ROTATING, Models.partial(PartialModel.of(TorquePartialModels.INPUT_SHAFT_ROD))).createInstance();
+        output = instancerProvider().instancer(TorqueInstanceTypes.VARIABLE_ROTATING, Models.partial(PartialModel.of(TorquePartialModels.OUTPUT_SHAFT_ROD))).createInstance();
         var facing = blockEntity.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
 
         input.setup(blockEntity)

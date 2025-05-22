@@ -17,8 +17,8 @@ public class ThreeWayInstance extends MultiModelInstance<ThreeWayEntity> impleme
 
     public void setupInstances() {
         lastBlockState = blockEntity.getBlockState();
-        var input = instancerProvider().instancer(TorqueInstanceTypes.ROTATING, Models.partial(PartialModel.of(TorquePartialModels.THREE_WAY_INPUT))).createInstance();
-        var side = instancerProvider().instancer(TorqueInstanceTypes.ROTATING, Models.partial(PartialModel.of(TorquePartialModels.THREE_WAY_SIDE))).createInstance();
+        var input = instancerProvider().instancer(TorqueInstanceTypes.VARIABLE_ROTATING, Models.partial(PartialModel.of(TorquePartialModels.THREE_WAY_INPUT))).createInstance();
+        var side = instancerProvider().instancer(TorqueInstanceTypes.VARIABLE_ROTATING, Models.partial(PartialModel.of(TorquePartialModels.THREE_WAY_SIDE))).createInstance();
         var facing = blockEntity.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
 
         input.setup(blockEntity)
