@@ -36,14 +36,18 @@ public class SimpleInstance<T extends RotaryNetworkDevice<?>> extends IOInstance
     }
 
     public void setupInstance() {
-        lastBlockState = blockEntity.getBlockState();
+        updateBlockState(blockEntity.getBlockState());
 
-        model = instancerProvider().instancer(TorqueInstanceTypes.ROTATING, Models.partial(PartialModel.of(modelLocation))).createInstance();
+        model = instancerProvider().instancer(TorqueInstanceTypes.VARIABLE_ROTATING, Models.partial(PartialModel.of(modelLocation))).createInstance();
 
         model.setup(blockEntity)
                 .rotateToFace(blockEntity.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING))
                 .setPosition(getVisualPosition())
                 .setChanged();
+    }
+
+    protected void updateBlockState(BlockState newBlockState) {
+        lastBlockState = newBlockState;
     }
 
     @Override

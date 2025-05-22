@@ -2,8 +2,11 @@ package dev.shinyepo.torquecraft.block.prefab.rotary;
 
 import com.mojang.serialization.MapCodec;
 import dev.shinyepo.torquecraft.block.entities.rotary.SprinklerEntity;
+import dev.shinyepo.torquecraft.factory.rotary.network.RotaryClient;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -39,6 +42,15 @@ public class Sprinkler extends HorizontalDirectionalBlock implements EntityBlock
     @Override
     protected VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
         return SHAPE;
+    }
+
+    @Override
+    public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+        if (level.isClientSide()) {
+            if (level.getBlockEntity(pos) instanceof RotaryClient rIO) {
+                rIO.setProgress(0F);
+            }
+        }
     }
 
     @Nullable

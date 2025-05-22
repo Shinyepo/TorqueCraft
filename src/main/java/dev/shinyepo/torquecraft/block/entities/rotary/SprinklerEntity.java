@@ -1,11 +1,9 @@
 package dev.shinyepo.torquecraft.block.entities.rotary;
 
-import dev.shinyepo.torquecraft.capabilities.handlers.fluid.IFluidBuffer;
 import dev.shinyepo.torquecraft.config.ClientConfig;
+import dev.shinyepo.torquecraft.config.side.SideType;
+import dev.shinyepo.torquecraft.factory.MachineFactory;
 import dev.shinyepo.torquecraft.factory.TorqueFluidTank;
-import dev.shinyepo.torquecraft.factory.rotary.network.RotaryClient;
-import dev.shinyepo.torquecraft.networking.TorqueMessages;
-import dev.shinyepo.torquecraft.networking.packets.SyncFluidS2C;
 import dev.shinyepo.torquecraft.registries.block.TorqueBlockEntities;
 import dev.shinyepo.torquecraft.registries.particle.TorqueParticles;
 import net.minecraft.core.BlockPos;
@@ -28,24 +26,18 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SprinklerEntity extends RotaryClient implements IFluidBuffer {
+public class SprinklerEntity extends MachineFactory {
+    private static final ClientConfig config = ClientConfig.SPRINKLER;
     private final int fluidCapacity = 16000;
     private final int usage = 5;
-    private final TorqueFluidTank fluidTank = new TorqueFluidTank(fluidCapacity) {
-        @Override
-        protected void onContentsChanged() {
-            setChanged();
-            if (!level.isClientSide()) {
-                TorqueMessages.sendToAllPlayers(new SyncFluidS2C(worldPosition, this.fluid));
-            }
-        }
-    };
+    private final TorqueFluidTank fluidTank = createFluidTank(fluidCapacity);
+
     private final AABB workingBoundary;
     private final List<BlockPos> workingArea = new ArrayList<>();
     private int nextTick = 20;
 
     public SprinklerEntity(BlockPos pPos, BlockState pBlockState) {
-        super(TorqueBlockEntities.SPRINKLER_ENTITY.get(), pPos, pBlockState, ClientConfig.VACUUM);
+        super(TorqueBlockEntities.SPRINKLER_ENTITY.get(), pPos, pBlockState, config);
 
         workingBoundary = new AABB(new Vec3(pPos.getX() - 4, pPos.getY() - 1, pPos.getZ() - 4),
                 new Vec3(pPos.getX() + 4, pPos.getY() - 5, pPos.getZ() + 4));
@@ -57,6 +49,15 @@ public class SprinklerEntity extends RotaryClient implements IFluidBuffer {
             if (x != this.worldPosition)
                 workingArea.add(x.immutable());
         });
+    }
+
+    @Override
+    public void configureSides(Direction facing) {
+        configureSides(Direction.UP, SideType.INPUT);
+    }
+
+    public int getUsage() {
+        return usage;
     }
 
     public void tick(Level level, BlockPos pos) {
