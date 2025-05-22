@@ -3,7 +3,8 @@
   "render_type": "minecraft:cutout_mipped",
   "loader": "neoforge:elements",
   "textures": {
-    "0": "torquecraft:block/shared/default_shaft"
+    "0": "torquecraft:block/shared/default_shaft",
+    "particle": "torquecraft:block/shared/default_shaft"
   },
   "elements": [
     {

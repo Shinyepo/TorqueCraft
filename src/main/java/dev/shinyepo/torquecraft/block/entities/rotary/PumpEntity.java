@@ -4,7 +4,9 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import dev.shinyepo.torquecraft.capabilities.handlers.fluid.AdaptedFluidHandler;
 import dev.shinyepo.torquecraft.capabilities.handlers.fluid.IFluidBuffer;
+import dev.shinyepo.torquecraft.config.ClientConfig;
 import dev.shinyepo.torquecraft.factory.TorqueFluidTank;
+import dev.shinyepo.torquecraft.factory.rotary.network.RotaryClient;
 import dev.shinyepo.torquecraft.networking.TorqueMessages;
 import dev.shinyepo.torquecraft.networking.packets.SyncFluidS2C;
 import dev.shinyepo.torquecraft.registries.block.TorqueBlockEntities;
@@ -14,7 +16,6 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -23,7 +24,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
 import java.util.List;
 
-public class PumpEntity extends BlockEntity implements IFluidBuffer {
+public class PumpEntity extends RotaryClient implements IFluidBuffer {
     private final int fluidCapacity = 16000;
     private final TorqueFluidTank fluidTank = new TorqueFluidTank(fluidCapacity) {
         @Override
@@ -47,7 +48,7 @@ public class PumpEntity extends BlockEntity implements IFluidBuffer {
     );
 
     public PumpEntity(BlockPos pPos, BlockState pBlockState) {
-        super(TorqueBlockEntities.PUMP_ENTITY.get(), pPos, pBlockState);
+        super(TorqueBlockEntities.PUMP_ENTITY.get(), pPos, pBlockState, ClientConfig.VACUUM);
     }
 
     public void tick(Level level, BlockPos pos) {

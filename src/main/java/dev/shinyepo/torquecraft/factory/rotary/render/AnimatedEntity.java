@@ -20,8 +20,8 @@ public class AnimatedEntity extends BlockEntity implements IRotaryIO, IRotationa
         return Mth.lerp(0.2F, this.progressOld, this.progress);
     }
 
-    public void setAngle(float speed) {
-        angle = (angle + speed / 10) % 360;
+    public void setAngle(float angle) {
+        this.angle = angle;
     }
 
     @Override

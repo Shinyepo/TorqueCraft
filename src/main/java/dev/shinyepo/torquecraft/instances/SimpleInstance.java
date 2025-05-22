@@ -6,42 +6,57 @@ import dev.engine_room.flywheel.api.visualization.VisualizationContext;
 import dev.engine_room.flywheel.lib.model.Models;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import dev.engine_room.flywheel.lib.visual.SimpleDynamicVisual;
-import dev.shinyepo.torquecraft.block.entities.rotary.transmitters.ShaftEntity;
+import dev.shinyepo.torquecraft.capabilities.handlers.rotary.IRotaryHandler;
+import dev.shinyepo.torquecraft.factory.rotary.network.RotaryNetworkDevice;
 import dev.shinyepo.torquecraft.instances.types.RotatingInstance;
-import dev.shinyepo.torquecraft.registries.model.partial.TorquePartialModels;
-import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;
 
-public class ShaftInstance extends IOInstance<ShaftEntity> implements SimpleDynamicVisual {
-    final Direction facing;
-    private final BlockState blockState;
-    private RotatingInstance model;
+public class SimpleInstance<T extends RotaryNetworkDevice<?>> extends IOInstance<T> implements SimpleDynamicVisual {
+    private final IRotaryHandler handler;
+    public RotatingInstance model;
+    public RotaryNetworkDevice<?> blockEntity;
+    public ResourceLocation modelLocation;
 
-    public ShaftInstance(VisualizationContext ctx, ShaftEntity blockEntity, float partialTick) {
+    private BlockState lastBlockState;
+
+    public SimpleInstance(ResourceLocation model, VisualizationContext ctx, T blockEntity, float partialTick) {
         super(ctx, blockEntity, partialTick);
-        blockState = blockEntity.getBlockState();
-        facing = blockEntity.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
+        this.blockEntity = blockEntity;
+        this.handler = this.blockEntity.getRotaryHandler(null);
+        lastBlockState = blockEntity.getBlockState();
+        modelLocation = model;
 
         setupInstance();
+
     }
 
     public void setupInstance() {
-        model = instancerProvider().instancer(TorqueInstanceTypes.ROTATING, Models.partial(PartialModel.of(TorquePartialModels.SHAFT_ROD))).createInstance();
+        lastBlockState = blockEntity.getBlockState();
+
+        model = instancerProvider().instancer(TorqueInstanceTypes.ROTATING, Models.partial(PartialModel.of(modelLocation))).createInstance();
 
         model.setup(blockEntity)
-                .rotateToFace(facing)
+                .rotateToFace(blockEntity.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING))
                 .setPosition(getVisualPosition())
                 .setChanged();
     }
 
     @Override
+    public void beginFrame(DynamicVisual.Context ctx) {
+        float angle = (float) ((blockEntity.getAngle() + (handler.getAngular() * 0.01F) * ctx.partialTick()) % 360);
+        blockEntity.setAngle(angle);
+        model.setRotationalSpeed(angle).setChanged();
+    }
+
+
+    @Override
     public void update(float pt) {
-        super.update(pt);
-        if (blockState != blockEntity.getBlockState()) {
+        if (lastBlockState != blockEntity.getBlockState()) {
             model.delete();
             setupInstance();
         } else {
@@ -66,12 +81,5 @@ public class ShaftInstance extends IOInstance<ShaftEntity> implements SimpleDyna
     protected void _delete() {
         super._delete();
         model.delete();
-    }
-
-    @Override
-    public void beginFrame(DynamicVisual.Context ctx) {
-        var speed = blockEntity.getRotaryHandler(null).getAngular();
-        model.setRotationalSpeed(speed).setChanged();
-
     }
 }

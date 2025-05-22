@@ -84,7 +84,7 @@ public class RotaryNetworkDevice<CONFIG extends IRotaryConfig> extends AnimatedE
     @Override
     public void renderTick() {
         super.renderTick();
-        setAngle(rotaryHandler.get().getAngular());
+//        setAngle(rotaryHandler.get().getAngular());
     }
 
     @Override

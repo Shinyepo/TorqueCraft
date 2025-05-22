@@ -1,7 +1,6 @@
 package dev.shinyepo.torquecraft;
 
 import com.mojang.logging.LogUtils;
-import dev.shinyepo.torquecraft.block.entities.renderers.*;
 import dev.shinyepo.torquecraft.events.HoverEvent;
 import dev.shinyepo.torquecraft.instances.TorqueInstances;
 import dev.shinyepo.torquecraft.menu.furnace.AlloyFurnaceScreen;
@@ -118,14 +117,7 @@ public class TorqueCraft {
 
         @SubscribeEvent
         public static void registerBER(EntityRenderersEvent.RegisterRenderers event) {
-            event.registerBlockEntityRenderer(TorqueBlockEntities.SHAFT_ENTITY.get(), ShaftRenderer::new);
-            event.registerBlockEntityRenderer(TorqueBlockEntities.STEAM_ENGINE_ENTITY.get(), SteamEngineRenderer::new);
-            event.registerBlockEntityRenderer(TorqueBlockEntities.MECHANICAL_FAN_ENTITY.get(), MechanicalFanRenderer::new);
-            event.registerBlockEntityRenderer(TorqueBlockEntities.GRINDER_ENTITY.get(), GrinderRenderer::new);
-            event.registerBlockEntityRenderer(TorqueBlockEntities.THREE_WAY_ENTITY.get(), ThreeWayRenderer::new);
-            event.registerBlockEntityRenderer(TorqueBlockEntities.BEVEL_GEARS_ENTITY.get(), BevelGearsRenderer::new);
-            event.registerBlockEntityRenderer(TorqueBlockEntities.GEARBOX_ENTITY.get(), GearboxRenderer::new);
-            event.registerBlockEntityRenderer(TorqueBlockEntities.VACUUM_ENTITY.get(), VacuumRenderer::new);
+
         }
 
         @SubscribeEvent

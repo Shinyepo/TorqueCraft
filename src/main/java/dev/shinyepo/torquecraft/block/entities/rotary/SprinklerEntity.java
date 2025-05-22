@@ -1,7 +1,9 @@
 package dev.shinyepo.torquecraft.block.entities.rotary;
 
 import dev.shinyepo.torquecraft.capabilities.handlers.fluid.IFluidBuffer;
+import dev.shinyepo.torquecraft.config.ClientConfig;
 import dev.shinyepo.torquecraft.factory.TorqueFluidTank;
+import dev.shinyepo.torquecraft.factory.rotary.network.RotaryClient;
 import dev.shinyepo.torquecraft.networking.TorqueMessages;
 import dev.shinyepo.torquecraft.networking.packets.SyncFluidS2C;
 import dev.shinyepo.torquecraft.registries.block.TorqueBlockEntities;
@@ -16,7 +18,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.FarmBlock;
 import net.minecraft.world.level.block.FireBlock;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.AABB;
@@ -27,7 +28,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SprinklerEntity extends BlockEntity implements IFluidBuffer {
+public class SprinklerEntity extends RotaryClient implements IFluidBuffer {
     private final int fluidCapacity = 16000;
     private final int usage = 5;
     private final TorqueFluidTank fluidTank = new TorqueFluidTank(fluidCapacity) {
@@ -44,7 +45,7 @@ public class SprinklerEntity extends BlockEntity implements IFluidBuffer {
     private int nextTick = 20;
 
     public SprinklerEntity(BlockPos pPos, BlockState pBlockState) {
-        super(TorqueBlockEntities.SPRINKLER_ENTITY.get(), pPos, pBlockState);
+        super(TorqueBlockEntities.SPRINKLER_ENTITY.get(), pPos, pBlockState, ClientConfig.VACUUM);
 
         workingBoundary = new AABB(new Vec3(pPos.getX() - 4, pPos.getY() - 1, pPos.getZ() - 4),
                 new Vec3(pPos.getX() + 4, pPos.getY() - 5, pPos.getZ() + 4));

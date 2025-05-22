@@ -11,8 +11,6 @@ import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
 public class RotatingInstance extends ColoredLitOverlayInstance {
-
-    public static final float SPEED_MULTIPLIER = 6;
     /**
      * Base rotation of the instance, applied before kinetic rotation
      */
@@ -27,6 +25,8 @@ public class RotatingInstance extends ColoredLitOverlayInstance {
      * Speed in degrees per second
      */
     public float rotationalSpeed;
+
+    public int spinDirection = 1;
     /**
      * Offset in degrees
      */
@@ -58,7 +58,7 @@ public class RotatingInstance extends ColoredLitOverlayInstance {
 
     public RotatingInstance setup(Direction.Axis axis, float speed) {
         return setRotationAxis(axis)
-                .setRotationalSpeed(speed * RotatingInstance.SPEED_MULTIPLIER);
+                .setRotationalSpeed(speed * spinDirection);
     }
 
     public RotatingInstance rotateToFace(Direction.Axis axis) {
@@ -80,7 +80,7 @@ public class RotatingInstance extends ColoredLitOverlayInstance {
     }
 
     public RotatingInstance rotateToFace(float stepX, float stepY, float stepZ) {
-        return rotateTo(0, 0, 1, stepX, stepY, stepZ);
+        return rotateTo(0, 0, -1, stepX, stepY, stepZ);
     }
 
     public RotatingInstance rotateTo(float fromX, float fromY, float fromZ, float toX, float toY, float toZ) {
@@ -101,6 +101,11 @@ public class RotatingInstance extends ColoredLitOverlayInstance {
         this.rotationAxisX = (byte) (rotationAxisX * 127);
         this.rotationAxisY = (byte) (rotationAxisY * 127);
         this.rotationAxisZ = (byte) (rotationAxisZ * 127);
+        return this;
+    }
+
+    public RotatingInstance reverse() {
+        spinDirection *= -1;
         return this;
     }
 
@@ -132,12 +137,17 @@ public class RotatingInstance extends ColoredLitOverlayInstance {
     }
 
     public RotatingInstance setRotationalSpeed(float rotationalSpeed) {
-        this.rotationalSpeed = rotationalSpeed;
+        this.rotationalSpeed = rotationalSpeed * spinDirection;
         return this;
     }
 
     public RotatingInstance setRotationOffset(float rotationOffset) {
         this.rotationOffset = rotationOffset;
+        return this;
+    }
+
+    public RotatingInstance setSpinDirection(int i) {
+        spinDirection *= i;
         return this;
     }
 }

@@ -1,7 +1,6 @@
 package dev.shinyepo.torquecraft.instances;
 
 import dev.engine_room.flywheel.api.instance.Instance;
-import dev.engine_room.flywheel.api.visual.TickableVisual;
 import dev.engine_room.flywheel.api.visualization.VisualizationContext;
 import dev.engine_room.flywheel.lib.instance.AbstractInstance;
 import dev.engine_room.flywheel.lib.instance.InstanceTypes;
@@ -46,6 +45,17 @@ public class IOInstance<T extends RotaryNetworkDevice<?>> extends AbstractBlockE
         adjustPosition();
     }
 
+    @Override
+    public void tick(Context ctx) {
+        if (blockEntity.getProgress() < 3.0F) {
+            adjustPosition();
+            blockEntity.updateAnimation();
+        } else {
+            if (!input.isEmpty()) input.forEach(AbstractInstance::delete);
+            if (!output.isEmpty()) output.forEach(AbstractInstance::delete);
+        }
+    }
+
     private void adjustPosition() {
         var sides = blockEntity.getSidesConfig();
         var inputs = 0;
@@ -80,19 +90,7 @@ public class IOInstance<T extends RotaryNetworkDevice<?>> extends AbstractBlockE
 
     @Override
     public void updateLight(float partialTick) {
-        relight();
         if (!input.isEmpty()) input.forEach(this::relight);
         if (!output.isEmpty()) output.forEach(this::relight);
-    }
-
-    @Override
-    public void tick(TickableVisual.Context context) {
-        if (blockEntity.getProgress() < 3.0F) {
-            adjustPosition();
-            blockEntity.updateAnimation();
-        } else {
-            if (!input.isEmpty()) input.forEach(AbstractInstance::delete);
-            if (!output.isEmpty()) output.forEach(AbstractInstance::delete);
-        }
     }
 }
