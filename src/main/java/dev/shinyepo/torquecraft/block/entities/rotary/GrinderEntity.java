@@ -104,10 +104,6 @@ public class GrinderEntity extends MachineFactory {
         distributeFluid();
     }
 
-    private boolean fulfilledReq() {
-        return this.rotaryHandler.get().getTorque() >= config.getMinTorque() && this.rotaryHandler.get().getAngular() >= config.getMinAngular();
-    }
-
     private void distributeFluid() {
         if (fluidTank.isEmpty()) {
             return;

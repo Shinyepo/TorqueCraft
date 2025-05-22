@@ -1,6 +1,7 @@
 package dev.shinyepo.torquecraft.factory;
 
 import dev.shinyepo.torquecraft.capabilities.handlers.AdaptedItemHandler;
+import dev.shinyepo.torquecraft.capabilities.handlers.fluid.AdaptedFluidHandler;
 import dev.shinyepo.torquecraft.capabilities.handlers.fluid.IFluidBuffer;
 import dev.shinyepo.torquecraft.config.ClientConfig;
 import dev.shinyepo.torquecraft.constants.TorqueNBT;
@@ -76,6 +77,10 @@ public class MachineFactory extends RotaryClient implements IFluidBuffer {
 
     public void setValidFluidSlotInputs(List<TagKey<Item>> tags) {
         validFluidSlotInputs = tags;
+    }
+
+    protected boolean fulfilledReq() {
+        return this.rotaryHandler.get().getTorque() >= config.getMinTorque() && this.rotaryHandler.get().getAngular() >= config.getMinAngular();
     }
 
     public Lazy<CombinedInvWrapper> createItemHandler(int inputSlots, int outputSlots) {
@@ -157,6 +162,16 @@ public class MachineFactory extends RotaryClient implements IFluidBuffer {
                 if(!level.isClientSide()) {
                     TorqueMessages.sendToAllPlayers(new SyncFluidS2C(worldPosition, this.fluid));
                 }
+            }
+        };
+    }
+
+    @Nonnull
+    public AdaptedFluidHandler createOutputFluidTank(TorqueFluidTank fluidTank) {
+        return new AdaptedFluidHandler(fluidTank) {
+            @Override
+            public int fill(FluidStack resource, FluidAction action) {
+                return 0;
             }
         };
     }
