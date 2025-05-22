@@ -2,8 +2,11 @@ package dev.shinyepo.torquecraft.block.prefab.rotary;
 
 import com.mojang.serialization.MapCodec;
 import dev.shinyepo.torquecraft.block.entities.rotary.PumpEntity;
+import dev.shinyepo.torquecraft.factory.rotary.network.RotaryClient;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -22,10 +25,10 @@ import org.jetbrains.annotations.Nullable;
 
 public class Pump extends HorizontalDirectionalBlock implements EntityBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
-    private static final VoxelShape SHAPE_N = Block.box(4, 0, 0, 12, 16, 12);
-    private static final VoxelShape SHAPE_E = Block.box(4, 0, 4, 16, 16, 12);
-    private static final VoxelShape SHAPE_S = Block.box(4, 0, 4, 12, 16, 16);
-    private static final VoxelShape SHAPE_W = Block.box(0, 0, 4, 12, 16, 12);
+    private static final VoxelShape SHAPE_N = Block.box(4, 0, 4, 12, 16, 16);
+    private static final VoxelShape SHAPE_E = Block.box(0, 0, 4, 12, 16, 12);
+    private static final VoxelShape SHAPE_S = Block.box(4, 0, 0, 12, 16, 12);
+    private static final VoxelShape SHAPE_W = Block.box(4, 0, 4, 16, 16, 12);
 
     public Pump(Properties pProperties) {
         super(pProperties);
@@ -76,6 +79,15 @@ public class Pump extends HorizontalDirectionalBlock implements EntityBlock {
         return new PumpEntity(pPos, pState);
     }
 
+    @Override
+    public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+        if (level.isClientSide()) {
+            if (level.getBlockEntity(pos) instanceof RotaryClient rIO) {
+                rIO.setProgress(0F);
+            }
+        }
+    }
+
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
@@ -91,8 +103,9 @@ public class Pump extends HorizontalDirectionalBlock implements EntityBlock {
     protected void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
         if (pState.getBlock() != pNewState.getBlock()) {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-            if (blockEntity instanceof PumpEntity) {
+            if (blockEntity instanceof PumpEntity pumpEntity) {
                 pLevel.removeBlockEntity(pPos);
+                pumpEntity.removeDevice();
             }
         }
         super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);

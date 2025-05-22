@@ -5,10 +5,8 @@ import com.google.common.collect.Lists;
 import dev.shinyepo.torquecraft.capabilities.handlers.fluid.AdaptedFluidHandler;
 import dev.shinyepo.torquecraft.capabilities.handlers.fluid.IFluidBuffer;
 import dev.shinyepo.torquecraft.config.ClientConfig;
+import dev.shinyepo.torquecraft.factory.MachineFactory;
 import dev.shinyepo.torquecraft.factory.TorqueFluidTank;
-import dev.shinyepo.torquecraft.factory.rotary.network.RotaryClient;
-import dev.shinyepo.torquecraft.networking.TorqueMessages;
-import dev.shinyepo.torquecraft.networking.packets.SyncFluidS2C;
 import dev.shinyepo.torquecraft.registries.block.TorqueBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -24,23 +22,11 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
 import java.util.List;
 
-public class PumpEntity extends RotaryClient implements IFluidBuffer {
+public class PumpEntity extends MachineFactory implements IFluidBuffer {
     private final int fluidCapacity = 16000;
-    private final TorqueFluidTank fluidTank = new TorqueFluidTank(fluidCapacity) {
-        @Override
-        protected void onContentsChanged() {
-            setChanged();
-            if(!level.isClientSide()) {
-                TorqueMessages.sendToAllPlayers(new SyncFluidS2C(worldPosition, this.fluid));
-            }
-        }
-    };
-    private final AdaptedFluidHandler adaptedFluidTank = new AdaptedFluidHandler(fluidTank) {
-        @Override
-        public int fill(FluidStack resource, FluidAction action) {
-            return 0;
-        }
-    };
+    private final TorqueFluidTank fluidTank = createFluidTank(fluidCapacity);
+
+    private final AdaptedFluidHandler adaptedFluidTank = createOutputFluidTank(fluidTank);
 
     private final List<BlockPos> validSources = Lists.newArrayList();
     public static final ImmutableList<Direction> POSSIBLE_DIRECTIONS = ImmutableList.of(
@@ -52,7 +38,7 @@ public class PumpEntity extends RotaryClient implements IFluidBuffer {
     }
 
     public void tick(Level level, BlockPos pos) {
-        if (level.getGameTime() % 5 == 0) {
+        if (level.getGameTime() % 5 == 0 && fulfilledReq()) {
             if (isSource(level, pos.below()) && canFitWater()) {
                 if (validSources.isEmpty()) {
                     fetchSources(level, pos);
