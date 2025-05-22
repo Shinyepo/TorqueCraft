@@ -36,7 +36,7 @@ public class TorquePartialModels {
 
     public static final ResourceLocation SPRINKLER_HEAD = register(fromNamespaceAndPath(TorqueCraft.MODID, PATH + "sprinkler_head"));
 
-    public static final ResourceLocation THREE_WAY_DOWN = register(fromNamespaceAndPath(TorqueCraft.MODID, PATH + "three_way_down"));
+    public static final ResourceLocation THREE_WAY_INPUT = register(fromNamespaceAndPath(TorqueCraft.MODID, PATH + "three_way_in_out"));
     public static final ResourceLocation THREE_WAY_SIDE = register(fromNamespaceAndPath(TorqueCraft.MODID, PATH + "three_way_side"));
 
     public static final ResourceLocation HIGHLIGHT_BOX = register(fromNamespaceAndPath(TorqueCraft.MODID, PATH + "highlight/box"));

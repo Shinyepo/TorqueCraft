@@ -33,6 +33,10 @@ public abstract class MultiModelInstance<T extends RotaryNetworkDevice<?>> exten
 
     public abstract void setupInstances();
 
+    protected IRotaryHandler getHandler() {
+        return this.handler;
+    }
+
     @Override
     public void beginFrame(DynamicVisual.Context ctx) {
         float angle = (float) ((blockEntity.getAngle() + (handler.getAngular() * 0.01F) * ctx.partialTick()) % 360);

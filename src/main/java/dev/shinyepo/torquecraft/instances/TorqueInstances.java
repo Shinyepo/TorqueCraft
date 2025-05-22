@@ -2,7 +2,7 @@ package dev.shinyepo.torquecraft.instances;
 
 import dev.engine_room.flywheel.lib.visualization.SimpleBlockEntityVisualizer;
 import dev.shinyepo.torquecraft.instances.entities.BevelGearsInstance;
-import dev.shinyepo.torquecraft.instances.entities.Gearbox1_2Instance;
+import dev.shinyepo.torquecraft.instances.entities.GearboxInstance;
 import dev.shinyepo.torquecraft.instances.entities.SprinklerInstance;
 import dev.shinyepo.torquecraft.instances.entities.ThreeWayInstance;
 import dev.shinyepo.torquecraft.registries.block.TorqueBlockEntities;
@@ -17,7 +17,7 @@ public class TorqueInstances {
 
         SimpleBlockEntityVisualizer
                 .builder(TorqueBlockEntities.GEARBOX_ENTITY.get())
-                .factory(Gearbox1_2Instance::new)
+                .factory(GearboxInstance::new)
                 .apply();
 
         SimpleBlockEntityVisualizer
