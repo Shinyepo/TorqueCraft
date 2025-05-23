@@ -87,11 +87,12 @@ public class RotaryNetwork {
         }
     }
 
-    private void adjustOutput(GearboxEntity gearbox, float angular, float torque) {
+    public void adjustOutput(GearboxEntity gearbox, float angular, float torque) {
         var value = gearbox.getRatio();
         var mode = gearbox.getBlockState().getValue(TorqueAttributes.MODE);
         float newAngular;
         float newTorque;
+        gearbox.backupRotaryValues(angular, torque);
         if (mode == RotaryMode.ANGULAR) {
             newAngular = angular * value;
             newTorque = torque / value;
@@ -174,7 +175,11 @@ public class RotaryNetwork {
             sources.forEach((pos, source) -> source.forceEmit());
         }
         if (!transmitters.isEmpty()) {
-            transmitters.forEach((pos, transmitter) -> transmitter.setRotaryPower(0, 0));
+            transmitters.forEach((pos, transmitter) -> {
+                if (transmitter instanceof GearboxEntity gearboxEntity)
+                    gearboxEntity.backupRotaryValues(0, 0);
+                transmitter.setRotaryPower(0, 0);
+            });
         }
         if (!clients.isEmpty()) {
             clients.forEach((pos, client) -> client.setRotaryPower(0, 0));
