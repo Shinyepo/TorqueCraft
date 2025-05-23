@@ -55,6 +55,7 @@ public class TorqueBlockStateProvider extends CustomBlockStateProvider {
         registerHorizontalMachineWithExistingModel("block/three_way", TorqueBlocks.THREE_WAY);
         registerHorizontalMachineWithExistingModel("block/fluid_tank", TorqueBlocks.FLUID_TANK);
         registerHorizontalMachineWithExistingModel("block/vacuum", TorqueBlocks.VACUUM);
+        registerMachineWithExistingModel("block/centrifuge", TorqueBlocks.CENTRIFUGE);
 
         makeHorizontalLitBlock("block/furnace/alloy_furnace", TorqueBlocks.ALLOY_FURNACE);
         registerFluid(TorqueBlocks.LUBRICANT_BLOCK);
@@ -119,6 +120,13 @@ public class TorqueBlockStateProvider extends CustomBlockStateProvider {
                     .rotationY(dir.getAxis().isVertical() ? 0 : (((int) dir.toYRot()) + 180) % 360)
                     .build();
         });
+    }
+
+    public void registerMachineWithExistingModel(String modelPath, Supplier<Block> block) {
+        ModelFile machineModel = models().getExistingFile(modLoc(modelPath + "/block"));
+        this.getVariantBuilder(block.get()).forAllStatesExcept(blockState -> ConfiguredModel.builder()
+                .modelFile(machineModel)
+                .build());
     }
 
     public void registerFluid(Supplier<LiquidBlock> block) {

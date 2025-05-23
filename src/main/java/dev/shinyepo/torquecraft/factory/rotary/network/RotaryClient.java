@@ -3,6 +3,7 @@ package dev.shinyepo.torquecraft.factory.rotary.network;
 import dev.shinyepo.torquecraft.config.ClientConfig;
 import dev.shinyepo.torquecraft.config.side.SideType;
 import dev.shinyepo.torquecraft.factory.IWrenchInteraction;
+import dev.shinyepo.torquecraft.registries.block.TorqueBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -15,7 +16,9 @@ public class RotaryClient extends RotaryNetworkDevice<ClientConfig> implements I
     public RotaryClient(BlockEntityType<?> type, BlockPos pos, BlockState blockState, ClientConfig config) {
         super(type, pos, blockState, config);
         this.clientConfig = config;
-        configureSides(blockState.getValue(BlockStateProperties.HORIZONTAL_FACING));
+
+        if (type != TorqueBlockEntities.CENTRIFUGE_ENTITY.get())
+            configureSides(blockState.getValue(BlockStateProperties.HORIZONTAL_FACING));
     }
 
     public void configureSides(Direction facing) {

@@ -66,6 +66,7 @@ public class TorqueItemModelProvider extends CustomItemModelProvider {
         withExistingParent(TorqueItems.MECHANICAL_FAN_ITEM.get(), TorqueBlocks.MECHANICAL_FAN.get());
         withExistingParent(TorqueItems.GRINDER_ITEM.get(), TorqueBlocks.GRINDER.get());
         withExistingParent(TorqueItems.SHAFT_ITEM.get(), TorqueBlocks.SHAFT.get());
+        withExistingParent(TorqueItems.CENTRIFUGE_ITEM.get(), TorqueBlocks.CENTRIFUGE.get());
 
         withExistingParent(TorqueItems.FLUID_PIPE_ITEM.get(), "torquecraft:block/pipe");
         withExistingParent(TorqueItems.STEAM_PIPE_ITEM.get(), "torquecraft:block/pipe");

@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "operational=false,vertical_direction=down": {
+      "model": "torquecraft:block/centrifuge/block"
+    },
+    "operational=false,vertical_direction=up": {
+      "model": "torquecraft:block/centrifuge/block"
+    },
+    "operational=true,vertical_direction=down": {
+      "model": "torquecraft:block/centrifuge/block"
+    },
+    "operational=true,vertical_direction=up": {
+      "model": "torquecraft:block/centrifuge/block"
+    }
+  }
+}

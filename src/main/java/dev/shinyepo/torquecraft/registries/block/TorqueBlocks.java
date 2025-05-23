@@ -50,6 +50,7 @@ public class TorqueBlocks {
     public static final Supplier<Block> SPRINKLER = BLOCKS.register("sprinkler", () -> new Sprinkler(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE)));
     public static final Supplier<Block> COOLING_RADIATOR = BLOCKS.register("cooling_radiator",() -> new CoolingRadiator(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE)));
     public static final Supplier<Block> VACUUM = BLOCKS.register("vacuum", () -> new Vacuum(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE)));
+    public static final Supplier<Block> CENTRIFUGE = BLOCKS.register("centrifuge", () -> new Centrifuge(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE)));
 
     //Crops
     public static final Supplier<Block> CANOLA_CROP = BLOCKS.register("canola_crop", () -> new CanolaCrop(BlockBehaviour.Properties.ofFullCopy(Blocks.WHEAT).noOcclusion().noCollission()));

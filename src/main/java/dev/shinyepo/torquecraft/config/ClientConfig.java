@@ -4,7 +4,8 @@ public enum ClientConfig implements IRotaryConfig {
     GRINDER(2048, 2048,512,32),
     MECHANICAL_FAN(1024, 2048, 128, 64),
     VACUUM(4096, 2048, 128, 8),
-    SPRINKLER(32, 32, 32, 32);
+    SPRINKLER(32, 32, 32, 32),
+    CENTRIFUGE(262144, 32, 16384, 32);
 
     private final float minTorque;
     private final float minAngular;

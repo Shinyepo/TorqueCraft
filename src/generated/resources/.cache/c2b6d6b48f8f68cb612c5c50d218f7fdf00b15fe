@@ -1,9 +1,10 @@
-// 1.21.1	2025-05-22T16:54:29.8617391	Item Models: torquecraft
+// 1.21.1	2025-05-23T19:50:41.8603743	Item Models: torquecraft
 e59d6b3d630b1cb3f52cae24f436ff54e71aa420 assets/torquecraft/models/item/alloy_furnace.json
 8f2119a5c863b94d0810e71d7e95ed78e9f27574 assets/torquecraft/models/item/bevel_gears.json
 5f52cc675d3896825693098fb2797e0b3b53e704 assets/torquecraft/models/item/canola_seeds.json
 b9b386c2e28e8c70e124a8d3bc6061e2ae6989c3 assets/torquecraft/models/item/cast_iron_block.json
 958176ce3cf7f0e4267d230b3c52d2ab9c59f554 assets/torquecraft/models/item/cast_iron_ingot.json
+22b250f3b4c1bfb12fdfd443bc15ee774975e78e assets/torquecraft/models/item/centrifuge.json
 ef62573dbfadab8e6abdae9b6b81d75881126570 assets/torquecraft/models/item/circuit_module.json
 fb83119ca3215741128f5d2630736dd55e2a0dba assets/torquecraft/models/item/cooling_radiator.json
 b4825f216969bc25f733ea2936c88bc38aa2e6ef assets/torquecraft/models/item/copper_dust.json

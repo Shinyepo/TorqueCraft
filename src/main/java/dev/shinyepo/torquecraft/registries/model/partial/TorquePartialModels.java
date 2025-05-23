@@ -16,6 +16,7 @@ public class TorquePartialModels {
     public static final ResourceLocation BEVEL_OUTPUT = register(fromNamespaceAndPath(TorqueCraft.MODID, PATH + "bevel_output"));
 
     public static final ResourceLocation FAN_BLADE = register(fromNamespaceAndPath(TorqueCraft.MODID, PATH + "fan_blade"));
+    public static final ResourceLocation CENTRIFUGE = register(fromNamespaceAndPath(TorqueCraft.MODID, PATH + "centrifuge"));
 
     public static final ResourceLocation GRINDER_SHAFT = register(fromNamespaceAndPath(TorqueCraft.MODID, PATH + "grinder_shaft"));
 
