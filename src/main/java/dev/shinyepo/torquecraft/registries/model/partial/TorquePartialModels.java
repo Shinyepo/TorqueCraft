@@ -12,14 +12,6 @@ public class TorquePartialModels {
     public static final List<ResourceLocation> PARTIAL_CACHE = new ArrayList<>();
     private static final String PATH = "block/partial/";
 
-    public static final ResourceLocation GEARBOX_1_2_LEFT = register(fromNamespaceAndPath(TorqueCraft.MODID, PATH + "1_2/1_2_left"));
-    public static final ResourceLocation GEARBOX_1_2_MAIN = register(fromNamespaceAndPath(TorqueCraft.MODID, PATH + "1_2/1_2_main"));
-    public static final ResourceLocation GEARBOX_1_2_RIGHT = register(fromNamespaceAndPath(TorqueCraft.MODID, PATH + "1_2/1_2_right"));
-    public static final ResourceLocation GEARBOX_1_2_RIGHT_2 = register(fromNamespaceAndPath(TorqueCraft.MODID, PATH + "1_2/1_2_right_2"));
-
-    public static final ResourceLocation GEARBOX_1_4_LEFT = register(fromNamespaceAndPath(TorqueCraft.MODID, PATH + "1_4_left"));
-    public static final ResourceLocation GEARBOX_1_4_RIGHT = register(fromNamespaceAndPath(TorqueCraft.MODID, PATH + "1_4_right"));
-
     public static final ResourceLocation BEVEL_INPUT = register(fromNamespaceAndPath(TorqueCraft.MODID, PATH + "bevel_input"));
     public static final ResourceLocation BEVEL_OUTPUT = register(fromNamespaceAndPath(TorqueCraft.MODID, PATH + "bevel_output"));
 

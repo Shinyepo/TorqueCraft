@@ -16,7 +16,22 @@ public class TorqueInstances {
                 .apply();
 
         SimpleBlockEntityVisualizer
-                .builder(TorqueBlockEntities.GEARBOX_ENTITY.get())
+                .builder(TorqueBlockEntities.GEARBOX1_2_ENTITY.get())
+                .factory(GearboxInstance::new)
+                .apply();
+
+        SimpleBlockEntityVisualizer
+                .builder(TorqueBlockEntities.GEARBOX1_4_ENTITY.get())
+                .factory(GearboxInstance::new)
+                .apply();
+
+        SimpleBlockEntityVisualizer
+                .builder(TorqueBlockEntities.GEARBOX1_8_ENTITY.get())
+                .factory(GearboxInstance::new)
+                .apply();
+
+        SimpleBlockEntityVisualizer
+                .builder(TorqueBlockEntities.GEARBOX1_16_ENTITY.get())
                 .factory(GearboxInstance::new)
                 .apply();
 

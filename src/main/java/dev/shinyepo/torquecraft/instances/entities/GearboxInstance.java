@@ -6,6 +6,8 @@ import dev.engine_room.flywheel.lib.model.Models;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import dev.engine_room.flywheel.lib.visual.SimpleDynamicVisual;
 import dev.shinyepo.torquecraft.block.entities.rotary.transmitters.GearboxEntity;
+import dev.shinyepo.torquecraft.config.RotaryMode;
+import dev.shinyepo.torquecraft.constants.TorqueAttributes;
 import dev.shinyepo.torquecraft.instances.MultiModelInstance;
 import dev.shinyepo.torquecraft.instances.TorqueInstanceTypes;
 import dev.shinyepo.torquecraft.instances.types.RotatingInstance;
@@ -42,7 +44,30 @@ public class GearboxInstance extends MultiModelInstance<GearboxEntity> implement
 
     @Override
     public void beginFrame(DynamicVisual.Context ctx) {
-        super.beginFrame(ctx);
+        if (blockEntity instanceof GearboxEntity gearboxEntity) {
+            var mode = lastBlockState.getValue(TorqueAttributes.MODE);
+            var ratio = gearboxEntity.getRatio();
+            var outputSpeed = gearboxEntity.getRotaryHandler(null).getAngular();
+
+            var outputAngle = (float) ((blockEntity.getOutputAngle() + (outputSpeed * 0.01F) * ctx.partialTick()) % 360);
+            blockEntity.setOutputAngle(outputAngle);
+
+            float inputSpeed = 0;
+            if (mode == RotaryMode.ANGULAR) {
+                inputSpeed = outputSpeed / ratio;
+            } else {
+                inputSpeed = outputSpeed * ratio;
+            }
+
+            float inputAngle = (float) ((blockEntity.getAngle() + (inputSpeed * 0.01F) * ctx.partialTick()) % 360);
+            blockEntity.setAngle(inputAngle);
+
+            input.setRotationalSpeed(inputAngle)
+                    .setChanged();
+
+            output.setRotationalSpeed(outputAngle)
+                    .setChanged();
+        }
         //TODO: introduce mode switch
     }
 }
