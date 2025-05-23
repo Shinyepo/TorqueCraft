@@ -15,7 +15,6 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 public class SprinklerInstance extends SimpleInstance<SprinklerEntity> implements SimpleDynamicVisual {
     public SprinklerInstance(VisualizationContext ctx, SprinklerEntity blockEntity, float partialTick) {
         super(TorquePartialModels.SPRINKLER_HEAD, ctx, blockEntity, partialTick);
-        model.setRotationAxis(Direction.Axis.Y);
     }
 
     @Override
@@ -24,7 +23,7 @@ public class SprinklerInstance extends SimpleInstance<SprinklerEntity> implement
 
         model = instancerProvider().instancer(TorqueInstanceTypes.ROTATING, Models.partial(PartialModel.of(modelLocation))).createInstance();
 
-        model.setup(blockEntity)
+        model.setup(blockEntity, Direction.Axis.Y)
                 .rotateToFace(blockEntity.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING))
                 .setPosition(getVisualPosition())
                 .setChanged();
