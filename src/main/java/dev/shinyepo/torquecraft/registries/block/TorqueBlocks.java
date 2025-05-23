@@ -9,10 +9,12 @@ import dev.shinyepo.torquecraft.block.prefab.pipes.FluidPipe;
 import dev.shinyepo.torquecraft.block.prefab.pipes.SteamPipe;
 import dev.shinyepo.torquecraft.block.prefab.rotary.*;
 import dev.shinyepo.torquecraft.block.prefab.rotary.transmitters.BevelGears;
-import dev.shinyepo.torquecraft.block.prefab.rotary.transmitters.Gearbox;
 import dev.shinyepo.torquecraft.block.prefab.rotary.transmitters.Shaft;
 import dev.shinyepo.torquecraft.block.prefab.rotary.transmitters.ThreeWay;
-import dev.shinyepo.torquecraft.config.GearboxRatio;
+import dev.shinyepo.torquecraft.block.prefab.rotary.transmitters.gearboxes.Gearbox1_16;
+import dev.shinyepo.torquecraft.block.prefab.rotary.transmitters.gearboxes.Gearbox1_2;
+import dev.shinyepo.torquecraft.block.prefab.rotary.transmitters.gearboxes.Gearbox1_4;
+import dev.shinyepo.torquecraft.block.prefab.rotary.transmitters.gearboxes.Gearbox1_8;
 import dev.shinyepo.torquecraft.registries.fluid.TorqueFluids;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -35,8 +37,10 @@ public class TorqueBlocks {
     public static final Supplier<Block> SHAFT = BLOCKS.register("shaft", () -> new Shaft(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE)));
     public static final Supplier<Block> THREE_WAY = BLOCKS.register("three_way", () -> new ThreeWay(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE)));
     public static final Supplier<Block> BEVEL_GEARS = BLOCKS.register("bevel_gears", () -> new BevelGears(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE)));
-    public static final Supplier<Block> GEARBOX_1_2 = BLOCKS.register("gearbox1_2", () -> new Gearbox(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE), GearboxRatio.RATIO_2));
-    public static final Supplier<Block> GEARBOX_1_4 = BLOCKS.register("gearbox1_4", () -> new Gearbox(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE), GearboxRatio.RATIO_4));
+    public static final Supplier<Block> GEARBOX_1_2 = BLOCKS.register("gearbox1_2", () -> new Gearbox1_2(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE)));
+    public static final Supplier<Block> GEARBOX_1_4 = BLOCKS.register("gearbox1_4", () -> new Gearbox1_4(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE)));
+    public static final Supplier<Block> GEARBOX_1_8 = BLOCKS.register("gearbox1_8", () -> new Gearbox1_8(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE)));
+    public static final Supplier<Block> GEARBOX_1_16 = BLOCKS.register("gearbox1_16", () -> new Gearbox1_16(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().mapColor(MapColor.STONE)));
 
     //Machines
     public static final Supplier<Block> STEAM_ENGINE = BLOCKS.register("steam_engine",() -> new SteamEngine(BlockBehaviour.Properties.of().destroyTime(1.5f).noOcclusion().requiresCorrectToolForDrops().mapColor(MapColor.STONE)));

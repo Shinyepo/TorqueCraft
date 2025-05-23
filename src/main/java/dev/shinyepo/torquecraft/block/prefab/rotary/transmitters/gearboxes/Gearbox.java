@@ -1,8 +1,7 @@
-package dev.shinyepo.torquecraft.block.prefab.rotary.transmitters;
+package dev.shinyepo.torquecraft.block.prefab.rotary.transmitters.gearboxes;
 
 import com.mojang.serialization.MapCodec;
 import dev.shinyepo.torquecraft.block.entities.rotary.transmitters.GearboxEntity;
-import dev.shinyepo.torquecraft.config.GearboxRatio;
 import dev.shinyepo.torquecraft.config.RotaryMode;
 import dev.shinyepo.torquecraft.constants.TorqueAttributes;
 import dev.shinyepo.torquecraft.factory.rotary.network.RotaryNetworkDevice;
@@ -34,23 +33,21 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 
 @ParametersAreNonnullByDefault
-public class Gearbox extends HorizontalDirectionalBlock implements EntityBlock {
+public abstract class Gearbox extends HorizontalDirectionalBlock implements EntityBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 16, 16);
     private static final EnumProperty<RotaryMode> MODE = TorqueAttributes.MODE;
-    private static final EnumProperty<GearboxRatio> RATIO = TorqueAttributes.RATIO;
 
-    public Gearbox(Properties pProperties, GearboxRatio ratio) {
+    public Gearbox(Properties pProperties) {
         super(pProperties);
 
         registerDefaultState(getStateDefinition().any()
                 .setValue(FACING, Direction.NORTH)
-                .setValue(MODE, RotaryMode.ANGULAR)
-                .setValue(RATIO, ratio));
+                .setValue(MODE, RotaryMode.ANGULAR));
     }
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(FACING, MODE, RATIO);
+        pBuilder.add(FACING, MODE);
     }
 
     @Nullable
@@ -58,8 +55,7 @@ public class Gearbox extends HorizontalDirectionalBlock implements EntityBlock {
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {
         return this.defaultBlockState()
                 .setValue(FACING, (pContext.getPlayer().isShiftKeyDown() ? pContext.getHorizontalDirection() : pContext.getHorizontalDirection().getOpposite()))
-                .setValue(MODE, RotaryMode.ANGULAR)
-                .setValue(RATIO, GearboxRatio.RATIO_2);
+                .setValue(MODE, RotaryMode.ANGULAR);
     }
 
     @Override
@@ -75,9 +71,7 @@ public class Gearbox extends HorizontalDirectionalBlock implements EntityBlock {
 
     @Nullable
     @Override
-    public GearboxEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new GearboxEntity(pos, state);
-    }
+    public abstract GearboxEntity newBlockEntity(BlockPos pos, BlockState state);
 
     @Override
     protected void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {

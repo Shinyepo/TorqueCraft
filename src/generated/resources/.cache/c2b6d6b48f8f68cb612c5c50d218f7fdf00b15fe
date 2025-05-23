@@ -1,4 +1,4 @@
-// 1.21.1	2025-05-15T23:18:47.665685	Item Models: torquecraft
+// 1.21.1	2025-05-22T16:54:29.8617391	Item Models: torquecraft
 e59d6b3d630b1cb3f52cae24f436ff54e71aa420 assets/torquecraft/models/item/alloy_furnace.json
 8f2119a5c863b94d0810e71d7e95ed78e9f27574 assets/torquecraft/models/item/bevel_gears.json
 5f52cc675d3896825693098fb2797e0b3b53e704 assets/torquecraft/models/item/canola_seeds.json
@@ -12,8 +12,10 @@ bdf61f384410fecb6421ebde340666a496c806f4 assets/torquecraft/models/item/diamond_
 9e73510877731a07a05cc1f54ee615a06a9e4319 assets/torquecraft/models/item/emerald_dust.json
 c9132467fff67005b589e94e5e19c2d3488d110e assets/torquecraft/models/item/fluid_pipe.json
 e6b3663d8832b1883cc264fa9929abdf077dd51d assets/torquecraft/models/item/fluid_tank.json
+0fb4ce11d2c0c9bb4263139912bb941eca6996e4 assets/torquecraft/models/item/gearbox1_16.json
 2312277111c20209904d136014dee8c09bc27929 assets/torquecraft/models/item/gearbox1_2.json
 31099cc000e5eac3c19ccb71edbde35532ff8f9d assets/torquecraft/models/item/gearbox1_4.json
+b12bfb74f6aeee3c774d5a840de1ab8359d90eb5 assets/torquecraft/models/item/gearbox1_8.json
 d26556a4b12e83c359af4fd6ccf20f04ee7a9142 assets/torquecraft/models/item/gold_dust.json
 29f187304eb688150a0d5dfbf1e59c24bd4b7d81 assets/torquecraft/models/item/grinder.json
 f1b35ff8517b9d65e6b4d51b48802e1b44137115 assets/torquecraft/models/item/hsla_block.json

@@ -53,6 +53,8 @@ public class TorqueItems {
     public static final Supplier<BlockItem> BEVEL_GEARS_ITEM = ITEMS.registerSimpleBlockItem("bevel_gears", TorqueBlocks.BEVEL_GEARS);
     public static final Supplier<BlockItem> GEARBOX1_2_ITEM = ITEMS.registerSimpleBlockItem("gearbox1_2", TorqueBlocks.GEARBOX_1_2);
     public static final Supplier<BlockItem> GEARBOX1_4_ITEM = ITEMS.registerSimpleBlockItem("gearbox1_4", TorqueBlocks.GEARBOX_1_4);
+    public static final Supplier<BlockItem> GEARBOX1_8_ITEM = ITEMS.registerSimpleBlockItem("gearbox1_8", TorqueBlocks.GEARBOX_1_8);
+    public static final Supplier<BlockItem> GEARBOX1_16_ITEM = ITEMS.registerSimpleBlockItem("gearbox1_16", TorqueBlocks.GEARBOX_1_16);
 
     //Items
     public static final Supplier<Item> CRUSHED_SEEDS = ITEMS.register("crushed_seeds", () -> new CanolaMeal(new Item.Properties()));

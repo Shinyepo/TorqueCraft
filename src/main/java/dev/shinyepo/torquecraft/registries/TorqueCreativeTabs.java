@@ -57,6 +57,8 @@ public class TorqueCreativeTabs {
                 output.accept(TorqueItems.BEVEL_GEARS_ITEM.get());
                 output.accept(TorqueItems.GEARBOX1_2_ITEM.get());
                 output.accept(TorqueItems.GEARBOX1_4_ITEM.get());
+                output.accept(TorqueItems.GEARBOX1_8_ITEM.get());
+                output.accept(TorqueItems.GEARBOX1_16_ITEM.get());
                 //
                 output.accept(TorqueItems.CANOLA_SEEDS.get());
                 output.accept(TorqueItems.CRUSHED_SEEDS.get());

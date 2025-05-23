@@ -5,10 +5,7 @@ import dev.shinyepo.torquecraft.block.entities.AlloyFurnaceEntity;
 import dev.shinyepo.torquecraft.block.entities.FluidTankEntity;
 import dev.shinyepo.torquecraft.block.entities.pipes.SteamPipeEntity;
 import dev.shinyepo.torquecraft.block.entities.rotary.*;
-import dev.shinyepo.torquecraft.block.entities.rotary.transmitters.BevelGearsEntity;
-import dev.shinyepo.torquecraft.block.entities.rotary.transmitters.GearboxEntity;
-import dev.shinyepo.torquecraft.block.entities.rotary.transmitters.ShaftEntity;
-import dev.shinyepo.torquecraft.block.entities.rotary.transmitters.ThreeWayEntity;
+import dev.shinyepo.torquecraft.block.entities.rotary.transmitters.*;
 import dev.shinyepo.torquecraft.factory.pipe.network.PressureFluidTransmitter;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -31,7 +28,10 @@ public class TorqueBlockEntities {
     public static final Supplier<BlockEntityType<ShaftEntity>> SHAFT_ENTITY = BLOCK_ENTITIES.register("shaft_be", () -> BlockEntityType.Builder.of(ShaftEntity::new, TorqueBlocks.SHAFT.get()).build(null));
     public static final Supplier<BlockEntityType<ThreeWayEntity>> THREE_WAY_ENTITY = BLOCK_ENTITIES.register("three_way_be", () -> BlockEntityType.Builder.of(ThreeWayEntity::new, TorqueBlocks.THREE_WAY.get()).build(null));
     public static final Supplier<BlockEntityType<BevelGearsEntity>> BEVEL_GEARS_ENTITY = BLOCK_ENTITIES.register("bevel_gears_be", () -> BlockEntityType.Builder.of(BevelGearsEntity::new, TorqueBlocks.BEVEL_GEARS.get()).build(null));
-    public static final Supplier<BlockEntityType<GearboxEntity>> GEARBOX_ENTITY = BLOCK_ENTITIES.register("gearbox_be", () -> BlockEntityType.Builder.of(GearboxEntity::new, TorqueBlocks.GEARBOX_1_2.get(), TorqueBlocks.GEARBOX_1_4.get()).build(null));
+    public static final Supplier<BlockEntityType<Gearbox1_2Entity>> GEARBOX1_2_ENTITY = BLOCK_ENTITIES.register("gearbox1_2_be", () -> BlockEntityType.Builder.of(Gearbox1_2Entity::new, TorqueBlocks.GEARBOX_1_2.get()).build(null));
+    public static final Supplier<BlockEntityType<Gearbox1_4Entity>> GEARBOX1_4_ENTITY = BLOCK_ENTITIES.register("gearbox1_4_be", () -> BlockEntityType.Builder.of(Gearbox1_4Entity::new, TorqueBlocks.GEARBOX_1_4.get()).build(null));
+    public static final Supplier<BlockEntityType<Gearbox1_8Entity>> GEARBOX1_8_ENTITY = BLOCK_ENTITIES.register("gearbox1_8_be", () -> BlockEntityType.Builder.of(Gearbox1_8Entity::new, TorqueBlocks.GEARBOX_1_8.get()).build(null));
+    public static final Supplier<BlockEntityType<Gearbox1_16Entity>> GEARBOX1_16_ENTITY = BLOCK_ENTITIES.register("gearbox1_16_be", () -> BlockEntityType.Builder.of(Gearbox1_16Entity::new, TorqueBlocks.GEARBOX_1_16.get()).build(null));
     public static final Supplier<BlockEntityType<VacuumEntity>> VACUUM_ENTITY = BLOCK_ENTITIES.register("vacuum_be", () -> BlockEntityType.Builder.of(VacuumEntity::new, TorqueBlocks.VACUUM.get()).build(null));
 
 }

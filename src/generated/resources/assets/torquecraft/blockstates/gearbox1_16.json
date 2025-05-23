@@ -1,33 +1,33 @@
 {
   "variants": {
     "facing=east,rotary_mode=angular": {
-      "model": "torquecraft:block/gearbox/1_2/block",
+      "model": "torquecraft:block/gearbox/1_16/block",
       "y": 90
     },
     "facing=east,rotary_mode=torque": {
-      "model": "torquecraft:block/gearbox/1_2/block",
+      "model": "torquecraft:block/gearbox/1_16/block",
       "y": 90
     },
     "facing=north,rotary_mode=angular": {
-      "model": "torquecraft:block/gearbox/1_2/block"
+      "model": "torquecraft:block/gearbox/1_16/block"
     },
     "facing=north,rotary_mode=torque": {
-      "model": "torquecraft:block/gearbox/1_2/block"
+      "model": "torquecraft:block/gearbox/1_16/block"
     },
     "facing=south,rotary_mode=angular": {
-      "model": "torquecraft:block/gearbox/1_2/block",
+      "model": "torquecraft:block/gearbox/1_16/block",
       "y": 180
     },
     "facing=south,rotary_mode=torque": {
-      "model": "torquecraft:block/gearbox/1_2/block",
+      "model": "torquecraft:block/gearbox/1_16/block",
       "y": 180
     },
     "facing=west,rotary_mode=angular": {
-      "model": "torquecraft:block/gearbox/1_2/block",
+      "model": "torquecraft:block/gearbox/1_16/block",
       "y": 270
     },
     "facing=west,rotary_mode=torque": {
-      "model": "torquecraft:block/gearbox/1_2/block",
+      "model": "torquecraft:block/gearbox/1_16/block",
       "y": 270
     }
   }

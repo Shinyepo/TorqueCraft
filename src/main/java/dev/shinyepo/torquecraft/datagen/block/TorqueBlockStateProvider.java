@@ -50,6 +50,8 @@ public class TorqueBlockStateProvider extends CustomBlockStateProvider {
         registerHorizontalMachineWithExistingModel("block/bevel_gears", TorqueBlocks.BEVEL_GEARS);
         registerHorizontalMachineWithExistingModel("block/gearbox/1_2", TorqueBlocks.GEARBOX_1_2);
         registerHorizontalMachineWithExistingModel("block/gearbox/1_4", TorqueBlocks.GEARBOX_1_4);
+        registerHorizontalMachineWithExistingModel("block/gearbox/1_8", TorqueBlocks.GEARBOX_1_8);
+        registerHorizontalMachineWithExistingModel("block/gearbox/1_16", TorqueBlocks.GEARBOX_1_16);
         registerHorizontalMachineWithExistingModel("block/three_way", TorqueBlocks.THREE_WAY);
         registerHorizontalMachineWithExistingModel("block/fluid_tank", TorqueBlocks.FLUID_TANK);
         registerHorizontalMachineWithExistingModel("block/vacuum", TorqueBlocks.VACUUM);

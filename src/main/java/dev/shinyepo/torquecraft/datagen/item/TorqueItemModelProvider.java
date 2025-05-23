@@ -73,6 +73,8 @@ public class TorqueItemModelProvider extends CustomItemModelProvider {
         withExistingParent(TorqueItems.ALLOY_FURNACE_ITEM.get(), "furnace/", TorqueBlocks.ALLOY_FURNACE.get());
         generateGearboxItem(TorqueItems.GEARBOX1_2_ITEM.get(), "1_2");
         generateGearboxItem(TorqueItems.GEARBOX1_4_ITEM.get(), "1_4");
+        generateGearboxItem(TorqueItems.GEARBOX1_8_ITEM.get(), "1_8");
+        generateGearboxItem(TorqueItems.GEARBOX1_16_ITEM.get(), "1_16");
         withExistingParent(TorqueItems.COOLING_RADIATOR_ITEM.get(), "radiator/", TorqueBlocks.COOLING_RADIATOR.get(), "_full");
     }
 }

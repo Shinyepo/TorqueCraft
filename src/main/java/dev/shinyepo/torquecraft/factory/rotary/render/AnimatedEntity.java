@@ -10,6 +10,7 @@ public class AnimatedEntity extends BlockEntity implements IRotaryIO, IRotationa
     private float progress = 3F;
     private float progressOld;
     private float angle = 0;
+    private float outputAngle = 0;
 
     public AnimatedEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
         super(type, pos, blockState);
@@ -22,6 +23,11 @@ public class AnimatedEntity extends BlockEntity implements IRotaryIO, IRotationa
 
     public void setAngle(float angle) {
         this.angle = angle;
+    }
+
+    @Override
+    public double getOutputAngle() {
+        return this.outputAngle;
     }
 
     @Override
@@ -41,5 +47,9 @@ public class AnimatedEntity extends BlockEntity implements IRotaryIO, IRotationa
     @Override
     public double getAngle() {
         return this.angle;
+    }
+
+    public void setOutputAngle(float angle) {
+        this.outputAngle = angle;
     }
 }
