@@ -59,9 +59,13 @@ public class RotaryTransmitter extends RotaryNetworkDevice<TransmitterConfig> im
         }
 
         if (getNetwork() != null && update) {
-            getNetwork().emitPower(this.getBlockPos().relative(this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING)), this.rotaryHandler.get().getAngular(), this.rotaryHandler.get().getTorque());
+            emitPower();
             update = false;
         }
+    }
+
+    public void emitPower() {
+        getNetwork().emitPower(this.getBlockPos().relative(this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING)), this.rotaryHandler.get().getAngular(), this.rotaryHandler.get().getTorque());
     }
 
     @Override
