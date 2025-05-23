@@ -6,6 +6,8 @@ import dev.shinyepo.torquecraft.config.TransmitterConfig;
 import dev.shinyepo.torquecraft.constants.TorqueAttributes;
 import dev.shinyepo.torquecraft.factory.IModeMachine;
 import dev.shinyepo.torquecraft.factory.rotary.network.RotaryTransmitter;
+import dev.shinyepo.torquecraft.networking.TorqueMessages;
+import dev.shinyepo.torquecraft.networking.packets.SyncGearboxRotaryPowerS2C;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -51,5 +53,11 @@ public class GearboxEntity extends RotaryTransmitter implements IModeMachine {
     public void backupRotaryValues(float angular, float torque) {
         inAngular = angular;
         inTorque = torque;
+        if (!level.isClientSide())
+            TorqueMessages.sendToAllPlayers(new SyncGearboxRotaryPowerS2C(getBlockPos(), angular, torque));
+    }
+
+    public float getInAngular() {
+        return inAngular;
     }
 }

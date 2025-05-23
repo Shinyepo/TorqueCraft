@@ -47,20 +47,20 @@ public class GearboxInstance extends MultiModelInstance<GearboxEntity> implement
         if (blockEntity instanceof GearboxEntity gearboxEntity) {
             var mode = lastBlockState.getValue(TorqueAttributes.MODE);
             var ratio = gearboxEntity.getRatio();
-            var outputSpeed = gearboxEntity.getRotaryHandler(null).getAngular();
-
-            var outputAngle = (float) ((blockEntity.getOutputAngle() + (outputSpeed * 0.01F) * ctx.partialTick()) % 360);
-            blockEntity.setOutputAngle(outputAngle);
-
-            float inputSpeed = 0;
-            if (mode == RotaryMode.ANGULAR) {
-                inputSpeed = outputSpeed / ratio;
-            } else {
-                inputSpeed = outputSpeed * ratio;
-            }
+            var inputSpeed = gearboxEntity.getInAngular();
 
             float inputAngle = (float) ((blockEntity.getAngle() + (inputSpeed * 0.01F) * ctx.partialTick()) % 360);
             blockEntity.setAngle(inputAngle);
+
+            float outputSpeed;
+            if (mode == RotaryMode.ANGULAR) {
+                outputSpeed = inputSpeed * ratio;
+            } else {
+                outputSpeed = inputSpeed / ratio;
+            }
+
+            var outputAngle = (float) ((blockEntity.getOutputAngle() + (outputSpeed * 0.01F) * ctx.partialTick()) % 360);
+            blockEntity.setOutputAngle(outputAngle);
 
             input.setRotationalSpeed(inputAngle)
                     .setChanged();
